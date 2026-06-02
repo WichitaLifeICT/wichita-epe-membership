@@ -208,6 +208,17 @@ h2.sec.light{color:var(--cream);}
 .benefit .ic{width:48px;height:48px;border-radius:12px;background:var(--gold-soft);color:var(--navy);display:flex;align-items:center;justify-content:center;}
 .benefit h3{font-family:var(--display);font-weight:600;font-size:18px;color:var(--navy);margin-top:20px;}
 .benefit p{font-size:14px;color:var(--muted);margin-top:8px;}
+.help-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:40px;}
+
+/* featured story */
+.feature-story{display:grid;gap:28px;align-items:center;margin-top:48px;background:var(--white);border:1px solid var(--border);border-radius:20px;padding:24px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+@media(min-width:900px){.feature-story{grid-template-columns:1.15fr 1fr;padding:32px;}}
+.feature-video{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:var(--navy);}
+.feature-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.fs-tag{display:inline-block;background:var(--gold-soft);color:var(--navy);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding:5px 12px;border-radius:999px;}
+.feature-story h3{font-family:var(--display);font-weight:600;font-size:26px;color:var(--navy);margin-top:14px;}
+.feature-story blockquote{margin-top:12px;font-size:16px;color:var(--navy);line-height:1.65;}
+.fs-cite{margin-top:16px;font-size:13px;font-weight:600;color:var(--muted);}
 
 /* stories */
 .stories{display:grid;gap:24px;margin-top:56px;}
@@ -267,6 +278,7 @@ svg.ic{width:24px;height:24px;}
       <a href="#levels">Levels</a>
       <a href="#partners">Partners</a>
       <a href="#benefits">Benefits</a>
+      <a href="#help">Ways to Help</a>
     </nav>
     <div class="nav-right">
       <a href="#join" class="btn btn-navy btn-sm nav-cta">Become a Member</a>
@@ -283,6 +295,7 @@ svg.ic{width:24px;height:24px;}
     <a href="#levels">Levels</a>
     <a href="#partners">Partners</a>
     <a href="#benefits">Benefits</a>
+    <a href="#help">Ways to Help</a>
     <a href="#join" class="btn btn-navy btn-full" style="margin-top:8px;color:var(--cream);">Become a Member</a>
   </div>
 </header>
@@ -430,7 +443,20 @@ svg.ic{width:24px;height:24px;}
 
 <!-- MEMBER STORIES -->
 <section class="wrap pad">
-  <div class="center"><p class="eyebrow">Member Stories</p><h2 class="sec">Real next steps, taken one at a time.</h2><p class="intro">Illustrative stories for the prototype — the kind of progress EPE is built to support.</p></div>
+  <div class="center"><p class="eyebrow">Member Stories</p><h2 class="sec">Real next steps, taken one at a time.</h2><p class="intro">A featured story from Wichita — plus illustrative examples of the progress EPE is built to support.</p></div>
+
+  <div class="feature-story">
+    <div class="feature-video">
+      <iframe src="https://www.youtube.com/embed/bRDGR0UN3Ts" title="Peazy's story" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <div class="fs-body">
+      <span class="fs-tag">Featured Story</span>
+      <h3>Meet Peazy</h3>
+      <blockquote>Former gang member turned community leader. Through relationships at Hope 4 Da Hood, support at WSU Tech, and a network of people who believed in him, Peazy found purpose — and now invests back into his neighborhood.</blockquote>
+      <p class="fs-cite">Peazy · Community Leader · Wichita</p>
+    </div>
+  </div>
+
   <div class="stories" id="stories"></div>
 </section>
 
@@ -440,6 +466,21 @@ svg.ic{width:24px;height:24px;}
     <p class="eyebrow" style="text-align:center;">Why This Matters</p>
     <p class="lead">Wichita has no shortage of people working hard to change their lives. The challenge is making the next step clear, visible, and connected.</p>
     <p class="body">EPE Membership is one simple place to connect with neighbors, opportunities, and local support — and to give back as you grow.</p>
+  </div>
+</section>
+
+<!-- WAYS TO HELP -->
+<section id="help" class="wrap pad">
+  <div class="center">
+    <p class="eyebrow">Ways to Help</p>
+    <h2 class="sec">Help others change their lives.</h2>
+    <p class="intro">EPE works two ways — a place to change your own life, and a place to help your neighbors change theirs. If you're ready to give back, here's where to start.</p>
+  </div>
+  <div class="benefits" id="helpWays"></div>
+  <div class="help-actions">
+    <a href="#join" class="btn btn-navy">Volunteer or Mentor</a>
+    <a href="#join" class="btn btn-outline">Refer a Neighbor</a>
+    <a href="#join" class="btn btn-outline">Partner or Give</a>
   </div>
 </section>
 
@@ -515,6 +556,12 @@ var MEMBERGET=[
 ];
 var BEFORE=["Hard to know where to start","Disconnected services","Limited relationships"];
 var AFTER=["One place to connect","A clear next step","Community support","Measurable progress"];
+var HELP=[
+  ["Volunteer & Mentor","Share your time and walk alongside a member as they take their next step.","family"],
+  ["Refer a Neighbor","Know someone who could use a hand? Point them to EPE in seconds.","heart"],
+  ["Partner Your Organization","Bring your services into the network and reach the neighbors who need them.","briefcase"],
+  ["Give & Sponsor","Help fund memberships, savings matches, and rides to work and school.","wallet"]
+];
 var DOMAINS=["Housing","Income & Work","Health","Transportation","Family & Relationships","Money & Savings","Education","Community"];
 var STATE_LABELS=["Needs support","Working on it","Thriving"];
 var LEVELS=[
@@ -555,6 +602,10 @@ document.getElementById('memberGet').innerHTML=MEMBERGET.map(function(b){
 
 document.getElementById('baBefore').innerHTML=BEFORE.map(function(t){return '<li><span class="b"></span>'+t+'</li>';}).join('');
 document.getElementById('baAfter').innerHTML=AFTER.map(function(t){return '<li><span class="b"></span>'+t+'</li>';}).join('');
+
+document.getElementById('helpWays').innerHTML=HELP.map(function(b){
+  return '<div class="benefit"><span class="ic">'+svg(b[2])+'</span><h3>'+b[0]+'</h3><p>'+b[1]+'</p></div>';
+}).join('');
 
 document.getElementById('tiers').innerHTML=LEVELS.map(function(l){
   var req=l.req.length?'<p class="grouplabel">Requirements</p><ul class="req">'+l.req.map(function(r){return '<li><span class="b"></span>'+r+'</li>';}).join('')+'</ul>':'';
