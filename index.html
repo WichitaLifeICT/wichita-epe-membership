@@ -141,14 +141,14 @@ h2.sec.light{color:var(--cream);}
 @media(min-width:1024px){.thrive-grid{grid-template-columns:1.4fr 1fr;}}
 .lights{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 @media(min-width:640px){.lights{grid-template-columns:repeat(4,1fr);}}
-.light{display:flex;flex-direction:column;align-items:flex-start;gap:12px;text-align:left;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;box-shadow:0 0 0 2px transparent;transition:transform .15s,box-shadow .2s;font-family:var(--sans);}
-.light:hover{transform:translateY(-2px);}
-.light .d{width:16px;height:16px;border-radius:50%;box-shadow:0 1px 2px rgba(0,0,0,.15);}
-.light .dn{font-size:14px;font-weight:600;color:var(--navy);line-height:1.2;}
-.light .st{font-size:12px;font-weight:500;}
-.light[data-state="0"]{box-shadow:0 0 0 2px rgba(200,85,61,.3);} .light[data-state="0"] .d{background:var(--coral);} .light[data-state="0"] .st{color:var(--coral);}
-.light[data-state="1"]{box-shadow:0 0 0 2px rgba(216,162,58,.4);} .light[data-state="1"] .d{background:var(--gold);} .light[data-state="1"] .st{color:var(--gold);}
-.light[data-state="2"]{box-shadow:0 0 0 2px rgba(79,138,99,.4);} .light[data-state="2"] .d{background:var(--sage);} .light[data-state="2"] .st{color:var(--sage);}
+.lights .light{display:flex;flex-direction:column;align-items:flex-start;gap:12px;text-align:left;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;box-shadow:0 0 0 2px transparent;transition:transform .15s,box-shadow .2s;font-family:var(--sans);}
+.lights .light:hover{transform:translateY(-2px);}
+.lights .light .d{width:16px;height:16px;border-radius:50%;box-shadow:0 1px 2px rgba(0,0,0,.15);}
+.lights .light .dn{font-size:14px;font-weight:600;color:var(--navy);line-height:1.2;}
+.lights .light .st{font-size:12px;font-weight:500;}
+.lights .light[data-state="0"]{box-shadow:0 0 0 2px rgba(200,85,61,.3);} .lights .light[data-state="0"] .d{background:var(--coral);} .lights .light[data-state="0"] .st{color:var(--coral);}
+.lights .light[data-state="1"]{box-shadow:0 0 0 2px rgba(216,162,58,.4);} .lights .light[data-state="1"] .d{background:var(--gold);} .lights .light[data-state="1"] .st{color:var(--gold);}
+.lights .light[data-state="2"]{box-shadow:0 0 0 2px rgba(79,138,99,.4);} .lights .light[data-state="2"] .d{background:var(--sage);} .lights .light[data-state="2"] .st{color:var(--sage);}
 .meter{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:28px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
 .meter .cap{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--navy-300);}
 .meter .pct{font-family:var(--display);font-weight:600;font-size:48px;color:var(--navy);margin-top:4px;}
@@ -295,7 +295,7 @@ svg.ic{width:24px;height:24px;}
   <div class="wrap grid" style="position:relative;">
     <div>
       <span class="badge"><span class="dot"></span>Every Person Empowered · Wichita</span>
-      <h1>Become part of Wichita's Ecosystem of Empowerment</h1>
+      <h1>Join the community empowering every person in Wichita</h1>
       <p class="sub">A membership community connecting residents, organizations, and supporters to opportunities, events, resources, and local impact. Free to join — for individuals and organizations alike.</p>
       <div class="cta-row">
         <a href="#join" class="btn btn-gold">Join Membership</a>
@@ -410,7 +410,7 @@ svg.ic{width:24px;height:24px;}
   <div class="wrap pad">
     <div style="max-width:640px;">
       <p class="eyebrow light">Partner Network</p>
-      <h2 class="sec light">One front door to a whole ecosystem of support.</h2>
+      <h2 class="sec light">One place to connect with the support you need.</h2>
       <p class="intro light">EPE connects members to trusted Wichita organizations across the areas that matter most.</p>
     </div>
     <div class="cat-grid" id="cats"></div>
@@ -439,7 +439,7 @@ svg.ic{width:24px;height:24px;}
   <div class="wrap pad why">
     <p class="eyebrow" style="text-align:center;">Why This Matters</p>
     <p class="lead">Wichita has no shortage of people working hard to change their lives. The challenge is making the next step clear, visible, and connected.</p>
-    <p class="body">EPE Membership creates a simple front door into a larger ecosystem of support, progress, and contribution.</p>
+    <p class="body">EPE Membership is one simple place to connect with neighbors, opportunities, and local support — and to give back as you grow.</p>
   </div>
 </section>
 
@@ -448,7 +448,7 @@ svg.ic{width:24px;height:24px;}
   <div class="wrap pad">
     <div class="cta-grid">
       <div class="cta">
-        <h2>Start your empowerment journey.</h2>
+        <h2>Join your neighbors today.</h2>
         <p>Join free, refer a neighbor, or bring your organization into the network. Every path starts with one step.</p>
         <div class="row">
           <a href="#" class="btn btn-gold">Become a Member</a>
@@ -511,25 +511,25 @@ var MEMBERGET=[
   ["Resource marketplace","One place to browse and request resources from trusted partners.","wallet"],
   ["Introductions to partners","Warm hand-offs to the organizations that can help with your next step.","briefcase"],
   ["Member dashboard","Track your goals, progress, and connections all in one place.","card"],
-  ["Access to pilots & experiments","Be first to try new programs as the ecosystem grows.","unlock"]
+  ["Access to pilots & experiments","Be first to try new programs as the community grows.","unlock"]
 ];
 var BEFORE=["Hard to know where to start","Disconnected services","Limited relationships"];
-var AFTER=["One place to connect","Personalized pathways","Community support","Measurable progress"];
+var AFTER=["One place to connect","A clear next step","Community support","Measurable progress"];
 var DOMAINS=["Housing","Income & Work","Health","Transportation","Family & Relationships","Money & Savings","Education","Community"];
 var STATE_LABELS=["Needs support","Working on it","Thriving"];
 var LEVELS=[
   {name:"Starter Member",accent:"navy",tagline:"For anyone ready to begin.",req:[],ben:["EPE Membership Card","Access to basic resources","Invitations to community opportunities"],featured:false},
   {name:"Progress Member",accent:"sage",tagline:"For members setting goals and tracking progress.",req:["Set goals","Track progress","Engage with a partner or support tool"],ben:["Thrive Lights access","Goal support","Partner referrals"],featured:true},
-  {name:"Gold Member",accent:"gold",tagline:"For members actively working, growing, and contributing.",req:["Working or pursuing work","Setting goals","Tracking progress","Referred or verified by a partner organization"],ben:["Premium partner benefits","Training and education pathways","Matching savings opportunities","Transportation support","Homeownership pathways"],featured:false}
+  {name:"Gold Member",accent:"gold",tagline:"For members actively working, growing, and contributing.",req:["Working or pursuing work","Setting goals","Tracking progress","Referred or verified by a partner organization"],ben:["Premium partner benefits","Training and education programs","Matching savings opportunities","Transportation support","Help toward owning a home"],featured:false}
 ];
 var CATS=[["Workforce & Training","briefcase"],["Financial Coaching","wallet"],["Transportation","bus"],["Housing & Homeownership","home"],["Family Stability","family"],["Community Contribution","heart"]];
 var PARTNERS=["WSU Tech","Thrive Lights","Family Promise","Hope CDC","Hope for the Hood","Empower","Create Campaign"];
 var BENEFITS=[
   ["Set & track personal goals","Name where you're headed and watch your progress add up, one step at a time.","target"],
   ["Build financial stability","Connect with coaching and matching savings opportunities that grow your foundation.","wallet"],
-  ["Access training & career pathways","Find education and workforce programs that open doors to better work.","briefcase"],
+  ["Access training & career programs","Find education and job programs that open doors to better work.","briefcase"],
   ["Get connected to transportation","Reliable ways to get to work, school, and appointments without the stress.","bus"],
-  ["Explore homeownership pathways","Take real steps toward owning a home and putting down roots in Wichita.","home"],
+  ["Work toward owning a home","Take real steps toward owning a home and putting down roots in Wichita.","home"],
   ["Contribute back to community","Once you've grown, help a neighbor take their next step too.","heart"]
 ];
 var STORIES=[
