@@ -503,7 +503,7 @@ var LEVELS=[
     req:["Just sign up with the simple form below"],
     groups:[
       {cat:"Financial Health",items:[
-        {t:"Bank On ICT",d:"Access safe, affordable bank accounts and financial tools to reduce fees, protect income, and build long-term financial stability."},
+        {t:"Bank On ICT",d:"Bank On ICT helps individuals access safe, affordable bank accounts and financial tools to reduce fees, protect income, and build long-term financial stability."},
         {t:"Free tax return via VITA (United Way)"}
       ]},
       {cat:"Transportation",items:[
@@ -511,17 +511,17 @@ var LEVELS=[
         {t:"Bike Walk — ride 15 hours and earn a bike"}
       ]},
       {cat:"Entrepreneurship",items:[
-        {t:"Small business consultation with Empower or Create Campaign"}
+        {t:"A small business consultation with Empower or Create Campaign"}
       ]},
       {cat:"Education",items:[
-        {t:"Career consultation with WSU Tech",d:"WSU Tech Career Services supports students and alumni with job-search help, resume and interview prep, career coaching, and employer connections."}
+        {t:"A career consultation with WSU Tech",d:"WSU Tech Career Services supports students and alumni with job-search assistance, resume and interview preparation, career coaching, and employer connections."}
       ]},
       {cat:"Work",items:[
-        {t:"Job consultation with the Wichita Workforce Center"}
+        {t:"A job consultation with the Wichita Workforce Center"}
       ]},
       {cat:"People Development & Goal Setting",items:[
-        {t:"Brand 316",d:"A Christ-centered reentry program equipping formerly incarcerated individuals with mentorship, career training, and life skills to reintegrate and build sustainable futures."},
-        {t:"Priority consideration for Getting Ahead",d:"Includes a stipend, childcare, motivation, and more."},
+        {t:"Brand 316",d:"Brand 316 is a Christ-centered reentry program equipping formerly incarcerated individuals with mentorship, career training, and life skills to successfully reintegrate and build sustainable futures."},
+        {t:"Priority consideration for the Getting Ahead program",d:"Includes a stipend, childcare, motivation, and more."},
         {t:"Free Live the Life relationship classes"}
       ]},
       {cat:"Community Service",items:[
@@ -536,32 +536,32 @@ var LEVELS=[
     benefitsNote:"Everything in Basic, plus:",
     groups:[
       {cat:"Financial Health",items:[
-        {t:"SMG matching savings up to $500"},
+        {t:"SMG — matching savings up to $500"},
         {t:"Grocery delivery — Walmart+"},
         {t:"Telehealth through Amazon for one year"}
       ]},
       {cat:"Economic Opportunity",items:[
-        {t:"Apply to own a tiny home (zip code required)"},
+        {t:"Apply to own a tiny home",d:"Zip code required."},
         {t:"Job consultation with Marquis / EPE"},
         {t:"Drive & Thrive"},
         {t:"Vehicle repair"},
         {t:"Apply for a vehicle donation"}
       ]},
       {cat:"Housing",items:[
-        {t:"Free housing consultation with Family Promise"},
-        {t:"Homeownership consultation with Meritrust"},
+        {t:"Help with housing",d:"A free consultation by contacting Family Promise."},
+        {t:"A homeownership consultation with Meritrust"},
         {t:"Down payment assistance — apply through Sycamore"}
       ]},
       {cat:"Health & Wellness",items:[
-        {t:"Mental health support through HopeNet"},
-        {t:"Discounted YMCA membership if you qualify"}
+        {t:"Mental health through HopeNet"},
+        {t:"Discounted Y membership if you qualify"}
       ]},
       {cat:"Education",items:[
-        {t:"Concierge support with Learning Lab"}
+        {t:"Concierge with Learning Lab"}
       ]},
       {cat:"Misc",items:[
-        {t:"Help getting your ID"},
-        {t:"Pro bono legal services from Kansas Legal Services"}
+        {t:"Help with getting your ID"},
+        {t:"Pro bono legal services from Koch / Kansas Legal Services"}
       ]}
     ]
   }
@@ -602,7 +602,7 @@ document.getElementById('tiers').innerHTML=LEVELS.map(function(l){
       var d=it.d?'<span class="desc">'+it.d+'</span>':'';
       return '<li><span class="chk">'+svg('check','ic')+'</span><span class="txt"><span class="t">'+it.t+'</span>'+d+'</span></li>';
     }).join('');
-    return '<div class="acc-item'+(gi===0?' open':'')+'"><button type="button" class="acc-head"><span class="lbl">'+chev+g.cat+'</span><span class="count">'+g.items.length+'</span></button><div class="acc-panel"><ul class="ben">'+items+'</ul></div></div>';
+    return '<div class="acc-item open"><button type="button" class="acc-head"><span class="lbl">'+chev+g.cat+'</span><span class="count">'+g.items.length+'</span></button><div class="acc-panel"><ul class="ben">'+items+'</ul></div></div>';
   }).join('')+'</div>';
   var pill=l.featured?'<span class="pill">Most common</span>':'';
   return '<div class="tier tier-'+l.accent+(l.featured?' featured':'')+'"><div class="topbar"></div>'+pill+'<div class="body"><h3>'+l.name+'</h3><p class="tagline">'+l.tagline+'</p>'+req+'<p class="grouplabel">Benefits</p>'+note+acc+'<button class="choose">Choose '+l.name.split(' ')[0]+'</button></div></div>';
