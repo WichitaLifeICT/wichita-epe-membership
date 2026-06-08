@@ -198,16 +198,6 @@ h2.sec.light{color:#fff;}
 .chip-p{background:rgba(251,247,239,.16);color:var(--cream);font-size:14px;font-weight:600;padding:8px 16px;border-radius:999px;}
 .partner-box .note{margin-top:16px;font-size:12px;color:rgba(251,247,239,.6);}
 
-/* benefits */
-.benefits{display:grid;gap:20px;margin-top:56px;}
-@media(min-width:640px){.benefits{grid-template-columns:1fr 1fr;}}
-@media(min-width:1024px){.benefits{grid-template-columns:repeat(3,1fr);}}
-.benefit{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:0 1px 2px rgba(0,0,0,.04);transition:transform .2s;}
-.benefit:hover{transform:translateY(-4px);}
-.benefit .ic{width:48px;height:48px;border-radius:12px;background:var(--gold-soft);color:var(--navy);display:flex;align-items:center;justify-content:center;}
-.benefit h3{font-family:var(--display);font-weight:600;font-size:18px;color:var(--navy);margin-top:20px;}
-.benefit p{font-size:14px;color:var(--muted);margin-top:8px;}
-
 /* stories */
 .stories{display:grid;gap:24px;margin-top:56px;}
 @media(min-width:768px){.stories{grid-template-columns:repeat(3,1fr);}}
@@ -259,6 +249,7 @@ svg.ic{width:24px;height:24px;}
 </style>
 </head>
 <body>
+<!-- EPE build: partners-light-fix -->
 
 <!-- NAV -->
 <header class="nav">
@@ -270,7 +261,6 @@ svg.ic{width:24px;height:24px;}
       <a href="#thrive">Thrive Lights</a>
       <a href="#levels">Levels</a>
       <a href="#partners">Partners</a>
-      <a href="#benefits">Benefits</a>
     </nav>
     <div class="nav-right">
       <a href="#join" class="btn btn-navy btn-sm nav-cta">Become a Member</a>
@@ -285,7 +275,6 @@ svg.ic{width:24px;height:24px;}
     <a href="#thrive">Thrive Lights</a>
     <a href="#levels">Levels</a>
     <a href="#partners">Partners</a>
-    <a href="#benefits">Benefits</a>
     <a href="#join" class="btn btn-navy btn-full" style="margin-top:8px;color:var(--cream);">Become a Member</a>
   </div>
 </header>
@@ -302,7 +291,7 @@ svg.ic{width:24px;height:24px;}
       <p class="sub">A simple way for people, partners, and neighbors to take the next step toward stability, progress, and contribution.</p>
       <div class="cta-row">
         <a href="#join" class="btn btn-gold">Become a Member</a>
-        <a href="#benefits" class="btn btn-outline">Explore Member Benefits</a>
+        <a href="#levels" class="btn btn-outline">Explore Member Benefits</a>
       </div>
       <p class="quote">&ldquo;Every person empowered to transform their life — and help others do the same.&rdquo;</p>
     </div>
@@ -386,9 +375,9 @@ svg.ic{width:24px;height:24px;}
 <section id="partners" class="band-navy">
   <div class="wrap pad">
     <div style="max-width:640px;">
-      <p class="eyebrow light">Partner Network</p>
-      <h2 class="sec light">One front door to a whole ecosystem of support.</h2>
-      <p class="intro light">EPE connects members to trusted Wichita organizations across the areas that matter most.</p>
+      <p class="eyebrow">Partner Network</p>
+      <h2 class="sec">One front door to a whole ecosystem of support.</h2>
+      <p class="intro">EPE connects members to trusted Wichita organizations across the areas that matter most — goals, money, work, transportation, housing, family, and giving back.</p>
     </div>
     <div class="cat-grid" id="cats"></div>
     <div class="partner-box">
@@ -397,12 +386,6 @@ svg.ic{width:24px;height:24px;}
       <p class="note">Placeholder partners shown for the prototype.</p>
     </div>
   </div>
-</section>
-
-<!-- MEMBER BENEFITS -->
-<section id="benefits" class="wrap pad">
-  <div class="center"><p class="eyebrow">Member Benefits</p><h2 class="sec">What you can do as a member.</h2></div>
-  <div class="benefits" id="benefits"></div>
 </section>
 
 <!-- MEMBER STORIES -->
@@ -569,16 +552,8 @@ var LEVELS=[
     ]
   }
 ];
-var CATS=[["Workforce & Training","briefcase"],["Financial Coaching","wallet"],["Transportation","bus"],["Housing & Homeownership","home"],["Family Stability","family"],["Community Contribution","heart"]];
+var CATS=[["Goal Setting & Progress","target"],["Workforce & Training","briefcase"],["Financial Coaching","wallet"],["Transportation","bus"],["Housing & Homeownership","home"],["Family Stability","family"],["Community Contribution","heart"]];
 var PARTNERS=["WSU Tech","Thrive Lights","Family Promise","Hope CDC","Hope for the Hood","Empower","Create Campaign","Bike Walk Wichita","Spero"];
-var BENEFITS=[
-  ["Set & track personal goals","Name where you're headed and watch your progress add up, one step at a time.","target"],
-  ["Build financial stability","Connect with coaching and matching savings opportunities that grow your foundation.","wallet"],
-  ["Access training & career pathways","Find education and workforce programs that open doors to better work.","briefcase"],
-  ["Get connected to transportation","Reliable ways to get to work, school, and appointments without the stress.","bus"],
-  ["Explore homeownership pathways","Take real steps toward owning a home and putting down roots in Wichita.","home"],
-  ["Contribute back to community","Once you've grown, help a neighbor take their next step too.","heart"]
-];
 var STORIES=[
   ["I set one goal — get my license back. EPE connected me to a ride program and a coach. Six months later I'm driving to a job I actually like.","Marcus T.","Basic Member · North End"],
   ["The card made it feel real. Like someone in Wichita was actually rooting for me to make it.","Dana R.","Gold Member · Planeview"],
@@ -621,10 +596,6 @@ document.getElementById('cats').innerHTML=CATS.map(function(c){
 }).join('');
 
 document.getElementById('partnerChips').innerHTML=PARTNERS.map(function(p){return '<span class="chip-p">'+p+'</span>';}).join('');
-
-document.getElementById('benefits').innerHTML=BENEFITS.map(function(b){
-  return '<div class="benefit"><span class="ic">'+svg(b[2])+'</span><h3>'+b[0]+'</h3><p>'+b[1]+'</p></div>';
-}).join('');
 
 document.getElementById('stories').innerHTML=STORIES.map(function(s){
   return '<figure class="story"><span class="q">&ldquo;</span><blockquote>'+s[0]+'</blockquote><figcaption><p class="nm">'+s[1]+'</p><p class="dt">'+s[2]+'</p></figcaption></figure>';
