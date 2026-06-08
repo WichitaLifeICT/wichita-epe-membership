@@ -142,7 +142,7 @@ h2.sec.light{color:var(--cream);}
 .legend .d{width:12px;height:12px;border-radius:50%;}
 
 /* membership levels */
-.tiers{display:grid;gap:24px;align-items:start;margin-top:56px;}
+.tiers{display:grid;gap:24px;align-items:start;margin-top:56px;max-width:780px;margin-left:auto;margin-right:auto;}
 @media(min-width:768px){.tiers{grid-template-columns:repeat(2,1fr);}}
 .tier{position:relative;display:flex;flex-direction:column;background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04);}
 .tier.featured{border-color:rgba(79,138,99,.4);box-shadow:0 0 0 2px rgba(79,138,99,.3);}
@@ -165,10 +165,6 @@ h2.sec.light{color:var(--cream);}
 .tier-sage .choose{background:var(--sage-light);color:var(--sage);}
 .tier-gold .choose{background:var(--gold-soft);color:var(--navy);}
 .tier .choose:hover{opacity:.9;}
-.tier .cat-label{font-size:12px;font-weight:700;color:var(--navy);margin-top:16px;margin-bottom:2px;}
-.tier .bnote{font-size:13px;font-style:italic;color:var(--sage);margin-top:4px;}
-.tier .ben .txt{display:flex;flex-direction:column;}
-.tier .ben .txt .desc{margin-top:2px;font-size:12px;color:var(--muted);line-height:1.45;}
 
 /* partners (navy band) */
 .band-navy{background:var(--navy);}
@@ -232,7 +228,6 @@ h2.sec.light{color:var(--cream);}
 .seg-btn{border:none;background:transparent;color:rgba(251,247,239,.75);font-family:var(--sans);font-size:13px;font-weight:600;padding:9px 6px;border-radius:8px;cursor:pointer;transition:background .2s,color .2s;}
 .seg-btn:hover{color:var(--cream);}
 .seg-btn.active{background:var(--gold);color:var(--navy);}
-.seg.seg-2{grid-template-columns:repeat(2,1fr);}
 
 /* footer */
 footer{border-top:1px solid var(--border);background:var(--cream);}
@@ -436,13 +431,6 @@ svg.ic{width:24px;height:24px;}
               <button type="button" class="seg-btn" data-val="both">Both</button>
             </div>
           </div>
-          <div class="toggle-field">
-            <span class="lb">Would you like a personal contact to reach out?</span>
-            <div class="seg seg-2" id="contactToggle" role="group" aria-label="Personal contact preference">
-              <button type="button" class="seg-btn active" data-val="yes">Yes, please</button>
-              <button type="button" class="seg-btn" data-val="no">No thanks</button>
-            </div>
-          </div>
           <button type="submit" class="btn btn-gold btn-full submit">Become a Member</button>
           <p class="fine">We'll never share your information.</p>
         </form>
@@ -487,77 +475,11 @@ var STEPS=[
 var DOMAINS=["Housing","Income & Work","Health","Transportation","Family & Relationships","Money & Savings","Education","Community"];
 var STATE_LABELS=["Needs support","Working on it","Thriving"];
 var LEVELS=[
-  {
-    name:"Basic Member",accent:"navy",featured:false,
-    tagline:"For anyone ready to begin.",
-    req:["Just sign up with the simple form below"],
-    groups:[
-      {cat:"Financial Health",items:[
-        {t:"Bank On ICT",d:"Access safe, affordable bank accounts and financial tools to reduce fees, protect income, and build long-term financial stability."},
-        {t:"Free tax return via VITA (United Way)"}
-      ]},
-      {cat:"Transportation",items:[
-        {t:"Free transportation consultation from Empower"},
-        {t:"Bike Walk — ride 15 hours and earn a bike"}
-      ]},
-      {cat:"Entrepreneurship",items:[
-        {t:"Small business consultation with Empower or Create Campaign"}
-      ]},
-      {cat:"Education",items:[
-        {t:"Career consultation with WSU Tech",d:"WSU Tech Career Services supports students and alumni with job-search help, resume and interview prep, career coaching, and employer connections."}
-      ]},
-      {cat:"Work",items:[
-        {t:"Job consultation with the Wichita Workforce Center"}
-      ]},
-      {cat:"People Development & Goal Setting",items:[
-        {t:"Brand 316",d:"A Christ-centered reentry program equipping formerly incarcerated individuals with mentorship, career training, and life skills to reintegrate and build sustainable futures."},
-        {t:"Priority consideration for Getting Ahead",d:"Includes a stipend, childcare, motivation, and more."},
-        {t:"Free Live the Life relationship classes"}
-      ]},
-      {cat:"Community Service",items:[
-        {t:"Army of Normal Folks volunteer opportunities"}
-      ]}
-    ]
-  },
-  {
-    name:"Gold Member",accent:"gold",featured:true,
-    tagline:"For members actively working, growing, and contributing.",
-    req:["Complete your profile in Everest","Take Thrive Lights and set goals","Confirm employment, school, or service"],
-    benefitsNote:"Everything in Basic, plus:",
-    groups:[
-      {cat:"Financial Health",items:[
-        {t:"SMG matching savings up to $500"},
-        {t:"Grocery delivery — Walmart+"},
-        {t:"Telehealth through Amazon for one year"}
-      ]},
-      {cat:"Economic Opportunity",items:[
-        {t:"Apply to own a tiny home (zip code required)"},
-        {t:"Job consultation with Marquis / EPE"},
-        {t:"Drive & Thrive"},
-        {t:"Vehicle repair"},
-        {t:"Apply for a vehicle donation"}
-      ]},
-      {cat:"Housing",items:[
-        {t:"Free housing consultation with Family Promise"},
-        {t:"Homeownership consultation with Meritrust"},
-        {t:"Down payment assistance — apply through Sycamore"}
-      ]},
-      {cat:"Health & Wellness",items:[
-        {t:"Mental health support through HopeNet"},
-        {t:"Discounted YMCA membership if you qualify"}
-      ]},
-      {cat:"Education",items:[
-        {t:"Concierge support with Learning Lab"}
-      ]},
-      {cat:"Misc",items:[
-        {t:"Help getting your ID"},
-        {t:"Pro bono legal services from Kansas Legal Services"}
-      ]}
-    ]
-  }
+  {name:"Basic Member",accent:"navy",tagline:"For anyone ready to begin.",req:[],ben:["EPE Membership Card","Access to basic resources","Thrive Lights goal tracking","Partner referrals","Invitations to community opportunities"],featured:false},
+  {name:"Gold Member",accent:"gold",tagline:"For members actively working, growing, and contributing.",req:["Working or pursuing work","Setting goals & tracking progress","Referred or verified by a partner organization"],ben:["Everything in Basic","Premium partner benefits","Training and education pathways","Matching savings opportunities","Transportation support","Homeownership pathways"],featured:true}
 ];
 var CATS=[["Workforce & Training","briefcase"],["Financial Coaching","wallet"],["Transportation","bus"],["Housing & Homeownership","home"],["Family Stability","family"],["Community Contribution","heart"]];
-var PARTNERS=["WSU Tech","Thrive Lights","Family Promise","Hope CDC","Hope for the Hood","Empower","Create Campaign","Bike Walk Wichita","Spero"];
+var PARTNERS=["WSU Tech","Thrive Lights","Family Promise","Hope CDC","Hope for the Hood","Empower","Create Campaign","Bike Walk Wichita"];
 var BENEFITS=[
   ["Set & track personal goals","Name where you're headed and watch your progress add up, one step at a time.","target"],
   ["Build financial stability","Connect with coaching and matching savings opportunities that grow your foundation.","wallet"],
@@ -584,17 +506,10 @@ document.getElementById('steps').innerHTML=STEPS.map(function(s){
 }).join('');
 
 document.getElementById('tiers').innerHTML=LEVELS.map(function(l){
-  var req=l.req&&l.req.length?'<p class="grouplabel">Requirements</p><ul class="req">'+l.req.map(function(r){return '<li><span class="b"></span>'+r+'</li>';}).join('')+'</ul>':'';
-  var note=l.benefitsNote?'<p class="bnote">'+l.benefitsNote+'</p>':'';
-  var groups=(l.groups||[]).map(function(g){
-    var items=g.items.map(function(it){
-      var d=it.d?'<span class="desc">'+it.d+'</span>':'';
-      return '<li><span class="chk">'+svg('check','ic')+'</span><span class="txt"><span class="t">'+it.t+'</span>'+d+'</span></li>';
-    }).join('');
-    return '<p class="cat-label">'+g.cat+'</p><ul class="ben">'+items+'</ul>';
-  }).join('');
+  var req=l.req.length?'<p class="grouplabel">Requirements</p><ul class="req">'+l.req.map(function(r){return '<li><span class="b"></span>'+r+'</li>';}).join('')+'</ul>':'';
+  var ben='<p class="grouplabel">Benefits</p><ul class="ben">'+l.ben.map(function(b){return '<li><span class="chk">'+svg('check','ic')+'</span>'+b+'</li>';}).join('')+'</ul>';
   var pill=l.featured?'<span class="pill">Most common</span>':'';
-  return '<div class="tier tier-'+l.accent+(l.featured?' featured':'')+'"><div class="topbar"></div>'+pill+'<div class="body"><h3>'+l.name+'</h3><p class="tagline">'+l.tagline+'</p>'+req+'<p class="grouplabel">Benefits</p>'+note+groups+'<button class="choose">Choose '+l.name.split(' ')[0]+'</button></div></div>';
+  return '<div class="tier tier-'+l.accent+(l.featured?' featured':'')+'"><div class="topbar"></div>'+pill+'<div class="body"><h3>'+l.name+'</h3><p class="tagline">'+l.tagline+'</p>'+req+ben+'<button class="choose">Choose '+l.name.split(' ')[0]+'</button></div></div>';
 }).join('');
 
 document.getElementById('cats').innerHTML=CATS.map(function(c){
@@ -639,14 +554,13 @@ burger.addEventListener('click',function(){
 });
 menu.addEventListener('click',function(e){if(e.target.tagName==='A'){menu.classList.remove('open');}});
 
-/* ---------- segmented toggles (help intent + personal contact) ---------- */
-document.querySelectorAll('.seg').forEach(function(seg){
-  seg.addEventListener('click',function(e){
-    var b=e.target.closest('.seg-btn'); if(!b)return;
-    seg.querySelectorAll('.seg-btn').forEach(function(x){x.classList.remove('active');});
-    b.classList.add('active');
-  });
-});
+/* ---------- help toggle (Need / Give / Both) ---------- */
+var helpToggle=document.getElementById('helpToggle');
+if(helpToggle){helpToggle.addEventListener('click',function(e){
+  var b=e.target.closest('.seg-btn'); if(!b)return;
+  helpToggle.querySelectorAll('.seg-btn').forEach(function(x){x.classList.remove('active');});
+  b.classList.add('active');
+});}
 
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
