@@ -245,10 +245,11 @@ h2.sec.light{color:#fff;}
 .form-box .ft{font-family:var(--display);font-weight:600;font-size:20px;color:var(--cream);}
 .form-box .fn{margin-top:4px;font-size:13px;color:var(--navy-300);}
 .form-box label{display:block;margin-top:16px;}
-.form-box label .lb{display:block;margin-bottom:6px;font-size:14px;font-weight:500;color:rgba(251,247,239,.9);}
-.form-box input{width:100%;border:1px solid rgba(251,247,239,.15);background:rgba(22,54,94,.6);border-radius:10px;padding:12px 16px;font-size:14px;color:var(--cream);font-family:var(--sans);}
-.form-box input::placeholder{color:var(--navy-300);}
+.form-box .lb{display:block;margin-bottom:6px;font-size:14px;font-weight:500;color:rgba(251,247,239,.9);}
+.form-box input{width:100%;border:1px solid rgba(251,247,239,.15);background:rgba(22,54,94,.6);border-radius:10px;padding:12px 16px;font-size:14px;color:#fff;-webkit-text-fill-color:#fff;caret-color:#fff;font-family:var(--sans);}
+.form-box input::placeholder{color:rgba(251,247,239,.55);-webkit-text-fill-color:rgba(251,247,239,.55);}
 .form-box input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
+.form-box input:-webkit-autofill,.form-box input:-webkit-autofill:hover,.form-box input:-webkit-autofill:focus{-webkit-text-fill-color:#fff;caret-color:#fff;-webkit-box-shadow:0 0 0 1000px rgba(22,54,94,.85) inset;transition:background-color 9999s ease-in-out 0s;}
 .form-box .submit{margin-top:20px;}
 .form-box .fine{margin-top:12px;text-align:center;font-size:12px;color:var(--navy-300);}
 .toggle-field{margin-top:16px;}
