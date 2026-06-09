@@ -169,6 +169,8 @@ h2.sec.light{color:#fff;}
 .tier .bnote{font-size:13px;font-style:italic;color:var(--sage);margin-top:4px;}
 .tier .ben .txt{display:flex;flex-direction:column;}
 .tier .ben .txt .desc{margin-top:2px;font-size:12px;color:var(--muted);line-height:1.45;}
+.tier .ben a.t{color:var(--navy);font-weight:600;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:2px;}
+.tier .ben a.t:hover{color:var(--gold);}
 .tier .acc{margin-top:10px;border-top:1px solid var(--border);}
 .tier .acc-item{border-bottom:1px solid var(--border);}
 .tier .acc-head{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:none;border:none;cursor:pointer;padding:12px 2px;font-family:var(--sans);}
@@ -207,6 +209,25 @@ h2.sec.light{color:#fff;}
 .story figcaption{margin-top:20px;border-top:1px solid var(--border);padding-top:16px;}
 .story .nm{font-size:14px;font-weight:600;color:var(--navy);}
 .story .dt{font-size:12px;color:var(--muted);}
+
+/* member spotlight (video) */
+.spotlight{display:grid;gap:32px;align-items:center;margin-top:48px;}
+@media(min-width:900px){.spotlight{grid-template-columns:1.15fr 1fr;}}
+.video-embed{position:relative;width:100%;padding-top:56.25%;border-radius:16px;overflow:hidden;box-shadow:0 12px 30px -12px rgba(14,39,69,.45);background:var(--navy);}
+.video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.spotlight-text .role{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--gold);}
+.spotlight-text h3{font-family:var(--display);font-weight:600;font-size:30px;color:var(--navy);margin-top:6px;}
+.spotlight-text .sub{font-size:16px;font-weight:600;color:var(--sage);margin-top:4px;}
+.spotlight-text .body{margin-top:14px;font-size:17px;color:var(--muted);line-height:1.65;}
+
+/* apply for gold */
+.apply-steps{display:grid;gap:24px;margin-top:48px;}
+@media(min-width:768px){.apply-steps{grid-template-columns:1fr 1fr;}}
+.apply-step{display:flex;flex-direction:column;align-items:flex-start;background:var(--white);border:1px solid var(--border);border-radius:16px;padding:28px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+.apply-step .num{width:36px;height:36px;border-radius:50%;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:16px;}
+.apply-step h3{font-family:var(--display);font-weight:600;font-size:20px;color:var(--navy);margin-top:16px;}
+.apply-step p{font-size:14px;color:var(--muted);margin-top:8px;margin-bottom:20px;}
+.apply-step .btn{margin-top:auto;}
 
 /* why (sage band) */
 .band-sage{background:var(--sage-light);}
@@ -371,6 +392,17 @@ svg.ic{width:24px;height:24px;}
   <div class="tiers" id="tiers"></div>
 </section>
 
+<!-- APPLY FOR GOLD -->
+<section id="gold" class="band-sage">
+  <div class="wrap pad">
+    <div class="center"><p class="eyebrow">Gold Membership</p><h2 class="sec">Ready to go Gold?</h2><p class="intro">Two steps to unlock premium benefits.</p></div>
+    <div class="apply-steps">
+      <div class="apply-step"><span class="num">1</span><h3>Fill out the membership form</h3><p>Complete the quick sign-up to start your profile and tell us a bit about your goals.</p><a href="#join" class="btn btn-navy">Go to the form</a></div>
+      <div class="apply-step"><span class="num">2</span><h3>Meet with an EPE navigator</h3><p>Schedule a one-on-one with an EPE navigator to set goals, confirm your status, and map your path to Gold.</p><a href="#" class="btn btn-gold">Schedule an appointment</a></div>
+    </div>
+  </div>
+</section>
+
 <!-- PARTNER NETWORK -->
 <section id="partners" class="band-navy">
   <div class="wrap pad">
@@ -390,7 +422,16 @@ svg.ic{width:24px;height:24px;}
 
 <!-- MEMBER STORIES -->
 <section class="wrap pad">
-  <div class="center"><p class="eyebrow">Member Stories</p><h2 class="sec">Real next steps, taken one at a time.</h2><p class="intro">Illustrative stories for the prototype — the kind of progress EPE is built to support.</p></div>
+  <div class="center"><p class="eyebrow">Member Stories</p><h2 class="sec">Real next steps, taken one at a time.</h2></div>
+  <div class="spotlight">
+    <div class="video-embed"><iframe src="https://www.youtube.com/embed/bRDGR0UN3Ts" title="Peazy's testimonial" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+    <div class="spotlight-text">
+      <p class="role">Member Spotlight</p>
+      <h3>Meet Peazy</h3>
+      <p class="sub">Former gang member turned community leader.</p>
+      <p class="body">Through relationships at Hope 4 Da Hood, support at WSU Tech, and a network of people who believed in him, Peazy found purpose and now invests back into his neighborhood.</p>
+    </div>
+  </div>
   <div class="stories" id="stories"></div>
 </section>
 
@@ -529,6 +570,7 @@ var LEVELS=[
       {cat:"Economic Opportunity",items:[
         {t:"Apply to own a tiny home",d:"Zip code required."},
         {t:"Job consultation with Marquis / EPE"},
+        {t:"Empower Workforce program",url:"https://empowernorthend.org/programs/workforce/",d:"Job training and placement support to launch a stronger career."},
         {t:"Drive & Thrive"},
         {t:"Vehicle repair"},
         {t:"Apply for a vehicle donation"}
@@ -553,7 +595,7 @@ var LEVELS=[
   }
 ];
 var CATS=[["Goal Setting & Progress","target"],["Workforce & Training","briefcase"],["Financial Coaching","wallet"],["Transportation","bus"],["Housing & Homeownership","home"],["Family Stability","family"],["Community Contribution","heart"]];
-var PARTNERS=["WSU Tech","Thrive Lights","Family Promise","Hope CDC","Hope for the Hood","Empower","Create Campaign","Bike Walk Wichita","Spero"];
+var PARTNERS=["WSU Tech","Thrive Lights","Family Promise","Hope CDC","Hope 4 Da Hood","Empower","Create Campaign","Bike Walk Wichita","Spero"];
 var STORIES=[
   ["I set one goal — get my license back. EPE connected me to a ride program and a coach. Six months later I'm driving to a job I actually like.","Marcus T.","Basic Member · North End"],
   ["The card made it feel real. Like someone in Wichita was actually rooting for me to make it.","Dana R.","Gold Member · Planeview"],
@@ -578,7 +620,8 @@ document.getElementById('tiers').innerHTML=LEVELS.map(function(l){
   var acc='<div class="acc">'+(l.groups||[]).map(function(g,gi){
     var items=g.items.map(function(it){
       var d=it.d?'<span class="desc">'+it.d+'</span>':'';
-      return '<li><span class="chk">'+svg('check','ic')+'</span><span class="txt"><span class="t">'+it.t+'</span>'+d+'</span></li>';
+      var t=it.url?'<a class="t" href="'+it.url+'" target="_blank" rel="noopener">'+it.t+' ↗</a>':'<span class="t">'+it.t+'</span>';
+      return '<li><span class="chk">'+svg('check','ic')+'</span><span class="txt">'+t+d+'</span></li>';
     }).join('');
     return '<div class="acc-item open"><button type="button" class="acc-head"><span class="lbl">'+chev+g.cat+'</span><span class="count">'+g.items.length+'</span></button><div class="acc-panel"><ul class="ben">'+items+'</ul></div></div>';
   }).join('')+'</div>';
