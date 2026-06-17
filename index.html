@@ -278,7 +278,6 @@ svg.ic{width:24px;height:24px;}
   <div class="wrap nav-inner">
     <a href="#top" class="brand"><span class="brand-mark">E</span><span class="brand-name">Wichita EPE</span></a>
     <nav class="nav-links">
-      <a href="#what">What is EPE</a>
       <a href="#how">How It Works</a>
       <a href="#thrive">Thrive Lights</a>
       <a href="#levels">Levels</a>
@@ -292,7 +291,6 @@ svg.ic{width:24px;height:24px;}
     </div>
   </div>
   <div class="mobile-menu" id="mobileMenu">
-    <a href="#what">What is EPE</a>
     <a href="#how">How It Works</a>
     <a href="#thrive">Thrive Lights</a>
     <a href="#levels">Levels</a>
@@ -339,18 +337,6 @@ svg.ic{width:24px;height:24px;}
         <span class="card-tag">Membership Card · placeholder</span>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- WHAT IS EPE -->
-<section id="what" class="wrap pad">
-  <div class="split">
-    <div style="max-width:560px;">
-      <p class="eyebrow">What is EPE Membership?</p>
-      <h2 class="sec">A free pathway to begin your empowerment journey.</h2>
-      <p class="intro">EPE Membership is a free pathway for anyone in Wichita to begin an empowerment journey. Members can set goals, track progress, access partner resources, and unlock deeper support as they take action.</p>
-    </div>
-    <div class="points" id="whatPoints"></div>
   </div>
 </section>
 
@@ -516,7 +502,6 @@ var ICONS={
 function svg(name,cls){return '<svg class="'+(cls||'ic')+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">'+(ICONS[name]||'')+'</svg>';}
 
 /* ---------- data ---------- */
-var WHAT=["Set goals that matter to you","Track your progress over time","Access partner resources","Unlock deeper support as you take action"];
 var STEPS=[
   {n:"01",t:"Join",b:"Get your EPE Membership Card and start your journey. It's free and open to anyone in Wichita.",i:"card"},
   {n:"02",t:"Set Goals",b:"Use tools like Thrive Lights to identify what matters most, set goals, and track your progress over time.",i:"target"},
@@ -532,27 +517,30 @@ var LEVELS=[
     groups:[
       {cat:"Financial Health",items:[
         {t:"Bank On ICT",d:"Bank On ICT helps individuals access safe, affordable bank accounts and financial tools to reduce fees, protect income, and build long-term financial stability."},
-        {t:"Free tax return via VITA (United Way)"}
+        {t:"Free tax return via VITA (United Way)"},
+        {t:"Operation Hope",d:"Free financial coaching and credit counseling to help you build credit, savings, and financial confidence."}
+      ]},
+      {cat:"Economic Opportunity",items:[
+        {t:"A small business consultation with Empower or Create Campaign"},
+        {t:"A job consultation with the Wichita Workforce Center"},
+        {t:"Empower Workforce program",url:"https://empowernorthend.org/programs/workforce/",d:"Job training and placement support to launch a stronger career."}
       ]},
       {cat:"Transportation",items:[
         {t:"Free transportation consultation from Empower"},
         {t:"Bike Walk — ride 15 hours and earn a bike"}
       ]},
-      {cat:"Entrepreneurship",items:[
-        {t:"A small business consultation with Empower or Create Campaign"}
+      {cat:"Health & Wellness",items:[
+        {t:"YMCA — income-based financial assistance",d:"Reduced-cost YMCA membership for those who qualify."}
       ]},
       {cat:"Education",items:[
         {t:"A career consultation with WSU Tech",d:"WSU Tech Career Services supports students and alumni with job-search assistance, resume and interview preparation, career coaching, and employer connections."}
       ]},
-      {cat:"Work",items:[
-        {t:"A job consultation with the Wichita Workforce Center"}
-      ]},
       {cat:"People Development & Goal Setting",items:[
-        {t:"Brand 316",d:"Brand 316 is a Christ-centered reentry program equipping formerly incarcerated individuals with mentorship, career training, and life skills to successfully reintegrate and build sustainable futures."},
+        {t:"The Phoenix",d:"The Phoenix is a free sober active community that builds strength, confidence, and connection through fitness and shared activities for people recovering from substance use."},
         {t:"Priority consideration for the Getting Ahead program",d:"Includes a stipend, childcare, motivation, and more."},
         {t:"Free Live the Life relationship classes"}
       ]},
-      {cat:"Community Service",items:[
+      {cat:"Community Connections",items:[
         {t:"Army of Normal Folks volunteer opportunities"}
       ]}
     ]
@@ -564,29 +552,38 @@ var LEVELS=[
     benefitsNote:"Everything in Basic, plus:",
     groups:[
       {cat:"Financial Health",items:[
-        {t:"SMG — matching savings up to $500"},
-        {t:"Grocery delivery — Walmart+"},
-        {t:"Telehealth through Amazon for one year"}
+        {t:"Save Match Grow (SMG) — matching savings up to $500"},
+        {t:"Micro loans"},
+        {t:"Other financial services",d:"Such as a last will & testament and more."}
       ]},
       {cat:"Economic Opportunity",items:[
-        {t:"Apply to own a tiny home",d:"Zip code required."},
-        {t:"Job consultation with Marquis / EPE"},
-        {t:"Empower Workforce program",url:"https://empowernorthend.org/programs/workforce/",d:"Job training and placement support to launch a stronger career."},
-        {t:"Drive & Thrive"},
-        {t:"Vehicle repair"},
-        {t:"Apply for a vehicle donation"}
+        {t:"Job consultation with EPE"},
+        {t:"Access to the Employer Pool"}
+      ]},
+      {cat:"Transportation",items:[
+        {t:"Car ownership support"},
+        {t:"Car repairs"},
+        {t:"Short-term transportation"},
+        {t:"Assistance with driver's license issues"}
       ]},
       {cat:"Housing",items:[
+        {t:"Apply to own a tiny home",d:"Zip code required."},
         {t:"Help with housing",d:"A free consultation by contacting Family Promise."},
         {t:"A homeownership consultation with Meritrust"},
         {t:"Down payment assistance — apply through Sycamore"}
       ]},
       {cat:"Health & Wellness",items:[
         {t:"Mental health through HopeNet"},
-        {t:"Discounted Y membership if you qualify"}
+        {t:"Free YMCA membership for income-qualified members"},
+        {t:"Grocery delivery — Walmart+"},
+        {t:"Telehealth through Amazon for one year"}
       ]},
       {cat:"Education",items:[
-        {t:"Concierge with Learning Lab"}
+        {t:"Concierge with Learning Lab"},
+        {t:"College scholarship access"}
+      ]},
+      {cat:"Community Connections",items:[
+        {t:"Mentor and give back in your neighborhood",d:"Step into peer mentorship and community leadership as you grow."}
       ]},
       {cat:"Misc",items:[
         {t:"Help with getting your ID"},
@@ -605,10 +602,6 @@ var STORIES=[
 
 /* ---------- render ---------- */
 function el(html){var d=document.createElement('div');d.innerHTML=html.trim();return d.firstChild;}
-
-document.getElementById('whatPoints').innerHTML=WHAT.map(function(p){
-  return '<div class="point"><span class="ic">'+svg('check','ic')+'</span><span class="t">'+p+'</span></div>';
-}).join('');
 
 document.getElementById('steps').innerHTML=STEPS.map(function(s){
   return '<div class="step"><span class="num">'+s.n+'</span><span class="ic">'+svg(s.i)+'</span><h3>'+s.t+'</h3><p>'+s.b+'</p></div>';
