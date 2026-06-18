@@ -377,6 +377,154 @@ h2.sec.light{color:#fff;}
 .adm-form input{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 11px;font-size:13px;font-family:var(--sans);background:#fff;color:var(--ink);margin-top:4px;}
 .adm-form input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
 
+/* ===== admin v2 (case-management platform) ===== */
+.adash-body{display:flex;min-height:calc(100vh - 64px);}
+.aside{flex:none;width:212px;background:var(--navy);color:var(--cream);padding:14px 12px 40px;display:none;}
+@media(min-width:900px){.aside{display:block;}}
+.aside .grp{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.13em;color:var(--navy-300);margin:18px 8px 6px;}
+.anav-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:none;background:transparent;color:rgba(251,247,239,.82);font-family:var(--sans);font-size:14px;font-weight:500;padding:9px 10px;border-radius:9px;cursor:pointer;transition:background .15s,color .15s;}
+.anav-item:hover{background:rgba(255,255,255,.08);color:#fff;}
+.anav-item.active{background:var(--gold);color:var(--navy);font-weight:600;}
+.anav-item .ic{width:18px;height:18px;flex:none;}
+.aview{flex:1;min-width:0;padding:22px 18px 70px;overflow-x:hidden;}
+@media(min-width:640px){.aview{padding:28px 32px 80px;}}
+.atabs{display:flex;gap:6px;overflow-x:auto;padding:10px 12px;background:var(--navy-700);}
+@media(min-width:900px){.atabs{display:none;}}
+.atabs button{flex:none;border:none;background:rgba(255,255,255,.10);color:var(--cream);font-size:12px;font-weight:600;padding:7px 13px;border-radius:999px;font-family:var(--sans);cursor:pointer;white-space:nowrap;}
+.atabs button.active{background:var(--gold);color:var(--navy);}
+.role-select{background:rgba(255,255,255,.13);color:var(--cream);border:1px solid rgba(251,247,239,.28);border-radius:999px;padding:7px 12px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;}
+.role-select option{color:var(--ink);}
+.av-head{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;justify-content:space-between;margin-bottom:20px;}
+.av-title{font-family:var(--display);font-weight:600;font-size:26px;color:var(--navy);line-height:1.1;}
+.av-sub{color:var(--muted);font-size:14px;margin-top:3px;max-width:640px;}
+.acols{display:grid;gap:18px;align-items:start;}
+@media(min-width:900px){.acols.two{grid-template-columns:1fr 1fr;}.acols.side{grid-template-columns:1.55fr 1fr;}.acols.three{grid-template-columns:repeat(3,1fr);}}
+.crumb{display:inline-flex;align-items:center;gap:6px;border:none;background:none;color:var(--sage);font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;padding:0;margin-bottom:10px;}
+.crumb:hover{color:var(--navy);}
+
+/* KPI cards */
+.kpi-grid{display:grid;gap:14px;grid-template-columns:repeat(2,1fr);}
+@media(min-width:720px){.kpi-grid{grid-template-columns:repeat(4,1fr);}}
+.kpi{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+.kpi .k{font-size:12px;color:var(--muted);font-weight:600;line-height:1.3;}
+.kpi .v{font-family:var(--display);font-weight:600;font-size:30px;color:var(--navy);margin-top:8px;line-height:1;}
+.trend{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:700;margin-top:9px;padding:2px 8px;border-radius:999px;}
+.trend.up{background:var(--sage-light);color:var(--sage);} .trend.down{background:rgba(200,85,61,.12);color:var(--coral);} .trend.flat{background:var(--cream-200);color:var(--muted);}
+
+/* light segmented control */
+.seg-light{display:inline-flex;background:#fff;border:1px solid var(--border);border-radius:999px;padding:3px;gap:2px;}
+.seg-light button{border:none;background:transparent;color:var(--muted);font-family:var(--sans);font-size:13px;font-weight:600;padding:6px 14px;border-radius:999px;cursor:pointer;}
+.seg-light button.active{background:var(--navy);color:var(--cream);}
+
+/* filters + bulk */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.filters select,.filters input{border:1px solid var(--border);border-radius:9px;padding:8px 10px;font-family:var(--sans);font-size:13px;background:#fff;color:var(--ink);}
+.filters select:focus,.filters input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
+.bulkbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:var(--navy);color:var(--cream);border-radius:12px;padding:10px 14px;margin-bottom:12px;font-size:13px;}
+.bulkbar .ct{font-weight:700;color:var(--gold-light);}
+.bulkbar .sp{flex:1;}
+.mini-btn{border:1px solid var(--border);background:#fff;color:var(--navy);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;font-family:var(--sans);cursor:pointer;}
+.mini-btn:hover{border-color:var(--navy);}
+.mini-btn.ghost{background:rgba(255,255,255,.12);color:var(--cream);border-color:rgba(251,247,239,.3);}
+.mini-btn.danger{background:var(--coral);color:#fff;border:none;}
+
+/* table */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+table.tbl{width:100%;border-collapse:collapse;font-size:13px;min-width:880px;}
+.tbl th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;padding:11px 12px;border-bottom:1px solid var(--border);background:var(--cream);}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--navy);vertical-align:middle;white-space:nowrap;}
+.tbl tbody tr:last-child td{border-bottom:none;}
+.tbl tbody tr:hover{background:var(--cream);}
+.tbl .nm{font-weight:600;cursor:pointer;}
+.tbl .nm:hover{color:var(--gold);text-decoration:underline;}
+.tbl .rowact{border:none;background:var(--cream-200);color:var(--navy);border-radius:7px;padding:5px 9px;font-size:12px;font-weight:600;font-family:var(--sans);cursor:pointer;}
+.tbl .rowact:hover{background:var(--gold-soft);}
+.tbl input[type=checkbox]{width:15px;height:15px;accent-color:var(--gold);cursor:pointer;}
+
+/* badges / pills */
+.tag-b{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap;}
+.lv-gold{background:var(--gold-soft);color:#8a6516;} .lv-basic{background:var(--cream-200);color:var(--muted);}
+.st-active{background:var(--sage-light);color:var(--sage);} .st-risk{background:rgba(200,85,61,.13);color:var(--coral);}
+.st-stalled{background:var(--cream-200);color:var(--muted);} .st-new{background:rgba(31,70,115,.12);color:var(--navy-600);} .st-ready{background:var(--gold-soft);color:#8a6516;}
+.chiprow{display:flex;flex-wrap:wrap;gap:5px;}
+.chip-s{font-size:11px;font-weight:600;background:var(--cream-200);color:var(--muted);border-radius:999px;padding:2px 9px;}
+.score{display:inline-flex;align-items:center;gap:8px;}
+.score .track{width:58px;height:7px;border-radius:999px;background:var(--cream-200);overflow:hidden;}
+.score .track>span{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--sage));}
+.score .pc{font-weight:700;color:var(--navy);font-size:12px;}
+
+/* thrive analytics */
+.dist{display:grid;gap:9px;margin-top:12px;}
+.dist .row{display:grid;grid-template-columns:120px 1fr;gap:10px;align-items:center;font-size:13px;}
+.dist .lab{color:var(--navy);font-weight:500;}
+.barx{display:flex;height:18px;border-radius:6px;overflow:hidden;background:var(--cream-200);}
+.barx>span{display:block;height:100%;}
+.legend-h{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;}
+.legend-h span{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);}
+.legend-h i{width:11px;height:11px;border-radius:3px;display:inline-block;}
+.heat{display:grid;gap:5px;overflow-x:auto;}
+.heat .hrow{display:grid;grid-template-columns:70px repeat(8,minmax(34px,1fr));gap:5px;align-items:center;}
+.heat .hh{font-size:9.5px;color:var(--muted);font-weight:700;text-align:center;line-height:1.1;}
+.heat .zl{font-size:12px;font-weight:700;color:var(--navy);}
+.heat .cell{height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;}
+.spark{width:100%;height:80px;display:block;margin-top:10px;}
+
+/* goals / timeline / notes */
+.goal{border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:10px;padding:12px 14px;margin-top:9px;}
+.goal .gt{font-weight:600;color:var(--navy);font-size:14px;}
+.goal .gm{font-size:12px;color:var(--muted);margin-top:3px;display:flex;flex-wrap:wrap;gap:10px;}
+.timeline{position:relative;margin-top:10px;padding-left:20px;}
+.timeline::before{content:'';position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:var(--cream-200);}
+.tl-ev{position:relative;padding:5px 0 11px;}
+.tl-ev::before{content:'';position:absolute;left:-18px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--gold);border:2px solid #fff;box-shadow:0 0 0 1px var(--border);}
+.tl-ev .ee{font-size:13px;color:var(--navy);font-weight:500;}
+.tl-ev .ed{font-size:11px;color:var(--muted);margin-top:1px;}
+.note-it{background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:13px;color:var(--navy);}
+.note-it .meta{font-size:11px;color:var(--muted);margin-top:4px;}
+.note-form{display:flex;gap:8px;margin-top:10px;}
+.note-form input{flex:1;border:1px solid var(--border);border-radius:9px;padding:9px 11px;font-family:var(--sans);font-size:13px;background:#fff;color:var(--ink);}
+.note-form input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
+.dom-list{display:grid;gap:8px;margin-top:12px;}
+.dom-row{display:grid;grid-template-columns:130px 1fr auto;gap:10px;align-items:center;font-size:13px;}
+.dom-row .mover{font-size:11px;color:var(--muted);}
+
+/* status select (referrals) */
+.statset{border:1px solid var(--border);border-radius:8px;padding:5px 8px;font-size:12px;font-family:var(--sans);background:#fff;color:var(--navy);font-weight:600;cursor:pointer;}
+.statset:focus{outline:none;border-color:var(--gold);}
+.pipeline{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.pl-step{flex:1;min-width:90px;text-align:center;background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 6px;}
+.pl-step .pv{font-family:var(--display);font-weight:600;font-size:22px;color:var(--navy);}
+.pl-step .pk{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;margin-top:2px;}
+.pl-arrow{display:flex;align-items:center;color:var(--navy-300);font-weight:700;}
+
+/* editable CMS fields */
+.cms-field{margin-top:14px;}
+.cms-field label{display:block;font-size:12px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.cms-field input,.cms-field textarea{width:100%;border:1px solid var(--border);border-radius:9px;padding:9px 11px;font-family:var(--sans);font-size:13px;background:#fff;color:var(--ink);resize:vertical;}
+.cms-field textarea{min-height:64px;line-height:1.5;}
+.cms-field input:focus,.cms-field textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
+.save-row{display:flex;align-items:center;gap:12px;margin-top:14px;}
+.saved-flag{font-size:13px;font-weight:600;color:var(--sage);opacity:0;transition:opacity .2s;}
+.saved-flag.show{opacity:1;}
+
+/* notifications + settings rows */
+.set-row{display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:11px;padding:12px 14px;margin-top:9px;background:#fff;}
+.set-row .info{flex:1;min-width:0;}
+.set-row .st{font-weight:600;color:var(--navy);font-size:14px;}
+.set-row .sd{font-size:12px;color:var(--muted);margin-top:2px;}
+.switch{position:relative;width:42px;height:24px;flex:none;border-radius:999px;background:var(--cream-200);border:none;cursor:pointer;transition:background .2s;}
+.switch.on{background:var(--sage);}
+.switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 2px rgba(0,0,0,.25);}
+.switch.on::after{left:21px;}
+.audit{font-size:12px;color:var(--muted);border-left:2px solid var(--cream-200);padding:6px 0 6px 12px;margin-left:4px;}
+.audit b{color:var(--navy);font-weight:600;}
+.perm-grid{overflow-x:auto;}
+.perm-grid table{width:100%;border-collapse:collapse;font-size:12px;min-width:560px;}
+.perm-grid th,.perm-grid td{padding:8px 10px;border-bottom:1px solid var(--border);text-align:center;}
+.perm-grid th:first-child,.perm-grid td:first-child{text-align:left;font-weight:600;color:var(--navy);}
+.perm-grid .yes{color:var(--sage);font-weight:700;} .perm-grid .no{color:var(--navy-300);}
+.empty-note{font-size:13px;color:var(--muted);padding:14px;text-align:center;}
+
 /* footer */
 footer{border-top:1px solid var(--border);background:var(--cream);}
 .foot{display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center;padding:40px 0;}
@@ -699,55 +847,23 @@ svg.ic{width:24px;height:24px;}
 </div>
 
 <!-- ADMIN BACK END (prototype) -->
-<div class="dash" id="admin">
+<div class="dash adash" id="admin">
   <div class="dash-bar">
     <div class="brand"><span class="brand-mark">E</span><span class="brand-name">Wichita EPE · Admin</span></div>
-    <div class="who"><button class="btn btn-outline-light btn-sm" id="adminLogout">Log out</button></div>
-  </div>
-  <div class="dash-wrap">
-    <h1>Admin dashboard</h1>
-    <p class="lead">Rewards engagement and the Bank of Solutions.</p>
-    <div class="stat-grid" id="admStats"></div>
-    <div class="dash-grid">
-      <div>
-        <div class="panel">
-          <span class="section-eyebrow">Bank of Solutions</span>
-          <h2>Benefits</h2>
-          <p class="sub">Supports available now (0★) or unlocked at a point threshold. These feed the member dashboard.</p>
-          <div id="admBenefits"></div>
-          <form class="adm-form" id="benefitForm">
-            <div><label>Benefit name</label><input id="bName" placeholder="e.g. Bus pass" required/></div>
-            <div><label>Category</label><input id="bCat" placeholder="e.g. Transportation"/></div>
-            <div><label>Unlock at (★)</label><input id="bUnlock" type="number" min="0" value="0"/></div>
-            <button class="btn btn-navy btn-sm" type="submit">Add</button>
-          </form>
-        </div>
-        <div class="panel">
-          <span class="section-eyebrow">Levels</span>
-          <h2>Rewards</h2>
-          <p class="sub">Incentives unlocked as members earn stars.</p>
-          <div id="admRewards"></div>
-          <form class="adm-form" id="rewardForm">
-            <div><label>Reward name</label><input id="rName" placeholder="e.g. Nike — 25% off" required/></div>
-            <div><label>Threshold (★)</label><input id="rTh" type="number" min="1" value="25"/></div>
-            <button class="btn btn-navy btn-sm" type="submit">Add</button>
-          </form>
-        </div>
-      </div>
-      <div>
-        <div class="panel">
-          <span class="section-eyebrow">Engagement</span>
-          <h2>Top earners</h2>
-          <div id="admLeaders"></div>
-        </div>
-        <div class="panel">
-          <span class="section-eyebrow">Redemptions</span>
-          <h2>Perks earned</h2>
-          <p class="sub">How many members have unlocked each perk.</p>
-          <div id="admPerks"></div>
-        </div>
-      </div>
+    <div class="who">
+      <select class="role-select" id="admRole" aria-label="Switch role">
+        <option value="super">Super Admin</option>
+        <option value="navigator">Navigator</option>
+        <option value="partner">Partner Org</option>
+        <option value="board">Read-Only / Board</option>
+      </select>
+      <button class="btn btn-outline-light btn-sm" id="adminLogout">Log out</button>
     </div>
+  </div>
+  <div class="atabs" id="admTabs"></div>
+  <div class="adash-body">
+    <aside class="aside"><nav id="admNav"></nav></aside>
+    <main class="aview" id="admView"></main>
   </div>
 </div>
 
@@ -1091,54 +1207,690 @@ function rewardList(){
   STORE.benefits.forEach(function(b){if(b.unlockAt>0)a.push({t:b.name,th:b.unlockAt});});
   return a.sort(function(x,y){return x.th-y.th;});
 }
-var MEMBERS=[
-  {name:'Peazy',stars:140},
-  {name:'Dana R.',stars:120},
-  {name:'Lena K.',stars:95},
-  {name:'Marcus T.',stars:85},
-  {name:'Olivia M.',stars:60},
-  {name:'Jamal W.',stars:45},
-  {name:'Sofia G.',stars:30},
-  {name:'Andre P.',stars:18}
-];
-function renderAdmin(){
-  var total=MEMBERS.reduce(function(a,m){return a+m.stars;},0);
-  var avg=Math.round(total/MEMBERS.length);
-  var redeemed=0; STORE.rewards.forEach(function(r){MEMBERS.forEach(function(m){if(m.stars>=r.th)redeemed++;});});
-  var stats=[['Stars earned',total],['Active members',MEMBERS.length],['Avg stars / member',avg],['Perks redeemed',redeemed]];
-  document.getElementById('admStats').innerHTML=stats.map(function(s){return '<div class="stat"><div class="v">'+s[1]+'</div><div class="k">'+s[0]+'</div></div>';}).join('');
-  var leaders=MEMBERS.slice().sort(function(a,b){return b.stars-a.stars;}).slice(0,6);
-  document.getElementById('admLeaders').innerHTML=leaders.map(function(m,i){return '<div class="lead-row"><span class="rank">'+(i+1)+'</span><span class="nm">'+m.name+'</span><span class="s">★ '+m.stars+'</span></div>';}).join('');
-  var perks=rewardList().map(function(rw){var ct=0;MEMBERS.forEach(function(m){if(m.stars>=rw.th)ct++;});return {t:rw.t,ct:ct};});
-  var maxct=Math.max(1,Math.max.apply(null,perks.map(function(p){return p.ct;})));
-  document.getElementById('admPerks').innerHTML=perks.map(function(p){return '<div class="bar-row"><span class="nm">'+p.t.split(' — ')[0]+'</span><span class="track"><span style="width:'+Math.round(p.ct/maxct*100)+'%"></span></span><span class="ct">'+p.ct+'</span></div>';}).join('');
-  document.getElementById('admBenefits').innerHTML=STORE.benefits.map(function(b){
-    return '<div class="adm-row"><div class="info"><div class="nm">'+b.name+'</div><div class="meta">'+(b.cat||'—')+'</div></div><span class="pill">'+(b.unlockAt>0?('Unlocks at '+b.unlockAt+'★'):'Available now')+'</span><button class="del" data-del-b="'+b.id+'">Delete</button></div>';
-  }).join('')||'<p class="sub">No benefits yet.</p>';
-  document.getElementById('admRewards').innerHTML=STORE.rewards.map(function(r){
-    return '<div class="adm-row"><div class="info"><div class="nm">'+r.name+'</div><div class="meta">Unlocks at '+r.th+'★</div></div><button class="del" data-del-r="'+r.id+'">Delete</button></div>';
-  }).join('')||'<p class="sub">No rewards yet.</p>';
+/* ===================================================================
+   EPE Admin — case-management & ecosystem-orchestration platform
+   Prototype: rich mock data, role-based views, localStorage persistence.
+   =================================================================== */
+
+/* ---- reference data ---- */
+var ADOM=['Housing','Income & Work','Health','Transportation','Family','Money & Savings','Education','Community'];
+var ADOM_SHORT=['Housing','Income','Health','Transport','Family','Money','Educ.','Community'];
+var ANAV=['Maria L.','James O.','Tanya B.'];
+var STATE_COL=['#c8553d','#d8a23a','#4f8a63']; /* red / gold / sage */
+var STATE_TXT=['Needs support','Working on it','Thriving'];
+
+/* roles -> which modules they can open + label */
+var AROLES={
+  super:{label:'Super Admin',views:['home','members','queue','thrive','referrals','solutions','stars','impact','content','notifications','settings']},
+  navigator:{label:'Navigator',views:['home','members','queue','referrals','stars']},
+  partner:{label:'Partner Org',views:['referrals']},
+  board:{label:'Read-Only / Board',views:['home','impact','thrive']}
+};
+var NAVMETA={
+  home:['Dashboard','grid'], members:['Members CRM','people'], queue:['Navigator Queue','flag'],
+  thrive:['Thrive Analytics','chart'], referrals:['Partner Referrals','link'], solutions:['Bank of Solutions','bank'],
+  stars:['Stars & Rewards','star'], impact:['Impact (Board)','trophy'], content:['Site Content','edit'],
+  notifications:['Notifications','bell'], settings:['Settings','gear']
+};
+var AICONS={
+  grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+  people:'<circle cx="9" cy="8" r="3"/><path d="M3 20v-1a5 5 0 0 1 9-3"/><circle cx="17" cy="10" r="2.4"/><path d="M14.5 20v-1a3.5 3.5 0 0 1 6-2.4"/>',
+  flag:'<path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/>',
+  chart:'<path d="M4 20V4"/><path d="M4 20h16"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/>',
+  link:'<path d="M9 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M15 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/>',
+  bank:'<path d="M3 10l9-6 9 6"/><path d="M5 10v8M19 10v8M9 10v8M15 10v8"/><path d="M3 20h18"/>',
+  star:'<path d="M12 3l2.6 5.6L21 9.4l-4.5 4.3L17.6 20 12 16.8 6.4 20l1.1-6.3L3 9.4l6.4-.8z"/>',
+  trophy:'<path d="M8 4h8v4a4 4 0 0 1-8 0z"/><path d="M8 6H5v1a3 3 0 0 0 3 3M16 6h3v1a3 3 0 0 1-3 3"/><path d="M10 13h4v4h-4z"/><path d="M8 20h8"/>',
+  edit:'<path d="M4 20h4l10-10-4-4L4 16z"/><path d="M14 6l4 4"/>',
+  bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+  gear:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>'
+};
+function aicon(n){return '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+(AICONS[n]||'')+'</svg>';}
+
+/* ---- member dataset (mock) ----
+   tl = 8 thrive-light states (0/1/2) in ADOM order. */
+function mkMember(o){
+  o.tlArr=o.tl.split('').map(Number);
+  o.score=Math.round(o.tlArr.reduce(function(a,b){return a+b;},0)/(o.tlArr.length*2)*100);
+  return o;
 }
-document.getElementById('benefitForm').addEventListener('submit',function(e){
-  e.preventDefault();
-  var n=document.getElementById('bName').value.trim(); if(!n)return;
-  STORE.benefits.push({id:'b'+Date.now(),name:n,cat:document.getElementById('bCat').value.trim(),unlockAt:Math.max(0,parseInt(document.getElementById('bUnlock').value,10)||0)});
-  saveStore(); this.reset(); document.getElementById('bUnlock').value='0'; renderAdmin();
+var MEMBERS=[
+  {id:'m1',name:'Peazy J.',email:'peazy@example.com',phone:'(316) 555-0140',level:'Gold',zip:'67214',intent:'Both',nav:0,joined:'Aug 2025',tl:'21222212',last:1,status:'Active',tags:['Mentor','Employed'],stars:{e:140,p:0,a:140}},
+  {id:'m2',name:'Dana R.',email:'dana.r@example.com',phone:'(316) 555-0118',level:'Gold',zip:'67203',intent:'Need',nav:1,joined:'Sep 2025',tl:'12212112',last:3,status:'Active',tags:['Housing'],stars:{e:120,p:10,a:110}},
+  {id:'m3',name:'Lena K.',email:'lena.k@example.com',phone:'(316) 555-0192',level:'Gold',zip:'67204',intent:'Need',nav:2,joined:'Oct 2025',tl:'11221102',last:6,status:'Gold-ready',tags:['School'],stars:{e:95,p:15,a:80}},
+  {id:'m4',name:'Marcus T.',email:'marcus.t@example.com',phone:'(316) 555-0177',level:'Basic',zip:'67214',intent:'Need',nav:0,joined:'Nov 2025',tl:'10110201',last:9,status:'Active',tags:['Transport'],stars:{e:85,p:5,a:80}},
+  {id:'m5',name:'Olivia M.',email:'olivia.m@example.com',phone:'(316) 555-0133',level:'Gold',zip:'67218',intent:'Give',nav:1,joined:'Sep 2025',tl:'22122212',last:2,status:'Active',tags:['Mentor'],stars:{e:60,p:0,a:60}},
+  {id:'m6',name:'Jamal W.',email:'jamal.w@example.com',phone:'(316) 555-0166',level:'Basic',zip:'67211',intent:'Need',nav:2,joined:'Dec 2025',tl:'01101100',last:18,status:'At risk',tags:['Housing','Health'],stars:{e:45,p:10,a:35}},
+  {id:'m7',name:'Sofia G.',email:'sofia.g@example.com',phone:'(316) 555-0155',level:'Basic',zip:'67217',intent:'Both',nav:0,joined:'Jan 2026',tl:'10010101',last:5,status:'Active',tags:['Childcare'],stars:{e:30,p:5,a:25}},
+  {id:'m8',name:'Andre P.',email:'andre.p@example.com',phone:'(316) 555-0144',level:'Basic',zip:'67202',intent:'Need',nav:1,joined:'Feb 2026',tl:'00100100',last:34,status:'Stalled',tags:['Justice-involved'],stars:{e:18,p:0,a:18}},
+  {id:'m9',name:'Tara B.',email:'tara.b@example.com',phone:'(316) 555-0121',level:'Basic',zip:'67220',intent:'Need',nav:2,joined:'Feb 2026',tl:'11011010',last:4,status:'Active',tags:['Single parent'],stars:{e:40,p:10,a:30}},
+  {id:'m10',name:'Devon H.',email:'devon.h@example.com',phone:'(316) 555-0188',level:'Gold',zip:'67214',intent:'Give',nav:0,joined:'Jul 2025',tl:'22212222',last:7,status:'Active',tags:['Mentor','Employed'],stars:{e:155,p:0,a:155}},
+  {id:'m11',name:'Nia C.',email:'nia.c@example.com',phone:'(316) 555-0109',level:'Basic',zip:'67204',intent:'Need',nav:1,joined:'Mar 2026',tl:'01001001',last:41,status:'Stalled',tags:['Health'],stars:{e:12,p:0,a:12}},
+  {id:'m12',name:'Carlos M.',email:'carlos.m@example.com',phone:'(316) 555-0102',level:'Basic',zip:'67211',intent:'Both',nav:2,joined:'Mar 2026',tl:'10100110',last:8,status:'New',tags:['Workforce'],stars:{e:22,p:8,a:14}},
+  {id:'m13',name:'Brianna S.',email:'brianna.s@example.com',phone:'(316) 555-0175',level:'Gold',zip:'67218',intent:'Need',nav:0,joined:'Oct 2025',tl:'12211212',last:6,status:'Gold-ready',tags:['Savings'],stars:{e:78,p:12,a:66}},
+  {id:'m14',name:'Hassan A.',email:'hassan.a@example.com',phone:'(316) 555-0163',level:'Basic',zip:'67217',intent:'Need',nav:1,joined:'Jan 2026',tl:'01110100',last:14,status:'At risk',tags:['Transport'],stars:{e:35,p:15,a:20}},
+  {id:'m15',name:'Gloria V.',email:'gloria.v@example.com',phone:'(316) 555-0150',level:'Gold',zip:'67203',intent:'Give',nav:2,joined:'Aug 2025',tl:'22221221',last:3,status:'Active',tags:['Mentor'],stars:{e:110,p:0,a:110}},
+  {id:'m16',name:'Tyrese D.',email:'tyrese.d@example.com',phone:'(316) 555-0190',level:'Basic',zip:'67202',intent:'Need',nav:0,joined:'Feb 2026',tl:'00010010',last:27,status:'Stalled',tags:['Justice-involved'],stars:{e:8,p:0,a:8}},
+  {id:'m17',name:'Mei L.',email:'mei.l@example.com',phone:'(316) 555-0112',level:'Basic',zip:'67220',intent:'Both',nav:1,joined:'Mar 2026',tl:'11101011',last:2,status:'Active',tags:['Education'],stars:{e:50,p:10,a:40}},
+  {id:'m18',name:'Robert N.',email:'robert.n@example.com',phone:'(316) 555-0128',level:'Basic',zip:'67214',intent:'Need',nav:2,joined:'Apr 2026',tl:'10001000',last:11,status:'New',tags:['Housing'],stars:{e:15,p:5,a:10}}
+].map(mkMember);
+
+/* ---- partners + referrals (mock, persisted) ---- */
+var REF_KEY='epe_admin_referrals_v1';
+var REF_STATUSES=['Created','Contacted','Scheduled','Engaged','Completed','Closed'];
+var PARTNERS=[
+  {id:'p1',name:'WSU Tech',cat:'Workforce',capacity:'High',contact:'careers@wsutech.edu',url:'wsutech.edu',active:true},
+  {id:'p2',name:'Family Promise',cat:'Housing',capacity:'Medium',contact:'intake@familypromise.org',url:'familypromisewichita.org',active:true},
+  {id:'p3',name:'Empower',cat:'Workforce',capacity:'High',contact:'hello@empowernorthend.org',url:'empowernorthend.org',active:true},
+  {id:'p4',name:'Bank On ICT',cat:'Financial',capacity:'Medium',contact:'info@bankonict.org',url:'bankonict.org',active:true},
+  {id:'p5',name:'Bike Walk Wichita',cat:'Transportation',capacity:'Low',contact:'rides@bikewalkict.org',url:'bikewalkwichita.org',active:true},
+  {id:'p6',name:'HopeNet',cat:'Health',capacity:'Medium',contact:'care@hopenetwichita.org',url:'hopenet.org',active:true},
+  {id:'p7',name:'Meritrust',cat:'Housing',capacity:'Medium',contact:'home@meritrust.com',url:'meritrust.com',active:false},
+  {id:'p8',name:'The Phoenix',cat:'Community',capacity:'High',contact:'wichita@thephoenix.org',url:'thephoenix.org',active:true}
+];
+var REFERRAL_DEFAULTS=[
+  {id:'rf1',mid:'m2',pid:'p2',reason:'Eviction risk — needs rapid rehousing',date:'2026-05-28',status:'Engaged'},
+  {id:'rf2',mid:'m4',pid:'p5',reason:'Needs reliable transport to job site',date:'2026-06-02',status:'Completed'},
+  {id:'rf3',mid:'m6',pid:'p6',reason:'Mental health support referral',date:'2026-06-05',status:'Contacted'},
+  {id:'rf4',mid:'m7',pid:'p1',reason:'CNA training pathway interest',date:'2026-06-08',status:'Scheduled'},
+  {id:'rf5',mid:'m12',pid:'p3',reason:'Workforce intake + resume help',date:'2026-06-10',status:'Created'},
+  {id:'rf6',mid:'m3',pid:'p1',reason:'Scholarship + enrollment support',date:'2026-05-20',status:'Completed'},
+  {id:'rf7',mid:'m13',pid:'p4',reason:'Open safe banking account',date:'2026-06-12',status:'Contacted'},
+  {id:'rf8',mid:'m14',pid:'p5',reason:'Bus pass while car is repaired',date:'2026-06-14',status:'Created'},
+  {id:'rf9',mid:'m9',pid:'p6',reason:'Childcare + wellness check',date:'2026-06-01',status:'Closed'},
+  {id:'rf10',mid:'m11',pid:'p6',reason:'Re-engagement outreach',date:'2026-05-15',status:'Closed'}
+];
+var REFERRALS;
+function loadRefs(){try{var s=JSON.parse(localStorage.getItem(REF_KEY));if(s&&s.length)return s;}catch(e){}return JSON.parse(JSON.stringify(REFERRAL_DEFAULTS));}
+function saveRefs(){try{localStorage.setItem(REF_KEY,JSON.stringify(REFERRALS));}catch(e){}}
+REFERRALS=loadRefs();
+
+/* ---- site content CMS (persisted) ---- */
+var CMS_KEY='epe_admin_cms_v1';
+var CMS_DEFAULTS={
+  heroTitle:'Wichita EPE Membership',
+  heroSub:'A simple way for people, partners, and neighbors to take the next step toward stability, progress, and contribution.',
+  whyLead:'Wichita has no shortage of people working hard to change their lives. The challenge is making the next step clear, visible, and connected.',
+  ctaButton:'Become a Member',
+  faq:'Q: Is membership free? A: Yes — EPE membership is free and open to anyone in Wichita.\nQ: How do I reach Gold? A: Complete your profile, take Thrive Lights, set goals, and meet with a navigator.',
+  partners:PARTNERS.map(function(p){return p.name;}).join(', ')
+};
+var CMS;
+function loadCms(){try{var s=JSON.parse(localStorage.getItem(CMS_KEY));if(s)return Object.assign({},CMS_DEFAULTS,s);}catch(e){}return JSON.parse(JSON.stringify(CMS_DEFAULTS));}
+function saveCms(){try{localStorage.setItem(CMS_KEY,JSON.stringify(CMS));}catch(e){}}
+CMS=loadCms();
+
+/* notification triggers (persisted) */
+var NOTIF_KEY='epe_admin_notif_v1';
+var NOTIF_DEFAULTS=[
+  {id:'n1',name:'New signup',desc:'Welcome message + first steps when a member joins.',email:true,sms:false},
+  {id:'n2',name:'Navigator assignment',desc:'Notify member when a navigator is assigned.',email:true,sms:false},
+  {id:'n3',name:'Referral created',desc:'Alert partner + member when a referral is sent.',email:true,sms:true},
+  {id:'n4',name:'Gold eligible',desc:'Tell a member they qualify to apply for Gold.',email:true,sms:false},
+  {id:'n5',name:'Reward unlocked',desc:'Celebrate when stars unlock a new reward.',email:true,sms:true},
+  {id:'n6',name:'Inactive member',desc:'Re-engagement nudge after 30 days of no activity.',email:true,sms:false}
+];
+var NOTIFS;
+function loadNotif(){try{var s=JSON.parse(localStorage.getItem(NOTIF_KEY));if(s&&s.length)return s;}catch(e){}return JSON.parse(JSON.stringify(NOTIF_DEFAULTS));}
+function saveNotif(){try{localStorage.setItem(NOTIF_KEY,JSON.stringify(NOTIFS));}catch(e){}}
+NOTIFS=loadNotif();
+
+var AUDIT=[
+  {who:'Maria L.',what:'verified milestone for Dana R.',when:'2h ago'},
+  {who:'System',what:'flagged Tyrese D. as stalled (27 days inactive)',when:'5h ago'},
+  {who:'James O.',what:'created referral to Empower for Carlos M.',when:'yesterday'},
+  {who:'Super Admin',what:'added reward “Premium partner access”',when:'2 days ago'},
+  {who:'Tanya B.',what:'promoted Lena K. to Gold-ready',when:'3 days ago'}
+];
+
+/* ---- admin runtime state ---- */
+var ADMIN={role:'super',view:'home',range:'30d',openId:null,sel:{},flt:{}};
+
+/* ---- helpers ---- */
+function fmtIntent(i){return i;}
+function statusClass(s){return {'Active':'st-active','At risk':'st-risk','Stalled':'st-stalled','New':'st-new','Gold-ready':'st-ready'}[s]||'st-new';}
+function navName(i){return ANAV[i]||'Unassigned';}
+function memberById(id){return MEMBERS.filter(function(m){return m.id===id;})[0];}
+function partnerById(id){return PARTNERS.filter(function(p){return p.id===id;})[0];}
+function scoreCell(pc){return '<span class="score"><span class="track"><span style="width:'+pc+'%"></span></span><span class="pc">'+pc+'%</span></span>';}
+function trend(pc,dir){var c=dir>0?'up':dir<0?'down':'flat';var a=dir>0?'▲':dir<0?'▼':'■';return '<span class="trend '+c+'">'+a+' '+pc+'</span>';}
+function totalStars(k){return MEMBERS.reduce(function(a,m){return a+m.stars[k];},0);}
+function rangeMul(){return ADMIN.range==='7d'?0.32:1;}
+function nextActionFor(m){
+  if(m.status==='Stalled')return 'Re-engagement outreach';
+  if(m.status==='At risk')return 'Schedule check-in';
+  if(m.status==='Gold-ready')return 'Review Gold application';
+  if(m.stars.p>0)return 'Verify '+m.stars.p+'★ pending';
+  if(m.status==='New')return 'Complete onboarding';
+  return 'Set next goal';
+}
+
+/* derive goals from thrive lights */
+function goalsFor(m){
+  var g=[],due=['Jun 30','Jul 15','Aug 1','Aug 20'];
+  m.tlArr.forEach(function(s,i){
+    if(s<2 && g.length<3){
+      g.push({title:'Move '+ADOM[i]+' '+(s===0?'from red to yellow':'from yellow to green'),
+        status:s===0?'Not started':'In progress',due:due[g.length],owner:navName(m.nav),verify:i%2===0});
+    }
+  });
+  if(!g.length)g.push({title:'Maintain progress + mentor a new member',status:'In progress',due:'Ongoing',owner:navName(m.nav),verify:false});
+  return g;
+}
+/* derive an activity timeline */
+function activityFor(m){
+  var t=[{ee:'Joined EPE',ed:m.joined+' · membership card issued',k:'join'},
+         {ee:'Completed profile in Everest',ed:m.joined+' · intake done',k:'profile'}];
+  var refs=REFERRALS.filter(function(r){return r.mid===m.id;});
+  refs.forEach(function(r){var p=partnerById(r.pid);t.push({ee:'Referral created → '+(p?p.name:'partner'),ed:r.date+' · '+r.reason,k:'ref'});});
+  if(m.stars.a>0)t.push({ee:'Stars verified by navigator',ed:'+'+m.stars.a+'★ approved · '+navName(m.nav),k:'star'});
+  if(m.stars.p>0)t.push({ee:m.stars.p+'★ submitted for verification',ed:'Awaiting navigator check-in',k:'pend'});
+  t.push({ee:'Navigator meeting',ed:'Last activity '+m.last+' day'+(m.last===1?'':'s')+' ago',k:'meet'});
+  return t;
+}
+function notesFor(m){
+  var base={
+    m6:[{a:'Tanya B.',d:'Jun 4',t:'Family staying with relatives — housing referral urgent. Following up Friday.'}],
+    m8:[{a:'James O.',d:'May 30',t:'Hard to reach by phone. Trying text outreach + partner location drop-in.'}],
+    m3:[{a:'Tanya B.',d:'Jun 10',t:'All Gold requirements met except final navigator sign-off. Strong candidate.'}]
+  };
+  return (m._notes||base[m.id]||[]);
+}
+
+/* ===== view router ===== */
+function renderAdminNav(){
+  var views=AROLES[ADMIN.role].views;
+  var html=views.map(function(v){
+    var meta=NAVMETA[v];
+    return '<button class="anav-item'+(v===ADMIN.view?' active':'')+'" data-view="'+v+'">'+aicon(meta[1])+'<span>'+meta[0]+'</span></button>';
+  }).join('');
+  document.getElementById('admNav').innerHTML=html;
+  document.getElementById('admTabs').innerHTML=views.map(function(v){
+    return '<button class="'+(v===ADMIN.view?'active':'')+'" data-view="'+v+'">'+NAVMETA[v][0]+'</button>';
+  }).join('');
+}
+function setView(v){
+  if(AROLES[ADMIN.role].views.indexOf(v)<0)v=AROLES[ADMIN.role].views[0];
+  ADMIN.view=v; ADMIN.openId=null;
+  renderAdminNav(); renderView();
+  document.getElementById('admView').scrollTop=0;
+}
+function renderView(){
+  var v=ADMIN.view,h='';
+  if(ADMIN.openId)h=viewProfile(memberById(ADMIN.openId));
+  else if(v==='home')h=viewHome();
+  else if(v==='members')h=viewMembers();
+  else if(v==='queue')h=viewQueue();
+  else if(v==='thrive')h=viewThrive();
+  else if(v==='referrals')h=viewReferrals();
+  else if(v==='solutions')h=viewSolutions();
+  else if(v==='stars')h=viewStars();
+  else if(v==='impact')h=viewImpact();
+  else if(v==='content')h=viewContent();
+  else if(v==='notifications')h=viewNotifs();
+  else if(v==='settings')h=viewSettings();
+  document.getElementById('admView').innerHTML=h;
+}
+function head(title,sub,right){
+  return '<div class="av-head"><div><div class="av-title">'+title+'</div>'+(sub?'<div class="av-sub">'+sub+'</div>':'')+'</div>'+(right?'<div>'+right+'</div>':'')+'</div>';
+}
+
+/* ===== 1. Dashboard Home (KPIs) ===== */
+function viewHome(){
+  var m=rangeMul();
+  var active=MEMBERS.filter(function(x){return x.last<=30;}).length;
+  var gold=MEMBERS.filter(function(x){return x.level==='Gold';}).length;
+  var follow=MEMBERS.filter(function(x){return x.status==='At risk'||x.status==='Stalled';}).length;
+  var openRef=REFERRALS.filter(function(r){return ['Created','Contacted','Scheduled','Engaged'].indexOf(r.status)>=0;}).length;
+  var tlDone=Math.round(MEMBERS.filter(function(x){return x.score>=70;}).length/MEMBERS.length*100);
+  var avgProg=Math.round(MEMBERS.reduce(function(a,x){return a+x.score;},0)/MEMBERS.length);
+  var starsMo=Math.round((totalStars('a')*0.18)*m);
+  var kpis=[
+    ['Total members',MEMBERS.length,trend('6.4%',1)],
+    ['Active ('+ADMIN.range+')',Math.round(active*(ADMIN.range==='7d'?0.7:1)),trend('3.1%',1)],
+    ['Gold members',gold,trend('2',1)],
+    ['Pending follow-ups',follow,trend('1',-1)],
+    ['Open referrals',openRef,trend('4',1)],
+    ['Thrive completed',tlDone+'%',trend('5%',1)],
+    ['Avg member progress',avgProg+'%',trend('1.8%',1)],
+    ['Stars awarded',starsMo,trend(ADMIN.range==='7d'?'12%':'9%',1)]
+  ];
+  var toggle='<div class="seg-light" id="rangeSeg"><button data-r="7d"'+(ADMIN.range==='7d'?' class="active"':'')+'>7d</button><button data-r="30d"'+(ADMIN.range==='30d'?' class="active"':'')+'>30d</button></div>';
+  var h=head('Dashboard','Operating snapshot of member progress, navigator load, and ecosystem outcomes.',toggle);
+  h+='<div class="kpi-grid">'+kpis.map(function(k){return '<div class="kpi"><div class="k">'+k[0]+'</div><div class="v">'+k[1]+'</div>'+k[2]+'</div>';}).join('')+'</div>';
+  /* attention + recent activity */
+  var att=MEMBERS.filter(function(x){return x.status==='At risk'||x.status==='Stalled'||x.status==='Gold-ready';}).slice(0,6);
+  h+='<div class="acols side" style="margin-top:18px;">';
+  h+='<div class="panel"><span class="section-eyebrow">Needs attention</span><h2>Members to act on</h2><p class="sub">Surfaced from status, inactivity, and Gold-readiness.</p>'+
+     att.map(function(x){return '<div class="adm-row"><div class="info"><div class="nm" data-open="'+x.id+'" style="cursor:pointer">'+x.name+'</div><div class="meta">'+nextActionFor(x)+' · '+navName(x.nav)+'</div></div><span class="tag-b '+statusClass(x.status)+'">'+x.status+'</span></div>';}).join('')+'</div>';
+  h+='<div class="panel"><span class="section-eyebrow">Live feed</span><h2>Recent activity</h2><div class="timeline" style="margin-top:6px">'+
+     AUDIT.map(function(a){return '<div class="tl-ev"><div class="ee"><b>'+a.who+'</b> '+a.what+'</div><div class="ed">'+a.when+'</div></div>';}).join('')+'</div></div>';
+  h+='</div>';
+  return h;
+}
+
+/* ===== 2. Members CRM ===== */
+function viewMembers(){
+  var f=ADMIN.flt;
+  var rows=MEMBERS.filter(function(m){
+    if(f.zip&&m.zip!==f.zip)return false;
+    if(f.level&&m.level!==f.level)return false;
+    if(f.status&&m.status!==f.status)return false;
+    if(f.nav!=null&&f.nav!==''&&String(m.nav)!==String(f.nav))return false;
+    if(f.q){var q=f.q.toLowerCase();if(m.name.toLowerCase().indexOf(q)<0&&m.email.toLowerCase().indexOf(q)<0)return false;}
+    return true;
+  });
+  var opt=function(arr,sel){return arr.map(function(o){return '<option value="'+o[0]+'"'+(String(sel)===String(o[0])?' selected':'')+'>'+o[1]+'</option>';}).join('');};
+  var zips=[].concat([['','All ZIPs']],MEMBERS.map(function(m){return m.zip;}).filter(function(v,i,a){return a.indexOf(v)===i;}).sort().map(function(z){return [z,z];}));
+  var filters='<div class="filters">'+
+    '<input id="fQ" placeholder="Search name or email" value="'+(f.q||'')+'"/>'+
+    '<select id="fZip">'+opt(zips,f.zip||'')+'</select>'+
+    '<select id="fLevel">'+opt([['','All levels'],['Basic','Basic'],['Gold','Gold']],f.level||'')+'</select>'+
+    '<select id="fStatus">'+opt([['','All statuses'],['Active','Active'],['New','New'],['At risk','At risk'],['Stalled','Stalled'],['Gold-ready','Gold-ready']],f.status||'')+'</select>'+
+    '<select id="fNav">'+opt([['','All navigators'],['0',ANAV[0]],['1',ANAV[1]],['2',ANAV[2]]],f.nav==null?'':f.nav)+'</select>'+
+    '<button class="mini-btn" id="fClear">Clear</button></div>';
+  var selCount=Object.keys(ADMIN.sel).filter(function(k){return ADMIN.sel[k];}).length;
+  var bulk=selCount?'<div class="bulkbar"><span class="ct">'+selCount+' selected</span><span class="sp"></span>'+
+    '<button class="mini-btn ghost" data-bulk="assign">Assign navigator</button>'+
+    '<button class="mini-btn ghost" data-bulk="tag">Tag</button>'+
+    '<button class="mini-btn ghost" data-bulk="outreach">Outreach</button>'+
+    '<button class="mini-btn ghost" data-bulk="export">Export</button></div>':'';
+  var body=rows.map(function(m){
+    return '<tr>'+
+      '<td><input type="checkbox" data-sel="'+m.id+'"'+(ADMIN.sel[m.id]?' checked':'')+'/></td>'+
+      '<td><span class="nm" data-open="'+m.id+'">'+m.name+'</span></td>'+
+      '<td><span class="tag-b '+(m.level==='Gold'?'lv-gold':'lv-basic')+'">'+m.level+'</span></td>'+
+      '<td>'+m.zip+'</td>'+
+      '<td>'+m.intent+'</td>'+
+      '<td>'+navName(m.nav)+'</td>'+
+      '<td>'+scoreCell(m.score)+'</td>'+
+      '<td><span class="tag-b '+statusClass(m.status)+'">'+m.status+'</span></td>'+
+      '<td>'+m.last+'d ago</td>'+
+      '<td>'+nextActionFor(m)+'</td>'+
+      '<td><button class="rowact" data-open="'+m.id+'">Open</button></td>'+
+    '</tr>';
+  }).join('')||'<tr><td colspan="11"><div class="empty-note">No members match these filters.</div></td></tr>';
+  var h=head('Members CRM',MEMBERS.length+' members · '+rows.length+' shown','<button class="mini-btn" data-bulk="export">Export all (CSV)</button>');
+  h+=filters+bulk;
+  h+='<div class="tbl-wrap"><table class="tbl"><thead><tr>'+
+     '<th></th><th>Name</th><th>Level</th><th>ZIP</th><th>Need/Give</th><th>Navigator</th><th>Thrive</th><th>Status</th><th>Last activity</th><th>Next action</th><th></th>'+
+     '</tr></thead><tbody>'+body+'</tbody></table></div>';
+  return h;
+}
+
+/* ===== 3. Member Profile ===== */
+function viewProfile(m){
+  if(!m)return viewMembers();
+  var h='<button class="crumb" id="backCrumb">&larr; Back to members</button>';
+  h+=head(m.name,m.level+' Member · '+m.intent+' · joined '+m.joined,
+    '<button class="mini-btn" data-promote="'+m.id+'">Promote to Gold</button> <button class="mini-btn" data-refnew="'+m.id+'">Send referral</button>');
+  /* overview + thrive */
+  h+='<div class="acols side">';
+  h+='<div>';
+  h+='<div class="panel"><span class="section-eyebrow">Thrive Lights</span><h2>Life domains</h2><p class="sub">Current state across all 8 domains. Click a domain to advance Red → Yellow → Green.</p><div class="dom-list">'+
+     m.tlArr.map(function(s,i){return '<div class="dom-row"><span><span class="dotm bg-'+SCLASS[s]+'"></span>'+ADOM[i]+'</span>'+
+       '<button class="rowact" data-tl="'+m.id+':'+i+'" style="justify-self:start">'+STATE_TXT[s]+'</button>'+
+       '<span class="mover st-'+SCLASS[s]+'" style="font-weight:700">'+['red','yellow','green'][s]+'</span></div>';}).join('')+
+     '</div><div class="pm" style="margin-top:14px"><div class="row" style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted)"><span>Overall Thrive score</span><span>'+m.score+'%</span></div><div class="pm-bar"><span style="width:'+m.score+'%"></span></div></div></div>';
+  h+='<div class="panel"><span class="section-eyebrow">Goals</span><h2>Active goals</h2>'+
+     goalsFor(m).map(function(g){return '<div class="goal"><div class="gt">'+g.title+'</div><div class="gm"><span>Status: <b>'+g.status+'</b></span><span>Due '+g.due+'</span><span>Owner: '+g.owner+'</span>'+(g.verify?'<span style="color:var(--coral)">Verification required</span>':'')+'</span></div></div>';}).join('')+'</div>';
+  h+='<div class="panel"><span class="section-eyebrow">History</span><h2>Activity timeline</h2><div class="timeline">'+
+     activityFor(m).map(function(e){return '<div class="tl-ev"><div class="ee">'+e.ee+'</div><div class="ed">'+e.ed+'</div></div>';}).join('')+'</div></div>';
+  h+='</div>';
+  /* right column: contact + stars + notes */
+  h+='<div>';
+  h+='<div class="panel"><span class="section-eyebrow">Overview</span><h2>Contact</h2>'+
+     '<div class="gm" style="display:grid;gap:8px;margin-top:8px;font-size:13px;color:var(--navy)">'+
+     '<div><b>Email</b><br/>'+m.email+'</div><div><b>Phone</b><br/>'+m.phone+'</div>'+
+     '<div><b>ZIP</b> '+m.zip+' &nbsp; <b>Navigator</b> '+navName(m.nav)+'</div>'+
+     '<div><b>Tags</b><div class="chiprow" style="margin-top:4px">'+m.tags.map(function(t){return '<span class="chip-s">'+t+'</span>';}).join('')+'</div></div></div></div>';
+  h+='<div class="panel"><span class="section-eyebrow">Stars</span><h2>'+m.stars.a+'★ approved</h2><p class="sub">'+m.stars.e+' earned · '+m.stars.p+' pending · '+m.stars.a+' approved</p>'+
+     (m.stars.p>0?'<button class="btn btn-gold btn-sm btn-full" data-approve="'+m.id+'" style="margin-top:12px">Verify &amp; approve '+m.stars.p+'★</button>':'<p class="sub" style="margin-top:10px">No stars pending verification.</p>')+'</div>';
+  h+='<div class="panel"><span class="section-eyebrow">Private notes</span><h2>Navigator notes</h2><div id="noteList">'+
+     (notesFor(m).length?notesFor(m).map(function(n){return '<div class="note-it">'+n.t+'<div class="meta">'+n.a+' · '+n.d+'</div></div>';}).join(''):'<p class="sub">No notes yet.</p>')+
+     '</div><div class="note-form"><input id="noteInput" placeholder="Add a private note…"/><button class="mini-btn" data-note="'+m.id+'">Add</button></div></div>';
+  h+='</div></div>';
+  return h;
+}
+
+/* ===== 4. Navigator Queue ===== */
+function viewQueue(){
+  var follow=MEMBERS.filter(function(m){return m.last>14&&m.status!=='Stalled';});
+  var verify=MEMBERS.filter(function(m){return m.stars.p>0;});
+  var ready=MEMBERS.filter(function(m){return m.status==='Gold-ready';});
+  var stalled=MEMBERS.filter(function(m){return m.status==='Stalled';});
+  function card(title,sub,list,renderRight,actions){
+    return '<div class="panel"><span class="section-eyebrow">'+sub+'</span><h2>'+title+' <span style="color:var(--gold)">('+list.length+')</span></h2>'+
+      (list.length?list.map(function(m){return '<div class="adm-row"><div class="info"><div class="nm" data-open="'+m.id+'" style="cursor:pointer">'+m.name+'</div><div class="meta">'+renderRight(m)+'</div></div>'+actions(m)+'</div>';}).join(''):'<p class="sub" style="margin-top:8px">Nothing here right now. 🎉</p>')+'</div>';
+  }
+  var h=head('Navigator Queue','Who needs attention — prioritized by overdue follow-ups, pending verifications, and Gold-readiness.');
+  h+='<div class="acols two">';
+  h+=card('Needs follow-up','Overdue > 14 days',follow,function(m){return 'Last activity '+m.last+' days ago · '+navName(m.nav);},function(m){return '<button class="rowact" data-q="schedule:'+m.id+'">Schedule</button>';});
+  h+=card('Needs verification','Member-submitted milestones',verify,function(m){return m.stars.p+'★ awaiting approval · '+navName(m.nav);},function(m){return '<button class="rowact" data-approve="'+m.id+'">Approve</button>';});
+  h+='</div><div class="acols two" style="margin-top:18px">';
+  h+=card('Ready for Gold','Profile · Thrive · goals · verified · meeting',ready,function(m){return 'All requirements met — '+m.score+'% Thrive';},function(m){return '<button class="rowact" data-promote="'+m.id+'">Promote</button>';});
+  h+=card('Recently stalled','No progress 30+ days',stalled,function(m){return m.last+' days inactive · '+navName(m.nav);},function(m){return '<button class="rowact" data-q="message:'+m.id+'">Message</button>';});
+  h+='</div>';
+  return h;
+}
+
+/* ===== 5. Thrive Lights Analytics ===== */
+function viewThrive(){
+  /* distribution by domain */
+  var dist=ADOM.map(function(d,i){var c=[0,0,0];MEMBERS.forEach(function(m){c[m.tlArr[i]]++;});return {d:d,c:c};});
+  var distHtml=dist.map(function(r){var tot=MEMBERS.length;
+    return '<div class="row"><span class="lab">'+r.d+'</span><span class="barx">'+
+      [0,1,2].map(function(s){return r.c[s]?'<span style="width:'+(r.c[s]/tot*100)+'%;background:'+STATE_COL[s]+'"></span>':'';}).join('')+
+      '</span></div>';}).join('');
+  /* avg by ZIP */
+  var byZip={};MEMBERS.forEach(function(m){(byZip[m.zip]=byZip[m.zip]||[]).push(m.score);});
+  var zipRows=Object.keys(byZip).sort().map(function(z){var arr=byZip[z];var avg=Math.round(arr.reduce(function(a,b){return a+b;},0)/arr.length);return {z:z,avg:avg,n:arr.length};});
+  var zipHtml=zipRows.map(function(r){return '<div class="bar-row"><span class="nm">'+r.z+' ('+r.n+')</span><span class="track"><span style="width:'+r.avg+'%"></span></span><span class="ct">'+r.avg+'%</span></div>';}).join('');
+  /* heatmap zip x domain avg state */
+  var heat='<div class="hrow"><span></span>'+ADOM_SHORT.map(function(d){return '<span class="hh">'+d+'</span>';}).join('')+'</div>';
+  heat+=zipRows.map(function(r){
+    var cells=ADOM.map(function(d,i){
+      var vals=MEMBERS.filter(function(m){return m.zip===r.z;}).map(function(m){return m.tlArr[i];});
+      var avg=vals.reduce(function(a,b){return a+b;},0)/vals.length;var st=avg<0.67?0:avg<1.34?1:2;
+      return '<span class="cell" style="background:'+STATE_COL[st]+'">'+avg.toFixed(1)+'</span>';
+    }).join('');
+    return '<div class="hrow"><span class="zl">'+r.z+'</span>'+cells+'</div>';
+  }).join('');
+  /* biggest improvement areas (most red = biggest opportunity) / highest barriers */
+  var barriers=dist.map(function(r){return {d:r.d,red:r.c[0]};}).sort(function(a,b){return b.red-a.red;}).slice(0,4);
+  var strengths=dist.map(function(r){return {d:r.d,green:r.c[2]};}).sort(function(a,b){return b.green-a.green;}).slice(0,4);
+  /* progress over time sparkline */
+  var pts=[38,41,44,46,49,52,55,58];
+  var spW=320,spH=70,mx=Math.max.apply(null,pts),mn=Math.min.apply(null,pts);
+  var path=pts.map(function(v,i){var x=i/(pts.length-1)*spW;var y=spH-((v-mn)/(mx-mn||1))*(spH-10)-5;return (i?'L':'M')+x.toFixed(0)+' '+y.toFixed(0);}).join(' ');
+
+  var legend='<div class="legend-h"><span><i style="background:'+STATE_COL[0]+'"></i>Needs support</span><span><i style="background:'+STATE_COL[1]+'"></i>Working on it</span><span><i style="background:'+STATE_COL[2]+'"></i>Thriving</span></div>';
+  var h=head('Thrive Lights Analytics','Admin-wide view of well-being across every domain, ZIP, and over time.');
+  h+='<div class="acols two">';
+  h+='<div class="panel"><span class="section-eyebrow">Distribution</span><h2>By domain</h2><div class="dist">'+distHtml+'</div>'+legend+'</div>';
+  h+='<div class="panel"><span class="section-eyebrow">Geography</span><h2>Avg score by ZIP</h2>'+zipHtml+'</div>';
+  h+='</div>';
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Trend</span><h2>Progress over time</h2><p class="sub">Average member Thrive score, last 8 months.</p>'+
+     '<svg class="spark" viewBox="0 0 '+spW+' '+spH+'" preserveAspectRatio="none"><polyline points="" fill="none"/><path d="'+path+'" fill="none" stroke="var(--sage)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Heatmap</span><h2>ZIP × domain</h2><p class="sub">Average state per domain (0 red → 2 green).</p><div class="heat" style="margin-top:12px">'+heat+'</div></div>';
+  h+='<div class="acols two" style="margin-top:18px">';
+  h+='<div class="panel"><span class="section-eyebrow">Opportunity</span><h2>Highest barriers</h2>'+barriers.map(function(b){return '<div class="bar-row"><span class="nm">'+b.d+'</span><span class="track"><span style="width:'+(b.red/MEMBERS.length*100)+'%;background:var(--coral)"></span></span><span class="ct" style="color:var(--coral)">'+b.red+'</span></div>';}).join('')+'</div>';
+  h+='<div class="panel"><span class="section-eyebrow">Strengths</span><h2>Biggest improvement areas</h2>'+strengths.map(function(b){return '<div class="bar-row"><span class="nm">'+b.d+'</span><span class="track"><span style="width:'+(b.green/MEMBERS.length*100)+'%"></span></span><span class="ct">'+b.green+'</span></div>';}).join('')+'</div>';
+  h+='</div>';
+  return h;
+}
+
+/* ===== 6. Partner Referral System ===== */
+function viewReferrals(){
+  var counts={};REF_STATUSES.forEach(function(s){counts[s]=0;});
+  REFERRALS.forEach(function(r){counts[r.status]++;});
+  var sent=REFERRALS.length;
+  var completed=counts['Completed'];
+  var conv=Math.round(completed/sent*100);
+  var pipeline='<div class="pipeline">'+REF_STATUSES.map(function(s,i){
+    return (i?'<div class="pl-arrow">›</div>':'')+'<div class="pl-step"><div class="pv">'+counts[s]+'</div><div class="pk">'+s+'</div></div>';
+  }).join('')+'</div>';
+  var partnerView=ADMIN.role==='partner';
+  var rows=REFERRALS.map(function(r){
+    var mem=memberById(r.mid),p=partnerById(r.pid);
+    var sel='<select class="statset" data-refstat="'+r.id+'">'+REF_STATUSES.map(function(s){return '<option'+(s===r.status?' selected':'')+'>'+s+'</option>';}).join('')+'</select>';
+    return '<tr><td>'+r.date+'</td><td class="nm" data-open="'+r.mid+'">'+(mem?mem.name:'—')+'</td><td>'+(p?p.name:'—')+'</td><td style="white-space:normal;min-width:200px">'+r.reason+'</td><td>'+sel+'</td></tr>';
+  }).join('');
+  var h=head(partnerView?'Referrals to your organization':'Partner Referral System',
+    sent+' referrals · '+conv+'% conversion · avg response 2.4 days',
+    partnerView?'':'<button class="mini-btn" id="newRefBtn">+ New referral</button>');
+  if(!partnerView){
+    h+='<div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)"><div class="kpi"><div class="k">Referrals sent</div><div class="v">'+sent+'</div>'+trend('8',1)+'</div>'+
+       '<div class="kpi"><div class="k">Conversion %</div><div class="v">'+conv+'%</div>'+trend('4%',1)+'</div>'+
+       '<div class="kpi"><div class="k">Avg response time</div><div class="v">2.4d</div>'+trend('0.3d',1)+'</div></div>';
+  }
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Pipeline</span><h2>Referral statuses</h2>'+pipeline+'</div>';
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Referrals</span><h2>All referrals</h2><div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:680px"><thead><tr><th>Date</th><th>Member</th><th>Partner</th><th>Reason</th><th>Status</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+  if(!partnerView){
+    h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Network</span><h2>Partners</h2><div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:640px"><thead><tr><th>Partner</th><th>Category</th><th>Capacity</th><th>Contact</th><th>Status</th></tr></thead><tbody>'+
+       PARTNERS.map(function(p){return '<tr><td class="nm">'+p.name+'</td><td>'+p.cat+'</td><td>'+p.capacity+'</td><td>'+p.contact+'</td><td><button class="rowact" data-ptoggle="'+p.id+'">'+(p.active?'Active':'Inactive')+'</button></td></tr>';}).join('')+
+       '</tbody></table></div></div>';
+  }
+  return h;
+}
+
+/* ===== 7. Bank of Solutions (CMS) ===== */
+function viewSolutions(){
+  var cats=['Financial','Transportation','Housing','Workforce','Health','Education','Community'];
+  var h=head('Bank of Solutions','Manage the benefits members can access now or unlock with stars. These feed the live member dashboard.');
+  h+='<div class="panel"><span class="section-eyebrow">Catalog</span><h2>Benefits ('+STORE.benefits.length+')</h2>'+
+     '<div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:560px"><thead><tr><th>Benefit</th><th>Category</th><th>Access</th><th></th></tr></thead><tbody>'+
+     STORE.benefits.map(function(b){return '<tr><td class="nm">'+b.name+'</td><td>'+(b.cat||'—')+'</td><td>'+(b.unlockAt>0?'<span class="tag-b lv-gold">Unlocks at '+b.unlockAt+'★</span>':'<span class="tag-b st-active">Available now</span>')+'</td><td><button class="rowact" data-delb="'+b.id+'">Archive</button></td></tr>';}).join('')+
+     '</tbody></table></div>'+
+     '<form class="adm-form" id="benefitForm" style="margin-top:16px"><div><label>Benefit name</label><input id="bName" placeholder="e.g. Bus pass" required/></div>'+
+     '<div><label>Category</label><input id="bCat" list="catList" placeholder="e.g. Transportation"/><datalist id="catList">'+cats.map(function(c){return '<option value="'+c+'">';}).join('')+'</datalist></div>'+
+     '<div><label>Unlock at (★)</label><input id="bUnlock" type="number" min="0" value="0"/></div>'+
+     '<button class="btn btn-navy btn-sm" type="submit">Add benefit</button></form></div>';
+  /* by category summary */
+  var byCat={};STORE.benefits.forEach(function(b){var c=b.cat||'Other';byCat[c]=(byCat[c]||0)+1;});
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Coverage</span><h2>Benefits by category</h2>'+
+     Object.keys(byCat).map(function(c){return '<div class="bar-row"><span class="nm">'+c+'</span><span class="track"><span style="width:'+(byCat[c]/STORE.benefits.length*100)+'%"></span></span><span class="ct">'+byCat[c]+'</span></div>';}).join('')+'</div>';
+  return h;
+}
+
+/* ===== 8. Stars + Rewards Engine ===== */
+function viewStars(){
+  var earned=totalStars('e'),pending=totalStars('p'),approved=totalStars('a');
+  var rl=rewardList();
+  var unlocks=rl.map(function(rw){var ct=MEMBERS.filter(function(m){return m.stars.a>=rw.th;}).length;return {t:rw.t,th:rw.th,ct:ct};});
+  var leaders=MEMBERS.slice().sort(function(a,b){return b.stars.a-a.stars.a;}).slice(0,6);
+  var funnel=[['Actions started',MEMBERS.length*4],['Submitted for verify',Math.round(earned/10)],['Stars approved',Math.round(approved/10)],['Rewards unlocked',unlocks.reduce(function(a,u){return a+u.ct;},0)]];
+  var h=head('Stars & Rewards Engine','Earned → pending → approved. Stars are only issued when a navigator verifies progress.');
+  h+='<div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)"><div class="kpi"><div class="k">Stars earned</div><div class="v">'+earned+'</div></div>'+
+     '<div class="kpi"><div class="k">Pending verification</div><div class="v" style="color:var(--gold)">'+pending+'</div></div>'+
+     '<div class="kpi"><div class="k">Approved &amp; issued</div><div class="v" style="color:var(--sage)">'+approved+'</div></div></div>';
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Workflow</span><h2>Approval pipeline</h2><div class="pipeline">'+
+     ['Member action','Navigator verify','Stars issued','Reward unlocked'].map(function(s,i){return (i?'<div class="pl-arrow">›</div>':'')+'<div class="pl-step"><div class="pv">'+funnel[i][1]+'</div><div class="pk">'+s+'</div></div>';}).join('')+'</div></div>';
+  h+='<div class="acols two" style="margin-top:18px">';
+  h+='<div class="panel"><span class="section-eyebrow">Engagement</span><h2>Top earners</h2>'+leaders.map(function(m,i){return '<div class="lead-row"><span class="rank">'+(i+1)+'</span><span class="nm" data-open="'+m.id+'" style="cursor:pointer">'+m.name+'</span><span class="s">★ '+m.stars.a+'</span></div>';}).join('')+'</div>';
+  h+='<div class="panel"><span class="section-eyebrow">Levels</span><h2>Rewards</h2>'+
+     '<div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:0"><thead><tr><th>Reward</th><th>Threshold</th><th>Unlocked by</th><th></th></tr></thead><tbody>'+
+     STORE.rewards.map(function(r){var ct=MEMBERS.filter(function(m){return m.stars.a>=r.th;}).length;return '<tr><td class="nm">'+r.name+'</td><td>'+r.th+'★</td><td>'+ct+' members</td><td><button class="rowact" data-delr="'+r.id+'">Remove</button></td></tr>';}).join('')+
+     '</tbody></table></div>'+
+     '<form class="adm-form" id="rewardForm" style="margin-top:14px"><div><label>Reward name</label><input id="rName" placeholder="e.g. Nike — 25% off" required/></div><div><label>Threshold (★)</label><input id="rTh" type="number" min="1" value="25"/></div><button class="btn btn-navy btn-sm" type="submit">Add</button></form></div>';
+  h+='</div>';
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Redemption funnel</span><h2>Perks earned</h2><p class="sub">Members who have reached each reward threshold.</p>'+
+     unlocks.map(function(u){var max=Math.max(1,unlocks[0].ct);return '<div class="bar-row"><span class="nm">'+u.t.split(' — ')[0]+'</span><span class="track"><span style="width:'+(u.ct/MEMBERS.length*100)+'%"></span></span><span class="ct">'+u.ct+'</span></div>';}).join('')+'</div>';
+  return h;
+}
+
+/* ===== 9. Impact Dashboard (Board) ===== */
+function viewImpact(){
+  var m=ADMIN.range==='7d'?0.25:1; /* reuse range as period scaler is odd; use dedicated below */
+  var period=ADMIN._period||'Quarter';
+  var pm=period==='Month'?0.34:period==='Year'?3.6:1;
+  function val(base){return Math.round(base*pm);}
+  var goalsDone=MEMBERS.reduce(function(a,x){return a+goalsFor(x).filter(function(g){return g.status!=='Not started';}).length;},0);
+  var metrics=[
+    ['Members served',val(MEMBERS.length*3),'people'],
+    ['Goals completed',val(goalsDone*2),'check'],
+    ['Red → Green moves',val(48),'up'],
+    ['Employment gains',val(22),'work'],
+    ['Housing placements',val(14),'home'],
+    ['Transportation solutions',val(31),'bus'],
+    ['Savings accumulated','$'+val(86)+'k','wallet'],
+    ['Partner engagements',val(REFERRALS.length*4),'link'],
+    ['Gold conversion %',Math.round(MEMBERS.filter(function(x){return x.level==='Gold';}).length/MEMBERS.length*100)+'%','star']
+  ];
+  var seg='<div class="seg-light" id="periodSeg">'+['Month','Quarter','Year'].map(function(p){return '<button data-p="'+p+'"'+(p===period?' class="active"':'')+'>'+p+'</button>';}).join('')+'</div>';
+  var h=head('Impact Dashboard','Executive outcomes across the EPE ecosystem — stability → progress → contribution.',
+    seg+' <button class="mini-btn" id="expCsv">Export CSV</button> <button class="mini-btn" id="expPdf">Export PDF</button>');
+  h+='<div class="kpi-grid">'+metrics.map(function(k){return '<div class="kpi"><div class="k">'+k[0]+'</div><div class="v">'+k[1]+'</div>'+trend('vs prior '+period.toLowerCase(),1)+'</div>';}).join('')+'</div>';
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Narrative</span><h2>Movement, not just activity</h2>'+
+     '<p class="sub">This '+period.toLowerCase()+', members moved '+val(48)+' life domains from red toward green. '+val(22)+' secured employment, '+val(14)+' reached stable housing, and '+val(31)+' resolved a transportation barrier — each a concrete step from stability to contribution.</p></div>';
+  return h;
+}
+
+/* ===== 10. Site Content Management ===== */
+function viewContent(){
+  function field(id,label,multi,val){return '<div class="cms-field"><label>'+label+'</label>'+(multi?'<textarea id="'+id+'">'+val+'</textarea>':'<input id="'+id+'" value="'+val.replace(/"/g,'&quot;')+'"/>')+'</div>';}
+  var h=head('Site Content','Edit the public site without code. Saved to this browser for the prototype.');
+  h+='<div class="acols two">';
+  h+='<div class="panel"><span class="section-eyebrow">Homepage</span><h2>Hero &amp; messaging</h2>'+
+     field('cmHeroTitle','Hero title',false,CMS.heroTitle)+
+     field('cmHeroSub','Hero subtitle',true,CMS.heroSub)+
+     field('cmWhy','“Why this matters” lead',true,CMS.whyLead)+
+     field('cmCta','Primary CTA button',false,CMS.ctaButton)+'</div>';
+  h+='<div class="panel"><span class="section-eyebrow">Network &amp; FAQ</span><h2>Partners, stories &amp; FAQ</h2>'+
+     field('cmPartners','Partner list (comma-separated)',true,CMS.partners)+
+     field('cmFaq','FAQ (one Q/A per line)',true,CMS.faq)+'</div>';
+  h+='</div><div class="save-row"><button class="btn btn-navy btn-sm" id="cmsSave">Save changes</button><span class="saved-flag" id="cmsSaved">Saved ✓</span></div>';
+  h+='<p class="av-sub" style="margin-top:10px">Membership levels and benefits are managed in <b>Bank of Solutions</b>; rewards in <b>Stars &amp; Rewards</b>.</p>';
+  return h;
+}
+
+/* ===== 11. Notifications ===== */
+function viewNotifs(){
+  var h=head('Notifications','Trigger events and the channels that fire when they happen. (SMS is prototype-only.)');
+  h+=NOTIFS.map(function(n){
+    return '<div class="set-row"><div class="info"><div class="st">'+n.name+'</div><div class="sd">'+n.desc+'</div></div>'+
+      '<div style="text-align:center;font-size:11px;color:var(--muted)">Email<br/><button class="switch'+(n.email?' on':'')+'" data-notif="'+n.id+':email"></button></div>'+
+      '<div style="text-align:center;font-size:11px;color:var(--muted)">SMS<br/><button class="switch'+(n.sms?' on':'')+'" data-notif="'+n.id+':sms"></button></div></div>';
+  }).join('');
+  return h;
+}
+
+/* ===== 12. Settings ===== */
+function viewSettings(){
+  var perms=[
+    ['Manage users','✓','','',''],['Manage rewards','✓','','',''],['Manage partners','✓','','',''],
+    ['Verify progress / stars','✓','✓','',''],['Create referrals','✓','✓','',''],
+    ['Update referral status','✓','✓','✓',''],['View analytics & impact','✓','✓','','✓'],['Edit site content','✓','','','']
+  ];
+  var cols=['Super','Navigator','Partner','Board'];
+  var h=head('Settings','Roles, tags, boundaries, and the rules that drive the platform.');
+  h+='<div class="acols two">';
+  h+='<div class="panel"><span class="section-eyebrow">Access</span><h2>Roles &amp; permissions</h2><div class="perm-grid" style="margin-top:10px"><table><thead><tr><th>Capability</th>'+cols.map(function(c){return '<th>'+c+'</th>';}).join('')+'</tr></thead><tbody>'+
+     perms.map(function(p){return '<tr><td>'+p[0]+'</td>'+[1,2,3,4].map(function(i){return '<td class="'+(p[i]?'yes':'no')+'">'+(p[i]||'—')+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table></div></div>';
+  h+='<div class="panel"><span class="section-eyebrow">Taxonomy</span><h2>Tags &amp; ZIP boundaries</h2>'+
+     '<div class="cms-field"><label>Member tags</label><div class="chiprow" style="margin-top:4px">'+['Mentor','Employed','Housing','Health','Transport','Childcare','Justice-involved','Single parent','Workforce','Savings','Education'].map(function(t){return '<span class="chip-s">'+t+'</span>';}).join('')+'</div></div>'+
+     '<div class="cms-field"><label>Service-area ZIPs</label><div class="chiprow" style="margin-top:4px">'+['67202','67203','67204','67211','67214','67217','67218','67220'].map(function(z){return '<span class="chip-s">'+z+'</span>';}).join('')+'</div></div></div>';
+  h+='</div>';
+  h+='<div class="acols two" style="margin-top:18px">';
+  h+='<div class="panel"><span class="section-eyebrow">Rules</span><h2>Star &amp; referral rules</h2>'+
+     '<div class="set-row"><div class="info"><div class="st">Require navigator verification</div><div class="sd">Stars only issue after in-person verification.</div></div><button class="switch on" data-rule="verify"></button></div>'+
+     '<div class="set-row"><div class="info"><div class="st">Auto-flag stalled at 30 days</div><div class="sd">Move inactive members into the queue automatically.</div></div><button class="switch on" data-rule="stall"></button></div>'+
+     '<div class="set-row"><div class="info"><div class="st">Auto-close referrals after 60 days</div><div class="sd">Close referrals with no partner response.</div></div><button class="switch" data-rule="autoclose"></button></div></div>';
+  h+='<div class="panel"><span class="section-eyebrow">Compliance</span><h2>Audit log</h2><div style="margin-top:10px">'+
+     AUDIT.map(function(a){return '<div class="audit"><b>'+a.who+'</b> '+a.what+' · <span style="color:var(--navy-300)">'+a.when+'</span></div>';}).join('')+'</div></div>';
+  h+='</div>';
+  return h;
+}
+
+/* ===== open / events ===== */
+function openAdmin(){
+  ADMIN.role=document.getElementById('admRole').value||'super';
+  ADMIN.view=AROLES[ADMIN.role].views[0];
+  ADMIN.openId=null; ADMIN.sel={}; ADMIN.flt={};
+  renderAdminNav(); renderView();
+}
+document.getElementById('admRole').addEventListener('change',function(){
+  ADMIN.role=this.value; ADMIN.openId=null;
+  if(AROLES[ADMIN.role].views.indexOf(ADMIN.view)<0)ADMIN.view=AROLES[ADMIN.role].views[0];
+  renderAdminNav(); renderView();
 });
-document.getElementById('rewardForm').addEventListener('submit',function(e){
-  e.preventDefault();
-  var n=document.getElementById('rName').value.trim(); if(!n)return;
-  STORE.rewards.push({id:'r'+Date.now(),name:n,th:Math.max(1,parseInt(document.getElementById('rTh').value,10)||1)});
-  saveStore(); this.reset(); document.getElementById('rTh').value='25'; renderAdmin();
+function navClick(e){var b=e.target.closest('[data-view]');if(!b)return;setView(b.getAttribute('data-view'));}
+document.getElementById('admNav').addEventListener('click',navClick);
+document.getElementById('admTabs').addEventListener('click',navClick);
+
+/* delegated events inside the view */
+document.getElementById('admView').addEventListener('click',function(e){
+  var t=e.target,el2;
+  if((el2=t.closest('[data-open]'))){ADMIN.openId=el2.getAttribute('data-open');renderView();return;}
+  if(t.id==='backCrumb'){ADMIN.openId=null;renderView();return;}
+  if((el2=t.closest('[data-tl]'))){var pr=el2.getAttribute('data-tl').split(':');var m=memberById(pr[0]);var i=+pr[1];m.tlArr[i]=(m.tlArr[i]+1)%3;m.score=Math.round(m.tlArr.reduce(function(a,b){return a+b;},0)/(m.tlArr.length*2)*100);renderView();return;}
+  if((el2=t.closest('[data-approve]'))){var m2=memberById(el2.getAttribute('data-approve'));if(m2&&m2.stars.p>0){m2.stars.a+=m2.stars.p;m2.stars.p=0;if(m2.status==='At risk')m2.status='Active';}renderView();return;}
+  if((el2=t.closest('[data-promote]'))){var m3=memberById(el2.getAttribute('data-promote'));if(m3){m3.level='Gold';if(m3.status==='Gold-ready')m3.status='Active';if(m3.tags.indexOf('Gold')<0)m3.tags.push('Gold');}renderView();return;}
+  if((el2=t.closest('[data-sel]'))){return;} /* checkbox handled on change */
+  if((el2=t.closest('[data-bulk]'))){bulkAction(el2.getAttribute('data-bulk'));return;}
+  if((el2=t.closest('[data-q]'))){var q=el2.getAttribute('data-q').split(':');var mm=memberById(q[1]);alert((q[0]==='schedule'?'Scheduling a check-in with ':q[0]==='message'?'Opening a message to ':'Action for ')+(mm?mm.name:'')+' (prototype).');return;}
+  if((el2=t.closest('[data-note]'))){var inp=document.getElementById('noteInput');var mn=memberById(el2.getAttribute('data-note'));if(inp&&inp.value.trim()&&mn){mn._notes=(notesFor(mn)).slice();mn._notes.unshift({a:AROLES[ADMIN.role].label,d:'just now',t:inp.value.trim()});renderView();}return;}
+  if((el2=t.closest('[data-delb]'))){var id=el2.getAttribute('data-delb');STORE.benefits=STORE.benefits.filter(function(x){return x.id!==id;});saveStore();renderView();return;}
+  if((el2=t.closest('[data-delr]'))){var id2=el2.getAttribute('data-delr');STORE.rewards=STORE.rewards.filter(function(x){return x.id!==id2;});saveStore();renderView();return;}
+  if((el2=t.closest('[data-ptoggle]'))){var p=partnerById(el2.getAttribute('data-ptoggle'));if(p)p.active=!p.active;renderView();return;}
+  if((el2=t.closest('[data-notif]'))){var nf=el2.getAttribute('data-notif').split(':');var n=NOTIFS.filter(function(x){return x.id===nf[0];})[0];if(n){n[nf[1]]=!n[nf[1]];saveNotif();}el2.classList.toggle('on');return;}
+  if((el2=t.closest('[data-rule]'))){el2.classList.toggle('on');return;}
+  if(t.id==='cmsSave'){saveCmsFromForm();return;}
+  if(t.id==='expCsv'){exportImpactCsv();return;}
+  if(t.id==='expPdf'){window.print();return;}
+  if(t.id==='newRefBtn'||t.closest('[data-refnew]')){alert('New referral form (prototype) — choose a member and partner, add a reason, and it enters the pipeline as “Created”.');return;}
+  if((el2=t.closest('#rangeSeg [data-r]'))){ADMIN.range=el2.getAttribute('data-r');renderView();return;}
+  if((el2=t.closest('#periodSeg [data-p]'))){ADMIN._period=el2.getAttribute('data-p');renderView();return;}
 });
-document.getElementById('admBenefits').addEventListener('click',function(e){
-  var b=e.target.closest('[data-del-b]'); if(!b)return;
-  var id=b.getAttribute('data-del-b'); STORE.benefits=STORE.benefits.filter(function(x){return x.id!==id;}); saveStore(); renderAdmin();
+document.getElementById('admView').addEventListener('change',function(e){
+  var t=e.target,el2;
+  if((el2=t.closest('[data-sel]'))){ADMIN.sel[el2.getAttribute('data-sel')]=t.checked;renderView();return;}
+  if((el2=t.closest('[data-refstat]'))){var r=REFERRALS.filter(function(x){return x.id===el2.getAttribute('data-refstat');})[0];if(r){r.status=t.value;saveRefs();renderView();}return;}
+  if(['fQ','fZip','fLevel','fStatus','fNav'].indexOf(t.id)>=0){applyFilters();return;}
 });
-document.getElementById('admRewards').addEventListener('click',function(e){
-  var b=e.target.closest('[data-del-r]'); if(!b)return;
-  var id=b.getAttribute('data-del-r'); STORE.rewards=STORE.rewards.filter(function(x){return x.id!==id;}); saveStore(); renderAdmin();
+document.getElementById('admView').addEventListener('input',function(e){
+  if(e.target.id==='fQ'){ADMIN.flt.q=e.target.value;
+    /* re-filter without losing focus: only update tbody */
+    var tb=document.querySelector('#admView .tbl tbody');if(tb){renderMembersBody();}}
 });
+document.getElementById('admView').addEventListener('submit',function(e){
+  if(e.target.id==='benefitForm'){e.preventDefault();var n=document.getElementById('bName').value.trim();if(!n)return;
+    STORE.benefits.push({id:'b'+Date.now(),name:n,cat:document.getElementById('bCat').value.trim(),unlockAt:Math.max(0,parseInt(document.getElementById('bUnlock').value,10)||0)});saveStore();renderView();return;}
+  if(e.target.id==='rewardForm'){e.preventDefault();var n2=document.getElementById('rName').value.trim();if(!n2)return;
+    STORE.rewards.push({id:'r'+Date.now(),name:n2,th:Math.max(1,parseInt(document.getElementById('rTh').value,10)||1)});saveStore();renderView();return;}
+});
+function applyFilters(){
+  ADMIN.flt.q=(document.getElementById('fQ')||{}).value||'';
+  ADMIN.flt.zip=(document.getElementById('fZip')||{}).value||'';
+  ADMIN.flt.level=(document.getElementById('fLevel')||{}).value||'';
+  ADMIN.flt.status=(document.getElementById('fStatus')||{}).value||'';
+  ADMIN.flt.nav=(document.getElementById('fNav')||{}).value||'';
+  renderView();
+}
+function renderMembersBody(){/* lightweight rerender keeping search focus */renderView();var fq=document.getElementById('fQ');if(fq){fq.focus();fq.setSelectionRange(fq.value.length,fq.value.length);}}
+function bulkAction(kind){
+  var ids=Object.keys(ADMIN.sel).filter(function(k){return ADMIN.sel[k];});
+  if(kind==='export'){exportMembersCsv(ids.length?ids:null);return;}
+  var names=ids.map(function(i){return (memberById(i)||{}).name;}).join(', ');
+  if(kind==='assign')alert('Assign navigator to: '+(names||'all')+' (prototype).');
+  else if(kind==='tag')alert('Add a tag to: '+(names||'all')+' (prototype).');
+  else if(kind==='outreach')alert('Send outreach to: '+(names||'all')+' (prototype).');
+}
+function exportMembersCsv(ids){
+  var list=ids?MEMBERS.filter(function(m){return ids.indexOf(m.id)>=0;}):MEMBERS;
+  var rows=[['Name','Email','Phone','Level','ZIP','Intent','Navigator','ThriveScore','Status','LastDays','Stars']];
+  list.forEach(function(m){rows.push([m.name,m.email,m.phone,m.level,m.zip,m.intent,navName(m.nav),m.score+'%',m.status,m.last,m.stars.a]);});
+  downloadCsv('epe-members.csv',rows);
+}
+function exportImpactCsv(){
+  var rows=[['Metric','Value'],['Members served',MEMBERS.length*3],['Goals completed',120],['Red→Green moves',48],['Employment gains',22],['Housing placements',14],['Transportation solutions',31],['Savings ($k)',86],['Gold conversion %',Math.round(MEMBERS.filter(function(x){return x.level==='Gold';}).length/MEMBERS.length*100)]];
+  downloadCsv('epe-impact.csv',rows);
+}
+function downloadCsv(name,rows){
+  var csv=rows.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  var blob=new Blob([csv],{type:'text/csv'});var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+}
+function saveCmsFromForm(){
+  CMS.heroTitle=document.getElementById('cmHeroTitle').value;
+  CMS.heroSub=document.getElementById('cmHeroSub').value;
+  CMS.whyLead=document.getElementById('cmWhy').value;
+  CMS.ctaButton=document.getElementById('cmCta').value;
+  CMS.partners=document.getElementById('cmPartners').value;
+  CMS.faq=document.getElementById('cmFaq').value;
+  saveCms(); applyCmsToSite();
+  var f=document.getElementById('cmsSaved');if(f){f.classList.add('show');setTimeout(function(){f.classList.remove('show');},1600);}
+}
+function applyCmsToSite(){
+  try{
+    var ht=document.querySelector('.hero h1');if(ht)ht.textContent=CMS.heroTitle;
+    var hs=document.querySelector('.hero .sub');if(hs)hs.textContent=CMS.heroSub;
+    var wl=document.querySelector('.why .lead');if(wl)wl.textContent=CMS.whyLead;
+    if(CMS.partners){document.getElementById('partnerChips').innerHTML=CMS.partners.split(',').map(function(p){return '<span class="chip-p">'+p.trim()+'</span>';}).join('');}
+  }catch(e){}
+}
+applyCmsToSite();
+
 document.getElementById('adminLogout').addEventListener('click',function(){
   document.getElementById('admin').classList.remove('open'); document.body.style.overflow='';
 });
@@ -1158,7 +1910,7 @@ document.getElementById('loginForm').addEventListener('submit',function(e){
     closeLogin();
     document.getElementById('admin').classList.add('open');
     document.body.style.overflow='hidden';
-    renderAdmin();
+    openAdmin();
   } else if(u==='user'&&p==='password'){
     document.getElementById('loginErr').style.display='none';
     closeLogin();
