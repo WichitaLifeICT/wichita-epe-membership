@@ -350,6 +350,33 @@ h2.sec.light{color:#fff;}
 .hist .row .s{margin-left:auto;font-weight:700;color:var(--gold);}
 .hist .empty{font-size:13px;color:var(--muted);}
 
+/* ===== admin ===== */
+.stat-grid{display:grid;gap:14px;grid-template-columns:repeat(2,1fr);margin-top:18px;}
+@media(min-width:760px){.stat-grid{grid-template-columns:repeat(4,1fr);}}
+.stat{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;}
+.stat .v{font-family:var(--display);font-weight:600;font-size:28px;color:var(--navy);}
+.stat .k{font-size:12px;color:var(--muted);margin-top:2px;}
+.lead-row{display:flex;align-items:center;gap:10px;margin-top:8px;font-size:14px;}
+.lead-row .rank{flex:none;width:22px;height:22px;border-radius:50%;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.lead-row .nm{flex:1;color:var(--navy);font-weight:500;}
+.lead-row .s{font-weight:700;color:var(--gold);}
+.bar-row{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:13px;color:var(--navy);}
+.bar-row .nm{width:42%;}
+.bar-row .track{flex:1;height:10px;border-radius:999px;background:var(--cream-200);overflow:hidden;}
+.bar-row .track>span{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--sage));}
+.bar-row .ct{width:30px;text-align:right;font-weight:700;color:var(--gold);}
+.adm-row{display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-top:8px;}
+.adm-row .info{flex:1;min-width:0;}
+.adm-row .nm{font-size:14px;font-weight:600;color:var(--navy);}
+.adm-row .meta{font-size:12px;color:var(--muted);}
+.adm-row .pill{flex:none;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--cream-200);color:var(--muted);}
+.adm-row .del{flex:none;border:none;background:var(--coral);color:#fff;border-radius:8px;padding:6px 11px;font-size:12px;font-weight:600;cursor:pointer;}
+.adm-form{display:grid;gap:10px;margin-top:16px;grid-template-columns:1fr;}
+@media(min-width:620px){.adm-form{grid-template-columns:2fr 1fr 1fr auto;align-items:end;}}
+.adm-form label{font-size:12px;font-weight:600;color:var(--navy);}
+.adm-form input{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 11px;font-size:13px;font-family:var(--sans);background:#fff;color:var(--ink);margin-top:4px;}
+.adm-form input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
+
 /* footer */
 footer{border-top:1px solid var(--border);background:var(--cream);}
 .foot{display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center;padding:40px 0;}
@@ -671,6 +698,59 @@ svg.ic{width:24px;height:24px;}
   </div>
 </div>
 
+<!-- ADMIN BACK END (prototype) -->
+<div class="dash" id="admin">
+  <div class="dash-bar">
+    <div class="brand"><span class="brand-mark">E</span><span class="brand-name">Wichita EPE · Admin</span></div>
+    <div class="who"><button class="btn btn-outline-light btn-sm" id="adminLogout">Log out</button></div>
+  </div>
+  <div class="dash-wrap">
+    <h1>Admin dashboard</h1>
+    <p class="lead">Rewards engagement and the Bank of Solutions.</p>
+    <div class="stat-grid" id="admStats"></div>
+    <div class="dash-grid">
+      <div>
+        <div class="panel">
+          <span class="section-eyebrow">Bank of Solutions</span>
+          <h2>Benefits</h2>
+          <p class="sub">Supports available now (0★) or unlocked at a point threshold. These feed the member dashboard.</p>
+          <div id="admBenefits"></div>
+          <form class="adm-form" id="benefitForm">
+            <div><label>Benefit name</label><input id="bName" placeholder="e.g. Bus pass" required/></div>
+            <div><label>Category</label><input id="bCat" placeholder="e.g. Transportation"/></div>
+            <div><label>Unlock at (★)</label><input id="bUnlock" type="number" min="0" value="0"/></div>
+            <button class="btn btn-navy btn-sm" type="submit">Add</button>
+          </form>
+        </div>
+        <div class="panel">
+          <span class="section-eyebrow">Levels</span>
+          <h2>Rewards</h2>
+          <p class="sub">Incentives unlocked as members earn stars.</p>
+          <div id="admRewards"></div>
+          <form class="adm-form" id="rewardForm">
+            <div><label>Reward name</label><input id="rName" placeholder="e.g. Nike — 25% off" required/></div>
+            <div><label>Threshold (★)</label><input id="rTh" type="number" min="1" value="25"/></div>
+            <button class="btn btn-navy btn-sm" type="submit">Add</button>
+          </form>
+        </div>
+      </div>
+      <div>
+        <div class="panel">
+          <span class="section-eyebrow">Engagement</span>
+          <h2>Top earners</h2>
+          <div id="admLeaders"></div>
+        </div>
+        <div class="panel">
+          <span class="section-eyebrow">Redemptions</span>
+          <h2>Perks earned</h2>
+          <p class="sub">How many members have unlocked each perk.</p>
+          <div id="admPerks"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ---------- icon set (inline SVG paths) ---------- */
 var ICONS={
@@ -944,17 +1024,17 @@ function renderDash(){
     }).join('');
     return '<div class="prio'+(r.s===1?' amber':'')+'"><h3>'+r.c+'</h3><p class="lead">'+lead+'</p><div class="actions-list">'+acts+'</div></div>';
   }).join('');
-  document.getElementById('supportsList').innerHTML=DASH.supports.map(function(s){
-    return '<div class="mini"><div class="t">'+s.t+'</div><div class="d">'+s.d+'</div><span class="tag">Available now</span></div>';
+  document.getElementById('supportsList').innerHTML=STORE.benefits.filter(function(b){return b.unlockAt===0;}).map(function(b){
+    return '<div class="mini"><div class="t">'+b.name+'</div><div class="d">'+(b.cat||'')+'</div><span class="tag">Available now</span></div>';
   }).join('');
-  document.getElementById('rewardsList').innerHTML=DASH.rewards.map(function(rw){
+  document.getElementById('rewardsList').innerHTML=rewardList().map(function(rw){
     var unlocked=stars>=rw.th;
     return '<div class="reward '+(unlocked?'unlocked':'locked')+'"><span class="star">★</span><div><div class="t">'+rw.t+'</div><div class="th">'+rw.th+' stars</div></div><span class="state">'+(unlocked?'Unlocked':(rw.th-stars)+' to go')+'</span></div>';
   }).join('');
   var c=dCounts(),pct=c.t?Math.round(c.v/c.t*100):0;
   document.getElementById('pmPct').textContent=pct+'%';
   document.getElementById('pmFill').style.width=pct+'%';
-  var next=DASH.rewards.filter(function(rw){return rw.th>stars;})[0];
+  var next=rewardList().filter(function(rw){return rw.th>stars;})[0];
   if(next){document.getElementById('nextReward').textContent=(next.th-stars)+'★ to '+next.t.split(' — ')[0];document.getElementById('rwFill').style.width=Math.min(100,Math.round(stars/next.th*100))+'%';}
   else{document.getElementById('nextReward').textContent='All unlocked';document.getElementById('rwFill').style.width='100%';}
   var p=dPending();
@@ -981,6 +1061,88 @@ document.getElementById('checkinBtn').addEventListener('click',function(){
   renderDash();
 });
 
+/* ================= prototype admin back end ================= */
+var STORE_KEY='epe_admin_store_v1';
+var STORE_DEFAULTS={
+  benefits:[
+    {id:'b1',name:'Bus pass',cat:'Transportation',unlockAt:0},
+    {id:'b2',name:'Bike',cat:'Transportation',unlockAt:0},
+    {id:'b3',name:'Uber support',cat:'Transportation',unlockAt:0},
+    {id:'b4',name:'Coaching',cat:'People Development',unlockAt:0},
+    {id:'b5',name:'Financial classes',cat:'Financial Health',unlockAt:0},
+    {id:'b6',name:'Transportation consult',cat:'Transportation',unlockAt:0},
+    {id:'b7',name:'Vehicle repair support',cat:'Transportation',unlockAt:60},
+    {id:'b8',name:'Homeownership consult',cat:'Housing',unlockAt:80}
+  ],
+  rewards:[
+    {id:'r1',name:"Doc Green's — free entrée",th:20},
+    {id:'r2',name:"Meddy's — meal voucher",th:35},
+    {id:'r3',name:'Nike — 25% off',th:55},
+    {id:'r4',name:'Premium partner access',th:75},
+    {id:'r5',name:'Exclusive opportunity — homeownership cohort',th:100}
+  ]
+};
+var STORE;
+function loadStore(){try{var s=JSON.parse(localStorage.getItem(STORE_KEY));if(s&&s.benefits&&s.rewards)return s;}catch(e){}return JSON.parse(JSON.stringify(STORE_DEFAULTS));}
+function saveStore(){try{localStorage.setItem(STORE_KEY,JSON.stringify(STORE));}catch(e){}}
+STORE=loadStore();
+function rewardList(){
+  var a=STORE.rewards.map(function(r){return {t:r.name,th:r.th};});
+  STORE.benefits.forEach(function(b){if(b.unlockAt>0)a.push({t:b.name,th:b.unlockAt});});
+  return a.sort(function(x,y){return x.th-y.th;});
+}
+var MEMBERS=[
+  {name:'Peazy',stars:140},
+  {name:'Dana R.',stars:120},
+  {name:'Lena K.',stars:95},
+  {name:'Marcus T.',stars:85},
+  {name:'Olivia M.',stars:60},
+  {name:'Jamal W.',stars:45},
+  {name:'Sofia G.',stars:30},
+  {name:'Andre P.',stars:18}
+];
+function renderAdmin(){
+  var total=MEMBERS.reduce(function(a,m){return a+m.stars;},0);
+  var avg=Math.round(total/MEMBERS.length);
+  var redeemed=0; STORE.rewards.forEach(function(r){MEMBERS.forEach(function(m){if(m.stars>=r.th)redeemed++;});});
+  var stats=[['Stars earned',total],['Active members',MEMBERS.length],['Avg stars / member',avg],['Perks redeemed',redeemed]];
+  document.getElementById('admStats').innerHTML=stats.map(function(s){return '<div class="stat"><div class="v">'+s[1]+'</div><div class="k">'+s[0]+'</div></div>';}).join('');
+  var leaders=MEMBERS.slice().sort(function(a,b){return b.stars-a.stars;}).slice(0,6);
+  document.getElementById('admLeaders').innerHTML=leaders.map(function(m,i){return '<div class="lead-row"><span class="rank">'+(i+1)+'</span><span class="nm">'+m.name+'</span><span class="s">★ '+m.stars+'</span></div>';}).join('');
+  var perks=rewardList().map(function(rw){var ct=0;MEMBERS.forEach(function(m){if(m.stars>=rw.th)ct++;});return {t:rw.t,ct:ct};});
+  var maxct=Math.max(1,Math.max.apply(null,perks.map(function(p){return p.ct;})));
+  document.getElementById('admPerks').innerHTML=perks.map(function(p){return '<div class="bar-row"><span class="nm">'+p.t.split(' — ')[0]+'</span><span class="track"><span style="width:'+Math.round(p.ct/maxct*100)+'%"></span></span><span class="ct">'+p.ct+'</span></div>';}).join('');
+  document.getElementById('admBenefits').innerHTML=STORE.benefits.map(function(b){
+    return '<div class="adm-row"><div class="info"><div class="nm">'+b.name+'</div><div class="meta">'+(b.cat||'—')+'</div></div><span class="pill">'+(b.unlockAt>0?('Unlocks at '+b.unlockAt+'★'):'Available now')+'</span><button class="del" data-del-b="'+b.id+'">Delete</button></div>';
+  }).join('')||'<p class="sub">No benefits yet.</p>';
+  document.getElementById('admRewards').innerHTML=STORE.rewards.map(function(r){
+    return '<div class="adm-row"><div class="info"><div class="nm">'+r.name+'</div><div class="meta">Unlocks at '+r.th+'★</div></div><button class="del" data-del-r="'+r.id+'">Delete</button></div>';
+  }).join('')||'<p class="sub">No rewards yet.</p>';
+}
+document.getElementById('benefitForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var n=document.getElementById('bName').value.trim(); if(!n)return;
+  STORE.benefits.push({id:'b'+Date.now(),name:n,cat:document.getElementById('bCat').value.trim(),unlockAt:Math.max(0,parseInt(document.getElementById('bUnlock').value,10)||0)});
+  saveStore(); this.reset(); document.getElementById('bUnlock').value='0'; renderAdmin();
+});
+document.getElementById('rewardForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var n=document.getElementById('rName').value.trim(); if(!n)return;
+  STORE.rewards.push({id:'r'+Date.now(),name:n,th:Math.max(1,parseInt(document.getElementById('rTh').value,10)||1)});
+  saveStore(); this.reset(); document.getElementById('rTh').value='25'; renderAdmin();
+});
+document.getElementById('admBenefits').addEventListener('click',function(e){
+  var b=e.target.closest('[data-del-b]'); if(!b)return;
+  var id=b.getAttribute('data-del-b'); STORE.benefits=STORE.benefits.filter(function(x){return x.id!==id;}); saveStore(); renderAdmin();
+});
+document.getElementById('admRewards').addEventListener('click',function(e){
+  var b=e.target.closest('[data-del-r]'); if(!b)return;
+  var id=b.getAttribute('data-del-r'); STORE.rewards=STORE.rewards.filter(function(x){return x.id!==id;}); saveStore(); renderAdmin();
+});
+document.getElementById('adminLogout').addEventListener('click',function(){
+  document.getElementById('admin').classList.remove('open'); document.body.style.overflow='';
+});
+
 /* auth */
 var loginModal=document.getElementById('loginModal');
 function openLogin(){loginModal.classList.add('open');}
@@ -990,8 +1152,14 @@ document.getElementById('loginClose').addEventListener('click',closeLogin);
 loginModal.addEventListener('click',function(e){if(e.target===loginModal)closeLogin();});
 document.getElementById('loginForm').addEventListener('submit',function(e){
   e.preventDefault();
-  var u=document.getElementById('luser').value.trim(),p=document.getElementById('lpass').value;
-  if(u==='user'&&p==='password'){
+  var u=document.getElementById('luser').value.trim().toLowerCase(),p=document.getElementById('lpass').value;
+  if(u==='admin'&&p==='password'){
+    document.getElementById('loginErr').style.display='none';
+    closeLogin();
+    document.getElementById('admin').classList.add('open');
+    document.body.style.overflow='hidden';
+    renderAdmin();
+  } else if(u==='user'&&p==='password'){
     document.getElementById('loginErr').style.display='none';
     closeLogin();
     document.getElementById('dashHello').textContent='Welcome back, User';
