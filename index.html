@@ -376,6 +376,29 @@ h2.sec.light{color:#fff;}
 .adm-form label{font-size:12px;font-weight:600;color:var(--navy);}
 .adm-form input{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 11px;font-size:13px;font-family:var(--sans);background:#fff;color:var(--ink);margin-top:4px;}
 .adm-form input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
+.vbtn{flex:none;border:none;background:var(--sage);color:#fff;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;}
+.vbtn:hover{opacity:.9;}
+.q-meta{font-size:12px;color:var(--muted);margin-top:2px;}
+.adm-form select{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 11px;font-size:13px;font-family:var(--sans);background:#fff;color:var(--ink);margin-top:4px;}
+.tl-q{font-size:15px;font-weight:600;color:var(--navy);margin-top:8px;}
+.tl-choice{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;}
+.tl-panel{margin-top:14px;border:1px solid var(--border);border-radius:12px;padding:16px;background:var(--cream);}
+.tl-panel .d{font-size:13px;color:var(--muted);margin-bottom:10px;}
+.tl-steps{margin:12px 0 0 18px;font-size:13px;color:var(--muted);display:grid;gap:4px;}
+.tl-hint{margin-top:12px;font-size:12px;color:var(--muted);}
+.tl-import{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px;}
+.tl-file{display:inline-flex;align-items:center;gap:8px;border:1px dashed var(--navy-300);border-radius:10px;padding:9px 14px;cursor:pointer;font-size:13px;color:var(--navy);background:#fff;}
+.tl-file input{display:none;}
+.tl-done{display:flex;align-items:center;gap:12px;margin-top:10px;border:1px solid var(--sage);background:var(--sage-light);border-radius:12px;padding:14px;}
+.tl-done .tl-check{width:28px;height:28px;border-radius:50%;background:var(--sage);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex:none;}
+.tl-done .t{font-weight:600;color:var(--navy);} .tl-done .d{font-size:12px;color:var(--muted);}
+.tl-done button{margin-left:auto;}
+.tl-detail-h{margin-top:16px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--navy-300);}
+.tl-dgroup{margin-top:12px;}
+.tl-dname{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.tl-ind{display:flex;align-items:center;gap:8px;padding:3px 0;font-size:13px;}
+.tl-ind .dot{width:10px;height:10px;border-radius:50%;flex:none;}
+.tl-iname{color:var(--muted);}
 
 /* ===== admin v2 (case-management platform) ===== */
 .adash-body{display:flex;min-height:calc(100vh - 64px);}
@@ -754,18 +777,20 @@ svg.ic{width:24px;height:24px;}
 </footer>
 
 <!-- LOGIN MODAL -->
-<div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-label="Member log in">
+<div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-label="Sign in">
   <div class="modal-card">
     <button class="modal-x" id="loginClose" aria-label="Close">&times;</button>
-    <h3>Member log in</h3>
-    <p class="hint">Sign in to your EPE dashboard.</p>
+    <h3 id="authTitle">Log in</h3>
+    <p class="hint" id="authHint">Sign in to your EPE dashboard.</p>
     <form id="loginForm">
-      <label>Username<input type="text" id="luser" autocomplete="username" placeholder="user"/></label>
-      <label>Password<input type="password" id="lpass" autocomplete="current-password" placeholder="password"/></label>
-      <p class="modal-err" id="loginErr">Incorrect username or password.</p>
-      <button type="submit" class="btn btn-gold btn-full" style="margin-top:18px;">Log in</button>
+      <label id="nameRow" style="display:none;">Full name<input type="text" id="lname" autocomplete="name" placeholder="Your name"/></label>
+      <label>Email or demo login<input type="text" id="lemail" autocomplete="email" placeholder="you@example.com"/></label>
+      <label>Password<input type="password" id="lpass" autocomplete="current-password" placeholder="At least 6 characters"/></label>
+      <p class="modal-err" id="loginErr"></p>
+      <button type="submit" id="authSubmit" class="btn btn-gold btn-full" style="margin-top:18px;">Log in</button>
     </form>
-    <p class="demo-creds">Prototype demo — username <b>user</b> · password <b>password</b></p>
+    <p class="demo-creds" id="authToggle">New here? <a href="#" id="toSignup">Create an account</a></p>
+    <p class="demo-creds" style="margin-top:8px;">Demo (no account, password <b>password</b>): <b>user-demo</b> · <b>navigator-demo</b> · <b>partner-demo</b> · <b>admin-demo</b></p>
   </div>
 </div>
 
@@ -784,8 +809,9 @@ svg.ic{width:24px;height:24px;}
 
     <div class="panel" style="margin-top:24px;">
       <span class="section-eyebrow">Getting started</span>
-      <h2>Two steps to set up your journey</h2>
-      <div class="steps2" id="obSteps"></div>
+      <h2>Set up your Thrive Lights</h2>
+      <div id="tlOnboard"></div>
+      <div class="steps2" id="obSteps" style="margin-top:14px;"></div>
     </div>
 
     <div class="dash-grid">
@@ -826,7 +852,9 @@ svg.ic{width:24px;height:24px;}
         <div class="panel">
           <span class="section-eyebrow">Thrive Lights</span>
           <h2>Your results</h2>
+          <p class="sub" id="tlDate"></p>
           <div class="tl-grid" id="tlGrid"></div>
+          <div id="tlDetail"></div>
         </div>
         <div class="panel nav-card">
           <span class="section-eyebrow" style="color:var(--gold-light)">Member ↔ Hub ↔ Navigator</span>
@@ -849,7 +877,7 @@ svg.ic{width:24px;height:24px;}
 <!-- ADMIN BACK END (prototype) -->
 <div class="dash adash" id="admin">
   <div class="dash-bar">
-    <div class="brand"><span class="brand-mark">E</span><span class="brand-name">Wichita EPE · Admin</span></div>
+    <div class="brand"><span class="brand-mark">E</span><span class="brand-name">Wichita EPE · Admin (Demo)</span></div>
     <div class="who">
       <select class="role-select" id="admRole" aria-label="Switch role">
         <option value="super">Super Admin</option>
@@ -867,7 +895,89 @@ svg.ic{width:24px;height:24px;}
   </div>
 </div>
 
+<!-- NAVIGATOR (prototype) -->
+<div class="dash" id="navdash">
+  <div class="dash-bar">
+    <div class="brand"><span class="brand-mark">E</span><span class="brand-name">Wichita EPE · Navigator</span></div>
+    <div class="who"><button class="btn btn-outline-light btn-sm" id="navLogout">Log out</button></div>
+  </div>
+  <div class="dash-wrap">
+    <h1>Navigator dashboard</h1>
+    <p class="lead">Verify member progress and support your caseload.</p>
+    <div class="stat-grid" id="navStats"></div>
+    <div class="dash-grid">
+      <div>
+        <div class="panel">
+          <span class="section-eyebrow">Action needed</span>
+          <h2>Verification queue</h2>
+          <p class="sub">Members marked these done — confirm at a check-in to award stars.</p>
+          <div id="navQueue"></div>
+        </div>
+        <div class="panel">
+          <span class="section-eyebrow">Recent</span>
+          <h2>Recently verified</h2>
+          <div class="hist" id="navHist"></div>
+        </div>
+      </div>
+      <div>
+        <div class="panel">
+          <span class="section-eyebrow">Your caseload</span>
+          <h2>My members</h2>
+          <div id="navCase"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PARTNER ORG (prototype) -->
+<div class="dash" id="partnerdash">
+  <div class="dash-bar">
+    <div class="brand"><span class="brand-mark">E</span><span class="brand-name">Wichita EPE · Partner</span></div>
+    <div class="who"><span class="stars" id="partnerName">Partner</span><button class="btn btn-outline-light btn-sm" id="partnerLogout">Log out</button></div>
+  </div>
+  <div class="dash-wrap">
+    <h1>Partner portal</h1>
+    <p class="lead">Referrals, participation, and the members you serve.</p>
+    <div class="stat-grid" id="partnerStats"></div>
+    <div class="dash-grid">
+      <div>
+        <div class="panel">
+          <span class="section-eyebrow">Inbox</span>
+          <h2>Referrals</h2>
+          <p class="sub">Members referred to your programs. Advance each as you work with them.</p>
+          <div id="partnerRef"></div>
+        </div>
+        <div class="panel">
+          <span class="section-eyebrow">Action needed</span>
+          <h2>Verify participation</h2>
+          <p class="sub">Confirm attendance or completion to award the member their stars.</p>
+          <div id="partnerQueue"></div>
+        </div>
+      </div>
+      <div>
+        <div class="panel">
+          <span class="section-eyebrow">Your members</span>
+          <h2>Participants</h2>
+          <div id="partnerParts"></div>
+        </div>
+        <div class="panel">
+          <span class="section-eyebrow">Recent</span>
+          <h2>Recently verified</h2>
+          <div class="hist" id="partnerHist"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+/* ---------- Supabase (LIVE) ---------- */
+var SB_URL='https://mhpbkjnzmqrzxthnqdoy.supabase.co';
+var SB_KEY='sb_publishable_I2IbZD8lqrWc9QpOo3dMGg_H_v7ST2G';
+var sb=window.supabase.createClient(SB_URL,SB_KEY);
+var CUR={live:false,uid:null,email:null,stars:0,level:'basic'};
 /* ---------- icon set (inline SVG paths) ---------- */
 var ICONS={
   card:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>',
@@ -1093,8 +1203,7 @@ var DASH={
   },
   state:{},
   ob:[
-    {t:"Take Thrive Lights",d:"Complete the self-check across your life areas — or import existing results.",done:false},
-    {t:"Set goals based on your results",d:"Choose the areas to focus on first and set 1–2 goals.",done:false}
+    {t:"Set goals based on your results",d:"Once your Thrive Lights results are in, choose your focus areas and set 1–2 goals.",done:false}
   ],
   supports:[
     {t:"Bus pass",d:"Immediate transit support to get where you need to go."},
@@ -1124,11 +1233,24 @@ function renderDash(){
   var stars=dStars();
   document.getElementById('dashStars').innerHTML='&#9733; '+stars;
   document.getElementById('obSteps').innerHTML=DASH.ob.map(function(o,i){
-    return '<div class="ob-step'+(o.done?' done':'')+'"><span class="n">'+(o.done?'✓':(i+1))+'</span><div><div class="t">'+o.t+'</div><div class="d">'+o.d+'</div></div><button type="button" class="btn '+(o.done?'btn-outline':'btn-navy')+' btn-sm go" data-ob="'+i+'">'+(o.done?'Done':(i===0?'Take Thrive Lights':'Set goals'))+'</button></div>';
+    return '<div class="ob-step'+(o.done?' done':'')+'"><span class="n">'+(o.done?'✓':(i+1))+'</span><div><div class="t">'+o.t+'</div><div class="d">'+o.d+'</div></div><button type="button" class="btn '+(o.done?'btn-outline':'btn-navy')+' btn-sm go" data-ob="'+i+'">'+(o.done?'Done':'Set goals')+'</button></div>';
   }).join('');
   document.getElementById('tlGrid').innerHTML=DASH.tl.map(function(r){
     return '<div class="tl-cell"><div><span class="dot bg-'+SCLASS[r.s]+'"></span><span class="c">'+r.c+'</span></div><div class="s st-'+SCLASS[r.s]+'">'+SLABEL[r.s]+'</div></div>';
   }).join('');
+  (function(){var dt=document.getElementById('tlDate');if(dt)dt.textContent=DASH.tlDate?('Assessed '+DASH.tlDate):'';
+    var det=document.getElementById('tlDetail');if(!det)return;
+    if(DASH.tlIndicators&&DASH.tlIndicators.length){
+      var order=['Transportation','Income & Work','Financial Health','Education','Housing','Health & Wellness','Other'];
+      var groups={};DASH.tlIndicators.forEach(function(ind){(groups[ind.domain]=groups[ind.domain]||[]).push(ind);});
+      var keys=order.filter(function(k){return groups[k];});
+      det.innerHTML='<div class="tl-detail-h">All results ('+DASH.tlIndicators.length+' indicators)</div>'+keys.map(function(d){
+        return '<div class="tl-dgroup"><div class="tl-dname">'+d+'</div>'+groups[d].map(function(ind){
+          return '<div class="tl-ind"><span class="dot bg-'+SCLASS[ind.status]+'"></span><span class="tl-iname">'+ind.name+'</span></div>';
+        }).join('')+'</div>';
+      }).join('');
+    } else { det.innerHTML=''; }
+  })();
   var prio=DASH.tl.filter(function(r){return r.s<2 && DASH.journeys[r.c];}).sort(function(a,b){return a.s-b.s;});
   document.getElementById('prioList').innerHTML=prio.map(function(r){
     var lead=r.s===0?('You’re red in '+r.c+' — here are your next actions.'):('You’re working on '+r.c+' — keep the momentum going.');
@@ -1168,6 +1290,97 @@ document.getElementById('obSteps').addEventListener('click',function(e){
   var b=e.target.closest('[data-ob]'); if(!b)return;
   var i=+b.getAttribute('data-ob'); DASH.ob[i].done=!DASH.ob[i].done; renderDash();
 });
+/* ---------- Thrive Lights import onboarding ---------- */
+var SURVEY_URL="https://platform.povertystoplight.org/?token=Thrive_ICT__Household__st_survey_2026-07-08T16:48:13.615";
+function tlImportUI(){
+  return '<div class="tl-import"><label class="tl-file"><input type="file" id="tlFile" accept="application/pdf,.pdf"/><span id="tlFileName">Choose your life map (PDF)\u2026</span></label><button type="button" class="btn btn-navy btn-sm" data-tlimport="1">Import results</button></div>';
+}
+function renderOnboard(){
+  var el=document.getElementById('tlOnboard'); if(!el)return;
+  if(DASH.tlImported){
+    el.innerHTML='<div class="tl-done"><span class="tl-check">\u2713</span><div><div class="t">Thrive Lights results imported</div><div class="d">From '+(DASH.tlFile||'your life map')+(DASH.tlSummary?' — '+DASH.tlSummary:'')+' \u2014 your results appear below.</div></div><button type="button" class="btn btn-outline btn-sm" data-tlreset="1">Re-import</button></div>';
+    return;
+  }
+  var q='<p class="tl-q">Have you taken Thrive Lights before?</p><div class="tl-choice"><button type="button" class="btn '+(DASH.tlChoice==='yes'?'btn-navy':'btn-outline')+' btn-sm" data-tl="yes">Yes, I have</button><button type="button" class="btn '+(DASH.tlChoice==='no'?'btn-navy':'btn-outline')+' btn-sm" data-tl="no">No, not yet</button></div>';
+  var body='';
+  if(DASH.tlChoice==='yes'){
+    body='<div class="tl-panel">'+tlImportUI()+'<p class="tl-hint">Don\u2019t have your life map handy? Log in to your Poverty Stoplight account and hit <b>Download</b>, or <a href="'+SURVEY_URL+'" target="_blank" rel="noopener">open the platform \u2197</a>.</p></div>';
+  } else if(DASH.tlChoice==='no'){
+    body='<div class="tl-panel"><p class="d">No problem \u2014 take the quiz, then download your life map and import it here.</p><a class="btn btn-gold btn-sm" href="'+SURVEY_URL+'" target="_blank" rel="noopener">Take Thrive Lights \u2197</a><ol class="tl-steps"><li>Complete the survey.</li><li>Hit <b>Download</b> to save your life map (PDF).</li><li>Import it below.</li></ol>'+tlImportUI()+'</div>';
+  }
+  el.innerHTML=q+body;
+}
+function psFlash(m){var n=document.getElementById('tlFileName');if(n)n.textContent=m;}
+function psLoad(cb,err){
+  if(window.pdfjsLib){cb();return;}
+  var sc=document.createElement('script');
+  sc.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+  sc.onload=function(){try{pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';}catch(e){}cb();};
+  sc.onerror=function(){if(err)err();};
+  document.head.appendChild(sc);
+}
+var PS_DOMAINS=[
+  ['Transportation',['transportation']],
+  ['Financial Health',['savings','budget','debt','loan','banking']],
+  ['Income & Work',['enough income','employ','resume','generate in','assets']],
+  ['Education',['read','graduate','enrolled','learn new','recreational']],
+  ['Housing',['housing','utilities','kitchen','appliance','bathroom','space in','clothing','internet','emergency','childcare','property','neighborhood is safe']],
+  ['Health & Wellness',['health serv','mental','teeth','vision','food','healthy diet','physical','healthy habits','relationship','clean neigh','community','conflict','believe in myself','spiritual','emotion','happy','recognize','well-being']]
+];
+function psDomainOf(t){for(var i=0;i<PS_DOMAINS.length;i++){var ks=PS_DOMAINS[i][1];for(var j=0;j<ks.length;j++){if(t.indexOf(ks[j])>=0)return PS_DOMAINS[i][0];}}return null;}
+function psStatus(c){var r=c[0],g=c[1],b=c[2];if(r>240&&g>240&&b>240)return null;if(r<40&&g<40&&b<40)return null;if(g>=140&&r<170)return 2;if(r>=200&&g>=140&&b<130)return 1;if(r>=170&&g<140)return 0;return null;}
+function psParse(file){
+  return file.arrayBuffer().then(function(buf){return pdfjsLib.getDocument({data:buf}).promise;})
+  .then(function(doc){return doc.getPage(1);})
+  .then(function(page){return Promise.all([page.getTextContent(),page.getOperatorList()]).then(function(res){
+    var tc=res[0],ops=res[1],O=pdfjsLib.OPS,U=pdfjsLib.Util;
+    var items=[];
+    tc.items.forEach(function(it){if(it.str&&it.str.trim()){var y=it.transform[5];if(y<520)items.push({s:it.str.trim(),x:it.transform[4],y:y});}});
+    items.sort(function(a,b){return (b.y-a.y)||(a.x-b.x);});
+    var clusters=[];
+    items.forEach(function(it){var c=null;for(var i=0;i<clusters.length;i++){if(Math.abs(clusters[i].x-it.x)<45&&Math.abs(clusters[i].y-it.y)<24){c=clusters[i];break;}}if(!c){clusters.push({x:it.x,y:it.y,t:it.s.toLowerCase(),raw:it.s});}else{c.t+=' '+it.s.toLowerCase();c.raw+=' '+it.s;c.y=Math.min(c.y,it.y);}});
+    var ctm=[1,0,0,1,0,0],stk=[],col=null,boxes=[];
+    function dev(x,y){return [ctm[0]*x+ctm[2]*y+ctm[4],ctm[1]*x+ctm[3]*y+ctm[5]];}
+    for(var k=0;k<ops.fnArray.length;k++){var fn=ops.fnArray[k],a=ops.argsArray[k];
+      if(fn===O.save)stk.push(ctm.slice());
+      else if(fn===O.restore)ctm=stk.pop()||ctm;
+      else if(fn===O.transform)ctm=U.transform(ctm,a);
+      else if(fn===O.paintFormXObjectBegin){stk.push(ctm.slice());if(a&&a[0])ctm=U.transform(ctm,a[0]);}
+      else if(fn===O.paintFormXObjectEnd){ctm=stk.pop()||ctm;}
+      else if(fn===O.setFillRGBColor){col=[a[0],a[1],a[2]];}
+      else if(fn===O.constructPath){var mm=a[2];if(mm&&col){var p0=dev(mm[0],mm[1]),p1=dev(mm[2],mm[3]);boxes.push({c:[col[0],col[1],col[2]],x:(p0[0]+p1[0])/2,y:(p0[1]+p1[1])/2});}}
+    }
+    var cboxes=[];boxes.forEach(function(b){var stx=psStatus(b.c);if(stx!==null)cboxes.push({x:b.x,y:b.y,s:stx});});
+    var domStat={},g=0,y=0,rd=0,matched=0;
+    clusters.forEach(function(c){var best=null,bd=1e9;for(var i=0;i<cboxes.length;i++){var dx=cboxes[i].x-c.x,dy=cboxes[i].y-c.y,d=dx*dx+dy*dy;if(d<bd){bd=d;best=cboxes[i];}}if(!best||bd>6000)return;c.status=best.s;if(best.s===2)g++;else if(best.s===1)y++;else rd++;var dom=psDomainOf(c.t);if(!dom)return;matched++;if(domStat[dom]===undefined||best.s<domStat[dom])domStat[dom]=best.s;});
+    function psClean(x){return x.replace(/([A-Za-z])-\s+([A-Za-z])/g,'$1$2').replace(/\s+/g,' ').trim();}
+    var indicators=[];clusters.forEach(function(c){if(c.status!==undefined)indicators.push({name:psClean(c.raw),status:c.status,domain:psDomainOf(c.t)||'Other'});});
+    var allTxt=tc.items.map(function(i){return i.str;}).join(' ');
+    var dm=allTxt.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s*\d{4}/i);
+    return {colored:g+y+rd,green:g,yellow:y,red:rd,matched:matched,domains:domStat,indicators:indicators,date:dm?dm[0]:''};
+  });});
+}
+function tlDoImport(){
+  if(!DASH.tlFileObj){psFlash('Please choose your life map PDF first.');return;}
+  psFlash('Reading your life map…');
+  psLoad(function(){
+    psParse(DASH.tlFileObj).then(function(r){
+      if(r.colored===0){psFlash('We read the PDF but found no stoplight colors — is this a completed Poverty Stoplight life map?');return;}
+      DASH.tl=DASH.tl.map(function(row){return (r.domains[row.c]!==undefined)?{c:row.c,s:r.domains[row.c]}:row;});
+      DASH.tlSummary=r.green+' green · '+r.yellow+' yellow · '+r.red+' red';
+      DASH.tlIndicators=r.indicators||[]; DASH.tlDate=r.date||'';
+      DASH.tlImported=true; if(CUR.live&&CUR.uid){saveAssessment(r);} renderDash(); renderOnboard();
+    }).catch(function(e){psFlash('Sorry — could not read that PDF. Please upload your Poverty Stoplight life map (PDF).');});
+  },function(){psFlash('Could not load the PDF reader (check your connection) — please try again.');});
+}
+document.getElementById('tlOnboard').addEventListener('click',function(e){
+  var c=e.target.closest('[data-tl]'); if(c){DASH.tlChoice=c.getAttribute('data-tl');renderOnboard();return;}
+  if(e.target.closest('[data-tlimport]')){tlDoImport();return;}
+  if(e.target.closest('[data-tlreset]')){DASH.tlImported=false;DASH.tlChoice='yes';DASH.tlFile='';renderOnboard();return;}
+});
+document.getElementById('tlOnboard').addEventListener('change',function(e){
+  var f=e.target; if(f&&f.id==='tlFile'&&f.files&&f.files[0]){DASH.tlFileObj=f.files[0];DASH.tlFile=f.files[0].name;var nm=document.getElementById('tlFileName');if(nm)nm.textContent=f.files[0].name;}
+});
 document.getElementById('checkinBtn').addEventListener('click',function(){
   var date=new Date().toLocaleDateString(),hubs=['Phoenix','Army of Normal Folks','WSU Tech'],any=false;
   Object.keys(DASH.journeys).forEach(function(c){DASH.journeys[c].forEach(function(a){
@@ -1181,14 +1394,14 @@ document.getElementById('checkinBtn').addEventListener('click',function(){
 var STORE_KEY='epe_admin_store_v1';
 var STORE_DEFAULTS={
   benefits:[
-    {id:'b1',name:'Bus pass',cat:'Transportation',unlockAt:0},
-    {id:'b2',name:'Bike',cat:'Transportation',unlockAt:0},
-    {id:'b3',name:'Uber support',cat:'Transportation',unlockAt:0},
-    {id:'b4',name:'Coaching',cat:'People Development',unlockAt:0},
-    {id:'b5',name:'Financial classes',cat:'Financial Health',unlockAt:0},
-    {id:'b6',name:'Transportation consult',cat:'Transportation',unlockAt:0},
-    {id:'b7',name:'Vehicle repair support',cat:'Transportation',unlockAt:60},
-    {id:'b8',name:'Homeownership consult',cat:'Housing',unlockAt:80}
+    {id:'b1',name:'Bus pass',cat:'Transportation',unlockAt:0,tier:'Basic'},
+    {id:'b2',name:'Bike',cat:'Transportation',unlockAt:0,tier:'Basic'},
+    {id:'b3',name:'Uber support',cat:'Transportation',unlockAt:0,tier:'Basic'},
+    {id:'b4',name:'Coaching',cat:'People Development',unlockAt:0,tier:'Basic'},
+    {id:'b5',name:'Financial classes',cat:'Financial Health',unlockAt:0,tier:'Basic'},
+    {id:'b6',name:'Transportation consult',cat:'Transportation',unlockAt:0,tier:'Basic'},
+    {id:'b7',name:'Vehicle repair support',cat:'Transportation',unlockAt:60,tier:'Gold'},
+    {id:'b8',name:'Homeownership consult',cat:'Housing',unlockAt:80,tier:'Gold'}
   ],
   rewards:[
     {id:'r1',name:"Doc Green's — free entrée",th:20},
@@ -1202,6 +1415,7 @@ var STORE;
 function loadStore(){try{var s=JSON.parse(localStorage.getItem(STORE_KEY));if(s&&s.benefits&&s.rewards)return s;}catch(e){}return JSON.parse(JSON.stringify(STORE_DEFAULTS));}
 function saveStore(){try{localStorage.setItem(STORE_KEY,JSON.stringify(STORE));}catch(e){}}
 STORE=loadStore();
+STORE.benefits.forEach(function(b){if(!b.tier)b.tier='Basic';});
 function rewardList(){
   var a=STORE.rewards.map(function(r){return {t:r.name,th:r.th};});
   STORE.benefits.forEach(function(b){if(b.unlockAt>0)a.push({t:b.name,th:b.unlockAt});});
@@ -1659,12 +1873,12 @@ function viewSolutions(){
   var cats=['Financial','Transportation','Housing','Workforce','Health','Education','Community'];
   var h=head('Bank of Solutions','Manage the benefits members can access now or unlock with stars. These feed the live member dashboard.');
   h+='<div class="panel"><span class="section-eyebrow">Catalog</span><h2>Benefits ('+STORE.benefits.length+')</h2>'+
-     '<div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:560px"><thead><tr><th>Benefit</th><th>Category</th><th>Access</th><th></th></tr></thead><tbody>'+
-     STORE.benefits.map(function(b){return '<tr><td class="nm">'+b.name+'</td><td>'+(b.cat||'—')+'</td><td>'+(b.unlockAt>0?'<span class="tag-b lv-gold">Unlocks at '+b.unlockAt+'★</span>':'<span class="tag-b st-active">Available now</span>')+'</td><td><button class="rowact" data-delb="'+b.id+'">Archive</button></td></tr>';}).join('')+
+     '<div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:560px"><thead><tr><th>Benefit</th><th>Category</th><th>Tier</th><th>Access</th><th></th></tr></thead><tbody>'+
+     STORE.benefits.map(function(b){return '<tr><td class="nm">'+b.name+'</td><td>'+(b.cat||'—')+'</td><td><span class="tag-b '+(b.tier==='Gold'?'lv-gold':'lv-basic')+'">'+(b.tier||'Basic')+'</span></td><td>'+(b.unlockAt>0?'<span class="tag-b lv-gold">Unlocks at '+b.unlockAt+'★</span>':'<span class="tag-b st-active">Available now</span>')+'</td><td><button class="rowact" data-delb="'+b.id+'">Archive</button></td></tr>';}).join('')+
      '</tbody></table></div>'+
      '<form class="adm-form" id="benefitForm" style="margin-top:16px"><div><label>Benefit name</label><input id="bName" placeholder="e.g. Bus pass" required/></div>'+
      '<div><label>Category</label><input id="bCat" list="catList" placeholder="e.g. Transportation"/><datalist id="catList">'+cats.map(function(c){return '<option value="'+c+'">';}).join('')+'</datalist></div>'+
-     '<div><label>Unlock at (★)</label><input id="bUnlock" type="number" min="0" value="0"/></div>'+
+     '<div><label>Unlock at (★)</label><input id="bUnlock" type="number" min="0" value="0"/></div>'+'<div><label>Tier</label><select id="bTier"><option value="Basic">Basic</option><option value="Gold">Gold</option></select></div>'+
      '<button class="btn btn-navy btn-sm" type="submit">Add benefit</button></form></div>';
   /* by category summary */
   var byCat={};STORE.benefits.forEach(function(b){var c=b.cat||'Other';byCat[c]=(byCat[c]||0)+1;});
@@ -1835,7 +2049,7 @@ document.getElementById('admView').addEventListener('input',function(e){
 });
 document.getElementById('admView').addEventListener('submit',function(e){
   if(e.target.id==='benefitForm'){e.preventDefault();var n=document.getElementById('bName').value.trim();if(!n)return;
-    STORE.benefits.push({id:'b'+Date.now(),name:n,cat:document.getElementById('bCat').value.trim(),unlockAt:Math.max(0,parseInt(document.getElementById('bUnlock').value,10)||0)});saveStore();renderView();return;}
+    STORE.benefits.push({id:'b'+Date.now(),name:n,cat:document.getElementById('bCat').value.trim(),unlockAt:Math.max(0,parseInt(document.getElementById('bUnlock').value,10)||0),tier:document.getElementById('bTier').value});saveStore();renderView();return;}
   if(e.target.id==='rewardForm'){e.preventDefault();var n2=document.getElementById('rName').value.trim();if(!n2)return;
     STORE.rewards.push({id:'r'+Date.now(),name:n2,th:Math.max(1,parseInt(document.getElementById('rTh').value,10)||1)});saveStore();renderView();return;}
 });
@@ -1895,6 +2109,103 @@ document.getElementById('adminLogout').addEventListener('click',function(){
   document.getElementById('admin').classList.remove('open'); document.body.style.overflow='';
 });
 
+/* ================= prototype navigator ================= */
+var NAV_META={
+  "Marcus T.":{priority:"Transportation",last:"3 days ago"},
+  "Olivia M.":{priority:"Education",last:"1 week ago"},
+  "Jamal W.":{priority:"Income & Work",last:"today"},
+  "Sofia G.":{priority:"Financial Health",last:"2 weeks ago"},
+  "Andre P.":{priority:"Transportation",last:"5 days ago"}
+};
+var NAV_QUEUE=[
+  {id:'q1',member:"Marcus T.",action:"Earn your bike (Bike Walk)",cat:"Transportation",pts:15,hub:"Phoenix"},
+  {id:'q2',member:"Olivia M.",action:"Attend classes",cat:"Education",pts:10,hub:"WSU Tech"},
+  {id:'q3',member:"Jamal W.",action:"Complete Empower Workforce intake",cat:"Income & Work",pts:10,hub:"Empower"},
+  {id:'q4',member:"Sofia G.",action:"Attend a financial class",cat:"Financial Health",pts:10,hub:"Army of Normal Folks"},
+  {id:'q5',member:"Andre P.",action:"Take a transportation class",cat:"Transportation",pts:10,hub:"Phoenix"}
+];
+var NAV_HIST=[];
+function nMember(n){for(var i=0;i<MEMBERS.length;i++){if(MEMBERS[i].name===n)return MEMBERS[i];}return null;}
+function renderNav(){
+  document.getElementById('navStats').innerHTML=[
+    ['My members',Object.keys(NAV_META).length],
+    ['Pending verifications',NAV_QUEUE.length],
+    ['Verified this session',NAV_HIST.filter(function(h){return h.pts>0;}).length],
+    ['Stars awarded',NAV_HIST.reduce(function(a,h){return a+h.pts;},0)]
+  ].map(function(s){return '<div class="stat"><div class="v">'+s[1]+'</div><div class="k">'+s[0]+'</div></div>';}).join('');
+  document.getElementById('navQueue').innerHTML=NAV_QUEUE.length?NAV_QUEUE.map(function(q){
+    return '<div class="adm-row"><div class="info"><div class="nm">'+q.member+'</div><div class="q-meta">'+q.action+' · '+q.cat+' · '+q.hub+'</div></div><span class="pill">+'+q.pts+'★</span><button class="vbtn" data-verify="'+q.id+'">Verify</button></div>';
+  }).join(''):'<p class="sub">Queue is clear — nothing awaiting verification.</p>';
+  document.getElementById('navCase').innerHTML=MEMBERS.filter(function(m){return NAV_META[m.name];}).map(function(m){
+    var meta=NAV_META[m.name];
+    return '<div class="adm-row"><div class="info"><div class="nm">'+m.name+'</div><div class="q-meta">Priority: '+meta.priority+' · Last check-in: '+meta.last+'</div></div><span class="pill">★ '+m.stars+'</span><button class="vbtn" style="background:var(--navy)" data-checkin="'+m.name+'">Log check-in</button></div>';
+  }).join('');
+  document.getElementById('navHist').innerHTML=NAV_HIST.length?NAV_HIST.map(function(h){
+    return '<div class="row"><span>'+h.member+' — '+h.action+'</span>'+(h.pts>0?'<span class="s">+'+h.pts+'★</span>':'')+'</div>';
+  }).join(''):'<div class="empty">No verifications yet this session.</div>';
+}
+document.getElementById('navQueue').addEventListener('click',function(e){
+  var b=e.target.closest('[data-verify]'); if(!b)return;
+  var id=b.getAttribute('data-verify'),item=null;
+  NAV_QUEUE=NAV_QUEUE.filter(function(q){if(q.id===id){item=q;return false;}return true;});
+  if(item){var m=nMember(item.member); if(m)m.stars+=item.pts; NAV_HIST.unshift({member:item.member,action:item.action,pts:item.pts});}
+  renderNav();
+});
+document.getElementById('navCase').addEventListener('click',function(e){
+  var b=e.target.closest('[data-checkin]'); if(!b)return;
+  var name=b.getAttribute('data-checkin'); if(NAV_META[name])NAV_META[name].last='just now';
+  NAV_HIST.unshift({member:name,action:'Check-in logged',pts:0});
+  renderNav();
+});
+document.getElementById('navLogout').addEventListener('click',function(){
+  document.getElementById('navdash').classList.remove('open'); document.body.style.overflow='';
+});
+
+/* ================= prototype partner org ================= */
+var PARTNER_NAME="Empower";
+var REF_STATUS=["New","Contacted","Enrolled"];
+var PARTNER_REF=[
+  {id:'pr1',member:"Jamal W.",program:"Workforce program",status:0},
+  {id:'pr2',member:"Sofia G.",program:"Transportation consultation",status:1},
+  {id:'pr3',member:"Andre P.",program:"Small business consultation",status:0},
+  {id:'pr4',member:"Marcus T.",program:"Workforce program",status:2}
+];
+var PARTNER_QUEUE=[
+  {id:'pq1',member:"Jamal W.",action:"Completed Workforce intake",pts:10},
+  {id:'pq2',member:"Andre P.",action:"Attended small-business session",pts:10},
+  {id:'pq3',member:"Sofia G.",action:"Finished transportation plan",pts:5}
+];
+var PARTNER_HIST=[];
+function renderPartner(){
+  document.getElementById('partnerName').textContent=PARTNER_NAME;
+  var served={};PARTNER_REF.forEach(function(r){served[r.member]=1;});PARTNER_HIST.forEach(function(h){served[h.member]=1;});
+  var stats=[['New referrals',PARTNER_REF.filter(function(r){return r.status===0;}).length],['Enrolled',PARTNER_REF.filter(function(r){return r.status===2;}).length],['Verified',PARTNER_HIST.length],['Members served',Object.keys(served).length]];
+  document.getElementById('partnerStats').innerHTML=stats.map(function(s){return '<div class="stat"><div class="v">'+s[1]+'</div><div class="k">'+s[0]+'</div></div>';}).join('');
+  document.getElementById('partnerRef').innerHTML=PARTNER_REF.map(function(r){
+    return '<div class="adm-row"><div class="info"><div class="nm">'+r.member+'</div><div class="q-meta">'+r.program+'</div></div><button class="vbtn" style="background:var(--navy)" data-refadv="'+r.id+'">'+REF_STATUS[r.status]+(r.status<2?' →':'')+'</button></div>';
+  }).join('');
+  document.getElementById('partnerQueue').innerHTML=PARTNER_QUEUE.length?PARTNER_QUEUE.map(function(q){
+    return '<div class="adm-row"><div class="info"><div class="nm">'+q.member+'</div><div class="q-meta">'+q.action+'</div></div><span class="pill">+'+q.pts+'★</span><button class="vbtn" data-pverify="'+q.id+'">Verify</button></div>';
+  }).join(''):'<p class="sub">Nothing awaiting verification.</p>';
+  document.getElementById('partnerParts').innerHTML=Object.keys(served).map(function(nm){
+    var m=nMember(nm);return '<div class="adm-row"><div class="info"><div class="nm">'+nm+'</div></div><span class="pill">★ '+(m?m.stars:0)+'</span></div>';
+  }).join('');
+  document.getElementById('partnerHist').innerHTML=PARTNER_HIST.length?PARTNER_HIST.map(function(h){return '<div class="row"><span>'+h.member+' — '+h.action+'</span><span class="s">+'+h.pts+'★</span></div>';}).join(''):'<div class="empty">No verifications yet this session.</div>';
+}
+document.getElementById('partnerRef').addEventListener('click',function(e){
+  var b=e.target.closest('[data-refadv]'); if(!b)return; var id=b.getAttribute('data-refadv');
+  PARTNER_REF.forEach(function(r){if(r.id===id&&r.status<2)r.status++;}); renderPartner();
+});
+document.getElementById('partnerQueue').addEventListener('click',function(e){
+  var b=e.target.closest('[data-pverify]'); if(!b)return; var id=b.getAttribute('data-pverify'),item=null;
+  PARTNER_QUEUE=PARTNER_QUEUE.filter(function(q){if(q.id===id){item=q;return false;}return true;});
+  if(item){var m=nMember(item.member);if(m)m.stars+=item.pts;PARTNER_HIST.unshift({member:item.member,action:item.action,pts:item.pts});}
+  renderPartner();
+});
+document.getElementById('partnerLogout').addEventListener('click',function(){
+  document.getElementById('partnerdash').classList.remove('open'); document.body.style.overflow='';
+});
+
 /* auth */
 var loginModal=document.getElementById('loginModal');
 function openLogin(){loginModal.classList.add('open');}
@@ -1902,28 +2213,128 @@ function closeLogin(){loginModal.classList.remove('open');}
 Array.prototype.forEach.call(document.querySelectorAll('.js-login'),function(b){b.addEventListener('click',function(){menu.classList.remove('open');openLogin();});});
 document.getElementById('loginClose').addEventListener('click',closeLogin);
 loginModal.addEventListener('click',function(e){if(e.target===loginModal)closeLogin();});
+var authMode='login';
+function setAuthMode(m){authMode=m;
+  document.getElementById('authTitle').textContent=(m==='signup')?'Create your account':'Log in';
+  document.getElementById('authHint').textContent=(m==='signup')?'Join EPE — it only takes a minute.':'Sign in to your EPE dashboard.';
+  document.getElementById('nameRow').style.display=(m==='signup')?'block':'none';
+  document.getElementById('authSubmit').textContent=(m==='signup')?'Sign up':'Log in';
+  document.getElementById('authToggle').innerHTML=(m==='signup')?'Already have an account? <a href="#" id="toLogin">Log in</a>':'New here? <a href="#" id="toSignup">Create an account</a>';
+  var er=document.getElementById('loginErr'); er.textContent=''; er.style.display='none';
+}
+setAuthMode('login');
+document.getElementById('authToggle').addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;e.preventDefault();setAuthMode(a.id==='toSignup'?'signup':'login');});
+function authErr(msg){var el=document.getElementById('loginErr');el.textContent=msg;el.style.display='block';}
+function hideAllDash(){['dashboard','navdash','partnerdash','admin'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove('open');});document.body.style.overflow='';}
+function routeByRole(profile,member,email){
+  hideAllDash();
+  var role=(profile&&profile.role)||'member';
+  if(role==='admin'){document.getElementById('admin').classList.add('open');document.body.style.overflow='hidden';openAdmin();}
+  else if(role==='navigator'){document.getElementById('navdash').classList.add('open');document.body.style.overflow='hidden';renderNav();}
+  else if(role==='partner'){document.getElementById('partnerdash').classList.add('open');document.body.style.overflow='hidden';renderPartner();}
+  else {
+    var nm=(profile&&profile.full_name)||'Member';
+    document.getElementById('dashHello').textContent='Welcome, '+nm;
+    var pn=document.getElementById('profName'); if(pn)pn.textContent=nm;
+    var ld=document.querySelector('#dashboard .lead'); if(ld)ld.textContent='Live account: '+(email||'')+' — your data will fill in as you use the app.';
+    document.getElementById('dashboard').classList.add('open');document.body.style.overflow='hidden';
+    loadLiveMember(profile);
+  }
+}
+function applyLiveMember(mem,profile){
+  var st=CUR.stars||0;
+  var ds=document.getElementById('dashStars'); if(ds)ds.innerHTML='&#9733; '+st;
+  var pn=document.getElementById('profName'); if(pn)pn.textContent=(profile&&profile.full_name)||'Member';
+  var sub=document.querySelector('#profName + .sub'); if(sub)sub.textContent=(((mem&&mem.level)||'basic')==='gold'?'Gold Member':'Basic Member')+((mem&&mem.joined_at)?(' · since '+new Date(mem.joined_at).toLocaleDateString()):'');
+  var ld=document.querySelector('#dashboard .lead'); if(ld)ld.textContent='Live account: '+(CUR.email||'');
+}
+function applyAssessment(asmt,rows){
+  var map={red:0,yellow:1,green:2};
+  var inds=(rows||[]).map(function(r){return {name:r.indicator,domain:r.domain||'Other',status:map[r.status]};});
+  DASH.tlIndicators=inds;
+  var domStat={};
+  inds.forEach(function(ind){var d=ind.domain; if(d&&d!=='Other'){ if(domStat[d]===undefined||ind.status<domStat[d])domStat[d]=ind.status; }});
+  DASH.tl=DASH.tl.map(function(row){return (domStat[row.c]!==undefined)?{c:row.c,s:domStat[row.c]}:row;});
+  DASH.tlDate=asmt.assessed_on?new Date(asmt.assessed_on+'T00:00:00').toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'}):'';
+  DASH.tlSummary=(asmt.green||0)+' green · '+(asmt.yellow||0)+' yellow · '+(asmt.red||0)+' red';
+  DASH.tlImported=true;
+}
+function saveAssessment(r){
+  var iso=null; if(r.date){var dd=new Date(r.date); if(!isNaN(dd.getTime())) iso=dd.toISOString().slice(0,10);}
+  sb.from('assessments').insert({member_id:CUR.uid,assessed_on:iso,source:'import',green:r.green,yellow:r.yellow,red:r.red}).select('id').single().then(function(a){
+    if(a.error||!a.data)return;
+    var aid=a.data.id;
+    var rows=(r.indicators||[]).map(function(ind){return {assessment_id:aid,indicator:ind.name,domain:ind.domain,status:['red','yellow','green'][ind.status]};});
+    if(rows.length)sb.from('assessment_indicators').insert(rows);
+  });
+}
+function loadLiveMember(profile){
+  var nm=(profile&&profile.full_name)||'Member';
+  document.getElementById('dashHello').textContent='Welcome, '+nm;
+  document.getElementById('dashboard').classList.add('open'); document.body.style.overflow='hidden';
+  DASH.tlImported=false; DASH.tlIndicators=[]; DASH.tlDate='';
+  renderDash(); renderOnboard();
+  sb.from('members').select('level,stars,joined_at').eq('profile_id',CUR.uid).maybeSingle().then(function(m){
+    var mem=(m&&m.data)||{level:'basic',stars:0};
+    CUR.stars=mem.stars||0; CUR.level=mem.level||'basic';
+    applyLiveMember(mem,profile);
+    sb.from('assessments').select('id,assessed_on,green,yellow,red').eq('member_id',CUR.uid).order('assessed_on',{ascending:false}).limit(1).maybeSingle().then(function(a){
+      var asmt=a&&a.data; if(!asmt)return;
+      sb.from('assessment_indicators').select('indicator,domain,status').eq('assessment_id',asmt.id).then(function(ind){
+        applyAssessment(asmt,(ind&&ind.data)||[]); renderDash(); renderOnboard(); applyLiveMember(mem,profile);
+      });
+    });
+  });
+}
+function openDemo(role){
+  CUR.live=false; CUR.uid=null;
+  hideAllDash();
+  if(role==='admin'){document.getElementById('admin').classList.add('open');document.body.style.overflow='hidden';openAdmin();}
+  else if(role==='navigator'){document.getElementById('navdash').classList.add('open');document.body.style.overflow='hidden';renderNav();}
+  else if(role==='partner'){document.getElementById('partnerdash').classList.add('open');document.body.style.overflow='hidden';renderPartner();}
+  else {document.getElementById('dashHello').textContent='Welcome back, User (Demo)';var ld=document.querySelector('#dashboard .lead');if(ld)ld.textContent='Demo mode — sample data, no account.';document.getElementById('dashboard').classList.add('open');document.body.style.overflow='hidden';renderDash();renderOnboard();}
+}
+function afterAuth(){
+  return sb.auth.getUser().then(function(res){
+    var u=res.data&&res.data.user; if(!u)return;
+    CUR.live=true; CUR.uid=u.id; CUR.email=u.email;
+    return sb.from('profiles').select('full_name,role').eq('id',u.id).maybeSingle().then(function(p){
+      var profile=(p&&p.data)||{role:'member',full_name:(u.user_metadata&&u.user_metadata.full_name)||''};
+      return sb.from('members').select('level,stars').eq('profile_id',u.id).maybeSingle().then(function(m){
+        closeLogin(); routeByRole(profile,(m&&m.data)||null,u.email);
+      },function(){closeLogin();routeByRole(profile,null,u.email);});
+    });
+  });
+}
 document.getElementById('loginForm').addEventListener('submit',function(e){
   e.preventDefault();
-  var u=document.getElementById('luser').value.trim().toLowerCase(),p=document.getElementById('lpass').value;
-  if(u==='admin'&&p==='password'){
-    document.getElementById('loginErr').style.display='none';
-    closeLogin();
-    document.getElementById('admin').classList.add('open');
-    document.body.style.overflow='hidden';
-    openAdmin();
-  } else if(u==='user'&&p==='password'){
-    document.getElementById('loginErr').style.display='none';
-    closeLogin();
-    document.getElementById('dashHello').textContent='Welcome back, User';
-    document.getElementById('dashboard').classList.add('open');
-    document.body.style.overflow='hidden';
-    renderDash();
-  } else { document.getElementById('loginErr').style.display='block'; }
+  var email=document.getElementById('lemail').value.trim(),pass=document.getElementById('lpass').value,name=document.getElementById('lname').value.trim();
+  var er=document.getElementById('loginErr'); er.style.display='none';
+  if(!email||!pass){authErr('Please enter your email and password.');return;}
+  if(authMode==='login'){
+    var DEMO={'user-demo':'member','navigator-demo':'navigator','partner-demo':'partner','admin-demo':'admin'};
+    var lid=email.toLowerCase();
+    if(DEMO[lid]&&pass==='password'){er.style.display='none';closeLogin();openDemo(DEMO[lid]);return;}
+  }
+  var btn=document.getElementById('authSubmit'); btn.disabled=true;
+  function done(){btn.disabled=false;}
+  if(authMode==='signup'){
+    if(!name){authErr('Please enter your name.');done();return;}
+    sb.auth.signUp({email:email,password:pass,options:{data:{full_name:name,source:'website'}}}).then(function(r){
+      if(r.error){authErr(r.error.message);done();return;}
+      if(!r.data.session){authErr('Account created — check your email to confirm, then log in.');setAuthMode('login');done();return;}
+      afterAuth().then(done,done);
+    },function(e2){authErr('Network error — please try again.');done();});
+  } else {
+    sb.auth.signInWithPassword({email:email,password:pass}).then(function(r){
+      if(r.error){authErr(r.error.message);done();return;}
+      afterAuth().then(done,done);
+    },function(e2){authErr('Network error — please try again.');done();});
+  }
 });
-document.getElementById('logoutBtn').addEventListener('click',function(){
-  document.getElementById('dashboard').classList.remove('open');
-  document.body.style.overflow='';
-});
+function epeLogout(){sb.auth.signOut().then(hideAllDash,hideAllDash);}
+['logoutBtn','navLogout','partnerLogout','adminLogout'].forEach(function(id){var b=document.getElementById(id);if(b)b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();epeLogout();});});
+sb.auth.getSession().then(function(r){if(r&&r.data&&r.data.session){afterAuth();}});
 
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
