@@ -53,6 +53,15 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(251,247,239,.85);bac
 .nav-links{display:none;align-items:center;gap:28px;}
 .nav-links a{font-size:14px;font-weight:500;color:var(--muted);transition:color .2s;}
 .nav-links a:hover{color:var(--navy);}
+.nav-dd{position:relative;display:inline-block;}
+.nav-dd-btn{background:none;border:none;font-family:var(--sans);font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:4px;}
+.nav-dd-btn:hover{color:var(--navy);}
+.nav-dd-menu{display:none;position:absolute;top:100%;left:0;margin-top:10px;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 30px -10px rgba(14,39,69,.25);padding:8px;min-width:190px;z-index:60;}
+.nav-dd-menu::before{content:'';position:absolute;top:-10px;left:0;right:0;height:10px;}
+.nav-dd:hover .nav-dd-menu,.nav-dd:focus-within .nav-dd-menu{display:block;}
+.nav-dd-menu a{display:block;padding:9px 12px;border-radius:8px;font-size:14px;color:var(--navy);white-space:nowrap;}
+.nav-dd-menu a:hover{background:var(--cream-200);color:var(--navy);}
+.mm-head{margin-top:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);padding:8px 12px 2px;}
 .nav-right{display:flex;align-items:center;gap:8px;}
 .nav-cta{display:none;}
 .burger{width:40px;height:40px;border-radius:10px;border:none;background:transparent;color:var(--navy);display:flex;align-items:center;justify-content:center;cursor:pointer;}
@@ -258,6 +267,10 @@ h2.sec.light{color:#fff;}
 .seg-btn:hover{color:var(--cream);}
 .seg-btn.active{background:var(--gold);color:var(--navy);}
 .seg.seg-2{grid-template-columns:repeat(2,1fr);}
+.pf-l{display:block;margin-top:12px;font-size:13px;font-weight:600;color:var(--navy);}
+.pf-cap{display:block;margin-bottom:4px;}
+.pf-i{width:100%;margin-top:5px;border:1px solid var(--border);border-radius:10px;padding:10px 13px;font-size:14px;font-family:var(--sans);color:var(--ink);background:#fff;}
+.pf-i:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
 
 /* ===== login modal ===== */
 .modal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(14,39,69,.55);backdrop-filter:blur(3px);}
@@ -381,6 +394,7 @@ h2.sec.light{color:#fff;}
 .q-meta{font-size:12px;color:var(--muted);margin-top:2px;}
 .adm-form select{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 11px;font-size:13px;font-family:var(--sans);background:#fff;color:var(--ink);margin-top:4px;}
 .tl-q{font-size:15px;font-weight:600;color:var(--navy);margin-top:8px;}
+.tl-req{font-size:13px;font-weight:700;color:var(--coral);background:rgba(200,85,61,.1);border-radius:8px;padding:8px 12px;margin-bottom:10px;}
 .tl-choice{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;}
 .tl-panel{margin-top:14px;border:1px solid var(--border);border-radius:12px;padding:16px;background:var(--cream);}
 .tl-panel .d{font-size:13px;color:var(--muted);margin-bottom:10px;}
@@ -571,6 +585,13 @@ svg.ic{width:24px;height:24px;}
       <a href="#thrive">Thrive Lights</a>
       <a href="#levels">Levels</a>
       <a href="#partners">Partners</a>
+      <div class="nav-dd">
+        <button class="nav-dd-btn" type="button">Current Solutions <span style="font-size:10px;">▾</span></button>
+        <div class="nav-dd-menu">
+          <a href="https://wichita-transportation-solutions.netlify.app/#get-involved" target="_blank" rel="noopener">Transportation</a>
+          <a href="https://wichitaremedialbank.netlify.app" target="_blank" rel="noopener">Remedial Bank</a>
+        </div>
+      </div>
     </nav>
     <div class="nav-right">
       <button type="button" class="btn btn-outline btn-sm nav-cta js-login">Log In</button>
@@ -585,6 +606,9 @@ svg.ic{width:24px;height:24px;}
     <a href="#thrive">Thrive Lights</a>
     <a href="#levels">Levels</a>
     <a href="#partners">Partners</a>
+    <div class="mm-head">Current Solutions</div>
+    <a href="https://wichita-transportation-solutions.netlify.app/#get-involved" target="_blank" rel="noopener">Transportation</a>
+    <a href="https://wichitaremedialbank.netlify.app" target="_blank" rel="noopener">Remedial Bank</a>
     <a href="#join" class="btn btn-navy btn-full" style="margin-top:8px;color:var(--cream);">Become a Member</a>
     <button type="button" class="btn btn-outline btn-full js-login" style="margin-top:8px;">Log In</button>
   </div>
@@ -848,6 +872,30 @@ svg.ic{width:24px;height:24px;}
             <div class="row"><span>Stars to next reward</span><span id="nextReward">—</span></div>
             <div class="pm-bar"><span id="rwFill" style="width:0%"></span></div>
           </div>
+        </div>
+        <div class="panel">
+          <span class="section-eyebrow">Your profile</span>
+          <h2>About you</h2>
+          <p class="sub">Tell us a bit so we can tailor your support.</p>
+          <label class="pf-l">Phone<input class="pf-i" id="pfPhone" type="tel" placeholder="(316) 555-0123"/></label>
+          <label class="pf-l">ZIP code<input class="pf-i" id="pfZip" type="text" placeholder="67202"/></label>
+          <div class="pf-l"><span class="pf-cap">Current status</span>
+            <div class="seg" id="pfStatus" role="group">
+              <button type="button" class="seg-btn" data-st="Employed">Employed</button>
+              <button type="button" class="seg-btn" data-st="School">In school</button>
+              <button type="button" class="seg-btn" data-st="Other">Other</button>
+            </div>
+            <input class="pf-i" id="pfDetail" type="text" placeholder="Tell us more (optional)" style="margin-top:8px;"/>
+          </div>
+          <div class="pf-l"><span class="pf-cap">I want to…</span>
+            <div class="seg" id="pfHelp" role="group">
+              <button type="button" class="seg-btn" data-hp="need">Need help</button>
+              <button type="button" class="seg-btn" data-hp="give">Give help</button>
+              <button type="button" class="seg-btn" data-hp="both">Both</button>
+            </div>
+          </div>
+          <button type="button" class="btn btn-gold btn-full" id="pfSave" style="margin-top:14px;">Save profile</button>
+          <p class="sub" id="pfMsg" style="margin-top:8px;"></p>
         </div>
         <div class="panel">
           <span class="section-eyebrow">Thrive Lights</span>
@@ -1199,6 +1247,18 @@ var DASH={
       {id:"e2",label:"Attend classes",pts:10},
       {id:"e3",label:"Start tutoring",pts:10},
       {id:"e4",label:"Enter the scholarship pipeline",pts:20}
+    ],
+    "Housing":[
+      {id:"h1",label:"Meet with a housing navigator",pts:10},
+      {id:"h2",label:"Free housing consultation with Family Promise",pts:10},
+      {id:"h3",label:"Start a homeownership consult (Meritrust)",pts:15},
+      {id:"h4",label:"Apply for down-payment assistance (Sycamore)",pts:20}
+    ],
+    "Health & Wellness":[
+      {id:"hw1",label:"Connect with health services",pts:10},
+      {id:"hw2",label:"Mental health support (HopeNet)",pts:10},
+      {id:"hw3",label:"Set up a free or discounted YMCA membership",pts:10},
+      {id:"hw4",label:"Schedule a wellness check-in with your navigator",pts:10}
     ]
   },
   state:{},
@@ -1251,17 +1311,25 @@ function renderDash(){
       }).join('');
     } else { det.innerHTML=''; }
   })();
-  var prio=DASH.tl.filter(function(r){return r.s<2 && DASH.journeys[r.c];}).sort(function(a,b){return a.s-b.s;});
+  var prio;
+  if(DASH.tlIndicators&&DASH.tlIndicators.length){
+    var agg={};
+    DASH.tlIndicators.forEach(function(ind){var d=ind.domain;if(!d||!DASH.journeys[d])return;if(!agg[d])agg[d]={c:d,s:2,sev:0,need:0};if(ind.status<2){agg[d].sev+=(2-ind.status);agg[d].need++;if(ind.status<agg[d].s)agg[d].s=ind.status;}});
+    prio=Object.keys(agg).map(function(k){return agg[k];}).filter(function(r){return r.sev>0;}).sort(function(a,b){return b.sev-a.sev;});
+  } else {
+    prio=DASH.tl.filter(function(r){return r.s<2 && DASH.journeys[r.c];}).sort(function(a,b){return a.s-b.s;}).map(function(r){return {c:r.c,s:r.s,need:0};});
+  }
   document.getElementById('prioList').innerHTML=prio.map(function(r){
-    var lead=r.s===0?('You’re red in '+r.c+' — here are your next actions.'):('You’re working on '+r.c+' — keep the momentum going.');
+    var lead=(r.s===0?'You are red in '+r.c:'You are working on '+r.c)+(r.need?(' \u2014 '+r.need+' area'+(r.need>1?'s':'')+' need attention. Here are your next actions:'):' \u2014 here are your next actions:');
     var acts=DASH.journeys[r.c].map(function(a){
       var st=DASH.state[a.id]||0,cls=st===2?'verified':st===1?'pending':'todo';
       var badge=st===2?'Verified':st===1?'Pending check-in':'To do';
-      var box=st===2?'✓':st===1?'…':'';
-      return '<div class="action '+cls+'" data-id="'+a.id+'"><span class="box">'+box+'</span><span class="lbl">'+a.label+'</span><span class="pts">+'+a.pts+'★</span><span class="badge">'+badge+'</span></div>';
+      var box=st===2?'\u2713':st===1?'\u2026':'';
+      return '<div class="action '+cls+'" data-id="'+a.id+'"><span class="box">'+box+'</span><span class="lbl">'+a.label+'</span><span class="pts">+'+a.pts+'\u2605</span><span class="badge">'+badge+'</span></div>';
     }).join('');
     return '<div class="prio'+(r.s===1?' amber':'')+'"><h3>'+r.c+'</h3><p class="lead">'+lead+'</p><div class="actions-list">'+acts+'</div></div>';
-  }).join('');
+  }).join('')||'<p class="sub">No priority areas flagged right now \u2014 nice work.</p>';
+  (function(){var gg=document.querySelector('#dashboard .dash-grid'); if(gg)gg.style.display=DASH.tlImported?'':'none';})();
   document.getElementById('supportsList').innerHTML=STORE.benefits.filter(function(b){return b.unlockAt===0;}).map(function(b){
     return '<div class="mini"><div class="t">'+b.name+'</div><div class="d">'+(b.cat||'')+'</div><span class="tag">Available now</span></div>';
   }).join('');
@@ -1301,7 +1369,7 @@ function renderOnboard(){
     el.innerHTML='<div class="tl-done"><span class="tl-check">\u2713</span><div><div class="t">Thrive Lights results imported</div><div class="d">From '+(DASH.tlFile||'your life map')+(DASH.tlSummary?' — '+DASH.tlSummary:'')+' \u2014 your results appear below.</div></div><button type="button" class="btn btn-outline btn-sm" data-tlreset="1">Re-import</button></div>';
     return;
   }
-  var q='<p class="tl-q">Have you taken Thrive Lights before?</p><div class="tl-choice"><button type="button" class="btn '+(DASH.tlChoice==='yes'?'btn-navy':'btn-outline')+' btn-sm" data-tl="yes">Yes, I have</button><button type="button" class="btn '+(DASH.tlChoice==='no'?'btn-navy':'btn-outline')+' btn-sm" data-tl="no">No, not yet</button></div>';
+  var q='<p class="tl-req">Thrive Lights is required to unlock your dashboard.</p><p class="tl-q">Have you taken Thrive Lights before?</p><div class="tl-choice"><button type="button" class="btn '+(DASH.tlChoice==='yes'?'btn-navy':'btn-outline')+' btn-sm" data-tl="yes">Yes, I have</button><button type="button" class="btn '+(DASH.tlChoice==='no'?'btn-navy':'btn-outline')+' btn-sm" data-tl="no">No, not yet</button></div>'+(!CUR.live?'<p class="tl-hint" style="margin-top:10px;">Demo: <a href="#" data-tlsample="1">use sample results</a> to continue.</p>':'');
   var body='';
   if(DASH.tlChoice==='yes'){
     body='<div class="tl-panel">'+tlImportUI()+'<p class="tl-hint">Don\u2019t have your life map handy? Log in to your Poverty Stoplight account and hit <b>Download</b>, or <a href="'+SURVEY_URL+'" target="_blank" rel="noopener">open the platform \u2197</a>.</p></div>';
@@ -1351,8 +1419,11 @@ function psParse(file){
       else if(fn===O.constructPath){var mm=a[2];if(mm&&col){var p0=dev(mm[0],mm[1]),p1=dev(mm[2],mm[3]);boxes.push({c:[col[0],col[1],col[2]],x:(p0[0]+p1[0])/2,y:(p0[1]+p1[1])/2});}}
     }
     var cboxes=[];boxes.forEach(function(b){var stx=psStatus(b.c);if(stx!==null)cboxes.push({x:b.x,y:b.y,s:stx});});
-    var domStat={},g=0,y=0,rd=0,matched=0;
-    clusters.forEach(function(c){var best=null,bd=1e9;for(var i=0;i<cboxes.length;i++){var dx=cboxes[i].x-c.x,dy=cboxes[i].y-c.y,d=dx*dx+dy*dy;if(d<bd){bd=d;best=cboxes[i];}}if(!best||bd>6000)return;c.status=best.s;if(best.s===2)g++;else if(best.s===1)y++;else rd++;var dom=psDomainOf(c.t);if(!dom)return;matched++;if(domStat[dom]===undefined||best.s<domStat[dom])domStat[dom]=best.s;});
+    var g=0,y=0,rd=0; cboxes.forEach(function(b){if(b.s===2)g++;else if(b.s===1)y++;else rd++;});
+    var pairs=[];for(var ci=0;ci<clusters.length;ci++){for(var bi=0;bi<cboxes.length;bi++){var pdx=clusters[ci].x-cboxes[bi].x,pdy=clusters[ci].y-cboxes[bi].y;pairs.push({d:pdx*pdx+pdy*pdy,ci:ci,bi:bi});}}
+    pairs.sort(function(p,q){return p.d-q.d;});
+    var uc={},ub={},domStat={},matched=0;
+    for(var pk=0;pk<pairs.length;pk++){var pp=pairs[pk];if(uc[pp.ci]||ub[pp.bi])continue;uc[pp.ci]=1;ub[pp.bi]=1;var sv=cboxes[pp.bi].s;clusters[pp.ci].status=sv;var dom=psDomainOf(clusters[pp.ci].t);if(dom){matched++;if(domStat[dom]===undefined||sv<domStat[dom])domStat[dom]=sv;}}
     function psClean(x){return x.replace(/([A-Za-z])-\s+([A-Za-z])/g,'$1$2').replace(/\s+/g,' ').trim();}
     var indicators=[];clusters.forEach(function(c){if(c.status!==undefined)indicators.push({name:psClean(c.raw),status:c.status,domain:psDomainOf(c.t)||'Other'});});
     var allTxt=tc.items.map(function(i){return i.str;}).join(' ');
@@ -1374,6 +1445,7 @@ function tlDoImport(){
   },function(){psFlash('Could not load the PDF reader (check your connection) — please try again.');});
 }
 document.getElementById('tlOnboard').addEventListener('click',function(e){
+  var samp=e.target.closest('[data-tlsample]'); if(samp){e.preventDefault();DASH.tlImported=true;DASH.tlDate='Sample';DASH.tlSummary='sample data';DASH.tlIndicators=[];renderDash();renderOnboard();return;}
   var c=e.target.closest('[data-tl]'); if(c){DASH.tlChoice=c.getAttribute('data-tl');renderOnboard();return;}
   if(e.target.closest('[data-tlimport]')){tlDoImport();return;}
   if(e.target.closest('[data-tlreset]')){DASH.tlImported=false;DASH.tlChoice='yes';DASH.tlFile='';renderOnboard();return;}
@@ -2273,7 +2345,7 @@ function loadLiveMember(profile){
   document.getElementById('dashHello').textContent='Welcome, '+nm;
   document.getElementById('dashboard').classList.add('open'); document.body.style.overflow='hidden';
   DASH.tlImported=false; DASH.tlIndicators=[]; DASH.tlDate='';
-  renderDash(); renderOnboard();
+  renderDash(); renderOnboard(); loadProfileForm();
   sb.from('members').select('level,stars,joined_at').eq('profile_id',CUR.uid).maybeSingle().then(function(m){
     var mem=(m&&m.data)||{level:'basic',stars:0};
     CUR.stars=mem.stars||0; CUR.level=mem.level||'basic';
@@ -2286,13 +2358,33 @@ function loadLiveMember(profile){
     });
   });
 }
+function pfFillSeg(id,val,attr){var seg=document.getElementById(id);if(!seg)return;var bs=seg.querySelectorAll('.seg-btn');for(var i=0;i<bs.length;i++){bs[i].classList.toggle('active',bs[i].getAttribute(attr)===val);}}
+function loadProfileForm(){
+  if(!CUR.live||!CUR.uid)return;
+  sb.from('profiles').select('phone,zip').eq('id',CUR.uid).maybeSingle().then(function(p){var d=(p&&p.data)||{};var a=document.getElementById('pfPhone');if(a)a.value=d.phone||'';var b=document.getElementById('pfZip');if(b)b.value=d.zip||'';});
+  sb.from('members').select('want_help,employment_status,employment_detail').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfStatus',d.employment_status,'data-st');var dt=document.getElementById('pfDetail');if(dt)dt.value=d.employment_detail||'';});
+}
+function saveProfile(){
+  var msg=document.getElementById('pfMsg');
+  if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Demo mode — sign in with a real account to save.';return;}
+  var phone=(document.getElementById('pfPhone').value||'').trim(),zip=(document.getElementById('pfZip').value||'').trim();
+  var stBtn=document.querySelector('#pfStatus .seg-btn.active'),hpBtn=document.querySelector('#pfHelp .seg-btn.active');
+  var st=stBtn?stBtn.getAttribute('data-st'):null,hp=hpBtn?hpBtn.getAttribute('data-hp'):null;
+  var detail=(document.getElementById('pfDetail').value||'').trim();
+  if(msg)msg.textContent='Saving…';
+  Promise.all([
+    sb.from('profiles').update({phone:phone,zip:zip}).eq('id',CUR.uid),
+    sb.from('members').update({want_help:hp,employment_status:st,employment_detail:detail}).eq('profile_id',CUR.uid)
+  ]).then(function(res){var err=(res[0]&&res[0].error)||(res[1]&&res[1].error);if(msg)msg.textContent=err?('Could not save: '+err.message):'Saved \u2713';},function(){if(msg)msg.textContent='Network error — try again.';});
+}
+(function(){var sv=document.getElementById('pfSave');if(sv)sv.addEventListener('click',saveProfile);})();
 function openDemo(role){
   CUR.live=false; CUR.uid=null;
   hideAllDash();
   if(role==='admin'){document.getElementById('admin').classList.add('open');document.body.style.overflow='hidden';openAdmin();}
   else if(role==='navigator'){document.getElementById('navdash').classList.add('open');document.body.style.overflow='hidden';renderNav();}
   else if(role==='partner'){document.getElementById('partnerdash').classList.add('open');document.body.style.overflow='hidden';renderPartner();}
-  else {document.getElementById('dashHello').textContent='Welcome back, User (Demo)';var ld=document.querySelector('#dashboard .lead');if(ld)ld.textContent='Demo mode — sample data, no account.';document.getElementById('dashboard').classList.add('open');document.body.style.overflow='hidden';renderDash();renderOnboard();}
+  else {document.getElementById('dashHello').textContent='Welcome back, User (Demo)';var ld=document.querySelector('#dashboard .lead');if(ld)ld.textContent='Demo mode — sample data, no account.';document.getElementById('dashboard').classList.add('open');document.body.style.overflow='hidden';DASH.tlImported=false;DASH.tlChoice=null;DASH.tlIndicators=[];renderDash();renderOnboard();}
 }
 function afterAuth(){
   return sb.auth.getUser().then(function(res){
