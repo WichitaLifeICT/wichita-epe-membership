@@ -433,6 +433,14 @@ h2.sec.light{color:#fff;}
 .sup-link{color:var(--navy);font-weight:600;text-decoration:none;}
 .sup-link:hover{color:var(--sage);text-decoration:underline;}
 .tag-soon{background:rgba(14,39,69,.06)!important;color:var(--muted)!important;}
+.mini-link{text-decoration:none;color:inherit;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:border-color .12s,background .12s;}
+.mini-link:hover{border-color:var(--gold);background:var(--cream);}
+.mini-link .t{color:var(--navy);}
+.step-link{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border:1px solid var(--border);border-radius:10px;background:#fff;text-decoration:none;transition:border-color .12s,background .12s;}
+.step-link:hover{border-color:var(--gold);background:var(--cream);}
+.step-link .lbl{font-size:14px;font-weight:600;color:var(--navy);}
+.step-link .step-go{font-size:12px;font-weight:700;color:var(--sage);white-space:nowrap;}
+.step-note{padding:11px 13px;border:1px dashed var(--border);border-radius:10px;font-size:14px;color:var(--muted);}
 .prio-rank-list{margin-top:4px;}
 .prow{display:flex;align-items:center;gap:11px;padding:11px 12px;border:1px solid var(--border);border-radius:10px;background:#fff;margin-bottom:8px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;}
 .prow.dragging{opacity:.9;box-shadow:0 10px 22px -8px rgba(14,39,69,.35);cursor:grabbing;border-color:var(--gold);}
@@ -652,7 +660,7 @@ svg.ic{width:24px;height:24px;}
       <div class="nav-dd">
         <button class="nav-dd-btn" type="button">Current Solutions <span style="font-size:10px;">▾</span></button>
         <div class="nav-dd-menu">
-          <a href="https://wichita-transportation-solutions.netlify.app/#get-involved" target="_blank" rel="noopener">Transportation</a>
+          <a href="https://wichita-transportation-solutions.netlify.app/#find-a-fit" target="_blank" rel="noopener">Transportation</a>
           <a href="https://wichitaremedialbank.netlify.app" target="_blank" rel="noopener">Remedial Bank</a>
           <a href="https://hopecdc.org/" target="_blank" rel="noopener">Housing</a>
         </div>
@@ -672,7 +680,7 @@ svg.ic{width:24px;height:24px;}
     <a href="#levels">Levels</a>
     <a href="#partners">Partners</a>
     <div class="mm-head">Current Solutions</div>
-    <a href="https://wichita-transportation-solutions.netlify.app/#get-involved" target="_blank" rel="noopener">Transportation</a>
+    <a href="https://wichita-transportation-solutions.netlify.app/#find-a-fit" target="_blank" rel="noopener">Transportation</a>
     <a href="https://wichitaremedialbank.netlify.app" target="_blank" rel="noopener">Remedial Bank</a>
     <a href="https://hopecdc.org/" target="_blank" rel="noopener">Housing</a>
     <a href="#join" class="btn btn-navy btn-full" style="margin-top:8px;color:var(--cream);">Become a Member</a>
@@ -891,10 +899,11 @@ svg.ic{width:24px;height:24px;}
     <h1 id="dashHello">Welcome back</h1>
     <p class="lead">Here's your empowerment journey at a glance.</p>
 
-    <div class="panel" style="margin-top:24px;" data-collapsible>
+    <div class="panel" style="margin-top:24px;" id="profilePanel" data-collapsible>
       <span class="section-eyebrow">Your profile</span>
       <h2 id="profName">User</h2>
-      <p class="sub" style="margin-bottom:12px;">Basic Member · since June 2026</p>
+      <p class="sub" id="profEmail" style="margin-top:2px;"></p>
+      <p class="sub" id="profLevel" style="margin-bottom:12px;">Basic Member</p>
       <p class="sub">Tell us a bit so we can tailor your support.</p>
       <div class="pf-2">
         <label class="pf-l">Phone<input class="pf-i" id="pfPhone" type="tel" placeholder="(316) 555-0123"/></label>
@@ -924,8 +933,7 @@ svg.ic{width:24px;height:24px;}
     </div>
     <div class="panel" style="margin-top:24px;" id="checkinPanel" data-collapsible>
       <span class="section-eyebrow">Getting started</span>
-      <h2>Review your info</h2>
-      <div id="infoReview"></div>
+      <h2>Your 7 Human Essentials check-in</h2>
       <div id="assessIntro">
         <p class="sub" style="margin-top:12px;">When you’re ready, take your 7 Human Essentials check-in. There’s nothing required — answer only what you’d like, and every bit helps us tailor your support.</p>
         <a href="#" id="startAssess" class="btn btn-gold" style="margin-top:6px;display:inline-block;">Start your 7 Human Essentials check-in</a>
@@ -1404,7 +1412,7 @@ function renderDash(){
     var st=_sc?essStatus(_sc[k]):null;
     var cc=st?(st.c==='muted'?'amber':st.c):'';
     var pill=st?' <span class="a-pill p-'+cc+'" style="font-size:11px;vertical-align:middle;margin-left:6px;">'+st.t+'</span>':'';
-    var act=step.u?('<a class="action todo" href="'+step.u+'" target="_blank" rel="noopener"><span class="box"></span><span class="lbl">'+step.t+'</span><span class="badge">Start ↗</span></a>'):('<div class="action todo"><span class="box"></span><span class="lbl">'+step.t+'</span></div>');
+    var act=step.u?('<a class="step-link" href="'+step.u+'" target="_blank" rel="noopener"><span class="lbl">'+step.t+'</span><span class="step-go">Start ↗</span></a>'):('<div class="step-note">'+step.t+'</div>');
     var sol=(SOLUTION_LINKS[k])?'<a class="prio-sol" href="'+SOLUTION_LINKS[k]+'" target="_blank" rel="noopener">Explore more solutions ↗</a>':'';
     return '<div class="prio"><h3><span class="prio-rank">'+(i+1)+'</span>'+FNAMES[k]+pill+'</h3><div class="actions-list">'+act+'</div>'+sol+'</div>';
   }).join('') : '<p class="sub">Set your priorities in <b>Your goals</b> to see your focus steps.</p>';
@@ -1415,7 +1423,7 @@ function renderDash(){
     var groups={};
     ((window._solutions&&window._solutions.length)?window._solutions:STORE.benefits.filter(function(b){return b.unlockAt===0;})).forEach(function(b){var g=CAT2ESS[b.cat]||b.cat;(groups[g]=groups[g]||[]).push(b);});
     var html=ORDER.filter(function(g){return groups[g]&&groups[g].length;}).map(function(g){
-      var cards=groups[g].map(function(b){var tt=(b.url&&!b.soon)?('<a class="t sup-link" href="'+b.url+'" target="_blank" rel="noopener">'+b.name+' ↗</a>'):('<div class="t">'+b.name+'</div>');var dd=b.desc?('<div class="d">'+b.desc+'</div>'):'';var tg=b.soon?'<span class="tag tag-soon">Coming soon</span>':(b.url?'<span class="tag">Open ↗</span>':'<span class="tag">Available now</span>');return '<div class="mini"><div class="mini-main">'+tt+dd+'</div>'+tg+'</div>';}).join('');
+      var cards=groups[g].map(function(b){var live=(b.url&&!b.soon);var tt='<div class="t">'+b.name+(live?' ↗':'')+'</div>';var dd=b.desc?('<div class="d">'+b.desc+'</div>'):'';var tg=b.soon?'<span class="tag tag-soon">Coming soon</span>':(live?'<span class="tag">Open</span>':'<span class="tag">Available now</span>');var inner='<div class="mini-main">'+tt+dd+'</div>'+tg;return live?('<a class="mini mini-link" href="'+b.url+'" target="_blank" rel="noopener">'+inner+'</a>'):('<div class="mini">'+inner+'</div>');}).join('');
       return '<div class="sup-group"><button type="button" class="sup-head"><span>'+g+' <span class="sup-count">('+groups[g].length+')</span></span><span class="sup-chev">\u25be</span></button><div class="sup-body">'+cards+'</div></div>';
     }).join('')||'<p class="sub">No supports listed yet.</p>';
     document.getElementById('supportsList').innerHTML=html;
@@ -1597,6 +1605,7 @@ var STORE_DEFAULTS={
     {id:'b4',name:'Transportation consult',cat:'Transportation',url:'',desc:'',soon:true,unlockAt:0,tier:'Basic'},
     {id:'b5',name:'Save Match Grow',cat:'Financial Tools',url:'https://empowernorthend.org/event/save-match-grow/',desc:'Empower',soon:false,unlockAt:0,tier:'Basic'},
     {id:'b6',name:'Financial Wellbeing Coach',cat:'Financial Tools',url:'https://bit.ly/4aJtqwz',desc:'Consult with Carmen Baca Gonzales',soon:false,unlockAt:0,tier:'Basic'},
+    {id:'b16',name:'Micro loans (instead of payday loans)',cat:'Financial Tools',url:'mailto:info@empowernorthend.org?subject=I%20am%20interested%20in%20a%20microloan',desc:'Empower — email to inquire',soon:false,unlockAt:0,tier:'Basic'},
     {id:'b7',name:'WSU Tech',cat:'Economic Opportunity',url:'https://wsutech.edu/financialaid/',desc:'Financial aid & training',soon:false,unlockAt:0,tier:'Basic'},
     {id:'b8',name:'Career Path Discovery',cat:'Economic Opportunity',url:'https://wsutech.edu/financialaid/',desc:'Empower',soon:false,unlockAt:0,tier:'Basic'},
     {id:'b9',name:'Small Business Resources',cat:'Economic Opportunity',url:'https://empowernorthend.org/programs/small-business-development/',desc:'Empower',soon:false,unlockAt:0,tier:'Basic'},
@@ -1639,7 +1648,7 @@ var STATE_TXT=['Needs support','Working on it','Thriving'];
 
 /* roles -> which modules they can open + label */
 var AROLES={
-  super:{label:'Super Admin',views:['home','members','referrals','solutions','stars','impact','content','notifications','settings']},
+  super:{label:'Super Admin',views:['home','members','ideas','referrals','solutions','stars','impact','content','notifications','settings']},
   navigator:{label:'Navigator',views:['home','members','referrals','stars']},
   partner:{label:'Partner Org',views:['referrals']},
   board:{label:'Read-Only / Board',views:['home','impact']}
@@ -1648,7 +1657,7 @@ var NAVMETA={
   home:['Dashboard','grid'], members:['Members CRM','people'], queue:['Navigator Queue','flag'],
   thrive:['Thrive Analytics','chart'], referrals:['Partner Referrals','link'], solutions:['Bank of Solutions','bank'],
   stars:['Stars & Rewards','star'], impact:['Impact (Board)','trophy'], content:['Site Content','edit'],
-  notifications:['Notifications','bell'], settings:['Settings','gear']
+  notifications:['Notifications','bell'], settings:['Settings','gear'], ideas:['Ideas & Offers','bell']
 };
 var AICONS={
   grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
@@ -1833,6 +1842,28 @@ function setView(v){
   renderAdminNav(); renderView();
   document.getElementById('admView').scrollTop=0;
 }
+function viewIdeas(){
+  var h=head('Ideas & Offers','What members shared — reward ideas from EPE Rewards and solutions members can provide.');
+  h+='<div id="ideasBox"><p class="sub">Loading…</p></div>';
+  return h;
+}
+function loadIdeas(){
+  var box=document.getElementById('ideasBox'); if(!box)return;
+  try{
+    sb.from('members').select('reward_wish,solution_offer,want_help,profiles(full_name,email)').then(function(r){
+      if(!r||r.error||!r.data){box.innerHTML='<div class="panel"><p class="sub">Could not load. Make sure you are logged in as an admin.</p></div>';return;}
+      function esc(x){return String(x||'').replace(/[&<>]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':'&gt;';});}
+      function who(m){var p=m.profiles||{};return esc(p.full_name||'Member')+(p.email?' · <span style="color:var(--muted)">'+esc(p.email)+'</span>':'');}
+      var wishes=r.data.filter(function(m){return m.reward_wish&&(''+m.reward_wish).trim();});
+      var offers=r.data.filter(function(m){return m.solution_offer&&(''+m.solution_offer).trim();});
+      var h2='<div class="panel"><span class="section-eyebrow">EPE Rewards</span><h2>Reward ideas ('+wishes.length+')</h2>'+
+        (wishes.length?wishes.map(function(m){return '<div class="mini" style="margin-top:8px"><div class="mini-main"><div class="t">'+esc(m.reward_wish)+'</div><div class="d">'+who(m)+'</div></div></div>';}).join(''):'<p class="sub">No reward ideas submitted yet.</p>')+'</div>';
+      h2+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Provide a Solution</span><h2>Solutions members can offer ('+offers.length+')</h2>'+
+        (offers.length?offers.map(function(m){return '<div class="mini" style="margin-top:8px"><div class="mini-main"><div class="t">'+esc(m.solution_offer)+'</div><div class="d">'+who(m)+'</div></div></div>';}).join(''):'<p class="sub">No solution offers submitted yet.</p>')+'</div>';
+      box.innerHTML=h2;
+    },function(){box.innerHTML='<div class="panel"><p class="sub">Network error loading ideas.</p></div>';});
+  }catch(e){box.innerHTML='<div class="panel"><p class="sub">Could not load ideas.</p></div>';}
+}
 function renderView(){
   var v=ADMIN.view,h='';
   if(ADMIN.openId)h=viewProfile(memberById(ADMIN.openId));
@@ -1847,7 +1878,9 @@ function renderView(){
   else if(v==='content')h=viewContent();
   else if(v==='notifications')h=viewNotifs();
   else if(v==='settings')h=viewSettings();
+  else if(v==='ideas')h=viewIdeas();
   document.getElementById('admView').innerHTML=h;
+  if(v==='ideas')loadIdeas();
 }
 function head(title,sub,right){
   return '<div class="av-head"><div><div class="av-title">'+title+'</div>'+(sub?'<div class="av-sub">'+sub+'</div>':'')+'</div>'+(right?'<div>'+right+'</div>':'')+'</div>';
@@ -2480,7 +2513,8 @@ function applyLiveMember(mem,profile){
   var st=CUR.stars||0;
   var ds=document.getElementById('dashStars'); if(ds)ds.innerHTML='&#9733; '+st;
   var pn=document.getElementById('profName'); if(pn)pn.textContent=(profile&&profile.full_name)||'Member';
-  var sub=document.querySelector('#profName + .sub'); if(sub)sub.textContent=(((mem&&mem.level)||'basic')==='gold'?'Gold Member':'Basic Member')+((mem&&mem.joined_at)?(' · since '+new Date(mem.joined_at).toLocaleDateString()):'');
+  var pe=document.getElementById('profEmail'); if(pe)pe.textContent=CUR.email||'';
+  var lvl=document.getElementById('profLevel'); if(lvl)lvl.textContent=(((mem&&mem.level)||'basic')==='gold'?'Gold Member':'Basic Member');
   var ld=document.querySelector('#dashboard .lead'); if(ld)ld.textContent='Live account: '+(CUR.email||'');
   CUR.joined=(mem&&mem.joined_at)||null; renderMemberSince();
   renderInfoReview();
@@ -2529,8 +2563,8 @@ function saveRewardWish(){var el=document.getElementById('rewardWish'),msg=docum
 (function(){var b=document.getElementById('rewardWishSave');if(b)b.addEventListener('click',saveRewardWish);})();
 function loadProfileForm(){
   if(!CUR.live||!CUR.uid)return;
-  sb.from('profiles').select('phone,zip').eq('id',CUR.uid).maybeSingle().then(function(p){var d=(p&&p.data)||{};var a=document.getElementById('pfPhone');if(a)a.value=d.phone||'';var b=document.getElementById('pfZip');if(b)b.value=d.zip||'';});
-  sb.from('members').select('want_help,employment_status,employment_detail,solution_offer,reward_wish').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfStatus',d.employment_status,'data-st');var dt=document.getElementById('pfDetail');if(dt)dt.value=d.employment_detail||'';var so=document.getElementById('pfSolution');if(so)so.value=d.solution_offer||'';var rw=document.getElementById('rewardWish');if(rw)rw.value=d.reward_wish||'';pfToggleSolution();});
+  sb.from('profiles').select('phone,zip').eq('id',CUR.uid).maybeSingle().then(function(p){var d=(p&&p.data)||{};var a=document.getElementById('pfPhone');if(a)a.value=d.phone||'';var b=document.getElementById('pfZip');if(b)b.value=d.zip||'';if(d.phone||d.zip){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
+  sb.from('members').select('want_help,employment_status,employment_detail,solution_offer,reward_wish').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfStatus',d.employment_status,'data-st');var dt=document.getElementById('pfDetail');if(dt)dt.value=d.employment_detail||'';var so=document.getElementById('pfSolution');if(so)so.value=d.solution_offer||'';var rw=document.getElementById('rewardWish');if(rw)rw.value=d.reward_wish||'';pfToggleSolution();if(d.want_help||d.employment_status||d.employment_detail||d.solution_offer){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
 }
 function saveProfile(){
   var msg=document.getElementById('pfMsg');
@@ -2673,10 +2707,10 @@ var ESS7=[
 var GOAL_OPTS=['Better job','Reliable transportation','Buy a home','Improve credit','Save money','Finish school','Learn a trade','Start a business','Improve physical health','Improve mental health','Strengthen relationships','Other'];
 var PRIORITY_OPTS=['Transportation','Financial Tools','Housing','Employment','Education','Health','Relationships'];
 var REFERRALS={transportation:['Empower','Bike Walk Wichita','EPE Drive & Thrive'],financial:['Bank On ICT','Operation Hope','Create Campaign'],housing:['Family Promise','Hope CDC','Meritrust / Sycamore'],economic:['WSU Tech Career Services','Wichita Workforce Center','Empower Workforce'],education:['WSU Tech','Learning Lab','GED & English programs'],health:['HopeNet','YMCA','Local clinics'],relationships:['Live the Life','Army of Normal Folks','The Phoenix']};
-var SOLUTION_LINKS={transportation:'https://wichita-transportation-solutions.netlify.app/#get-involved',financial:'https://wichitaremedialbank.netlify.app',housing:'https://hopecdc.org/'};
+var SOLUTION_LINKS={transportation:'https://wichita-transportation-solutions.netlify.app/#find-a-fit',financial:'https://wichitaremedialbank.netlify.app',housing:'https://hopecdc.org/'};
 var ESS_STEPS={
- transportation:[{t:'Connect with transportation support',u:'https://wichita-transportation-solutions.netlify.app/#get-involved'}],
- financial:[{t:'Explore the Remedial Bank of solutions',u:'https://wichitaremedialbank.netlify.app'}],
+ transportation:[{t:'Connect with transportation support',u:'https://wichita-transportation-solutions.netlify.app/#find-a-fit'}],
+ financial:[{t:'Save Match Grow (Empower)',u:'https://empowernorthend.org/event/save-match-grow/'},{t:'Micro loans (instead of payday loans)',u:'mailto:info@empowernorthend.org?subject=I%20am%20interested%20in%20a%20microloan'}],
  housing:[{t:'Talk with a housing navigator (Hope CDC)',u:'https://hopecdc.org/'}],
  economic:[{t:'Explore jobs & workforce support',u:''}],
  education:[{t:'Find education & training options',u:''}],
@@ -2697,7 +2731,7 @@ function renderQ(q){var v=ANS[q.id];var h='<div class="aq"><p class="aq-t">'+q.t
   return h+'</div>';}
 function renderEssentialStep(e,i){var h='<p class="a-eyebrow">Essential '+(i+1)+' of '+ESS7.length+'</p><h1 class="a-h1">'+e.name+'</h1><p class="a-sub">'+e.intro+'</p>';e.q.forEach(function(q){if(aVisible(q))h+=renderQ(q);});h+='<div class="a-nav">'+(i>0?'<button class="btn btn-outline" data-aback>Back</button>':'<span></span>')+'<button class="btn btn-gold" data-anext>Next</button></div>';return h;}
 function renderGoalsStep(){var g=ANS._goals||[],p=ANS._priority;var h='<p class="a-eyebrow">Almost done</p><h1 class="a-h1">Your goals</h1><p class="a-sub">Pick up to three goals for the next year.</p><div class="aq"><div class="aopts">';GOAL_OPTS.forEach(function(o){var on=g.indexOf(o)>=0;h+='<button type="button" class="aopt'+(on?' active':'')+'" data-q="_goals" data-v="'+aEsc(o)+'" data-multi="1">'+o+'</button>';});h+='</div></div>';var pr=Array.isArray(ANS._priority)?ANS._priority:(ANS._priority?[ANS._priority]:[]);h+='<div class="aq"><p class="aq-t">Which areas would make the biggest difference right now?</p><p class="a-sub" style="margin-top:-2px;margin-bottom:10px;">Tap in order of priority — your first tap is your top priority.</p><div class="aopts">';PRIORITY_OPTS.forEach(function(o){var rank=pr.indexOf(o),on=rank>=0;h+='<button type="button" class="aopt'+(on?' active':'')+'" data-q="_priority" data-v="'+aEsc(o)+'" data-multi="1">'+(on?'<span class="prio-rank">'+(rank+1)+'</span>':'')+o+'</button>';});h+='</div></div><div class="a-nav"><button class="btn btn-outline" data-aback>Back</button><button class="btn btn-gold" data-anext>See my results</button></div>';return h;}
-function renderResultsStep(){var arr=ESS7.map(function(e){return {e:e,pct:scoreEssential(e)};});arr.sort(function(a,b){return (b.pct||0)-(a.pct||0);});var h='<p class="a-eyebrow">Your check-in</p><h1 class="a-h1">Here is what we heard</h1><p class="a-sub">Your strengths, your opportunities, and where we can help most.</p>';var _pr=Array.isArray(ANS._priority)?ANS._priority:(ANS._priority?[ANS._priority]:[]);if(_pr.length)h+='<div class="a-prio">Your priorities: <b>'+_pr.join('</b> &rsaquo; <b>')+'</b></div>';h+='<div class="a-results">';arr.forEach(function(r){var st=essStatus(r.pct),cc=(st.c==='muted'?'amber':st.c),need=r.pct==null?0:r.pct;h+='<div class="a-rcard"><div class="a-rhead"><span class="c">'+r.e.name+'</span><span class="a-pill p-'+cc+'">'+st.t+'</span></div><div class="a-bar"><span class="bg-'+cc+'" style="width:'+need+'%"></span></div>';if(st.c==='red'||st.c==='amber')h+='<div class="a-refs">We can connect you with: '+REFERRALS[r.e.key].slice(0,3).join(' · ')+'</div>';h+='</div>';});h+='</div><div class="a-nav"><button class="btn btn-outline" data-aretake>Retake</button><button class="btn btn-gold" data-afinish>Done</button></div>';return h;}
+function renderResultsStep(){var arr=ESS7.map(function(e){return {e:e,pct:scoreEssential(e)};});arr.sort(function(a,b){return (b.pct||0)-(a.pct||0);});var h='<p class="a-eyebrow">Your check-in</p><h1 class="a-h1">Here is what we heard</h1><p class="a-sub">Your strengths, your opportunities, and where we can help most.</p>';var _pr=Array.isArray(ANS._priority)?ANS._priority:(ANS._priority?[ANS._priority]:[]);if(_pr.length)h+='<div class="a-prio">Your priorities: <b>'+_pr.join('</b> &rsaquo; <b>')+'</b></div>';h+='<div class="a-results">';arr.forEach(function(r){var st=essStatus(r.pct),cc=(st.c==='muted'?'amber':st.c),need=r.pct==null?0:r.pct;h+='<div class="a-rcard"><div class="a-rhead"><span class="c">'+r.e.name+'</span><span class="a-pill p-'+cc+'">'+st.t+'</span></div><div class="a-bar"><span class="bg-'+cc+'" style="width:'+need+'%"></span></div>';if(st.c==='red'||st.c==='amber')h+='<div class="a-refs">We can connect you with: '+REFERRALS[r.e.key].slice(0,3).join(' · ')+'</div>';h+='</div>';});h+='</div><p class="sub" id="assessSaveMsg" style="margin-top:14px;"></p><div class="a-nav"><button class="btn btn-outline" data-aretake>Retake</button><button class="btn btn-gold" data-afinish>Done</button></div>';return h;}
 function orderedPriorities(){var pr=Array.isArray(ANS._priority)?ANS._priority.slice():[];pr=pr.filter(function(o){return PRIORITY_OPTS.indexOf(o)>=0;});PRIORITY_OPTS.forEach(function(o){if(pr.indexOf(o)<0)pr.push(o);});return pr;}
 function renderGoalsBox(){
   var el=document.getElementById('goalsBox'); if(!el)return;
@@ -2715,7 +2749,10 @@ function saveGoals(){var msg=document.getElementById('goalsMsg');if(!CUR.live||!
 function renderAStep(){var body=document.getElementById('assessBody');if(!body)return;var total=ESS7.length+1;var bar=document.getElementById('assessBar');if(bar)bar.style.width=Math.round(ASTEP/(total-1)*100)+'%';if(ASTEP<ESS7.length)body.innerHTML=renderEssentialStep(ESS7[ASTEP],ASTEP);else body.innerHTML=renderResultsStep();}
 function aScroll(){var _cp=document.getElementById('checkinPanel');if(_cp)_cp.scrollIntoView({block:'start'});}
 function validateAStep(){return true;}
-function finishAssessment(){var scores={};ESS7.forEach(function(e){scores[e.key]=scoreEssential(e);});window._essScores=scores;if(CUR.live&&CUR.uid){sb.from('essential_assessments').insert({member_id:CUR.uid,answers:ANS,scores:scores,priority:(Array.isArray(ANS._priority)?ANS._priority.join(', '):ANS._priority)||null});}try{window._essLast=new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(e){}renderEssentialsPanel();updateAssessIntro();}
+function finishAssessment(){var scores={};ESS7.forEach(function(e){scores[e.key]=scoreEssential(e);});window._essScores=scores;try{window._essLast=new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(e){}renderEssentialsPanel();updateAssessIntro();
+  function setMsg(t){var m=document.getElementById('assessSaveMsg');if(m)m.textContent=t;}
+  if(CUR.live&&CUR.uid){setMsg('Saving your answers…');sb.from('essential_assessments').insert({member_id:CUR.uid,answers:ANS,scores:scores,priority:(Array.isArray(ANS._priority)?ANS._priority.join(', '):ANS._priority)||null}).then(function(r){setMsg((r&&r.error)?('Could not save: '+r.error.message):'Saved \u2713 — your answers will be here next time.');},function(){setMsg('Network error — not saved. Try again.');});}
+  else{setMsg('Demo mode — sign in with a real account to save.');}}
 function openAssessment(){ASTEP=0;var intro=document.getElementById('assessIntro'),inl=document.getElementById('assessInline');if(intro)intro.style.display='none';if(inl)inl.style.display='';renderAStep();var cp=document.getElementById('checkinPanel');if(cp)cp.scrollIntoView({block:'start'});}
 function closeAssessment(){var intro=document.getElementById('assessIntro'),inl=document.getElementById('assessInline');if(inl)inl.style.display='none';if(intro)intro.style.display='';renderEssentialsPanel();var pl=document.getElementById('prioList');if(pl)renderDash();var cp=document.getElementById('checkinPanel');if(cp)cp.scrollIntoView({block:'start'});}
 var PRIO2KEY={'Transportation':'transportation','Financial Tools':'financial','Housing':'housing','Employment':'economic','Education':'education','Health':'health','Relationships':'relationships'};
