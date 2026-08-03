@@ -395,6 +395,10 @@ h2.sec.light{color:#fff;}
 .adm-form select{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 11px;font-size:13px;font-family:var(--sans);background:#fff;color:var(--ink);margin-top:4px;}
 .tl-q{font-size:15px;font-weight:600;color:var(--navy);margin-top:8px;}
 .tl-req{font-size:13px;font-weight:700;color:var(--coral);background:rgba(200,85,61,.1);border-radius:8px;padding:8px 12px;margin-bottom:10px;}
+.ir-row{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted);padding:5px 0;border-bottom:1px solid var(--border);}
+.ir-row b{color:var(--navy);font-weight:600;}
+.pf-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:520px){.pf-2{grid-template-columns:1fr;}}
 .tl-choice{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;}
 .tl-panel{margin-top:14px;border:1px solid var(--border);border-radius:12px;padding:16px;background:var(--cream);}
 .tl-panel .d{font-size:13px;color:var(--muted);margin-bottom:10px;}
@@ -590,6 +594,7 @@ svg.ic{width:24px;height:24px;}
         <div class="nav-dd-menu">
           <a href="https://wichita-transportation-solutions.netlify.app/#get-involved" target="_blank" rel="noopener">Transportation</a>
           <a href="https://wichitaremedialbank.netlify.app" target="_blank" rel="noopener">Remedial Bank</a>
+          <a href="https://hopecdc.org/" target="_blank" rel="noopener">Housing</a>
         </div>
       </div>
     </nav>
@@ -609,6 +614,7 @@ svg.ic{width:24px;height:24px;}
     <div class="mm-head">Current Solutions</div>
     <a href="https://wichita-transportation-solutions.netlify.app/#get-involved" target="_blank" rel="noopener">Transportation</a>
     <a href="https://wichitaremedialbank.netlify.app" target="_blank" rel="noopener">Remedial Bank</a>
+    <a href="https://hopecdc.org/" target="_blank" rel="noopener">Housing</a>
     <a href="#join" class="btn btn-navy btn-full" style="margin-top:8px;color:var(--cream);">Become a Member</a>
     <button type="button" class="btn btn-outline btn-full js-login" style="margin-top:8px;">Log In</button>
   </div>
@@ -669,7 +675,7 @@ svg.ic{width:24px;height:24px;}
     <div style="max-width:640px;">
       <p class="eyebrow">Thrive Lights</p>
       <h2 class="sec">See your whole life at a glance.</h2>
-      <p class="intro">Thrive Lights is a simple self-check across the areas that matter. Tap a light to mark where you are today — then set goals to move it forward. (Try it.)</p>
+      <p class="intro">Thrive Lights is a simple self-check across the areas that matter. Tap a light to mark where you are today — then set goals to move it forward. (<a href="https://platform.povertystoplight.org/?token=Thrive_ICT__Household__st_survey_2026-07-08T16:48:13.615" target="_blank" rel="noopener" style="color:var(--sage);text-decoration:underline;">Try it</a>.)</p>
     </div>
     <div class="thrive-grid">
       <div class="lights" id="lights"></div>
@@ -760,29 +766,23 @@ svg.ic{width:24px;height:24px;}
         </div>
       </div>
       <div class="form-box">
-        <p class="ft">Get your EPE Membership Card</p>
-        <p class="fn">Prototype form — not yet connected.</p>
-        <form onsubmit="return false;">
-          <label><span class="lb">Full name</span><input type="text" placeholder="Your name"/></label>
-          <label><span class="lb">Email</span><input type="email" placeholder="you@example.com"/></label>
-          <label><span class="lb">Phone number</span><input type="tel" placeholder="(316) 555-0123"/></label>
-          <label><span class="lb">ZIP code</span><input type="text" placeholder="67202"/></label>
-          <div class="toggle-field">
-            <span class="lb">I want to…</span>
-            <div class="seg" id="helpToggle" role="group" aria-label="Need help, give help, or both">
-              <button type="button" class="seg-btn active" data-val="need">Need Help</button>
-              <button type="button" class="seg-btn" data-val="give">Give Help</button>
-              <button type="button" class="seg-btn" data-val="both">Both</button>
-            </div>
-          </div>
+        <p class="ft">Become a Member</p>
+        <p class="fn">Create your free account.</p>
+        <form id="joinForm">
+          <label><span class="lb">Full name</span><input type="text" id="jName" placeholder="Your name"/></label>
+          <label><span class="lb">Email</span><input type="email" id="jEmail" placeholder="you@example.com"/></label>
+          <label><span class="lb">Phone number</span><input type="tel" id="jPhone" placeholder="(316) 555-0123"/></label>
+          <label><span class="lb">ZIP code</span><input type="text" id="jZip" placeholder="67202"/></label>
+          <label><span class="lb">Password</span><input type="password" id="jPass" placeholder="At least 6 characters"/></label>
           <div class="toggle-field">
             <span class="lb">Would you like a personal contact to reach out?</span>
-            <div class="seg seg-2" id="contactToggle" role="group" aria-label="Personal contact preference">
+            <div class="seg seg-2" id="jContact" role="group" aria-label="Personal contact preference">
               <button type="button" class="seg-btn active" data-val="yes">Yes, please</button>
               <button type="button" class="seg-btn" data-val="no">No thanks</button>
             </div>
           </div>
-          <button type="submit" class="btn btn-gold btn-full submit">Become a Member</button>
+          <p class="fine" id="joinErr" style="color:var(--gold-light);display:none;margin-top:10px;"></p>
+          <button type="submit" class="btn btn-gold btn-full submit">Create my account</button>
           <p class="fine">We'll never share your information.</p>
         </form>
       </div>
@@ -831,11 +831,38 @@ svg.ic{width:24px;height:24px;}
     <h1 id="dashHello">Welcome back</h1>
     <p class="lead">Here's your empowerment journey at a glance.</p>
 
+    <div class="panel" style="margin-top:24px;max-width:720px;">
+      <span class="section-eyebrow">Your profile</span>
+      <h2>About you</h2>
+      <p class="sub">Tell us a bit so we can tailor your support.</p>
+      <div class="pf-2">
+        <label class="pf-l">Phone<input class="pf-i" id="pfPhone" type="tel" placeholder="(316) 555-0123"/></label>
+        <label class="pf-l">ZIP code<input class="pf-i" id="pfZip" type="text" placeholder="67202"/></label>
+      </div>
+      <div class="pf-l"><span class="pf-cap">Current status</span>
+        <div class="seg" id="pfStatus" role="group">
+          <button type="button" class="seg-btn" data-st="Employed">Employed</button>
+          <button type="button" class="seg-btn" data-st="School">In school</button>
+          <button type="button" class="seg-btn" data-st="Other">Other</button>
+        </div>
+        <input class="pf-i" id="pfDetail" type="text" placeholder="Tell us more (optional)" style="margin-top:8px;"/>
+      </div>
+      <div class="pf-l"><span class="pf-cap">I want to…</span>
+        <div class="seg" id="pfHelp" role="group">
+          <button type="button" class="seg-btn" data-hp="give">Provide a Solution</button>
+          <button type="button" class="seg-btn" data-hp="need">Explore Solutions</button>
+          <button type="button" class="seg-btn" data-hp="both">Both</button>
+        </div>
+      </div>
+      <button type="button" class="btn btn-gold btn-full" id="pfSave" style="margin-top:14px;max-width:240px;">Save profile</button>
+      <p class="sub" id="pfMsg" style="margin-top:8px;"></p>
+    </div>
     <div class="panel" style="margin-top:24px;">
       <span class="section-eyebrow">Getting started</span>
-      <h2>Set up your Thrive Lights</h2>
-      <div id="tlOnboard"></div>
+      <h2>Review your info</h2>
+      <div id="infoReview"></div>
       <div class="steps2" id="obSteps" style="margin-top:14px;"></div>
+      <div id="tlOnboard" style="margin-top:12px;"></div>
     </div>
 
     <div class="dash-grid">
@@ -853,10 +880,9 @@ svg.ic{width:24px;height:24px;}
           <div class="cards2" id="supportsList"></div>
         </div>
         <div class="panel">
-          <span class="section-eyebrow">Rewards &amp; incentives</span>
-          <h2>Earn stars, unlock rewards</h2>
-          <p class="sub">Stars are earned only when a navigator or hub verifies your progress.</p>
-          <div id="rewardsList"></div>
+          <span class="section-eyebrow">EPE Rewards</span>
+          <h2>Rewards coming soon…</h2>
+          <p class="sub">What would <b>you</b> like to see — discounts or free food from your favorite local spots? Something else? Let your navigator know.</p>
         </div>
       </div>
       <div>
@@ -873,30 +899,7 @@ svg.ic{width:24px;height:24px;}
             <div class="pm-bar"><span id="rwFill" style="width:0%"></span></div>
           </div>
         </div>
-        <div class="panel">
-          <span class="section-eyebrow">Your profile</span>
-          <h2>About you</h2>
-          <p class="sub">Tell us a bit so we can tailor your support.</p>
-          <label class="pf-l">Phone<input class="pf-i" id="pfPhone" type="tel" placeholder="(316) 555-0123"/></label>
-          <label class="pf-l">ZIP code<input class="pf-i" id="pfZip" type="text" placeholder="67202"/></label>
-          <div class="pf-l"><span class="pf-cap">Current status</span>
-            <div class="seg" id="pfStatus" role="group">
-              <button type="button" class="seg-btn" data-st="Employed">Employed</button>
-              <button type="button" class="seg-btn" data-st="School">In school</button>
-              <button type="button" class="seg-btn" data-st="Other">Other</button>
-            </div>
-            <input class="pf-i" id="pfDetail" type="text" placeholder="Tell us more (optional)" style="margin-top:8px;"/>
-          </div>
-          <div class="pf-l"><span class="pf-cap">I want to…</span>
-            <div class="seg" id="pfHelp" role="group">
-              <button type="button" class="seg-btn" data-hp="need">Need help</button>
-              <button type="button" class="seg-btn" data-hp="give">Give help</button>
-              <button type="button" class="seg-btn" data-hp="both">Both</button>
-            </div>
-          </div>
-          <button type="button" class="btn btn-gold btn-full" id="pfSave" style="margin-top:14px;">Save profile</button>
-          <p class="sub" id="pfMsg" style="margin-top:8px;"></p>
-        </div>
+
         <div class="panel">
           <span class="section-eyebrow">Thrive Lights</span>
           <h2>Your results</h2>
@@ -1263,7 +1266,7 @@ var DASH={
   },
   state:{},
   ob:[
-    {t:"Set goals based on your results",d:"Once your Thrive Lights results are in, choose your focus areas and set 1–2 goals.",done:false}
+    {t:"Set goals based on your current situation",d:"Choose your focus areas and set 1–2 goals to start your journey.",done:false}
   ],
   supports:[
     {t:"Bus pass",d:"Immediate transit support to get where you need to go."},
@@ -1329,11 +1332,11 @@ function renderDash(){
     }).join('');
     return '<div class="prio'+(r.s===1?' amber':'')+'"><h3>'+r.c+'</h3><p class="lead">'+lead+'</p><div class="actions-list">'+acts+'</div></div>';
   }).join('')||'<p class="sub">No priority areas flagged right now \u2014 nice work.</p>';
-  (function(){var gg=document.querySelector('#dashboard .dash-grid'); if(gg)gg.style.display=DASH.tlImported?'':'none';})();
+  (function(){var gg=document.querySelector('#dashboard .dash-grid'); if(gg)gg.style.display='';})(); renderInfoReview();
   document.getElementById('supportsList').innerHTML=STORE.benefits.filter(function(b){return b.unlockAt===0;}).map(function(b){
     return '<div class="mini"><div class="t">'+b.name+'</div><div class="d">'+(b.cat||'')+'</div><span class="tag">Available now</span></div>';
   }).join('');
-  document.getElementById('rewardsList').innerHTML=rewardList().map(function(rw){
+  var _rl=document.getElementById('rewardsList'); if(_rl)_rl.innerHTML=rewardList().map(function(rw){
     var unlocked=stars>=rw.th;
     return '<div class="reward '+(unlocked?'unlocked':'locked')+'"><span class="star">★</span><div><div class="t">'+rw.t+'</div><div class="th">'+rw.th+' stars</div></div><span class="state">'+(unlocked?'Unlocked':(rw.th-stars)+' to go')+'</span></div>';
   }).join('');
@@ -1363,13 +1366,21 @@ var SURVEY_URL="https://platform.povertystoplight.org/?token=Thrive_ICT__Househo
 function tlImportUI(){
   return '<div class="tl-import"><label class="tl-file"><input type="file" id="tlFile" accept="application/pdf,.pdf"/><span id="tlFileName">Choose your life map (PDF)\u2026</span></label><button type="button" class="btn btn-navy btn-sm" data-tlimport="1">Import results</button></div>';
 }
+function renderInfoReview(){
+  var el=document.getElementById('infoReview'); if(!el)return;
+  var pn=document.getElementById('profName'); var nm=pn?pn.textContent:'Member';
+  var html='<div class="ir-row"><span>Name</span><b>'+nm+'</b></div>';
+  if(CUR.email)html+='<div class="ir-row"><span>Email</span><b>'+CUR.email+'</b></div>';
+  html+='<p class="sub" style="margin-top:8px;">Review and complete your details in <b>Your profile</b> below.</p>';
+  el.innerHTML=html;
+}
 function renderOnboard(){
   var el=document.getElementById('tlOnboard'); if(!el)return;
   if(DASH.tlImported){
     el.innerHTML='<div class="tl-done"><span class="tl-check">\u2713</span><div><div class="t">Thrive Lights results imported</div><div class="d">From '+(DASH.tlFile||'your life map')+(DASH.tlSummary?' — '+DASH.tlSummary:'')+' \u2014 your results appear below.</div></div><button type="button" class="btn btn-outline btn-sm" data-tlreset="1">Re-import</button></div>';
     return;
   }
-  var q='<p class="tl-req">Thrive Lights is required to unlock your dashboard.</p><p class="tl-q">Have you taken Thrive Lights before?</p><div class="tl-choice"><button type="button" class="btn '+(DASH.tlChoice==='yes'?'btn-navy':'btn-outline')+' btn-sm" data-tl="yes">Yes, I have</button><button type="button" class="btn '+(DASH.tlChoice==='no'?'btn-navy':'btn-outline')+' btn-sm" data-tl="no">No, not yet</button></div>'+(!CUR.live?'<p class="tl-hint" style="margin-top:10px;">Demo: <a href="#" data-tlsample="1">use sample results</a> to continue.</p>':'');
+  var q='<p class="tl-hint" style="margin-top:0;margin-bottom:8px;">Optional — add your Thrive Lights results anytime to personalize your dashboard.</p><p class="tl-q">Have you taken Thrive Lights before?</p><div class="tl-choice"><button type="button" class="btn '+(DASH.tlChoice==='yes'?'btn-navy':'btn-outline')+' btn-sm" data-tl="yes">Yes, I have</button><button type="button" class="btn '+(DASH.tlChoice==='no'?'btn-navy':'btn-outline')+' btn-sm" data-tl="no">No, not yet</button></div>'+(!CUR.live?'<p class="tl-hint" style="margin-top:10px;">Demo: <a href="#" data-tlsample="1">use sample results</a> to continue.</p>':'');
   var body='';
   if(DASH.tlChoice==='yes'){
     body='<div class="tl-panel">'+tlImportUI()+'<p class="tl-hint">Don\u2019t have your life map handy? Log in to your Poverty Stoplight account and hit <b>Download</b>, or <a href="'+SURVEY_URL+'" target="_blank" rel="noopener">open the platform \u2197</a>.</p></div>';
@@ -2319,6 +2330,7 @@ function applyLiveMember(mem,profile){
   var pn=document.getElementById('profName'); if(pn)pn.textContent=(profile&&profile.full_name)||'Member';
   var sub=document.querySelector('#profName + .sub'); if(sub)sub.textContent=(((mem&&mem.level)||'basic')==='gold'?'Gold Member':'Basic Member')+((mem&&mem.joined_at)?(' · since '+new Date(mem.joined_at).toLocaleDateString()):'');
   var ld=document.querySelector('#dashboard .lead'); if(ld)ld.textContent='Live account: '+(CUR.email||'');
+  renderInfoReview();
 }
 function applyAssessment(asmt,rows){
   var map={red:0,yellow:1,green:2};
@@ -2428,6 +2440,21 @@ function epeLogout(){sb.auth.signOut().then(hideAllDash,hideAllDash);}
 ['logoutBtn','navLogout','partnerLogout','adminLogout'].forEach(function(id){var b=document.getElementById(id);if(b)b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();epeLogout();});});
 sb.auth.getSession().then(function(r){if(r&&r.data&&r.data.session){afterAuth();}});
 
+function jv(id){var e=document.getElementById(id);return e?(e.value||'').trim():'';}
+(function(){var jf=document.getElementById('joinForm');if(!jf)return;jf.addEventListener('submit',function(e){
+  e.preventDefault();
+  var name=jv('jName'),email=jv('jEmail'),phone=jv('jPhone'),zip=jv('jZip'),pass=(document.getElementById('jPass').value||'');
+  var cb=document.querySelector('#jContact .seg-btn.active');var contact=cb?(cb.getAttribute('data-val')==='yes'):true;
+  var er=document.getElementById('joinErr');er.style.display='none';er.textContent='';
+  if(!name||!email||!pass){er.textContent='Please enter your name, email, and a password.';er.style.display='block';return;}
+  var btn=jf.querySelector('button[type=submit]');btn.disabled=true;
+  sb.auth.signUp({email:email,password:pass,options:{data:{full_name:name,source:'website'}}}).then(function(r){
+    if(r.error){er.textContent=r.error.message;er.style.display='block';btn.disabled=false;return;}
+    if(!r.data.session){er.textContent='Account created — check your email to confirm, then log in.';er.style.display='block';btn.disabled=false;return;}
+    var uid=r.data.user.id;
+    Promise.all([sb.from('profiles').update({phone:phone,zip:zip}).eq('id',uid),sb.from('members').update({personal_contact:contact}).eq('profile_id',uid)]).then(function(){btn.disabled=false;afterAuth();},function(){btn.disabled=false;afterAuth();});
+  },function(){er.textContent='Network error — please try again.';er.style.display='block';btn.disabled=false;});
+});})();
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 </body>
