@@ -169,7 +169,7 @@ h2.sec.light{color:#fff;}
 .tier .ben li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--navy);}
 .tier-navy .ben .chk{color:var(--navy);} .tier-sage .ben .chk{color:var(--sage);} .tier-gold .ben .chk{color:var(--gold);}
 .tier .chk{flex:none;margin-top:1px;}
-.tier .choose{margin-top:28px;border-radius:999px;padding:12px 20px;font-size:14px;font-weight:600;border:none;cursor:pointer;width:100%;font-family:var(--sans);}
+.tier .choose{margin-top:28px;border-radius:999px;padding:12px 20px;font-size:14px;font-weight:600;border:none;cursor:pointer;width:100%;font-family:var(--sans);display:block;text-align:center;text-decoration:none;box-sizing:border-box;}
 .tier-navy .choose{background:rgba(14,39,69,.1);color:var(--navy);}
 .tier-sage .choose{background:var(--sage-light);color:var(--sage);}
 .tier-gold .choose{background:var(--gold-soft);color:var(--navy);}
@@ -1123,83 +1123,16 @@ var LEVELS=[
   {
     name:"Basic Member",accent:"navy",featured:false,
     tagline:"For anyone ready to begin.",
-    req:["Just sign up with the simple form below"],
-    groups:[
-      {cat:"Financial Health",items:[
-        {t:"Bank On ICT",d:"Bank On ICT helps individuals access safe, affordable bank accounts and financial tools to reduce fees, protect income, and build long-term financial stability."},
-        {t:"Free tax return via VITA (United Way)"},
-        {t:"Operation Hope",d:"Free financial coaching and credit counseling to help you build credit, savings, and financial confidence."}
-      ]},
-      {cat:"Economic Opportunity",items:[
-        {t:"A small business consultation with Empower or Create Campaign"},
-        {t:"A job consultation with the Wichita Workforce Center"},
-        {t:"Empower Workforce program",url:"https://empowernorthend.org/programs/workforce/",d:"Job training and placement support to launch a stronger career."}
-      ]},
-      {cat:"Transportation",items:[
-        {t:"Free transportation consultation from Empower"},
-        {t:"Bike Walk — ride 15 hours and earn a bike"}
-      ]},
-      {cat:"Health & Wellness",items:[
-        {t:"YMCA — income-based financial assistance",d:"Reduced-cost YMCA membership for those who qualify."}
-      ]},
-      {cat:"Education",items:[
-        {t:"A career consultation with WSU Tech",d:"WSU Tech Career Services supports students and alumni with job-search assistance, resume and interview preparation, career coaching, and employer connections."}
-      ]},
-      {cat:"People Development & Goal Setting",items:[
-        {t:"The Phoenix",d:"The Phoenix is a free sober active community that builds strength, confidence, and connection through fitness and shared activities for people recovering from substance use."},
-        {t:"Priority consideration for the Getting Ahead program",d:"Includes a stipend, childcare, motivation, and more."},
-        {t:"Free Live the Life relationship classes"}
-      ]},
-      {cat:"Community Connections",items:[
-        {t:"Army of Normal Folks volunteer opportunities"}
-      ]}
-    ]
+    req:["Sign up and set goals"],
+    benefitsNote:"Full access to the Bank of Solutions and your 7 Human Essentials dashboard.",
+    groups:[]
   },
   {
     name:"Gold Member",accent:"gold",featured:true,
     tagline:"For members actively working, growing, and contributing.",
-    req:["Complete your profile in Everest","Take Thrive Lights and set goals","Confirm employment, school, or service"],
-    benefitsNote:"Everything in Basic, plus:",
-    groups:[
-      {cat:"Financial Health",items:[
-        {t:"Save Match Grow (SMG) — matching savings up to $500"},
-        {t:"Micro loans"},
-        {t:"Other financial services",d:"Such as a last will & testament and more."}
-      ]},
-      {cat:"Economic Opportunity",items:[
-        {t:"Job consultation with EPE"},
-        {t:"Access to the Employer Pool"}
-      ]},
-      {cat:"Transportation",items:[
-        {t:"Car ownership support"},
-        {t:"Car repairs"},
-        {t:"Short-term transportation"},
-        {t:"Assistance with driver's license issues"}
-      ]},
-      {cat:"Housing",items:[
-        {t:"Apply to own a tiny home",d:"Zip code required."},
-        {t:"Help with housing",d:"A free consultation by contacting Family Promise."},
-        {t:"A homeownership consultation with Meritrust"},
-        {t:"Down payment assistance — apply through Sycamore"}
-      ]},
-      {cat:"Health & Wellness",items:[
-        {t:"Mental health through HopeNet"},
-        {t:"Free YMCA membership for income-qualified members"},
-        {t:"Grocery delivery — Walmart+"},
-        {t:"Telehealth through Amazon for one year"}
-      ]},
-      {cat:"Education",items:[
-        {t:"Concierge with Learning Lab"},
-        {t:"College scholarship access"}
-      ]},
-      {cat:"Community Connections",items:[
-        {t:"Mentor and give back in your neighborhood",d:"Step into peer mentorship and community leadership as you grow."}
-      ]},
-      {cat:"Misc",items:[
-        {t:"Help with getting your ID"},
-        {t:"Pro bono legal services from Koch / Kansas Legal Services"}
-      ]}
-    ]
+    req:["Sign up and set goals","Be an EPE Member for 30 days"],
+    benefitsNote:"Gold member-worthy benefits coming soon.",
+    groups:[]
   }
 ];
 var CATS=[["Goal Setting & Progress","target"],["Workforce & Training","briefcase"],["Financial Coaching","wallet"],["Transportation","bus"],["Housing & Homeownership","home"],["Family Stability","family"],["Community Contribution","heart"]];
@@ -1229,8 +1162,8 @@ document.getElementById('tiers').innerHTML=LEVELS.map(function(l){
     }).join('');
     return '<div class="acc-item open"><button type="button" class="acc-head"><span class="lbl">'+chev+g.cat+'</span><span class="count">'+g.items.length+'</span></button><div class="acc-panel"><ul class="ben">'+items+'</ul></div></div>';
   }).join('')+'</div>';
-  var pill=l.featured?'<span class="pill">Most common</span>':'';
-  return '<div class="tier tier-'+l.accent+(l.featured?' featured':'')+'"><div class="topbar"></div>'+pill+'<div class="body"><h3>'+l.name+'</h3><p class="tagline">'+l.tagline+'</p>'+req+'<p class="grouplabel">Benefits</p>'+note+acc+'<button class="choose">Choose '+l.name.split(' ')[0]+'</button></div></div>';
+  var pill='';
+  return '<div class="tier tier-'+l.accent+(l.featured?' featured':'')+'"><div class="topbar"></div>'+pill+'<div class="body"><h3>'+l.name+'</h3><p class="tagline">'+l.tagline+'</p>'+req+'<p class="grouplabel">Benefits</p>'+note+((l.groups&&l.groups.length)?acc:'')+(l.featured?'':'<a class="choose" href="#join">Sign up today</a>')+'</div></div>';
 }).join('');
 
 document.getElementById('tiers').addEventListener('click',function(e){
@@ -1739,7 +1672,7 @@ var CMS_DEFAULTS={
   heroSub:'A simple way for people, partners, and neighbors to take the next step toward stability, progress, and contribution.',
   whyLead:'Wichita has no shortage of people working hard to change their lives. The challenge is making the next step clear, visible, and connected.',
   ctaButton:'Become a Member',
-  faq:'Q: Is membership free? A: Yes — EPE membership is free and open to anyone in Wichita.\nQ: How do I reach Gold? A: Complete your profile, take Thrive Lights, set goals, and meet with a navigator.',
+  faq:'Q: Is membership free? A: Yes — EPE membership is free and open to anyone in Wichita.\nQ: How do I reach Gold? A: Sign up, set goals, and be an EPE member for 30 days.',
   partners:PARTNERS.map(function(p){return p.name;}).join(', ')
 };
 var CMS;
