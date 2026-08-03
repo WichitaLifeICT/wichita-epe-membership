@@ -1,0 +1,2461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Wichita EPE Membership — Every Person Empowered</title>
+<meta name="description" content="A free, community-powered membership that helps Wichita residents take the next step toward stability, progress, and contribution."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* ============================================================
+   Wichita EPE Membership — static prototype
+   Palette: deep navy, warm gold, off-white, subtle green (sage)
+   Edit the variables below to re-theme the whole page.
+   ============================================================ */
+:root{
+  --navy:#0e2745; --navy-700:#16365e; --navy-600:#1f4673; --navy-300:#6c84a3;
+  --gold:#d8a23a; --gold-light:#ecc06a; --gold-soft:#f6e8c9;
+  --cream:#fbf7ef; --cream-200:#f3ecdd;
+  --sage:#4f8a63; --sage-light:#e3efe6;
+  --coral:#c8553d;
+  --ink:#1c2330; --muted:#5e6b7e;
+  --border:rgba(14,39,69,0.10); --white:#fff;
+  --display:'Fraunces',Georgia,serif; --sans:'Outfit',ui-sans-serif,system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+.wrap{max-width:1120px;margin:0 auto;padding:0 1.25rem;}
+@media(min-width:640px){.wrap{padding:0 2rem;}}
+.display{font-family:var(--display);}
+.bg-dots{background-image:radial-gradient(rgba(14,39,69,0.06) 1px,transparent 1px);background-size:22px 22px;}
+section{scroll-margin-top:80px;}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:14px 28px;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:background .2s,color .2s,border-color .2s,transform .15s;font-family:var(--sans);}
+.btn-gold{background:var(--gold);color:var(--navy);} .btn-gold:hover{background:var(--gold-light);}
+.btn-navy{background:var(--navy);color:var(--cream);} .btn-navy:hover{background:var(--navy-700);}
+.btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--border);} .btn-outline:hover{border-color:var(--navy);}
+.btn-outline-light{background:transparent;color:var(--cream);border:1.5px solid rgba(251,247,239,.3);} .btn-outline-light:hover{border-color:rgba(251,247,239,.7);}
+.btn-sm{padding:10px 20px;}
+.btn-full{width:100%;}
+
+/* nav */
+header.nav{position:sticky;top:0;z-index:50;background:rgba(251,247,239,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand-mark{width:36px;height:36px;border-radius:10px;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:16px;}
+.brand-name{font-family:var(--display);font-weight:600;font-size:18px;color:var(--navy);}
+.nav-links{display:none;align-items:center;gap:28px;}
+.nav-links a{font-size:14px;font-weight:500;color:var(--muted);transition:color .2s;}
+.nav-links a:hover{color:var(--navy);}
+.nav-dd{position:relative;display:inline-block;}
+.nav-dd-btn{background:none;border:none;font-family:var(--sans);font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:4px;}
+.nav-dd-btn:hover{color:var(--navy);}
+.nav-dd-menu{display:none;position:absolute;top:100%;left:0;margin-top:10px;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 30px -10px rgba(14,39,69,.25);padding:8px;min-width:190px;z-index:60;}
+.nav-dd-menu::before{content:'';position:absolute;top:-10px;left:0;right:0;height:10px;}
+.nav-dd:hover .nav-dd-menu,.nav-dd:focus-within .nav-dd-menu{display:block;}
+.nav-dd-menu a{display:block;padding:9px 12px;border-radius:8px;font-size:14px;color:var(--navy);white-space:nowrap;}
+.nav-dd-menu a:hover{background:var(--cream-200);color:var(--navy);}
+.mm-head{margin-top:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);padding:8px 12px 2px;}
+.nav-right{display:flex;align-items:center;gap:8px;}
+.nav-cta{display:none;}
+.burger{width:40px;height:40px;border-radius:10px;border:none;background:transparent;color:var(--navy);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.mobile-menu{display:none;border-top:1px solid var(--border);background:var(--cream);padding:16px 1.25rem;}
+.mobile-menu.open{display:block;}
+.mobile-menu a{display:block;padding:10px 12px;border-radius:10px;font-size:14px;font-weight:500;color:var(--navy);}
+.mobile-menu a:hover{background:var(--cream-200);}
+@media(min-width:768px){.nav-links{display:flex;}.nav-cta{display:inline-flex;}.burger{display:none;}}
+
+/* hero */
+.hero{position:relative;overflow:hidden;background:var(--cream);}
+.hero .grid{display:grid;gap:48px;align-items:center;padding:64px 0;}
+@media(min-width:1024px){.hero .grid{grid-template-columns:1fr 1fr;padding:96px 0;}}
+.badge{display:inline-flex;align-items:center;gap:8px;background:var(--sage-light);color:var(--sage);font-size:12px;font-weight:600;padding:6px 16px;border-radius:999px;}
+.badge .dot{width:6px;height:6px;border-radius:50%;background:var(--sage);}
+.hero h1{font-family:var(--display);font-weight:600;font-size:clamp(40px,6vw,64px);line-height:1.05;letter-spacing:-.02em;color:var(--navy);margin-top:24px;}
+.hero .sub{font-size:18px;color:var(--muted);max-width:560px;margin-top:20px;line-height:1.6;}
+.hero .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;}
+.hero .quote{margin-top:32px;max-width:460px;font-size:14px;font-style:italic;color:var(--navy-300);}
+.card-stage{display:flex;justify-content:center;}
+@media(min-width:1024px){.card-stage{justify-content:flex-end;}}
+.card-wrap{position:relative;}
+
+/* membership card */
+.epe-card{position:relative;overflow:hidden;width:100%;max-width:420px;aspect-ratio:1.6/1;border-radius:18px;background:var(--navy);color:var(--cream);padding:24px;box-shadow:0 25px 50px -12px rgba(14,39,69,.45);transform:rotate(-3deg);}
+.epe-card .glow1{position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:rgba(216,162,58,.3);filter:blur(40px);}
+.epe-card .glow2{position:absolute;bottom:-48px;left:-32px;width:160px;height:160px;border-radius:50%;background:rgba(79,138,99,.2);filter:blur(40px);}
+.epe-card .inner{position:relative;height:100%;display:flex;flex-direction:column;justify-content:space-between;}
+.epe-card .eyebrow{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.2em;color:var(--gold-light);}
+.epe-card .title{font-family:var(--display);font-size:22px;font-weight:600;margin-top:4px;}
+.epe-card .chip{width:44px;height:32px;border-radius:6px;background:linear-gradient(135deg,var(--gold-light),var(--gold));}
+.epe-card .label{font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:var(--navy-300);}
+.epe-card .name{font-family:var(--display);font-size:18px;font-weight:500;letter-spacing:.02em;}
+.epe-card .lvl{font-size:13px;font-weight:500;color:var(--gold-light);}
+.epe-card .id{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.15em;color:rgba(251,247,239,.7);}
+.card-tag{position:absolute;left:50%;bottom:-14px;transform:translateX(-50%);background:rgba(14,39,69,.9);color:var(--cream);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;padding:4px 12px;border-radius:999px;white-space:nowrap;}
+
+/* generic section heading */
+.eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.2em;color:var(--sage);margin-bottom:12px;}
+.eyebrow.light{color:var(--gold-light);}
+h2.sec{font-family:var(--display);font-weight:600;font-size:clamp(28px,4vw,38px);line-height:1.15;color:var(--navy);}
+h2.sec.light{color:#fff;}
+.intro{margin-top:16px;font-size:18px;color:var(--muted);line-height:1.6;}
+.intro.light{color:rgba(255,255,255,.92);}
+.center{text-align:center;margin-left:auto;margin-right:auto;max-width:640px;}
+.pad{padding:80px 0;}
+@media(min-width:640px){.pad{padding:96px 0;}}
+
+/* what is epe */
+.split{display:grid;gap:48px;align-items:center;}
+@media(min-width:1024px){.split{grid-template-columns:1fr 1fr;}}
+.points{display:grid;gap:12px;}
+@media(min-width:640px){.points{grid-template-columns:1fr 1fr;}}
+.point{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.6);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.point .ic{flex:none;width:28px;height:28px;border-radius:50%;background:var(--sage-light);color:var(--sage);display:flex;align-items:center;justify-content:center;}
+.point span.t{font-size:14px;font-weight:500;color:var(--navy);}
+
+/* steps */
+.cards3{display:grid;gap:24px;margin-top:56px;}
+@media(min-width:768px){.cards3{grid-template-columns:repeat(3,1fr);}}
+.step{position:relative;background:var(--white);border:1px solid var(--border);border-radius:16px;padding:28px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+.step .num{position:absolute;right:24px;top:20px;font-family:var(--display);font-weight:600;font-size:36px;color:var(--cream-200);}
+.step .ic{width:48px;height:48px;border-radius:12px;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;}
+.step h3{font-family:var(--display);font-weight:600;font-size:20px;color:var(--navy);margin-top:20px;}
+.step p{font-size:14px;color:var(--muted);margin-top:8px;}
+
+/* thrive lights */
+.thrive-grid{display:grid;gap:32px;align-items:center;margin-top:48px;}
+@media(min-width:1024px){.thrive-grid{grid-template-columns:1.4fr 1fr;}}
+.lights{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(min-width:640px){.lights{grid-template-columns:repeat(4,1fr);}}
+.light{display:flex;flex-direction:column;align-items:flex-start;gap:12px;text-align:left;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;box-shadow:0 0 0 2px transparent;transition:transform .15s,box-shadow .2s;font-family:var(--sans);}
+.light:hover{transform:translateY(-2px);}
+.light .d{width:16px;height:16px;border-radius:50%;box-shadow:0 1px 2px rgba(0,0,0,.15);}
+.light .dn{font-size:14px;font-weight:600;color:var(--navy);line-height:1.2;}
+.light .st{font-size:12px;font-weight:500;}
+.light[data-state="0"]{box-shadow:0 0 0 2px rgba(200,85,61,.3);} .light[data-state="0"] .d{background:var(--coral);} .light[data-state="0"] .st{color:var(--coral);}
+.light[data-state="1"]{box-shadow:0 0 0 2px rgba(216,162,58,.4);} .light[data-state="1"] .d{background:var(--gold);} .light[data-state="1"] .st{color:var(--gold);}
+.light[data-state="2"]{box-shadow:0 0 0 2px rgba(79,138,99,.4);} .light[data-state="2"] .d{background:var(--sage);} .light[data-state="2"] .st{color:var(--sage);}
+.meter{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:28px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+.meter .cap{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--navy-300);}
+.meter .pct{font-family:var(--display);font-weight:600;font-size:48px;color:var(--navy);margin-top:4px;}
+.bar{height:12px;border-radius:999px;background:var(--cream-200);overflow:hidden;margin-top:16px;}
+.bar>span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--gold),var(--sage));transition:width .5s;}
+.legend{margin-top:24px;display:grid;gap:8px;}
+.legend li{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);list-style:none;}
+.legend .d{width:12px;height:12px;border-radius:50%;}
+
+/* membership levels */
+.tiers{display:grid;gap:24px;align-items:start;margin-top:56px;}
+@media(min-width:768px){.tiers{grid-template-columns:repeat(2,1fr);}}
+.tier{position:relative;display:flex;flex-direction:column;background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+.tier.featured{border-color:rgba(79,138,99,.4);box-shadow:0 0 0 2px rgba(79,138,99,.3);}
+@media(min-width:1024px){.tier.featured{transform:translateY(-12px);}}
+.tier .topbar{height:6px;}
+.tier-navy .topbar{background:var(--navy);} .tier-sage .topbar{background:var(--sage);} .tier-gold .topbar{background:var(--gold);}
+.tier .pill{position:absolute;right:16px;top:16px;background:var(--sage);color:#fff;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;padding:4px 12px;border-radius:999px;}
+.tier .body{padding:28px;display:flex;flex-direction:column;flex:1;}
+.tier h3{font-family:var(--display);font-weight:600;font-size:24px;color:var(--navy);}
+.tier .tagline{font-size:14px;color:var(--muted);margin-top:4px;}
+.tier .grouplabel{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--navy-300);margin-top:24px;}
+.tier ul{list-style:none;margin-top:8px;display:grid;gap:8px;}
+.tier .req li{display:flex;gap:8px;align-items:flex-start;font-size:14px;color:var(--muted);}
+.tier .req li .b{margin-top:7px;width:6px;height:6px;border-radius:50%;background:rgba(14,39,69,.3);flex:none;}
+.tier .ben li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--navy);}
+.tier-navy .ben .chk{color:var(--navy);} .tier-sage .ben .chk{color:var(--sage);} .tier-gold .ben .chk{color:var(--gold);}
+.tier .chk{flex:none;margin-top:1px;}
+.tier .choose{margin-top:28px;border-radius:999px;padding:12px 20px;font-size:14px;font-weight:600;border:none;cursor:pointer;width:100%;font-family:var(--sans);}
+.tier-navy .choose{background:rgba(14,39,69,.1);color:var(--navy);}
+.tier-sage .choose{background:var(--sage-light);color:var(--sage);}
+.tier-gold .choose{background:var(--gold-soft);color:var(--navy);}
+.tier .choose:hover{opacity:.9;}
+.tier .cat-label{font-size:12px;font-weight:700;color:var(--navy);margin-top:16px;margin-bottom:2px;}
+.tier .bnote{font-size:13px;font-style:italic;color:var(--sage);margin-top:4px;}
+.tier .ben .txt{display:flex;flex-direction:column;}
+.tier .ben .txt .desc{margin-top:2px;font-size:12px;color:var(--muted);line-height:1.45;}
+.tier .ben a.t{color:var(--navy);font-weight:600;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:2px;}
+.tier .ben a.t:hover{color:var(--gold);}
+.tier .acc{margin-top:10px;border-top:1px solid var(--border);}
+.tier .acc-item{border-bottom:1px solid var(--border);}
+.tier .acc-head{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:none;border:none;cursor:pointer;padding:12px 2px;font-family:var(--sans);}
+.tier .acc-head .lbl{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--navy);text-align:left;}
+.tier .acc-head .count{font-size:12px;font-weight:600;color:var(--navy-300);background:var(--cream-200);border-radius:999px;padding:1px 9px;flex:none;}
+.tier .acc-head .chev{width:15px;height:15px;color:var(--navy-300);transition:transform .2s;flex:none;}
+.tier .acc-item.open .acc-head .chev{transform:rotate(90deg);}
+.tier .acc-panel{display:none;padding:0 0 14px 23px;}
+.tier .acc-item.open .acc-panel{display:block;}
+.tier .acc-panel ul{margin-top:0;}
+
+/* partners (navy band) */
+.band-navy{background:var(--navy);}
+.band-navy .eyebrow{color:var(--gold-light);}
+.band-navy h2.sec{color:#fff;}
+.band-navy .intro{color:rgba(255,255,255,.92);}
+.cat-grid{display:grid;gap:16px;margin-top:48px;}
+@media(min-width:640px){.cat-grid{grid-template-columns:1fr 1fr;}}
+@media(min-width:1024px){.cat-grid{grid-template-columns:repeat(3,1fr);}}
+.cat{display:flex;align-items:center;gap:16px;border:1px solid rgba(251,247,239,.18);background:rgba(255,255,255,.08);border-radius:12px;padding:18px;transition:background .2s;}
+.cat:hover{background:rgba(255,255,255,.13);}
+.cat .ic{flex:none;width:44px;height:44px;border-radius:10px;background:rgba(216,162,58,.22);color:var(--gold-light);display:flex;align-items:center;justify-content:center;}
+.cat span.t{font-weight:600;color:var(--cream);}
+.partner-box{margin-top:56px;border:1px solid rgba(251,247,239,.18);background:rgba(255,255,255,.08);border-radius:16px;padding:28px;}
+.partner-box .cap{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:var(--gold-light);}
+.chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;}
+.chip-p{background:rgba(251,247,239,.16);color:var(--cream);font-size:14px;font-weight:600;padding:8px 16px;border-radius:999px;}
+.partner-box .note{margin-top:16px;font-size:12px;color:rgba(251,247,239,.6);}
+
+/* stories */
+.stories{display:grid;gap:24px;margin-top:56px;}
+@media(min-width:768px){.stories{grid-template-columns:repeat(3,1fr);}}
+.story{display:flex;flex-direction:column;background:var(--white);border:1px solid var(--border);border-radius:16px;padding:28px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+.story .q{font-family:var(--display);font-size:48px;line-height:1;color:var(--gold);}
+.story blockquote{flex:1;margin-top:8px;font-size:14px;color:var(--navy);line-height:1.6;}
+.story figcaption{margin-top:20px;border-top:1px solid var(--border);padding-top:16px;}
+.story .nm{font-size:14px;font-weight:600;color:var(--navy);}
+.story .dt{font-size:12px;color:var(--muted);}
+
+/* member spotlight (video) */
+.spotlight{display:grid;gap:32px;align-items:center;margin-top:48px;}
+@media(min-width:900px){.spotlight{grid-template-columns:1.15fr 1fr;}}
+.video-embed{position:relative;width:100%;padding-top:56.25%;border-radius:16px;overflow:hidden;box-shadow:0 12px 30px -12px rgba(14,39,69,.45);background:var(--navy);}
+.video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.spotlight-text .role{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--gold);}
+.spotlight-text h3{font-family:var(--display);font-weight:600;font-size:30px;color:var(--navy);margin-top:6px;}
+.spotlight-text .sub{font-size:16px;font-weight:600;color:var(--sage);margin-top:4px;}
+.spotlight-text .body{margin-top:14px;font-size:17px;color:var(--muted);line-height:1.65;}
+
+/* apply for gold */
+.apply-steps{display:grid;gap:24px;margin-top:48px;}
+@media(min-width:768px){.apply-steps{grid-template-columns:1fr 1fr;}}
+.apply-step{display:flex;flex-direction:column;align-items:flex-start;background:var(--white);border:1px solid var(--border);border-radius:16px;padding:28px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+.apply-step .num{width:36px;height:36px;border-radius:50%;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:16px;}
+.apply-step h3{font-family:var(--display);font-weight:600;font-size:20px;color:var(--navy);margin-top:16px;}
+.apply-step p{font-size:14px;color:var(--muted);margin-top:8px;margin-bottom:20px;}
+.apply-step .btn{margin-top:auto;}
+
+/* why (sage band) */
+.band-sage{background:var(--sage-light);}
+.why{max-width:760px;margin:0 auto;text-align:center;}
+.why .lead{font-family:var(--display);font-weight:500;font-size:clamp(22px,3vw,30px);line-height:1.3;color:var(--navy);}
+.why .body{margin-top:24px;font-size:18px;color:rgba(14,39,69,.7);line-height:1.6;}
+
+/* cta */
+.cta-grid{display:grid;gap:48px;align-items:center;}
+@media(min-width:1024px){.cta-grid{grid-template-columns:1fr 1fr;}}
+.cta h2{font-family:var(--display);font-weight:600;font-size:clamp(28px,4vw,38px);line-height:1.15;color:var(--cream);}
+.cta p{margin-top:16px;max-width:520px;font-size:18px;color:rgba(251,247,239,.8);line-height:1.6;}
+.cta .row{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;}
+.form-box{border:1px solid rgba(251,247,239,.1);background:rgba(255,255,255,.05);border-radius:16px;padding:28px;}
+.form-box .ft{font-family:var(--display);font-weight:600;font-size:20px;color:var(--cream);}
+.form-box .fn{margin-top:4px;font-size:13px;color:var(--navy-300);}
+.form-box label{display:block;margin-top:16px;}
+.form-box .lb{display:block;margin-bottom:6px;font-size:14px;font-weight:500;color:rgba(251,247,239,.9);}
+.form-box input{width:100%;border:1px solid rgba(251,247,239,.15);background:rgba(22,54,94,.6);border-radius:10px;padding:12px 16px;font-size:14px;color:#fff;-webkit-text-fill-color:#fff;caret-color:#fff;font-family:var(--sans);}
+.form-box input::placeholder{color:rgba(251,247,239,.55);-webkit-text-fill-color:rgba(251,247,239,.55);}
+.form-box input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
+.form-box input:-webkit-autofill,.form-box input:-webkit-autofill:hover,.form-box input:-webkit-autofill:focus{-webkit-text-fill-color:#fff;caret-color:#fff;-webkit-box-shadow:0 0 0 1000px rgba(22,54,94,.85) inset;transition:background-color 9999s ease-in-out 0s;}
+.form-box .submit{margin-top:20px;}
+.form-box .fine{margin-top:12px;text-align:center;font-size:12px;color:var(--navy-300);}
+.toggle-field{margin-top:16px;}
+.seg{margin-top:6px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:rgba(22,54,94,.6);border:1px solid rgba(251,247,239,.15);border-radius:12px;padding:5px;}
+.seg-btn{border:none;background:transparent;color:rgba(251,247,239,.75);font-family:var(--sans);font-size:13px;font-weight:600;padding:9px 6px;border-radius:8px;cursor:pointer;transition:background .2s,color .2s;}
+.seg-btn:hover{color:var(--cream);}
+.seg-btn.active{background:var(--gold);color:var(--navy);}
+.seg.seg-2{grid-template-columns:repeat(2,1fr);}
+.pf-l{display:block;margin-top:12px;font-size:13px;font-weight:600;color:var(--navy);}
+.pf-cap{display:block;margin-bottom:4px;}
+.pf-i{width:100%;margin-top:5px;border:1px solid var(--border);border-radius:10px;padding:10px 13px;font-size:14px;font-family:var(--sans);color:var(--ink);background:#fff;}
+.pf-i:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
+
+/* ===== login modal ===== */
+.modal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(14,39,69,.55);backdrop-filter:blur(3px);}
+.modal.open{display:flex;}
+.modal-card{position:relative;width:100%;max-width:380px;background:var(--cream);border-radius:18px;padding:28px;box-shadow:0 25px 60px -15px rgba(14,39,69,.5);}
+.modal-card h3{font-family:var(--display);font-weight:600;font-size:22px;color:var(--navy);}
+.modal-card .hint{font-size:13px;color:var(--muted);margin-top:4px;}
+.modal-card label{display:block;margin-top:14px;font-size:13px;font-weight:600;color:var(--navy);}
+.modal-card input{width:100%;margin-top:6px;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--ink);background:#fff;}
+.modal-card input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
+.modal-err{display:none;margin-top:10px;font-size:13px;color:var(--coral);font-weight:600;}
+.modal-x{position:absolute;top:16px;right:18px;border:none;background:none;cursor:pointer;color:var(--muted);font-size:22px;line-height:1;}
+.demo-creds{margin-top:14px;font-size:12px;color:var(--navy-300);background:var(--cream-200);border-radius:8px;padding:8px 10px;}
+
+/* ===== dashboard ===== */
+.dash{position:fixed;inset:0;z-index:200;display:none;overflow-y:auto;background:var(--cream);}
+.dash.open{display:block;}
+.dash-bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 1.25rem;background:var(--navy);color:var(--cream);}
+.dash-bar .brand-name{color:var(--cream);}
+.dash-bar .brand-mark{background:var(--gold);color:var(--navy);}
+.dash-bar .who{display:flex;align-items:center;gap:12px;}
+.dash-bar .stars{display:flex;align-items:center;gap:6px;background:rgba(216,162,58,.18);color:var(--gold-light);font-weight:700;font-size:14px;padding:6px 12px;border-radius:999px;}
+.dash-wrap{max-width:1080px;margin:0 auto;padding:24px 1.25rem 80px;}
+@media(min-width:640px){.dash-wrap{padding:32px 2rem 96px;}}
+.dash h1{font-family:var(--display);font-weight:600;font-size:28px;color:var(--navy);}
+.dash .lead{color:var(--muted);margin-top:4px;}
+.dash-grid{display:grid;gap:20px;margin-top:24px;align-items:start;}
+@media(min-width:900px){.dash-grid{grid-template-columns:1.6fr 1fr;}}
+.panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+.panel+.panel{margin-top:20px;}
+.panel h2{font-family:var(--display);font-weight:600;font-size:18px;color:var(--navy);margin-top:4px;}
+.panel .sub{font-size:13px;color:var(--muted);margin-top:4px;}
+.section-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--sage);}
+.steps2{display:grid;gap:12px;margin-top:14px;}
+.ob-step{display:flex;gap:14px;align-items:center;border:1px solid var(--border);border-radius:12px;padding:14px;}
+.ob-step .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--cream-200);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;}
+.ob-step.done .n{background:var(--sage);color:#fff;}
+.ob-step .t{font-weight:600;color:var(--navy);font-size:15px;}
+.ob-step .d{font-size:13px;color:var(--muted);margin-top:2px;}
+.ob-step .go{margin-left:auto;flex:none;}
+.tl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px;}
+.tl-cell{border:1px solid var(--border);border-radius:12px;padding:12px;}
+.tl-cell .dot{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:6px;}
+.tl-cell .c{font-size:13px;font-weight:600;color:var(--navy);}
+.tl-cell .s{font-size:12px;margin-top:3px;}
+.st-red{color:var(--coral);} .bg-red{background:var(--coral);}
+.st-amber{color:var(--gold);} .bg-amber{background:var(--gold);}
+.st-green{color:var(--sage);} .bg-green{background:var(--sage);}
+.prio{border:1px solid var(--border);border-left:4px solid var(--coral);border-radius:12px;padding:16px;margin-top:14px;}
+.prio.amber{border-left-color:var(--gold);}
+.prio h3{font-size:15px;color:var(--navy);font-weight:700;}
+.prio .lead{font-size:13px;color:var(--muted);margin-top:2px;}
+.actions-list{display:grid;gap:8px;margin-top:12px;}
+.action{display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:10px;padding:10px 12px;cursor:pointer;background:#fff;transition:background .15s;}
+.action:hover{background:var(--cream);}
+.action .box{flex:none;width:22px;height:22px;border-radius:6px;border:2px solid var(--navy-300);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;}
+.action.pending .box{border-color:var(--gold);background:var(--gold);color:var(--navy);}
+.action.verified .box{border-color:var(--sage);background:var(--sage);}
+.action .lbl{font-size:14px;color:var(--navy);flex:1;}
+.action .pts{font-size:12px;font-weight:700;color:var(--gold);}
+.action .badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:999px;white-space:nowrap;}
+.action.todo .badge{background:var(--cream-200);color:var(--muted);}
+.action.pending .badge{background:var(--gold-soft);color:var(--navy);}
+.action.verified .badge{background:var(--sage-light);color:var(--sage);}
+.nav-card{background:linear-gradient(135deg,var(--navy),var(--navy-700));border:none;}
+.nav-card h2{color:var(--cream);}
+.nav-card .sub{color:var(--navy-300);}
+.nav-card .hub{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.nav-card .hub span{font-size:12px;color:var(--cream);background:rgba(255,255,255,.1);padding:4px 10px;border-radius:999px;}
+.pm{margin-top:14px;}
+.pm .row{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);}
+.pm-bar{height:12px;border-radius:999px;background:var(--cream-200);overflow:hidden;margin-top:8px;}
+.pm-bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--sage));transition:width .4s;}
+.cards2{display:grid;gap:12px;margin-top:14px;}
+@media(min-width:560px){.cards2{grid-template-columns:repeat(2,1fr);}}
+.mini{border:1px solid var(--border);border-radius:12px;padding:14px;}
+.mini .t{font-size:14px;font-weight:600;color:var(--navy);}
+.mini .d{font-size:12px;color:var(--muted);margin-top:2px;}
+.mini .tag{display:inline-block;margin-top:8px;font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px;background:var(--sage-light);color:var(--sage);}
+.reward{border:1px solid var(--border);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-top:8px;}
+.reward.locked{opacity:.55;}
+.reward .star{flex:none;width:34px;height:34px;border-radius:8px;background:var(--gold-soft);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:700;}
+.reward .t{font-size:14px;font-weight:600;color:var(--navy);}
+.reward .th{font-size:12px;color:var(--muted);}
+.reward .state{margin-left:auto;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 9px;border-radius:999px;white-space:nowrap;}
+.reward.unlocked .state{background:var(--sage-light);color:var(--sage);}
+.reward.locked .state{background:var(--cream-200);color:var(--muted);}
+.hist{margin-top:12px;display:grid;gap:8px;}
+.hist .row{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--navy);}
+.hist .row .s{margin-left:auto;font-weight:700;color:var(--gold);}
+.hist .empty{font-size:13px;color:var(--muted);}
+
+/* ===== admin ===== */
+.stat-grid{display:grid;gap:14px;grid-template-columns:repeat(2,1fr);margin-top:18px;}
+@media(min-width:760px){.stat-grid{grid-template-columns:repeat(4,1fr);}}
+.stat{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;}
+.stat .v{font-family:var(--display);font-weight:600;font-size:28px;color:var(--navy);}
+.stat .k{font-size:12px;color:var(--muted);margin-top:2px;}
+.lead-row{display:flex;align-items:center;gap:10px;margin-top:8px;font-size:14px;}
+.lead-row .rank{flex:none;width:22px;height:22px;border-radius:50%;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.lead-row .nm{flex:1;color:var(--navy);font-weight:500;}
+.lead-row .s{font-weight:700;color:var(--gold);}
+.bar-row{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:13px;color:var(--navy);}
+.bar-row .nm{width:42%;}
+.bar-row .track{flex:1;height:10px;border-radius:999px;background:var(--cream-200);overflow:hidden;}
+.bar-row .track>span{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--sage));}
+.bar-row .ct{width:30px;text-align:right;font-weight:700;color:var(--gold);}
+.adm-row{display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-top:8px;}
+.adm-row .info{flex:1;min-width:0;}
+.adm-row .nm{font-size:14px;font-weight:600;color:var(--navy);}
+.adm-row .meta{font-size:12px;color:var(--muted);}
+.adm-row .pill{flex:none;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--cream-200);color:var(--muted);}
+.adm-row .del{flex:none;border:none;background:var(--coral);color:#fff;border-radius:8px;padding:6px 11px;font-size:12px;font-weight:600;cursor:pointer;}
+.adm-form{display:grid;gap:10px;margin-top:16px;grid-template-columns:1fr;}
+@media(min-width:620px){.adm-form{grid-template-columns:2fr 1fr 1fr auto;align-items:end;}}
+.adm-form label{font-size:12px;font-weight:600;color:var(--navy);}
+.adm-form input{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 11px;font-size:13px;font-family:var(--sans);background:#fff;color:var(--ink);margin-top:4px;}
+.adm-form input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
+.vbtn{flex:none;border:none;background:var(--sage);color:#fff;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;}
+.vbtn:hover{opacity:.9;}
+.q-meta{font-size:12px;color:var(--muted);margin-top:2px;}
+.adm-form select{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 11px;font-size:13px;font-family:var(--sans);background:#fff;color:var(--ink);margin-top:4px;}
+.tl-q{font-size:15px;font-weight:600;color:var(--navy);margin-top:8px;}
+.tl-req{font-size:13px;font-weight:700;color:var(--coral);background:rgba(200,85,61,.1);border-radius:8px;padding:8px 12px;margin-bottom:10px;}
+.ir-row{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted);padding:5px 0;border-bottom:1px solid var(--border);}
+.ir-row b{color:var(--navy);font-weight:600;}
+.pf-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:520px){.pf-2{grid-template-columns:1fr;}}
+.tl-choice{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;}
+.tl-panel{margin-top:14px;border:1px solid var(--border);border-radius:12px;padding:16px;background:var(--cream);}
+.tl-panel .d{font-size:13px;color:var(--muted);margin-bottom:10px;}
+.tl-steps{margin:12px 0 0 18px;font-size:13px;color:var(--muted);display:grid;gap:4px;}
+.tl-hint{margin-top:12px;font-size:12px;color:var(--muted);}
+.tl-import{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px;}
+.tl-file{display:inline-flex;align-items:center;gap:8px;border:1px dashed var(--navy-300);border-radius:10px;padding:9px 14px;cursor:pointer;font-size:13px;color:var(--navy);background:#fff;}
+.tl-file input{display:none;}
+.tl-done{display:flex;align-items:center;gap:12px;margin-top:10px;border:1px solid var(--sage);background:var(--sage-light);border-radius:12px;padding:14px;}
+.tl-done .tl-check{width:28px;height:28px;border-radius:50%;background:var(--sage);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex:none;}
+.tl-done .t{font-weight:600;color:var(--navy);} .tl-done .d{font-size:12px;color:var(--muted);}
+.tl-done button{margin-left:auto;}
+.tl-detail-h{margin-top:16px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--navy-300);}
+.tl-dgroup{margin-top:12px;}
+.tl-dname{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.tl-ind{display:flex;align-items:center;gap:8px;padding:3px 0;font-size:13px;}
+.tl-ind .dot{width:10px;height:10px;border-radius:50%;flex:none;}
+.tl-iname{color:var(--muted);}
+
+/* ===== admin v2 (case-management platform) ===== */
+.adash-body{display:flex;min-height:calc(100vh - 64px);}
+.aside{flex:none;width:212px;background:var(--navy);color:var(--cream);padding:14px 12px 40px;display:none;}
+@media(min-width:900px){.aside{display:block;}}
+.aside .grp{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.13em;color:var(--navy-300);margin:18px 8px 6px;}
+.anav-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:none;background:transparent;color:rgba(251,247,239,.82);font-family:var(--sans);font-size:14px;font-weight:500;padding:9px 10px;border-radius:9px;cursor:pointer;transition:background .15s,color .15s;}
+.anav-item:hover{background:rgba(255,255,255,.08);color:#fff;}
+.anav-item.active{background:var(--gold);color:var(--navy);font-weight:600;}
+.anav-item .ic{width:18px;height:18px;flex:none;}
+.aview{flex:1;min-width:0;padding:22px 18px 70px;overflow-x:hidden;}
+@media(min-width:640px){.aview{padding:28px 32px 80px;}}
+.atabs{display:flex;gap:6px;overflow-x:auto;padding:10px 12px;background:var(--navy-700);}
+@media(min-width:900px){.atabs{display:none;}}
+.atabs button{flex:none;border:none;background:rgba(255,255,255,.10);color:var(--cream);font-size:12px;font-weight:600;padding:7px 13px;border-radius:999px;font-family:var(--sans);cursor:pointer;white-space:nowrap;}
+.atabs button.active{background:var(--gold);color:var(--navy);}
+.role-select{background:rgba(255,255,255,.13);color:var(--cream);border:1px solid rgba(251,247,239,.28);border-radius:999px;padding:7px 12px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;}
+.role-select option{color:var(--ink);}
+.av-head{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;justify-content:space-between;margin-bottom:20px;}
+.av-title{font-family:var(--display);font-weight:600;font-size:26px;color:var(--navy);line-height:1.1;}
+.av-sub{color:var(--muted);font-size:14px;margin-top:3px;max-width:640px;}
+.acols{display:grid;gap:18px;align-items:start;}
+@media(min-width:900px){.acols.two{grid-template-columns:1fr 1fr;}.acols.side{grid-template-columns:1.55fr 1fr;}.acols.three{grid-template-columns:repeat(3,1fr);}}
+.crumb{display:inline-flex;align-items:center;gap:6px;border:none;background:none;color:var(--sage);font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;padding:0;margin-bottom:10px;}
+.crumb:hover{color:var(--navy);}
+
+/* KPI cards */
+.kpi-grid{display:grid;gap:14px;grid-template-columns:repeat(2,1fr);}
+@media(min-width:720px){.kpi-grid{grid-template-columns:repeat(4,1fr);}}
+.kpi{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+.kpi .k{font-size:12px;color:var(--muted);font-weight:600;line-height:1.3;}
+.kpi .v{font-family:var(--display);font-weight:600;font-size:30px;color:var(--navy);margin-top:8px;line-height:1;}
+.trend{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:700;margin-top:9px;padding:2px 8px;border-radius:999px;}
+.trend.up{background:var(--sage-light);color:var(--sage);} .trend.down{background:rgba(200,85,61,.12);color:var(--coral);} .trend.flat{background:var(--cream-200);color:var(--muted);}
+
+/* light segmented control */
+.seg-light{display:inline-flex;background:#fff;border:1px solid var(--border);border-radius:999px;padding:3px;gap:2px;}
+.seg-light button{border:none;background:transparent;color:var(--muted);font-family:var(--sans);font-size:13px;font-weight:600;padding:6px 14px;border-radius:999px;cursor:pointer;}
+.seg-light button.active{background:var(--navy);color:var(--cream);}
+
+/* filters + bulk */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.filters select,.filters input{border:1px solid var(--border);border-radius:9px;padding:8px 10px;font-family:var(--sans);font-size:13px;background:#fff;color:var(--ink);}
+.filters select:focus,.filters input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
+.bulkbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:var(--navy);color:var(--cream);border-radius:12px;padding:10px 14px;margin-bottom:12px;font-size:13px;}
+.bulkbar .ct{font-weight:700;color:var(--gold-light);}
+.bulkbar .sp{flex:1;}
+.mini-btn{border:1px solid var(--border);background:#fff;color:var(--navy);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;font-family:var(--sans);cursor:pointer;}
+.mini-btn:hover{border-color:var(--navy);}
+.mini-btn.ghost{background:rgba(255,255,255,.12);color:var(--cream);border-color:rgba(251,247,239,.3);}
+.mini-btn.danger{background:var(--coral);color:#fff;border:none;}
+
+/* table */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+table.tbl{width:100%;border-collapse:collapse;font-size:13px;min-width:880px;}
+.tbl th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;padding:11px 12px;border-bottom:1px solid var(--border);background:var(--cream);}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--navy);vertical-align:middle;white-space:nowrap;}
+.tbl tbody tr:last-child td{border-bottom:none;}
+.tbl tbody tr:hover{background:var(--cream);}
+.tbl .nm{font-weight:600;cursor:pointer;}
+.tbl .nm:hover{color:var(--gold);text-decoration:underline;}
+.tbl .rowact{border:none;background:var(--cream-200);color:var(--navy);border-radius:7px;padding:5px 9px;font-size:12px;font-weight:600;font-family:var(--sans);cursor:pointer;}
+.tbl .rowact:hover{background:var(--gold-soft);}
+.tbl input[type=checkbox]{width:15px;height:15px;accent-color:var(--gold);cursor:pointer;}
+
+/* badges / pills */
+.tag-b{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap;}
+.lv-gold{background:var(--gold-soft);color:#8a6516;} .lv-basic{background:var(--cream-200);color:var(--muted);}
+.st-active{background:var(--sage-light);color:var(--sage);} .st-risk{background:rgba(200,85,61,.13);color:var(--coral);}
+.st-stalled{background:var(--cream-200);color:var(--muted);} .st-new{background:rgba(31,70,115,.12);color:var(--navy-600);} .st-ready{background:var(--gold-soft);color:#8a6516;}
+.chiprow{display:flex;flex-wrap:wrap;gap:5px;}
+.chip-s{font-size:11px;font-weight:600;background:var(--cream-200);color:var(--muted);border-radius:999px;padding:2px 9px;}
+.score{display:inline-flex;align-items:center;gap:8px;}
+.score .track{width:58px;height:7px;border-radius:999px;background:var(--cream-200);overflow:hidden;}
+.score .track>span{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--sage));}
+.score .pc{font-weight:700;color:var(--navy);font-size:12px;}
+
+/* thrive analytics */
+.dist{display:grid;gap:9px;margin-top:12px;}
+.dist .row{display:grid;grid-template-columns:120px 1fr;gap:10px;align-items:center;font-size:13px;}
+.dist .lab{color:var(--navy);font-weight:500;}
+.barx{display:flex;height:18px;border-radius:6px;overflow:hidden;background:var(--cream-200);}
+.barx>span{display:block;height:100%;}
+.legend-h{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;}
+.legend-h span{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);}
+.legend-h i{width:11px;height:11px;border-radius:3px;display:inline-block;}
+.heat{display:grid;gap:5px;overflow-x:auto;}
+.heat .hrow{display:grid;grid-template-columns:70px repeat(8,minmax(34px,1fr));gap:5px;align-items:center;}
+.heat .hh{font-size:9.5px;color:var(--muted);font-weight:700;text-align:center;line-height:1.1;}
+.heat .zl{font-size:12px;font-weight:700;color:var(--navy);}
+.heat .cell{height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;}
+.spark{width:100%;height:80px;display:block;margin-top:10px;}
+
+/* goals / timeline / notes */
+.goal{border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:10px;padding:12px 14px;margin-top:9px;}
+.goal .gt{font-weight:600;color:var(--navy);font-size:14px;}
+.goal .gm{font-size:12px;color:var(--muted);margin-top:3px;display:flex;flex-wrap:wrap;gap:10px;}
+.timeline{position:relative;margin-top:10px;padding-left:20px;}
+.timeline::before{content:'';position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:var(--cream-200);}
+.tl-ev{position:relative;padding:5px 0 11px;}
+.tl-ev::before{content:'';position:absolute;left:-18px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--gold);border:2px solid #fff;box-shadow:0 0 0 1px var(--border);}
+.tl-ev .ee{font-size:13px;color:var(--navy);font-weight:500;}
+.tl-ev .ed{font-size:11px;color:var(--muted);margin-top:1px;}
+.note-it{background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:13px;color:var(--navy);}
+.note-it .meta{font-size:11px;color:var(--muted);margin-top:4px;}
+.note-form{display:flex;gap:8px;margin-top:10px;}
+.note-form input{flex:1;border:1px solid var(--border);border-radius:9px;padding:9px 11px;font-family:var(--sans);font-size:13px;background:#fff;color:var(--ink);}
+.note-form input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
+.dom-list{display:grid;gap:8px;margin-top:12px;}
+.dom-row{display:grid;grid-template-columns:130px 1fr auto;gap:10px;align-items:center;font-size:13px;}
+.dom-row .mover{font-size:11px;color:var(--muted);}
+
+/* status select (referrals) */
+.statset{border:1px solid var(--border);border-radius:8px;padding:5px 8px;font-size:12px;font-family:var(--sans);background:#fff;color:var(--navy);font-weight:600;cursor:pointer;}
+.statset:focus{outline:none;border-color:var(--gold);}
+.pipeline{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.pl-step{flex:1;min-width:90px;text-align:center;background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 6px;}
+.pl-step .pv{font-family:var(--display);font-weight:600;font-size:22px;color:var(--navy);}
+.pl-step .pk{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;margin-top:2px;}
+.pl-arrow{display:flex;align-items:center;color:var(--navy-300);font-weight:700;}
+
+/* editable CMS fields */
+.cms-field{margin-top:14px;}
+.cms-field label{display:block;font-size:12px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.cms-field input,.cms-field textarea{width:100%;border:1px solid var(--border);border-radius:9px;padding:9px 11px;font-family:var(--sans);font-size:13px;background:#fff;color:var(--ink);resize:vertical;}
+.cms-field textarea{min-height:64px;line-height:1.5;}
+.cms-field input:focus,.cms-field textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
+.save-row{display:flex;align-items:center;gap:12px;margin-top:14px;}
+.saved-flag{font-size:13px;font-weight:600;color:var(--sage);opacity:0;transition:opacity .2s;}
+.saved-flag.show{opacity:1;}
+
+/* notifications + settings rows */
+.set-row{display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:11px;padding:12px 14px;margin-top:9px;background:#fff;}
+.set-row .info{flex:1;min-width:0;}
+.set-row .st{font-weight:600;color:var(--navy);font-size:14px;}
+.set-row .sd{font-size:12px;color:var(--muted);margin-top:2px;}
+.switch{position:relative;width:42px;height:24px;flex:none;border-radius:999px;background:var(--cream-200);border:none;cursor:pointer;transition:background .2s;}
+.switch.on{background:var(--sage);}
+.switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 2px rgba(0,0,0,.25);}
+.switch.on::after{left:21px;}
+.audit{font-size:12px;color:var(--muted);border-left:2px solid var(--cream-200);padding:6px 0 6px 12px;margin-left:4px;}
+.audit b{color:var(--navy);font-weight:600;}
+.perm-grid{overflow-x:auto;}
+.perm-grid table{width:100%;border-collapse:collapse;font-size:12px;min-width:560px;}
+.perm-grid th,.perm-grid td{padding:8px 10px;border-bottom:1px solid var(--border);text-align:center;}
+.perm-grid th:first-child,.perm-grid td:first-child{text-align:left;font-weight:600;color:var(--navy);}
+.perm-grid .yes{color:var(--sage);font-weight:700;} .perm-grid .no{color:var(--navy-300);}
+.empty-note{font-size:13px;color:var(--muted);padding:14px;text-align:center;}
+
+/* footer */
+footer{border-top:1px solid var(--border);background:var(--cream);}
+.foot{display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center;padding:40px 0;}
+@media(min-width:640px){.foot{flex-direction:row;justify-content:space-between;text-align:left;}}
+.foot .l{display:flex;align-items:center;gap:10px;}
+.foot .mk{width:32px;height:32px;border-radius:8px;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:14px;}
+.foot .t{font-size:14px;color:var(--muted);}
+.foot .r{font-size:12px;color:var(--navy-300);}
+svg.ic{width:24px;height:24px;}
+</style>
+</head>
+<body>
+<!-- EPE build: partners-light-fix -->
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand"><span class="brand-mark">E</span><span class="brand-name">Wichita EPE</span></a>
+    <nav class="nav-links">
+      <a href="#how">How It Works</a>
+      <a href="#thrive">Thrive Lights</a>
+      <a href="#levels">Levels</a>
+      <a href="#partners">Partners</a>
+      <div class="nav-dd">
+        <button class="nav-dd-btn" type="button">Current Solutions <span style="font-size:10px;">▾</span></button>
+        <div class="nav-dd-menu">
+          <a href="https://wichita-transportation-solutions.netlify.app/#get-involved" target="_blank" rel="noopener">Transportation</a>
+          <a href="https://wichitaremedialbank.netlify.app" target="_blank" rel="noopener">Remedial Bank</a>
+          <a href="https://hopecdc.org/" target="_blank" rel="noopener">Housing</a>
+        </div>
+      </div>
+    </nav>
+    <div class="nav-right">
+      <button type="button" class="btn btn-outline btn-sm nav-cta js-login">Log In</button>
+      <a href="#join" class="btn btn-navy btn-sm nav-cta">Become a Member</a>
+      <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#how">How It Works</a>
+    <a href="#thrive">Thrive Lights</a>
+    <a href="#levels">Levels</a>
+    <a href="#partners">Partners</a>
+    <div class="mm-head">Current Solutions</div>
+    <a href="https://wichita-transportation-solutions.netlify.app/#get-involved" target="_blank" rel="noopener">Transportation</a>
+    <a href="https://wichitaremedialbank.netlify.app" target="_blank" rel="noopener">Remedial Bank</a>
+    <a href="https://hopecdc.org/" target="_blank" rel="noopener">Housing</a>
+    <a href="#join" class="btn btn-navy btn-full" style="margin-top:8px;color:var(--cream);">Become a Member</a>
+    <button type="button" class="btn btn-outline btn-full js-login" style="margin-top:8px;">Log In</button>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="bg-dots" style="position:absolute;inset:0;opacity:.7;"></div>
+  <div class="wrap grid" style="position:relative;">
+    <div>
+      <span class="badge"><span class="dot"></span>Every Person Empowered · Wichita</span>
+      <h1>Wichita EPE Membership</h1>
+      <p class="sub">A simple way for people, partners, and neighbors to take the next step toward stability, progress, and contribution.</p>
+      <div class="cta-row">
+        <a href="#join" class="btn btn-gold">Become a Member</a>
+        <a href="#levels" class="btn btn-outline">Explore Member Benefits</a>
+      </div>
+      <p class="quote">&ldquo;Every person empowered to transform their life — and help others do the same.&rdquo;</p>
+    </div>
+    <div class="card-stage">
+      <div class="card-wrap">
+        <div class="epe-card">
+          <div class="glow1"></div><div class="glow2"></div>
+          <div class="inner">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div><p class="eyebrow">Every Person Empowered</p><p class="title">EPE Membership</p></div>
+              <div class="chip"></div>
+            </div>
+            <div>
+              <p class="label">Member</p>
+              <p class="name">Your Name Here</p>
+              <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:12px;">
+                <div><p class="label">Level</p><p class="lvl">Basic Member</p></div>
+                <p class="id">WICHITA · 2026</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="card-tag">Membership Card · placeholder</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="band-sage bg-dots" style="background-color:var(--cream-200);">
+  <div class="wrap pad">
+    <div class="center"><p class="eyebrow">How It Works</p><h2 class="sec">Three steps to get started.</h2></div>
+    <div class="cards3" id="steps"></div>
+  </div>
+</section>
+
+<!-- THRIVE LIGHTS -->
+<section id="thrive" class="bg-dots" style="background-color:var(--cream-200);">
+  <div class="wrap pad">
+    <div style="max-width:640px;">
+      <p class="eyebrow">Thrive Lights</p>
+      <h2 class="sec">See your whole life at a glance.</h2>
+      <p class="intro">Thrive Lights is a simple self-check across the areas that matter. Tap a light to mark where you are today — then set goals to move it forward. (<a href="https://platform.povertystoplight.org/?token=Thrive_ICT__Household__st_survey_2026-07-08T16:48:13.615" target="_blank" rel="noopener" style="color:var(--sage);text-decoration:underline;">Try it</a>.)</p>
+    </div>
+    <div class="thrive-grid">
+      <div class="lights" id="lights"></div>
+      <div class="meter">
+        <p class="cap">Overall progress</p>
+        <p class="pct" id="pct">0%</p>
+        <div class="bar"><span id="barFill" style="width:0%"></span></div>
+        <ul class="legend">
+          <li><span class="d" style="background:var(--coral)"></span>Needs support</li>
+          <li><span class="d" style="background:var(--gold)"></span>Working on it</li>
+          <li><span class="d" style="background:var(--sage)"></span>Thriving</li>
+        </ul>
+        <p class="note" style="margin-top:24px;font-size:12px;color:var(--navy-300);">Prototype demo — progress isn't saved.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERSHIP LEVELS -->
+<section id="levels" class="wrap pad">
+  <div class="center"><p class="eyebrow">Membership Levels</p><h2 class="sec">Start where you are. Grow as you go.</h2><p class="intro">Prototype tiers — every member begins as Basic and can grow into Gold as they set goals and take action.</p></div>
+  <div class="tiers" id="tiers"></div>
+</section>
+
+<!-- APPLY FOR GOLD -->
+<section id="gold" class="band-sage">
+  <div class="wrap pad">
+    <div class="center"><p class="eyebrow">Gold Membership</p><h2 class="sec">Ready to go Gold?</h2><p class="intro">Two steps to unlock premium benefits.</p></div>
+    <div class="apply-steps">
+      <div class="apply-step"><span class="num">1</span><h3>Fill out the membership form</h3><p>Complete the quick sign-up to start your profile and tell us a bit about your goals.</p><a href="#join" class="btn btn-navy">Go to the form</a></div>
+      <div class="apply-step"><span class="num">2</span><h3>Meet with an EPE navigator</h3><p>Schedule a one-on-one with an EPE navigator to set goals, confirm your status, and map your path to Gold.</p><a href="#" class="btn btn-gold">Schedule an appointment</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNER NETWORK -->
+<section id="partners" class="band-navy">
+  <div class="wrap pad">
+    <div style="max-width:640px;">
+      <p class="eyebrow">Partner Network</p>
+      <h2 class="sec">One front door to a whole ecosystem of support.</h2>
+      <p class="intro">EPE connects members to trusted Wichita organizations across the areas that matter most — goals, money, work, transportation, housing, family, and giving back.</p>
+    </div>
+    <div class="cat-grid" id="cats"></div>
+    <div class="partner-box">
+      <p class="cap">Example Wichita partners</p>
+      <div class="chips" id="partnerChips"></div>
+      <p class="note">Placeholder partners shown for the prototype.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBER STORIES -->
+<section class="wrap pad">
+  <div class="center"><p class="eyebrow">Member Stories</p><h2 class="sec">Real next steps, taken one at a time.</h2></div>
+  <div class="spotlight">
+    <div class="video-embed"><iframe src="https://www.youtube.com/embed/bRDGR0UN3Ts" title="Peazy's testimonial" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+    <div class="spotlight-text">
+      <p class="role">Member Spotlight</p>
+      <h3>Meet Peazy</h3>
+      <p class="sub">Former gang member turned community leader.</p>
+      <p class="body">Through relationships at Hope 4 Da Hood, support at WSU Tech, and a network of people who believed in him, Peazy found purpose and now invests back into his neighborhood.</p>
+    </div>
+  </div>
+  <div class="stories" id="stories"></div>
+</section>
+
+<!-- WHY THIS MATTERS -->
+<section class="band-sage">
+  <div class="wrap pad why">
+    <p class="eyebrow" style="text-align:center;">Why This Matters</p>
+    <p class="lead">Wichita has no shortage of people working hard to change their lives. The challenge is making the next step clear, visible, and connected.</p>
+    <p class="body">EPE Membership creates a simple front door into a larger ecosystem of support, progress, and contribution.</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="join" class="band-navy">
+  <div class="wrap pad">
+    <div class="cta-grid">
+      <div class="cta">
+        <h2>Start your empowerment journey.</h2>
+        <p>Join free, refer a neighbor, or bring your organization into the network. Every path starts with one step.</p>
+        <div class="row">
+          <a href="#" class="btn btn-gold">Become a Member</a>
+          <a href="#" class="btn btn-outline-light">Refer Someone</a>
+          <a href="#" class="btn btn-outline-light">Partner With Us</a>
+        </div>
+      </div>
+      <div class="form-box">
+        <p class="ft">Become a Member</p>
+        <p class="fn">Create your free account.</p>
+        <form id="joinForm">
+          <label><span class="lb">Full name</span><input type="text" id="jName" placeholder="Your name"/></label>
+          <label><span class="lb">Email</span><input type="email" id="jEmail" placeholder="you@example.com"/></label>
+          <label><span class="lb">Phone number</span><input type="tel" id="jPhone" placeholder="(316) 555-0123"/></label>
+          <label><span class="lb">ZIP code</span><input type="text" id="jZip" placeholder="67202"/></label>
+          <label><span class="lb">Password</span><input type="password" id="jPass" placeholder="At least 6 characters"/></label>
+          <div class="toggle-field">
+            <span class="lb">Would you like a personal contact to reach out?</span>
+            <div class="seg seg-2" id="jContact" role="group" aria-label="Personal contact preference">
+              <button type="button" class="seg-btn active" data-val="yes">Yes, please</button>
+              <button type="button" class="seg-btn" data-val="no">No thanks</button>
+            </div>
+          </div>
+          <p class="fine" id="joinErr" style="color:var(--gold-light);display:none;margin-top:10px;"></p>
+          <button type="submit" class="btn btn-gold btn-full submit">Create my account</button>
+          <p class="fine">We'll never share your information.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap foot">
+    <div class="l"><span class="mk">E</span><span class="t">Wichita EPE Membership — Every Person Empowered.</span></div>
+    <p class="r">Prototype · For demonstration only · <span id="year"></span></p>
+  </div>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-label="Sign in">
+  <div class="modal-card">
+    <button class="modal-x" id="loginClose" aria-label="Close">&times;</button>
+    <h3 id="authTitle">Log in</h3>
+    <p class="hint" id="authHint">Sign in to your EPE dashboard.</p>
+    <form id="loginForm">
+      <label id="nameRow" style="display:none;">Full name<input type="text" id="lname" autocomplete="name" placeholder="Your name"/></label>
+      <label>Email or demo login<input type="text" id="lemail" autocomplete="email" placeholder="you@example.com"/></label>
+      <label>Password<input type="password" id="lpass" autocomplete="current-password" placeholder="At least 6 characters"/></label>
+      <p class="modal-err" id="loginErr"></p>
+      <button type="submit" id="authSubmit" class="btn btn-gold btn-full" style="margin-top:18px;">Log in</button>
+    </form>
+    <p class="demo-creds" id="authToggle">New here? <a href="#" id="toSignup">Create an account</a></p>
+    <p class="demo-creds" style="margin-top:8px;">Demo (no account, password <b>password</b>): <b>user-demo</b> · <b>navigator-demo</b> · <b>partner-demo</b> · <b>admin-demo</b></p>
+  </div>
+</div>
+
+<!-- MEMBER DASHBOARD (prototype) -->
+<div class="dash" id="dashboard">
+  <div class="dash-bar">
+    <div class="brand"><span class="brand-mark">E</span><span class="brand-name">Wichita EPE</span></div>
+    <div class="who">
+      <span class="stars" id="dashStars">&#9733; 0</span>
+      <button class="btn btn-outline-light btn-sm" id="logoutBtn">Log out</button>
+    </div>
+  </div>
+  <div class="dash-wrap">
+    <h1 id="dashHello">Welcome back</h1>
+    <p class="lead">Here's your empowerment journey at a glance.</p>
+
+    <div class="panel" style="margin-top:24px;max-width:720px;">
+      <span class="section-eyebrow">Your profile</span>
+      <h2>About you</h2>
+      <p class="sub">Tell us a bit so we can tailor your support.</p>
+      <div class="pf-2">
+        <label class="pf-l">Phone<input class="pf-i" id="pfPhone" type="tel" placeholder="(316) 555-0123"/></label>
+        <label class="pf-l">ZIP code<input class="pf-i" id="pfZip" type="text" placeholder="67202"/></label>
+      </div>
+      <div class="pf-l"><span class="pf-cap">Current status</span>
+        <div class="seg" id="pfStatus" role="group">
+          <button type="button" class="seg-btn" data-st="Employed">Employed</button>
+          <button type="button" class="seg-btn" data-st="School">In school</button>
+          <button type="button" class="seg-btn" data-st="Other">Other</button>
+        </div>
+        <input class="pf-i" id="pfDetail" type="text" placeholder="Tell us more (optional)" style="margin-top:8px;"/>
+      </div>
+      <div class="pf-l"><span class="pf-cap">I want to…</span>
+        <div class="seg" id="pfHelp" role="group">
+          <button type="button" class="seg-btn" data-hp="give">Provide a Solution</button>
+          <button type="button" class="seg-btn" data-hp="need">Explore Solutions</button>
+          <button type="button" class="seg-btn" data-hp="both">Both</button>
+        </div>
+      </div>
+      <button type="button" class="btn btn-gold btn-full" id="pfSave" style="margin-top:14px;max-width:240px;">Save profile</button>
+      <p class="sub" id="pfMsg" style="margin-top:8px;"></p>
+    </div>
+    <div class="panel" style="margin-top:24px;">
+      <span class="section-eyebrow">Getting started</span>
+      <h2>Review your info</h2>
+      <div id="infoReview"></div>
+      <div class="steps2" id="obSteps" style="margin-top:14px;"></div>
+      <div id="tlOnboard" style="margin-top:12px;"></div>
+    </div>
+
+    <div class="dash-grid">
+      <div>
+        <div class="panel" id="prioPanel">
+          <span class="section-eyebrow">Your focus right now</span>
+          <h2>Recommended next actions</h2>
+          <p class="sub">Based on your Thrive Lights results — we start where you need the most support.</p>
+          <div id="prioList"></div>
+        </div>
+        <div class="panel">
+          <span class="section-eyebrow">Supports</span>
+          <h2>Available to you now</h2>
+          <p class="sub">Things to help you stabilize — no points required.</p>
+          <div class="cards2" id="supportsList"></div>
+        </div>
+        <div class="panel">
+          <span class="section-eyebrow">EPE Rewards</span>
+          <h2>Rewards coming soon…</h2>
+          <p class="sub">What would <b>you</b> like to see — discounts or free food from your favorite local spots? Something else? Let your navigator know.</p>
+        </div>
+      </div>
+      <div>
+        <div class="panel">
+          <span class="section-eyebrow">Account</span>
+          <h2 id="profName">User</h2>
+          <p class="sub">Basic Member · since June 2026</p>
+          <div class="pm">
+            <div class="row"><span>Overall progress</span><span id="pmPct">0%</span></div>
+            <div class="pm-bar"><span id="pmFill" style="width:0%"></span></div>
+          </div>
+          <div class="pm">
+            <div class="row"><span>Stars to next reward</span><span id="nextReward">—</span></div>
+            <div class="pm-bar"><span id="rwFill" style="width:0%"></span></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <span class="section-eyebrow">Thrive Lights</span>
+          <h2>Your results</h2>
+          <p class="sub" id="tlDate"></p>
+          <div class="tl-grid" id="tlGrid"></div>
+          <div id="tlDetail"></div>
+        </div>
+        <div class="panel nav-card">
+          <span class="section-eyebrow" style="color:var(--gold-light)">Member ↔ Hub ↔ Navigator</span>
+          <h2>Your navigator</h2>
+          <p class="sub">Progress is validated in person — not self-reported.</p>
+          <div class="hub"><span>Phoenix</span><span>Army of Normal Folks</span><span>Partner locations</span></div>
+          <button class="btn btn-gold btn-full" id="checkinBtn" style="margin-top:14px;">Simulate navigator check-in</button>
+          <p class="sub" id="pendingNote" style="margin-top:8px;"></p>
+        </div>
+        <div class="panel">
+          <span class="section-eyebrow">Progress history</span>
+          <h2>Verified milestones</h2>
+          <div class="hist" id="histList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN BACK END (prototype) -->
+<div class="dash adash" id="admin">
+  <div class="dash-bar">
+    <div class="brand"><span class="brand-mark">E</span><span class="brand-name">Wichita EPE · Admin (Demo)</span></div>
+    <div class="who">
+      <select class="role-select" id="admRole" aria-label="Switch role">
+        <option value="super">Super Admin</option>
+        <option value="navigator">Navigator</option>
+        <option value="partner">Partner Org</option>
+        <option value="board">Read-Only / Board</option>
+      </select>
+      <button class="btn btn-outline-light btn-sm" id="adminLogout">Log out</button>
+    </div>
+  </div>
+  <div class="atabs" id="admTabs"></div>
+  <div class="adash-body">
+    <aside class="aside"><nav id="admNav"></nav></aside>
+    <main class="aview" id="admView"></main>
+  </div>
+</div>
+
+<!-- NAVIGATOR (prototype) -->
+<div class="dash" id="navdash">
+  <div class="dash-bar">
+    <div class="brand"><span class="brand-mark">E</span><span class="brand-name">Wichita EPE · Navigator</span></div>
+    <div class="who"><button class="btn btn-outline-light btn-sm" id="navLogout">Log out</button></div>
+  </div>
+  <div class="dash-wrap">
+    <h1>Navigator dashboard</h1>
+    <p class="lead">Verify member progress and support your caseload.</p>
+    <div class="stat-grid" id="navStats"></div>
+    <div class="dash-grid">
+      <div>
+        <div class="panel">
+          <span class="section-eyebrow">Action needed</span>
+          <h2>Verification queue</h2>
+          <p class="sub">Members marked these done — confirm at a check-in to award stars.</p>
+          <div id="navQueue"></div>
+        </div>
+        <div class="panel">
+          <span class="section-eyebrow">Recent</span>
+          <h2>Recently verified</h2>
+          <div class="hist" id="navHist"></div>
+        </div>
+      </div>
+      <div>
+        <div class="panel">
+          <span class="section-eyebrow">Your caseload</span>
+          <h2>My members</h2>
+          <div id="navCase"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PARTNER ORG (prototype) -->
+<div class="dash" id="partnerdash">
+  <div class="dash-bar">
+    <div class="brand"><span class="brand-mark">E</span><span class="brand-name">Wichita EPE · Partner</span></div>
+    <div class="who"><span class="stars" id="partnerName">Partner</span><button class="btn btn-outline-light btn-sm" id="partnerLogout">Log out</button></div>
+  </div>
+  <div class="dash-wrap">
+    <h1>Partner portal</h1>
+    <p class="lead">Referrals, participation, and the members you serve.</p>
+    <div class="stat-grid" id="partnerStats"></div>
+    <div class="dash-grid">
+      <div>
+        <div class="panel">
+          <span class="section-eyebrow">Inbox</span>
+          <h2>Referrals</h2>
+          <p class="sub">Members referred to your programs. Advance each as you work with them.</p>
+          <div id="partnerRef"></div>
+        </div>
+        <div class="panel">
+          <span class="section-eyebrow">Action needed</span>
+          <h2>Verify participation</h2>
+          <p class="sub">Confirm attendance or completion to award the member their stars.</p>
+          <div id="partnerQueue"></div>
+        </div>
+      </div>
+      <div>
+        <div class="panel">
+          <span class="section-eyebrow">Your members</span>
+          <h2>Participants</h2>
+          <div id="partnerParts"></div>
+        </div>
+        <div class="panel">
+          <span class="section-eyebrow">Recent</span>
+          <h2>Recently verified</h2>
+          <div class="hist" id="partnerHist"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ---------- Supabase (LIVE) ---------- */
+var SB_URL='https://mhpbkjnzmqrzxthnqdoy.supabase.co';
+var SB_KEY='sb_publishable_I2IbZD8lqrWc9QpOo3dMGg_H_v7ST2G';
+var sb=window.supabase.createClient(SB_URL,SB_KEY);
+var CUR={live:false,uid:null,email:null,stars:0,level:'basic'};
+/* ---------- icon set (inline SVG paths) ---------- */
+var ICONS={
+  card:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>',
+  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+  unlock:'<rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.9-1"/>',
+  briefcase:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/>',
+  wallet:'<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1"/>',
+  bus:'<rect x="4" y="4" width="16" height="13" rx="2"/><path d="M4 11h16"/><path d="M7 17v3M17 17v3"/>',
+  home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
+  family:'<circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.2"/><path d="M3 20v-1a5 5 0 0 1 10 0v1"/><path d="M14.5 20v-1a4 4 0 0 1 6.5-3.1"/>',
+  heart:'<path d="M12 20s-7-4.6-9.2-8.4A4.6 4.6 0 0 1 12 6a4.6 4.6 0 0 1 9.2 5.6C19 15.4 12 20 12 20z"/>',
+  check:'<path d="M4 12l5 5L20 6"/>'
+};
+function svg(name,cls){return '<svg class="'+(cls||'ic')+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">'+(ICONS[name]||'')+'</svg>';}
+
+/* ---------- data ---------- */
+var STEPS=[
+  {n:"01",t:"Join",b:"Get your EPE Membership Card and start your journey. It's free and open to anyone in Wichita.",i:"card"},
+  {n:"02",t:"Set Goals",b:"Use tools like Thrive Lights to identify what matters most, set goals, and track your progress over time.",i:"target"},
+  {n:"03",t:"Unlock Support",b:"As members work, set goals, and make progress, they may unlock partner benefits like training, savings support, transportation help, or homeownership pathways.",i:"unlock"}
+];
+var DOMAINS=["Housing","Income & Work","Health","Transportation","Family & Relationships","Money & Savings","Education","Community"];
+var STATE_LABELS=["Needs support","Working on it","Thriving"];
+var LEVELS=[
+  {
+    name:"Basic Member",accent:"navy",featured:false,
+    tagline:"For anyone ready to begin.",
+    req:["Just sign up with the simple form below"],
+    groups:[
+      {cat:"Financial Health",items:[
+        {t:"Bank On ICT",d:"Bank On ICT helps individuals access safe, affordable bank accounts and financial tools to reduce fees, protect income, and build long-term financial stability."},
+        {t:"Free tax return via VITA (United Way)"},
+        {t:"Operation Hope",d:"Free financial coaching and credit counseling to help you build credit, savings, and financial confidence."}
+      ]},
+      {cat:"Economic Opportunity",items:[
+        {t:"A small business consultation with Empower or Create Campaign"},
+        {t:"A job consultation with the Wichita Workforce Center"},
+        {t:"Empower Workforce program",url:"https://empowernorthend.org/programs/workforce/",d:"Job training and placement support to launch a stronger career."}
+      ]},
+      {cat:"Transportation",items:[
+        {t:"Free transportation consultation from Empower"},
+        {t:"Bike Walk — ride 15 hours and earn a bike"}
+      ]},
+      {cat:"Health & Wellness",items:[
+        {t:"YMCA — income-based financial assistance",d:"Reduced-cost YMCA membership for those who qualify."}
+      ]},
+      {cat:"Education",items:[
+        {t:"A career consultation with WSU Tech",d:"WSU Tech Career Services supports students and alumni with job-search assistance, resume and interview preparation, career coaching, and employer connections."}
+      ]},
+      {cat:"People Development & Goal Setting",items:[
+        {t:"The Phoenix",d:"The Phoenix is a free sober active community that builds strength, confidence, and connection through fitness and shared activities for people recovering from substance use."},
+        {t:"Priority consideration for the Getting Ahead program",d:"Includes a stipend, childcare, motivation, and more."},
+        {t:"Free Live the Life relationship classes"}
+      ]},
+      {cat:"Community Connections",items:[
+        {t:"Army of Normal Folks volunteer opportunities"}
+      ]}
+    ]
+  },
+  {
+    name:"Gold Member",accent:"gold",featured:true,
+    tagline:"For members actively working, growing, and contributing.",
+    req:["Complete your profile in Everest","Take Thrive Lights and set goals","Confirm employment, school, or service"],
+    benefitsNote:"Everything in Basic, plus:",
+    groups:[
+      {cat:"Financial Health",items:[
+        {t:"Save Match Grow (SMG) — matching savings up to $500"},
+        {t:"Micro loans"},
+        {t:"Other financial services",d:"Such as a last will & testament and more."}
+      ]},
+      {cat:"Economic Opportunity",items:[
+        {t:"Job consultation with EPE"},
+        {t:"Access to the Employer Pool"}
+      ]},
+      {cat:"Transportation",items:[
+        {t:"Car ownership support"},
+        {t:"Car repairs"},
+        {t:"Short-term transportation"},
+        {t:"Assistance with driver's license issues"}
+      ]},
+      {cat:"Housing",items:[
+        {t:"Apply to own a tiny home",d:"Zip code required."},
+        {t:"Help with housing",d:"A free consultation by contacting Family Promise."},
+        {t:"A homeownership consultation with Meritrust"},
+        {t:"Down payment assistance — apply through Sycamore"}
+      ]},
+      {cat:"Health & Wellness",items:[
+        {t:"Mental health through HopeNet"},
+        {t:"Free YMCA membership for income-qualified members"},
+        {t:"Grocery delivery — Walmart+"},
+        {t:"Telehealth through Amazon for one year"}
+      ]},
+      {cat:"Education",items:[
+        {t:"Concierge with Learning Lab"},
+        {t:"College scholarship access"}
+      ]},
+      {cat:"Community Connections",items:[
+        {t:"Mentor and give back in your neighborhood",d:"Step into peer mentorship and community leadership as you grow."}
+      ]},
+      {cat:"Misc",items:[
+        {t:"Help with getting your ID"},
+        {t:"Pro bono legal services from Koch / Kansas Legal Services"}
+      ]}
+    ]
+  }
+];
+var CATS=[["Goal Setting & Progress","target"],["Workforce & Training","briefcase"],["Financial Coaching","wallet"],["Transportation","bus"],["Housing & Homeownership","home"],["Family Stability","family"],["Community Contribution","heart"]];
+var PARTNERS=["WSU Tech","Thrive Lights","Family Promise","Hope CDC","Hope 4 Da Hood","Empower","Create Campaign","Bike Walk Wichita","Spero"];
+var STORIES=[
+  ["I set one goal — get my license back. EPE connected me to a ride program and a coach. Six months later I'm driving to a job I actually like.","Marcus T.","Basic Member · North End"],
+  ["The card made it feel real. Like someone in Wichita was actually rooting for me to make it.","Dana R.","Gold Member · Planeview"],
+  ["I started to get help. Now I mentor two new members. That's the part nobody tells you about — you get to give back.","Olivia M.","Gold Member · Delano"]
+];
+
+/* ---------- render ---------- */
+function el(html){var d=document.createElement('div');d.innerHTML=html.trim();return d.firstChild;}
+
+document.getElementById('steps').innerHTML=STEPS.map(function(s){
+  return '<div class="step"><span class="num">'+s.n+'</span><span class="ic">'+svg(s.i)+'</span><h3>'+s.t+'</h3><p>'+s.b+'</p></div>';
+}).join('');
+
+document.getElementById('tiers').innerHTML=LEVELS.map(function(l){
+  var req=l.req&&l.req.length?'<p class="grouplabel">Requirements</p><ul class="req">'+l.req.map(function(r){return '<li><span class="b"></span>'+r+'</li>';}).join('')+'</ul>':'';
+  var note=l.benefitsNote?'<p class="bnote">'+l.benefitsNote+'</p>':'';
+  var chev='<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+  var acc='<div class="acc">'+(l.groups||[]).map(function(g,gi){
+    var items=g.items.map(function(it){
+      var d=it.d?'<span class="desc">'+it.d+'</span>':'';
+      var t=it.url?'<a class="t" href="'+it.url+'" target="_blank" rel="noopener">'+it.t+' ↗</a>':'<span class="t">'+it.t+'</span>';
+      return '<li><span class="chk">'+svg('check','ic')+'</span><span class="txt">'+t+d+'</span></li>';
+    }).join('');
+    return '<div class="acc-item open"><button type="button" class="acc-head"><span class="lbl">'+chev+g.cat+'</span><span class="count">'+g.items.length+'</span></button><div class="acc-panel"><ul class="ben">'+items+'</ul></div></div>';
+  }).join('')+'</div>';
+  var pill=l.featured?'<span class="pill">Most common</span>':'';
+  return '<div class="tier tier-'+l.accent+(l.featured?' featured':'')+'"><div class="topbar"></div>'+pill+'<div class="body"><h3>'+l.name+'</h3><p class="tagline">'+l.tagline+'</p>'+req+'<p class="grouplabel">Benefits</p>'+note+acc+'<button class="choose">Choose '+l.name.split(' ')[0]+'</button></div></div>';
+}).join('');
+
+document.getElementById('tiers').addEventListener('click',function(e){
+  var h=e.target.closest('.acc-head'); if(!h)return;
+  h.parentElement.classList.toggle('open');
+});
+
+document.getElementById('cats').innerHTML=CATS.map(function(c){
+  return '<div class="cat"><span class="ic">'+svg(c[1])+'</span><span class="t">'+c[0]+'</span></div>';
+}).join('');
+
+document.getElementById('partnerChips').innerHTML=PARTNERS.map(function(p){return '<span class="chip-p">'+p+'</span>';}).join('');
+
+document.getElementById('stories').innerHTML=STORIES.map(function(s){
+  return '<figure class="story"><span class="q">&ldquo;</span><blockquote>'+s[0]+'</blockquote><figcaption><p class="nm">'+s[1]+'</p><p class="dt">'+s[2]+'</p></figcaption></figure>';
+}).join('');
+
+/* ---------- thrive lights interactivity ---------- */
+var states=DOMAINS.map(function(_,i){return i%3===0?0:(i%3===1?1:2);});
+function renderLights(){
+  document.getElementById('lights').innerHTML=DOMAINS.map(function(d,i){
+    return '<button class="light" data-state="'+states[i]+'" data-i="'+i+'"><span class="d"></span><span class="dn">'+d+'</span><span class="st">'+STATE_LABELS[states[i]]+'</span></button>';
+  }).join('');
+  var score=states.reduce(function(a,s){return a+s;},0);
+  var pct=Math.round((score/(states.length*2))*100);
+  document.getElementById('pct').textContent=pct+'%';
+  document.getElementById('barFill').style.width=pct+'%';
+}
+document.getElementById('lights').addEventListener('click',function(e){
+  var btn=e.target.closest('.light'); if(!btn)return;
+  var i=+btn.getAttribute('data-i'); states[i]=(states[i]+1)%3; renderLights();
+});
+renderLights();
+
+/* ---------- mobile menu ---------- */
+var burger=document.getElementById('burger'),menu=document.getElementById('mobileMenu');
+burger.addEventListener('click',function(){
+  var open=menu.classList.toggle('open');
+  burger.setAttribute('aria-expanded',open);
+  burger.innerHTML=open
+    ?'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'
+    :'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+});
+menu.addEventListener('click',function(e){if(e.target.tagName==='A'){menu.classList.remove('open');}});
+
+/* ---------- segmented toggles (help intent + personal contact) ---------- */
+document.querySelectorAll('.seg').forEach(function(seg){
+  seg.addEventListener('click',function(e){
+    var b=e.target.closest('.seg-btn'); if(!b)return;
+    seg.querySelectorAll('.seg-btn').forEach(function(x){x.classList.remove('active');});
+    b.classList.add('active');
+  });
+});
+
+/* ================= prototype member dashboard ================= */
+var DASH={
+  tl:[
+    {c:"Transportation",s:0},
+    {c:"Income & Work",s:0},
+    {c:"Financial Health",s:1},
+    {c:"Education",s:1},
+    {c:"Housing",s:2},
+    {c:"Health & Wellness",s:2}
+  ],
+  journeys:{
+    "Transportation":[
+      {id:"t1",label:"Take a transportation class",pts:10},
+      {id:"t2",label:"Check in with your navigator",pts:5},
+      {id:"t3",label:"Earn your bike (Bike Walk)",pts:15},
+      {id:"t4",label:"Unlock vehicle support",pts:20}
+    ],
+    "Income & Work":[
+      {id:"w1",label:"Meet the Employer Pool",pts:10},
+      {id:"w2",label:"Complete Empower Workforce intake",pts:10},
+      {id:"w3",label:"Land an interview",pts:15}
+    ],
+    "Financial Health":[
+      {id:"f1",label:"Attend a financial class",pts:10},
+      {id:"f2",label:"Open a Bank On ICT account",pts:10},
+      {id:"f3",label:"Start Save Match Grow",pts:15}
+    ],
+    "Education":[
+      {id:"e1",label:"Enroll in a program",pts:10},
+      {id:"e2",label:"Attend classes",pts:10},
+      {id:"e3",label:"Start tutoring",pts:10},
+      {id:"e4",label:"Enter the scholarship pipeline",pts:20}
+    ],
+    "Housing":[
+      {id:"h1",label:"Meet with a housing navigator",pts:10},
+      {id:"h2",label:"Free housing consultation with Family Promise",pts:10},
+      {id:"h3",label:"Start a homeownership consult (Meritrust)",pts:15},
+      {id:"h4",label:"Apply for down-payment assistance (Sycamore)",pts:20}
+    ],
+    "Health & Wellness":[
+      {id:"hw1",label:"Connect with health services",pts:10},
+      {id:"hw2",label:"Mental health support (HopeNet)",pts:10},
+      {id:"hw3",label:"Set up a free or discounted YMCA membership",pts:10},
+      {id:"hw4",label:"Schedule a wellness check-in with your navigator",pts:10}
+    ]
+  },
+  state:{},
+  ob:[
+    {t:"Set goals based on your current situation",d:"Choose your focus areas and set 1–2 goals to start your journey.",done:false}
+  ],
+  supports:[
+    {t:"Bus pass",d:"Immediate transit support to get where you need to go."},
+    {t:"Bike",d:"Earn a bike through Bike Walk ride hours."},
+    {t:"Uber support",d:"Short-term rides for work, school, and appointments."},
+    {t:"Coaching",d:"1:1 coaching with a navigator."},
+    {t:"Financial classes",d:"Free classes to build money skills."},
+    {t:"Transportation consult",d:"Plan your transportation with Empower."}
+  ],
+  rewards:[
+    {t:"Doc Green's — free entrée",th:20},
+    {t:"Meddy's — meal voucher",th:35},
+    {t:"Nike — 25% off",th:55},
+    {t:"Premium partner access",th:75},
+    {t:"Exclusive opportunity — homeownership cohort",th:100}
+  ],
+  history:[]
+};
+var SLABEL=["Needs support","Working on it","Thriving"];
+var SCLASS=["red","amber","green"];
+
+function dStars(){var s=0;Object.keys(DASH.journeys).forEach(function(c){DASH.journeys[c].forEach(function(a){if(DASH.state[a.id]===2)s+=a.pts;});});return s;}
+function dCounts(){var t=0,v=0;Object.keys(DASH.journeys).forEach(function(c){DASH.journeys[c].forEach(function(a){t++;if(DASH.state[a.id]===2)v++;});});return {t:t,v:v};}
+function dPending(){var n=0;Object.keys(DASH.journeys).forEach(function(c){DASH.journeys[c].forEach(function(a){if(DASH.state[a.id]===1)n++;});});return n;}
+
+function renderDash(){
+  var stars=dStars();
+  document.getElementById('dashStars').innerHTML='&#9733; '+stars;
+  document.getElementById('obSteps').innerHTML=DASH.ob.map(function(o,i){
+    return '<div class="ob-step'+(o.done?' done':'')+'"><span class="n">'+(o.done?'✓':(i+1))+'</span><div><div class="t">'+o.t+'</div><div class="d">'+o.d+'</div></div><button type="button" class="btn '+(o.done?'btn-outline':'btn-navy')+' btn-sm go" data-ob="'+i+'">'+(o.done?'Done':'Set goals')+'</button></div>';
+  }).join('');
+  document.getElementById('tlGrid').innerHTML=DASH.tl.map(function(r){
+    return '<div class="tl-cell"><div><span class="dot bg-'+SCLASS[r.s]+'"></span><span class="c">'+r.c+'</span></div><div class="s st-'+SCLASS[r.s]+'">'+SLABEL[r.s]+'</div></div>';
+  }).join('');
+  (function(){var dt=document.getElementById('tlDate');if(dt)dt.textContent=DASH.tlDate?('Assessed '+DASH.tlDate):'';
+    var det=document.getElementById('tlDetail');if(!det)return;
+    if(DASH.tlIndicators&&DASH.tlIndicators.length){
+      var order=['Transportation','Income & Work','Financial Health','Education','Housing','Health & Wellness','Other'];
+      var groups={};DASH.tlIndicators.forEach(function(ind){(groups[ind.domain]=groups[ind.domain]||[]).push(ind);});
+      var keys=order.filter(function(k){return groups[k];});
+      det.innerHTML='<div class="tl-detail-h">All results ('+DASH.tlIndicators.length+' indicators)</div>'+keys.map(function(d){
+        return '<div class="tl-dgroup"><div class="tl-dname">'+d+'</div>'+groups[d].map(function(ind){
+          return '<div class="tl-ind"><span class="dot bg-'+SCLASS[ind.status]+'"></span><span class="tl-iname">'+ind.name+'</span></div>';
+        }).join('')+'</div>';
+      }).join('');
+    } else { det.innerHTML=''; }
+  })();
+  var prio;
+  if(DASH.tlIndicators&&DASH.tlIndicators.length){
+    var agg={};
+    DASH.tlIndicators.forEach(function(ind){var d=ind.domain;if(!d||!DASH.journeys[d])return;if(!agg[d])agg[d]={c:d,s:2,sev:0,need:0};if(ind.status<2){agg[d].sev+=(2-ind.status);agg[d].need++;if(ind.status<agg[d].s)agg[d].s=ind.status;}});
+    prio=Object.keys(agg).map(function(k){return agg[k];}).filter(function(r){return r.sev>0;}).sort(function(a,b){return b.sev-a.sev;});
+  } else {
+    prio=DASH.tl.filter(function(r){return r.s<2 && DASH.journeys[r.c];}).sort(function(a,b){return a.s-b.s;}).map(function(r){return {c:r.c,s:r.s,need:0};});
+  }
+  document.getElementById('prioList').innerHTML=prio.map(function(r){
+    var lead=(r.s===0?'You are red in '+r.c:'You are working on '+r.c)+(r.need?(' \u2014 '+r.need+' area'+(r.need>1?'s':'')+' need attention. Here are your next actions:'):' \u2014 here are your next actions:');
+    var acts=DASH.journeys[r.c].map(function(a){
+      var st=DASH.state[a.id]||0,cls=st===2?'verified':st===1?'pending':'todo';
+      var badge=st===2?'Verified':st===1?'Pending check-in':'To do';
+      var box=st===2?'\u2713':st===1?'\u2026':'';
+      return '<div class="action '+cls+'" data-id="'+a.id+'"><span class="box">'+box+'</span><span class="lbl">'+a.label+'</span><span class="pts">+'+a.pts+'\u2605</span><span class="badge">'+badge+'</span></div>';
+    }).join('');
+    return '<div class="prio'+(r.s===1?' amber':'')+'"><h3>'+r.c+'</h3><p class="lead">'+lead+'</p><div class="actions-list">'+acts+'</div></div>';
+  }).join('')||'<p class="sub">No priority areas flagged right now \u2014 nice work.</p>';
+  (function(){var gg=document.querySelector('#dashboard .dash-grid'); if(gg)gg.style.display='';})(); renderInfoReview();
+  document.getElementById('supportsList').innerHTML=STORE.benefits.filter(function(b){return b.unlockAt===0;}).map(function(b){
+    return '<div class="mini"><div class="t">'+b.name+'</div><div class="d">'+(b.cat||'')+'</div><span class="tag">Available now</span></div>';
+  }).join('');
+  var _rl=document.getElementById('rewardsList'); if(_rl)_rl.innerHTML=rewardList().map(function(rw){
+    var unlocked=stars>=rw.th;
+    return '<div class="reward '+(unlocked?'unlocked':'locked')+'"><span class="star">★</span><div><div class="t">'+rw.t+'</div><div class="th">'+rw.th+' stars</div></div><span class="state">'+(unlocked?'Unlocked':(rw.th-stars)+' to go')+'</span></div>';
+  }).join('');
+  var c=dCounts(),pct=c.t?Math.round(c.v/c.t*100):0;
+  document.getElementById('pmPct').textContent=pct+'%';
+  document.getElementById('pmFill').style.width=pct+'%';
+  var next=rewardList().filter(function(rw){return rw.th>stars;})[0];
+  if(next){document.getElementById('nextReward').textContent=(next.th-stars)+'★ to '+next.t.split(' — ')[0];document.getElementById('rwFill').style.width=Math.min(100,Math.round(stars/next.th*100))+'%';}
+  else{document.getElementById('nextReward').textContent='All unlocked';document.getElementById('rwFill').style.width='100%';}
+  var p=dPending();
+  document.getElementById('pendingNote').textContent=p?(p+' action'+(p>1?'s':'')+' awaiting verification.'):'No actions pending verification.';
+  var h=document.getElementById('histList');
+  h.innerHTML=DASH.history.length?DASH.history.map(function(x){return '<div class="row"><span>'+x.label+'</span><span class="s">+'+x.pts+'★</span></div><div class="d" style="font-size:11px;color:var(--muted);margin-top:-4px;">Verified at '+x.hub+' · '+x.date+'</div>';}).join(''):'<div class="empty">No verified milestones yet. Start actions, then check in with your navigator.</div>';
+}
+
+document.getElementById('prioList').addEventListener('click',function(e){
+  var a=e.target.closest('.action'); if(!a)return;
+  var id=a.getAttribute('data-id'),st=DASH.state[id]||0;
+  if(st===2)return; DASH.state[id]=st===1?0:1; renderDash();
+});
+document.getElementById('obSteps').addEventListener('click',function(e){
+  var b=e.target.closest('[data-ob]'); if(!b)return;
+  var i=+b.getAttribute('data-ob'); DASH.ob[i].done=!DASH.ob[i].done; renderDash();
+});
+/* ---------- Thrive Lights import onboarding ---------- */
+var SURVEY_URL="https://platform.povertystoplight.org/?token=Thrive_ICT__Household__st_survey_2026-07-08T16:48:13.615";
+function tlImportUI(){
+  return '<div class="tl-import"><label class="tl-file"><input type="file" id="tlFile" accept="application/pdf,.pdf"/><span id="tlFileName">Choose your life map (PDF)\u2026</span></label><button type="button" class="btn btn-navy btn-sm" data-tlimport="1">Import results</button></div>';
+}
+function renderInfoReview(){
+  var el=document.getElementById('infoReview'); if(!el)return;
+  var pn=document.getElementById('profName'); var nm=pn?pn.textContent:'Member';
+  var html='<div class="ir-row"><span>Name</span><b>'+nm+'</b></div>';
+  if(CUR.email)html+='<div class="ir-row"><span>Email</span><b>'+CUR.email+'</b></div>';
+  html+='<p class="sub" style="margin-top:8px;">Review and complete your details in <b>Your profile</b> below.</p>';
+  el.innerHTML=html;
+}
+function renderOnboard(){
+  var el=document.getElementById('tlOnboard'); if(!el)return;
+  if(DASH.tlImported){
+    el.innerHTML='<div class="tl-done"><span class="tl-check">\u2713</span><div><div class="t">Thrive Lights results imported</div><div class="d">From '+(DASH.tlFile||'your life map')+(DASH.tlSummary?' — '+DASH.tlSummary:'')+' \u2014 your results appear below.</div></div><button type="button" class="btn btn-outline btn-sm" data-tlreset="1">Re-import</button></div>';
+    return;
+  }
+  var q='<p class="tl-hint" style="margin-top:0;margin-bottom:8px;">Optional — add your Thrive Lights results anytime to personalize your dashboard.</p><p class="tl-q">Have you taken Thrive Lights before?</p><div class="tl-choice"><button type="button" class="btn '+(DASH.tlChoice==='yes'?'btn-navy':'btn-outline')+' btn-sm" data-tl="yes">Yes, I have</button><button type="button" class="btn '+(DASH.tlChoice==='no'?'btn-navy':'btn-outline')+' btn-sm" data-tl="no">No, not yet</button></div>'+(!CUR.live?'<p class="tl-hint" style="margin-top:10px;">Demo: <a href="#" data-tlsample="1">use sample results</a> to continue.</p>':'');
+  var body='';
+  if(DASH.tlChoice==='yes'){
+    body='<div class="tl-panel">'+tlImportUI()+'<p class="tl-hint">Don\u2019t have your life map handy? Log in to your Poverty Stoplight account and hit <b>Download</b>, or <a href="'+SURVEY_URL+'" target="_blank" rel="noopener">open the platform \u2197</a>.</p></div>';
+  } else if(DASH.tlChoice==='no'){
+    body='<div class="tl-panel"><p class="d">No problem \u2014 take the quiz, then download your life map and import it here.</p><a class="btn btn-gold btn-sm" href="'+SURVEY_URL+'" target="_blank" rel="noopener">Take Thrive Lights \u2197</a><ol class="tl-steps"><li>Complete the survey.</li><li>Hit <b>Download</b> to save your life map (PDF).</li><li>Import it below.</li></ol>'+tlImportUI()+'</div>';
+  }
+  el.innerHTML=q+body;
+}
+function psFlash(m){var n=document.getElementById('tlFileName');if(n)n.textContent=m;}
+function psLoad(cb,err){
+  if(window.pdfjsLib){cb();return;}
+  var sc=document.createElement('script');
+  sc.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+  sc.onload=function(){try{pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';}catch(e){}cb();};
+  sc.onerror=function(){if(err)err();};
+  document.head.appendChild(sc);
+}
+var PS_DOMAINS=[
+  ['Transportation',['transportation']],
+  ['Financial Health',['savings','budget','debt','loan','banking']],
+  ['Income & Work',['enough income','employ','resume','generate in','assets']],
+  ['Education',['read','graduate','enrolled','learn new','recreational']],
+  ['Housing',['housing','utilities','kitchen','appliance','bathroom','space in','clothing','internet','emergency','childcare','property','neighborhood is safe']],
+  ['Health & Wellness',['health serv','mental','teeth','vision','food','healthy diet','physical','healthy habits','relationship','clean neigh','community','conflict','believe in myself','spiritual','emotion','happy','recognize','well-being']]
+];
+function psDomainOf(t){for(var i=0;i<PS_DOMAINS.length;i++){var ks=PS_DOMAINS[i][1];for(var j=0;j<ks.length;j++){if(t.indexOf(ks[j])>=0)return PS_DOMAINS[i][0];}}return null;}
+function psStatus(c){var r=c[0],g=c[1],b=c[2];if(r>240&&g>240&&b>240)return null;if(r<40&&g<40&&b<40)return null;if(g>=140&&r<170)return 2;if(r>=200&&g>=140&&b<130)return 1;if(r>=170&&g<140)return 0;return null;}
+function psParse(file){
+  return file.arrayBuffer().then(function(buf){return pdfjsLib.getDocument({data:buf}).promise;})
+  .then(function(doc){return doc.getPage(1);})
+  .then(function(page){return Promise.all([page.getTextContent(),page.getOperatorList()]).then(function(res){
+    var tc=res[0],ops=res[1],O=pdfjsLib.OPS,U=pdfjsLib.Util;
+    var items=[];
+    tc.items.forEach(function(it){if(it.str&&it.str.trim()){var y=it.transform[5];if(y<520)items.push({s:it.str.trim(),x:it.transform[4],y:y});}});
+    items.sort(function(a,b){return (b.y-a.y)||(a.x-b.x);});
+    var clusters=[];
+    items.forEach(function(it){var c=null;for(var i=0;i<clusters.length;i++){if(Math.abs(clusters[i].x-it.x)<45&&Math.abs(clusters[i].y-it.y)<24){c=clusters[i];break;}}if(!c){clusters.push({x:it.x,y:it.y,t:it.s.toLowerCase(),raw:it.s});}else{c.t+=' '+it.s.toLowerCase();c.raw+=' '+it.s;c.y=Math.min(c.y,it.y);}});
+    var ctm=[1,0,0,1,0,0],stk=[],col=null,boxes=[];
+    function dev(x,y){return [ctm[0]*x+ctm[2]*y+ctm[4],ctm[1]*x+ctm[3]*y+ctm[5]];}
+    for(var k=0;k<ops.fnArray.length;k++){var fn=ops.fnArray[k],a=ops.argsArray[k];
+      if(fn===O.save)stk.push(ctm.slice());
+      else if(fn===O.restore)ctm=stk.pop()||ctm;
+      else if(fn===O.transform)ctm=U.transform(ctm,a);
+      else if(fn===O.paintFormXObjectBegin){stk.push(ctm.slice());if(a&&a[0])ctm=U.transform(ctm,a[0]);}
+      else if(fn===O.paintFormXObjectEnd){ctm=stk.pop()||ctm;}
+      else if(fn===O.setFillRGBColor){col=[a[0],a[1],a[2]];}
+      else if(fn===O.constructPath){var mm=a[2];if(mm&&col){var p0=dev(mm[0],mm[1]),p1=dev(mm[2],mm[3]);boxes.push({c:[col[0],col[1],col[2]],x:(p0[0]+p1[0])/2,y:(p0[1]+p1[1])/2});}}
+    }
+    var cboxes=[];boxes.forEach(function(b){var stx=psStatus(b.c);if(stx!==null)cboxes.push({x:b.x,y:b.y,s:stx});});
+    var g=0,y=0,rd=0; cboxes.forEach(function(b){if(b.s===2)g++;else if(b.s===1)y++;else rd++;});
+    var pairs=[];for(var ci=0;ci<clusters.length;ci++){for(var bi=0;bi<cboxes.length;bi++){var pdx=clusters[ci].x-cboxes[bi].x,pdy=clusters[ci].y-cboxes[bi].y;pairs.push({d:pdx*pdx+pdy*pdy,ci:ci,bi:bi});}}
+    pairs.sort(function(p,q){return p.d-q.d;});
+    var uc={},ub={},domStat={},matched=0;
+    for(var pk=0;pk<pairs.length;pk++){var pp=pairs[pk];if(uc[pp.ci]||ub[pp.bi])continue;uc[pp.ci]=1;ub[pp.bi]=1;var sv=cboxes[pp.bi].s;clusters[pp.ci].status=sv;var dom=psDomainOf(clusters[pp.ci].t);if(dom){matched++;if(domStat[dom]===undefined||sv<domStat[dom])domStat[dom]=sv;}}
+    function psClean(x){return x.replace(/([A-Za-z])-\s+([A-Za-z])/g,'$1$2').replace(/\s+/g,' ').trim();}
+    var indicators=[];clusters.forEach(function(c){if(c.status!==undefined)indicators.push({name:psClean(c.raw),status:c.status,domain:psDomainOf(c.t)||'Other'});});
+    var allTxt=tc.items.map(function(i){return i.str;}).join(' ');
+    var dm=allTxt.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s*\d{4}/i);
+    return {colored:g+y+rd,green:g,yellow:y,red:rd,matched:matched,domains:domStat,indicators:indicators,date:dm?dm[0]:''};
+  });});
+}
+function tlDoImport(){
+  if(!DASH.tlFileObj){psFlash('Please choose your life map PDF first.');return;}
+  psFlash('Reading your life map…');
+  psLoad(function(){
+    psParse(DASH.tlFileObj).then(function(r){
+      if(r.colored===0){psFlash('We read the PDF but found no stoplight colors — is this a completed Poverty Stoplight life map?');return;}
+      DASH.tl=DASH.tl.map(function(row){return (r.domains[row.c]!==undefined)?{c:row.c,s:r.domains[row.c]}:row;});
+      DASH.tlSummary=r.green+' green · '+r.yellow+' yellow · '+r.red+' red';
+      DASH.tlIndicators=r.indicators||[]; DASH.tlDate=r.date||'';
+      DASH.tlImported=true; if(CUR.live&&CUR.uid){saveAssessment(r);} renderDash(); renderOnboard();
+    }).catch(function(e){psFlash('Sorry — could not read that PDF. Please upload your Poverty Stoplight life map (PDF).');});
+  },function(){psFlash('Could not load the PDF reader (check your connection) — please try again.');});
+}
+document.getElementById('tlOnboard').addEventListener('click',function(e){
+  var samp=e.target.closest('[data-tlsample]'); if(samp){e.preventDefault();DASH.tlImported=true;DASH.tlDate='Sample';DASH.tlSummary='sample data';DASH.tlIndicators=[];renderDash();renderOnboard();return;}
+  var c=e.target.closest('[data-tl]'); if(c){DASH.tlChoice=c.getAttribute('data-tl');renderOnboard();return;}
+  if(e.target.closest('[data-tlimport]')){tlDoImport();return;}
+  if(e.target.closest('[data-tlreset]')){DASH.tlImported=false;DASH.tlChoice='yes';DASH.tlFile='';renderOnboard();return;}
+});
+document.getElementById('tlOnboard').addEventListener('change',function(e){
+  var f=e.target; if(f&&f.id==='tlFile'&&f.files&&f.files[0]){DASH.tlFileObj=f.files[0];DASH.tlFile=f.files[0].name;var nm=document.getElementById('tlFileName');if(nm)nm.textContent=f.files[0].name;}
+});
+document.getElementById('checkinBtn').addEventListener('click',function(){
+  var date=new Date().toLocaleDateString(),hubs=['Phoenix','Army of Normal Folks','WSU Tech'],any=false;
+  Object.keys(DASH.journeys).forEach(function(c){DASH.journeys[c].forEach(function(a){
+    if(DASH.state[a.id]===1){DASH.state[a.id]=2;any=true;DASH.history.unshift({label:a.label,pts:a.pts,hub:hubs[Math.floor(Math.random()*hubs.length)],date:date});}
+  });});
+  if(!any){document.getElementById('pendingNote').textContent='Nothing pending — start an action above first.';return;}
+  renderDash();
+});
+
+/* ================= prototype admin back end ================= */
+var STORE_KEY='epe_admin_store_v1';
+var STORE_DEFAULTS={
+  benefits:[
+    {id:'b1',name:'Bus pass',cat:'Transportation',unlockAt:0,tier:'Basic'},
+    {id:'b2',name:'Bike',cat:'Transportation',unlockAt:0,tier:'Basic'},
+    {id:'b3',name:'Uber support',cat:'Transportation',unlockAt:0,tier:'Basic'},
+    {id:'b4',name:'Coaching',cat:'People Development',unlockAt:0,tier:'Basic'},
+    {id:'b5',name:'Financial classes',cat:'Financial Health',unlockAt:0,tier:'Basic'},
+    {id:'b6',name:'Transportation consult',cat:'Transportation',unlockAt:0,tier:'Basic'},
+    {id:'b7',name:'Vehicle repair support',cat:'Transportation',unlockAt:60,tier:'Gold'},
+    {id:'b8',name:'Homeownership consult',cat:'Housing',unlockAt:80,tier:'Gold'}
+  ],
+  rewards:[
+    {id:'r1',name:"Doc Green's — free entrée",th:20},
+    {id:'r2',name:"Meddy's — meal voucher",th:35},
+    {id:'r3',name:'Nike — 25% off',th:55},
+    {id:'r4',name:'Premium partner access',th:75},
+    {id:'r5',name:'Exclusive opportunity — homeownership cohort',th:100}
+  ]
+};
+var STORE;
+function loadStore(){try{var s=JSON.parse(localStorage.getItem(STORE_KEY));if(s&&s.benefits&&s.rewards)return s;}catch(e){}return JSON.parse(JSON.stringify(STORE_DEFAULTS));}
+function saveStore(){try{localStorage.setItem(STORE_KEY,JSON.stringify(STORE));}catch(e){}}
+STORE=loadStore();
+STORE.benefits.forEach(function(b){if(!b.tier)b.tier='Basic';});
+function rewardList(){
+  var a=STORE.rewards.map(function(r){return {t:r.name,th:r.th};});
+  STORE.benefits.forEach(function(b){if(b.unlockAt>0)a.push({t:b.name,th:b.unlockAt});});
+  return a.sort(function(x,y){return x.th-y.th;});
+}
+/* ===================================================================
+   EPE Admin — case-management & ecosystem-orchestration platform
+   Prototype: rich mock data, role-based views, localStorage persistence.
+   =================================================================== */
+
+/* ---- reference data ---- */
+var ADOM=['Housing','Income & Work','Health','Transportation','Family','Money & Savings','Education','Community'];
+var ADOM_SHORT=['Housing','Income','Health','Transport','Family','Money','Educ.','Community'];
+var ANAV=['Maria L.','James O.','Tanya B.'];
+var STATE_COL=['#c8553d','#d8a23a','#4f8a63']; /* red / gold / sage */
+var STATE_TXT=['Needs support','Working on it','Thriving'];
+
+/* roles -> which modules they can open + label */
+var AROLES={
+  super:{label:'Super Admin',views:['home','members','queue','thrive','referrals','solutions','stars','impact','content','notifications','settings']},
+  navigator:{label:'Navigator',views:['home','members','queue','referrals','stars']},
+  partner:{label:'Partner Org',views:['referrals']},
+  board:{label:'Read-Only / Board',views:['home','impact','thrive']}
+};
+var NAVMETA={
+  home:['Dashboard','grid'], members:['Members CRM','people'], queue:['Navigator Queue','flag'],
+  thrive:['Thrive Analytics','chart'], referrals:['Partner Referrals','link'], solutions:['Bank of Solutions','bank'],
+  stars:['Stars & Rewards','star'], impact:['Impact (Board)','trophy'], content:['Site Content','edit'],
+  notifications:['Notifications','bell'], settings:['Settings','gear']
+};
+var AICONS={
+  grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+  people:'<circle cx="9" cy="8" r="3"/><path d="M3 20v-1a5 5 0 0 1 9-3"/><circle cx="17" cy="10" r="2.4"/><path d="M14.5 20v-1a3.5 3.5 0 0 1 6-2.4"/>',
+  flag:'<path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/>',
+  chart:'<path d="M4 20V4"/><path d="M4 20h16"/><rect x="7" y="11" width="3" height="6"/><rect x="12" y="7" width="3" height="10"/><rect x="17" y="13" width="3" height="4"/>',
+  link:'<path d="M9 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M15 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/>',
+  bank:'<path d="M3 10l9-6 9 6"/><path d="M5 10v8M19 10v8M9 10v8M15 10v8"/><path d="M3 20h18"/>',
+  star:'<path d="M12 3l2.6 5.6L21 9.4l-4.5 4.3L17.6 20 12 16.8 6.4 20l1.1-6.3L3 9.4l6.4-.8z"/>',
+  trophy:'<path d="M8 4h8v4a4 4 0 0 1-8 0z"/><path d="M8 6H5v1a3 3 0 0 0 3 3M16 6h3v1a3 3 0 0 1-3 3"/><path d="M10 13h4v4h-4z"/><path d="M8 20h8"/>',
+  edit:'<path d="M4 20h4l10-10-4-4L4 16z"/><path d="M14 6l4 4"/>',
+  bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+  gear:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>'
+};
+function aicon(n){return '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+(AICONS[n]||'')+'</svg>';}
+
+/* ---- member dataset (mock) ----
+   tl = 8 thrive-light states (0/1/2) in ADOM order. */
+function mkMember(o){
+  o.tlArr=o.tl.split('').map(Number);
+  o.score=Math.round(o.tlArr.reduce(function(a,b){return a+b;},0)/(o.tlArr.length*2)*100);
+  return o;
+}
+var MEMBERS=[
+  {id:'m1',name:'Peazy J.',email:'peazy@example.com',phone:'(316) 555-0140',level:'Gold',zip:'67214',intent:'Both',nav:0,joined:'Aug 2025',tl:'21222212',last:1,status:'Active',tags:['Mentor','Employed'],stars:{e:140,p:0,a:140}},
+  {id:'m2',name:'Dana R.',email:'dana.r@example.com',phone:'(316) 555-0118',level:'Gold',zip:'67203',intent:'Need',nav:1,joined:'Sep 2025',tl:'12212112',last:3,status:'Active',tags:['Housing'],stars:{e:120,p:10,a:110}},
+  {id:'m3',name:'Lena K.',email:'lena.k@example.com',phone:'(316) 555-0192',level:'Gold',zip:'67204',intent:'Need',nav:2,joined:'Oct 2025',tl:'11221102',last:6,status:'Gold-ready',tags:['School'],stars:{e:95,p:15,a:80}},
+  {id:'m4',name:'Marcus T.',email:'marcus.t@example.com',phone:'(316) 555-0177',level:'Basic',zip:'67214',intent:'Need',nav:0,joined:'Nov 2025',tl:'10110201',last:9,status:'Active',tags:['Transport'],stars:{e:85,p:5,a:80}},
+  {id:'m5',name:'Olivia M.',email:'olivia.m@example.com',phone:'(316) 555-0133',level:'Gold',zip:'67218',intent:'Give',nav:1,joined:'Sep 2025',tl:'22122212',last:2,status:'Active',tags:['Mentor'],stars:{e:60,p:0,a:60}},
+  {id:'m6',name:'Jamal W.',email:'jamal.w@example.com',phone:'(316) 555-0166',level:'Basic',zip:'67211',intent:'Need',nav:2,joined:'Dec 2025',tl:'01101100',last:18,status:'At risk',tags:['Housing','Health'],stars:{e:45,p:10,a:35}},
+  {id:'m7',name:'Sofia G.',email:'sofia.g@example.com',phone:'(316) 555-0155',level:'Basic',zip:'67217',intent:'Both',nav:0,joined:'Jan 2026',tl:'10010101',last:5,status:'Active',tags:['Childcare'],stars:{e:30,p:5,a:25}},
+  {id:'m8',name:'Andre P.',email:'andre.p@example.com',phone:'(316) 555-0144',level:'Basic',zip:'67202',intent:'Need',nav:1,joined:'Feb 2026',tl:'00100100',last:34,status:'Stalled',tags:['Justice-involved'],stars:{e:18,p:0,a:18}},
+  {id:'m9',name:'Tara B.',email:'tara.b@example.com',phone:'(316) 555-0121',level:'Basic',zip:'67220',intent:'Need',nav:2,joined:'Feb 2026',tl:'11011010',last:4,status:'Active',tags:['Single parent'],stars:{e:40,p:10,a:30}},
+  {id:'m10',name:'Devon H.',email:'devon.h@example.com',phone:'(316) 555-0188',level:'Gold',zip:'67214',intent:'Give',nav:0,joined:'Jul 2025',tl:'22212222',last:7,status:'Active',tags:['Mentor','Employed'],stars:{e:155,p:0,a:155}},
+  {id:'m11',name:'Nia C.',email:'nia.c@example.com',phone:'(316) 555-0109',level:'Basic',zip:'67204',intent:'Need',nav:1,joined:'Mar 2026',tl:'01001001',last:41,status:'Stalled',tags:['Health'],stars:{e:12,p:0,a:12}},
+  {id:'m12',name:'Carlos M.',email:'carlos.m@example.com',phone:'(316) 555-0102',level:'Basic',zip:'67211',intent:'Both',nav:2,joined:'Mar 2026',tl:'10100110',last:8,status:'New',tags:['Workforce'],stars:{e:22,p:8,a:14}},
+  {id:'m13',name:'Brianna S.',email:'brianna.s@example.com',phone:'(316) 555-0175',level:'Gold',zip:'67218',intent:'Need',nav:0,joined:'Oct 2025',tl:'12211212',last:6,status:'Gold-ready',tags:['Savings'],stars:{e:78,p:12,a:66}},
+  {id:'m14',name:'Hassan A.',email:'hassan.a@example.com',phone:'(316) 555-0163',level:'Basic',zip:'67217',intent:'Need',nav:1,joined:'Jan 2026',tl:'01110100',last:14,status:'At risk',tags:['Transport'],stars:{e:35,p:15,a:20}},
+  {id:'m15',name:'Gloria V.',email:'gloria.v@example.com',phone:'(316) 555-0150',level:'Gold',zip:'67203',intent:'Give',nav:2,joined:'Aug 2025',tl:'22221221',last:3,status:'Active',tags:['Mentor'],stars:{e:110,p:0,a:110}},
+  {id:'m16',name:'Tyrese D.',email:'tyrese.d@example.com',phone:'(316) 555-0190',level:'Basic',zip:'67202',intent:'Need',nav:0,joined:'Feb 2026',tl:'00010010',last:27,status:'Stalled',tags:['Justice-involved'],stars:{e:8,p:0,a:8}},
+  {id:'m17',name:'Mei L.',email:'mei.l@example.com',phone:'(316) 555-0112',level:'Basic',zip:'67220',intent:'Both',nav:1,joined:'Mar 2026',tl:'11101011',last:2,status:'Active',tags:['Education'],stars:{e:50,p:10,a:40}},
+  {id:'m18',name:'Robert N.',email:'robert.n@example.com',phone:'(316) 555-0128',level:'Basic',zip:'67214',intent:'Need',nav:2,joined:'Apr 2026',tl:'10001000',last:11,status:'New',tags:['Housing'],stars:{e:15,p:5,a:10}}
+].map(mkMember);
+
+/* ---- partners + referrals (mock, persisted) ---- */
+var REF_KEY='epe_admin_referrals_v1';
+var REF_STATUSES=['Created','Contacted','Scheduled','Engaged','Completed','Closed'];
+var PARTNERS=[
+  {id:'p1',name:'WSU Tech',cat:'Workforce',capacity:'High',contact:'careers@wsutech.edu',url:'wsutech.edu',active:true},
+  {id:'p2',name:'Family Promise',cat:'Housing',capacity:'Medium',contact:'intake@familypromise.org',url:'familypromisewichita.org',active:true},
+  {id:'p3',name:'Empower',cat:'Workforce',capacity:'High',contact:'hello@empowernorthend.org',url:'empowernorthend.org',active:true},
+  {id:'p4',name:'Bank On ICT',cat:'Financial',capacity:'Medium',contact:'info@bankonict.org',url:'bankonict.org',active:true},
+  {id:'p5',name:'Bike Walk Wichita',cat:'Transportation',capacity:'Low',contact:'rides@bikewalkict.org',url:'bikewalkwichita.org',active:true},
+  {id:'p6',name:'HopeNet',cat:'Health',capacity:'Medium',contact:'care@hopenetwichita.org',url:'hopenet.org',active:true},
+  {id:'p7',name:'Meritrust',cat:'Housing',capacity:'Medium',contact:'home@meritrust.com',url:'meritrust.com',active:false},
+  {id:'p8',name:'The Phoenix',cat:'Community',capacity:'High',contact:'wichita@thephoenix.org',url:'thephoenix.org',active:true}
+];
+var REFERRAL_DEFAULTS=[
+  {id:'rf1',mid:'m2',pid:'p2',reason:'Eviction risk — needs rapid rehousing',date:'2026-05-28',status:'Engaged'},
+  {id:'rf2',mid:'m4',pid:'p5',reason:'Needs reliable transport to job site',date:'2026-06-02',status:'Completed'},
+  {id:'rf3',mid:'m6',pid:'p6',reason:'Mental health support referral',date:'2026-06-05',status:'Contacted'},
+  {id:'rf4',mid:'m7',pid:'p1',reason:'CNA training pathway interest',date:'2026-06-08',status:'Scheduled'},
+  {id:'rf5',mid:'m12',pid:'p3',reason:'Workforce intake + resume help',date:'2026-06-10',status:'Created'},
+  {id:'rf6',mid:'m3',pid:'p1',reason:'Scholarship + enrollment support',date:'2026-05-20',status:'Completed'},
+  {id:'rf7',mid:'m13',pid:'p4',reason:'Open safe banking account',date:'2026-06-12',status:'Contacted'},
+  {id:'rf8',mid:'m14',pid:'p5',reason:'Bus pass while car is repaired',date:'2026-06-14',status:'Created'},
+  {id:'rf9',mid:'m9',pid:'p6',reason:'Childcare + wellness check',date:'2026-06-01',status:'Closed'},
+  {id:'rf10',mid:'m11',pid:'p6',reason:'Re-engagement outreach',date:'2026-05-15',status:'Closed'}
+];
+var REFERRALS;
+function loadRefs(){try{var s=JSON.parse(localStorage.getItem(REF_KEY));if(s&&s.length)return s;}catch(e){}return JSON.parse(JSON.stringify(REFERRAL_DEFAULTS));}
+function saveRefs(){try{localStorage.setItem(REF_KEY,JSON.stringify(REFERRALS));}catch(e){}}
+REFERRALS=loadRefs();
+
+/* ---- site content CMS (persisted) ---- */
+var CMS_KEY='epe_admin_cms_v1';
+var CMS_DEFAULTS={
+  heroTitle:'Wichita EPE Membership',
+  heroSub:'A simple way for people, partners, and neighbors to take the next step toward stability, progress, and contribution.',
+  whyLead:'Wichita has no shortage of people working hard to change their lives. The challenge is making the next step clear, visible, and connected.',
+  ctaButton:'Become a Member',
+  faq:'Q: Is membership free? A: Yes — EPE membership is free and open to anyone in Wichita.\nQ: How do I reach Gold? A: Complete your profile, take Thrive Lights, set goals, and meet with a navigator.',
+  partners:PARTNERS.map(function(p){return p.name;}).join(', ')
+};
+var CMS;
+function loadCms(){try{var s=JSON.parse(localStorage.getItem(CMS_KEY));if(s)return Object.assign({},CMS_DEFAULTS,s);}catch(e){}return JSON.parse(JSON.stringify(CMS_DEFAULTS));}
+function saveCms(){try{localStorage.setItem(CMS_KEY,JSON.stringify(CMS));}catch(e){}}
+CMS=loadCms();
+
+/* notification triggers (persisted) */
+var NOTIF_KEY='epe_admin_notif_v1';
+var NOTIF_DEFAULTS=[
+  {id:'n1',name:'New signup',desc:'Welcome message + first steps when a member joins.',email:true,sms:false},
+  {id:'n2',name:'Navigator assignment',desc:'Notify member when a navigator is assigned.',email:true,sms:false},
+  {id:'n3',name:'Referral created',desc:'Alert partner + member when a referral is sent.',email:true,sms:true},
+  {id:'n4',name:'Gold eligible',desc:'Tell a member they qualify to apply for Gold.',email:true,sms:false},
+  {id:'n5',name:'Reward unlocked',desc:'Celebrate when stars unlock a new reward.',email:true,sms:true},
+  {id:'n6',name:'Inactive member',desc:'Re-engagement nudge after 30 days of no activity.',email:true,sms:false}
+];
+var NOTIFS;
+function loadNotif(){try{var s=JSON.parse(localStorage.getItem(NOTIF_KEY));if(s&&s.length)return s;}catch(e){}return JSON.parse(JSON.stringify(NOTIF_DEFAULTS));}
+function saveNotif(){try{localStorage.setItem(NOTIF_KEY,JSON.stringify(NOTIFS));}catch(e){}}
+NOTIFS=loadNotif();
+
+var AUDIT=[
+  {who:'Maria L.',what:'verified milestone for Dana R.',when:'2h ago'},
+  {who:'System',what:'flagged Tyrese D. as stalled (27 days inactive)',when:'5h ago'},
+  {who:'James O.',what:'created referral to Empower for Carlos M.',when:'yesterday'},
+  {who:'Super Admin',what:'added reward “Premium partner access”',when:'2 days ago'},
+  {who:'Tanya B.',what:'promoted Lena K. to Gold-ready',when:'3 days ago'}
+];
+
+/* ---- admin runtime state ---- */
+var ADMIN={role:'super',view:'home',range:'30d',openId:null,sel:{},flt:{}};
+
+/* ---- helpers ---- */
+function fmtIntent(i){return i;}
+function statusClass(s){return {'Active':'st-active','At risk':'st-risk','Stalled':'st-stalled','New':'st-new','Gold-ready':'st-ready'}[s]||'st-new';}
+function navName(i){return ANAV[i]||'Unassigned';}
+function memberById(id){return MEMBERS.filter(function(m){return m.id===id;})[0];}
+function partnerById(id){return PARTNERS.filter(function(p){return p.id===id;})[0];}
+function scoreCell(pc){return '<span class="score"><span class="track"><span style="width:'+pc+'%"></span></span><span class="pc">'+pc+'%</span></span>';}
+function trend(pc,dir){var c=dir>0?'up':dir<0?'down':'flat';var a=dir>0?'▲':dir<0?'▼':'■';return '<span class="trend '+c+'">'+a+' '+pc+'</span>';}
+function totalStars(k){return MEMBERS.reduce(function(a,m){return a+m.stars[k];},0);}
+function rangeMul(){return ADMIN.range==='7d'?0.32:1;}
+function nextActionFor(m){
+  if(m.status==='Stalled')return 'Re-engagement outreach';
+  if(m.status==='At risk')return 'Schedule check-in';
+  if(m.status==='Gold-ready')return 'Review Gold application';
+  if(m.stars.p>0)return 'Verify '+m.stars.p+'★ pending';
+  if(m.status==='New')return 'Complete onboarding';
+  return 'Set next goal';
+}
+
+/* derive goals from thrive lights */
+function goalsFor(m){
+  var g=[],due=['Jun 30','Jul 15','Aug 1','Aug 20'];
+  m.tlArr.forEach(function(s,i){
+    if(s<2 && g.length<3){
+      g.push({title:'Move '+ADOM[i]+' '+(s===0?'from red to yellow':'from yellow to green'),
+        status:s===0?'Not started':'In progress',due:due[g.length],owner:navName(m.nav),verify:i%2===0});
+    }
+  });
+  if(!g.length)g.push({title:'Maintain progress + mentor a new member',status:'In progress',due:'Ongoing',owner:navName(m.nav),verify:false});
+  return g;
+}
+/* derive an activity timeline */
+function activityFor(m){
+  var t=[{ee:'Joined EPE',ed:m.joined+' · membership card issued',k:'join'},
+         {ee:'Completed profile in Everest',ed:m.joined+' · intake done',k:'profile'}];
+  var refs=REFERRALS.filter(function(r){return r.mid===m.id;});
+  refs.forEach(function(r){var p=partnerById(r.pid);t.push({ee:'Referral created → '+(p?p.name:'partner'),ed:r.date+' · '+r.reason,k:'ref'});});
+  if(m.stars.a>0)t.push({ee:'Stars verified by navigator',ed:'+'+m.stars.a+'★ approved · '+navName(m.nav),k:'star'});
+  if(m.stars.p>0)t.push({ee:m.stars.p+'★ submitted for verification',ed:'Awaiting navigator check-in',k:'pend'});
+  t.push({ee:'Navigator meeting',ed:'Last activity '+m.last+' day'+(m.last===1?'':'s')+' ago',k:'meet'});
+  return t;
+}
+function notesFor(m){
+  var base={
+    m6:[{a:'Tanya B.',d:'Jun 4',t:'Family staying with relatives — housing referral urgent. Following up Friday.'}],
+    m8:[{a:'James O.',d:'May 30',t:'Hard to reach by phone. Trying text outreach + partner location drop-in.'}],
+    m3:[{a:'Tanya B.',d:'Jun 10',t:'All Gold requirements met except final navigator sign-off. Strong candidate.'}]
+  };
+  return (m._notes||base[m.id]||[]);
+}
+
+/* ===== view router ===== */
+function renderAdminNav(){
+  var views=AROLES[ADMIN.role].views;
+  var html=views.map(function(v){
+    var meta=NAVMETA[v];
+    return '<button class="anav-item'+(v===ADMIN.view?' active':'')+'" data-view="'+v+'">'+aicon(meta[1])+'<span>'+meta[0]+'</span></button>';
+  }).join('');
+  document.getElementById('admNav').innerHTML=html;
+  document.getElementById('admTabs').innerHTML=views.map(function(v){
+    return '<button class="'+(v===ADMIN.view?'active':'')+'" data-view="'+v+'">'+NAVMETA[v][0]+'</button>';
+  }).join('');
+}
+function setView(v){
+  if(AROLES[ADMIN.role].views.indexOf(v)<0)v=AROLES[ADMIN.role].views[0];
+  ADMIN.view=v; ADMIN.openId=null;
+  renderAdminNav(); renderView();
+  document.getElementById('admView').scrollTop=0;
+}
+function renderView(){
+  var v=ADMIN.view,h='';
+  if(ADMIN.openId)h=viewProfile(memberById(ADMIN.openId));
+  else if(v==='home')h=viewHome();
+  else if(v==='members')h=viewMembers();
+  else if(v==='queue')h=viewQueue();
+  else if(v==='thrive')h=viewThrive();
+  else if(v==='referrals')h=viewReferrals();
+  else if(v==='solutions')h=viewSolutions();
+  else if(v==='stars')h=viewStars();
+  else if(v==='impact')h=viewImpact();
+  else if(v==='content')h=viewContent();
+  else if(v==='notifications')h=viewNotifs();
+  else if(v==='settings')h=viewSettings();
+  document.getElementById('admView').innerHTML=h;
+}
+function head(title,sub,right){
+  return '<div class="av-head"><div><div class="av-title">'+title+'</div>'+(sub?'<div class="av-sub">'+sub+'</div>':'')+'</div>'+(right?'<div>'+right+'</div>':'')+'</div>';
+}
+
+/* ===== 1. Dashboard Home (KPIs) ===== */
+function viewHome(){
+  var m=rangeMul();
+  var active=MEMBERS.filter(function(x){return x.last<=30;}).length;
+  var gold=MEMBERS.filter(function(x){return x.level==='Gold';}).length;
+  var follow=MEMBERS.filter(function(x){return x.status==='At risk'||x.status==='Stalled';}).length;
+  var openRef=REFERRALS.filter(function(r){return ['Created','Contacted','Scheduled','Engaged'].indexOf(r.status)>=0;}).length;
+  var tlDone=Math.round(MEMBERS.filter(function(x){return x.score>=70;}).length/MEMBERS.length*100);
+  var avgProg=Math.round(MEMBERS.reduce(function(a,x){return a+x.score;},0)/MEMBERS.length);
+  var starsMo=Math.round((totalStars('a')*0.18)*m);
+  var kpis=[
+    ['Total members',MEMBERS.length,trend('6.4%',1)],
+    ['Active ('+ADMIN.range+')',Math.round(active*(ADMIN.range==='7d'?0.7:1)),trend('3.1%',1)],
+    ['Gold members',gold,trend('2',1)],
+    ['Pending follow-ups',follow,trend('1',-1)],
+    ['Open referrals',openRef,trend('4',1)],
+    ['Thrive completed',tlDone+'%',trend('5%',1)],
+    ['Avg member progress',avgProg+'%',trend('1.8%',1)],
+    ['Stars awarded',starsMo,trend(ADMIN.range==='7d'?'12%':'9%',1)]
+  ];
+  var toggle='<div class="seg-light" id="rangeSeg"><button data-r="7d"'+(ADMIN.range==='7d'?' class="active"':'')+'>7d</button><button data-r="30d"'+(ADMIN.range==='30d'?' class="active"':'')+'>30d</button></div>';
+  var h=head('Dashboard','Operating snapshot of member progress, navigator load, and ecosystem outcomes.',toggle);
+  h+='<div class="kpi-grid">'+kpis.map(function(k){return '<div class="kpi"><div class="k">'+k[0]+'</div><div class="v">'+k[1]+'</div>'+k[2]+'</div>';}).join('')+'</div>';
+  /* attention + recent activity */
+  var att=MEMBERS.filter(function(x){return x.status==='At risk'||x.status==='Stalled'||x.status==='Gold-ready';}).slice(0,6);
+  h+='<div class="acols side" style="margin-top:18px;">';
+  h+='<div class="panel"><span class="section-eyebrow">Needs attention</span><h2>Members to act on</h2><p class="sub">Surfaced from status, inactivity, and Gold-readiness.</p>'+
+     att.map(function(x){return '<div class="adm-row"><div class="info"><div class="nm" data-open="'+x.id+'" style="cursor:pointer">'+x.name+'</div><div class="meta">'+nextActionFor(x)+' · '+navName(x.nav)+'</div></div><span class="tag-b '+statusClass(x.status)+'">'+x.status+'</span></div>';}).join('')+'</div>';
+  h+='<div class="panel"><span class="section-eyebrow">Live feed</span><h2>Recent activity</h2><div class="timeline" style="margin-top:6px">'+
+     AUDIT.map(function(a){return '<div class="tl-ev"><div class="ee"><b>'+a.who+'</b> '+a.what+'</div><div class="ed">'+a.when+'</div></div>';}).join('')+'</div></div>';
+  h+='</div>';
+  return h;
+}
+
+/* ===== 2. Members CRM ===== */
+function viewMembers(){
+  var f=ADMIN.flt;
+  var rows=MEMBERS.filter(function(m){
+    if(f.zip&&m.zip!==f.zip)return false;
+    if(f.level&&m.level!==f.level)return false;
+    if(f.status&&m.status!==f.status)return false;
+    if(f.nav!=null&&f.nav!==''&&String(m.nav)!==String(f.nav))return false;
+    if(f.q){var q=f.q.toLowerCase();if(m.name.toLowerCase().indexOf(q)<0&&m.email.toLowerCase().indexOf(q)<0)return false;}
+    return true;
+  });
+  var opt=function(arr,sel){return arr.map(function(o){return '<option value="'+o[0]+'"'+(String(sel)===String(o[0])?' selected':'')+'>'+o[1]+'</option>';}).join('');};
+  var zips=[].concat([['','All ZIPs']],MEMBERS.map(function(m){return m.zip;}).filter(function(v,i,a){return a.indexOf(v)===i;}).sort().map(function(z){return [z,z];}));
+  var filters='<div class="filters">'+
+    '<input id="fQ" placeholder="Search name or email" value="'+(f.q||'')+'"/>'+
+    '<select id="fZip">'+opt(zips,f.zip||'')+'</select>'+
+    '<select id="fLevel">'+opt([['','All levels'],['Basic','Basic'],['Gold','Gold']],f.level||'')+'</select>'+
+    '<select id="fStatus">'+opt([['','All statuses'],['Active','Active'],['New','New'],['At risk','At risk'],['Stalled','Stalled'],['Gold-ready','Gold-ready']],f.status||'')+'</select>'+
+    '<select id="fNav">'+opt([['','All navigators'],['0',ANAV[0]],['1',ANAV[1]],['2',ANAV[2]]],f.nav==null?'':f.nav)+'</select>'+
+    '<button class="mini-btn" id="fClear">Clear</button></div>';
+  var selCount=Object.keys(ADMIN.sel).filter(function(k){return ADMIN.sel[k];}).length;
+  var bulk=selCount?'<div class="bulkbar"><span class="ct">'+selCount+' selected</span><span class="sp"></span>'+
+    '<button class="mini-btn ghost" data-bulk="assign">Assign navigator</button>'+
+    '<button class="mini-btn ghost" data-bulk="tag">Tag</button>'+
+    '<button class="mini-btn ghost" data-bulk="outreach">Outreach</button>'+
+    '<button class="mini-btn ghost" data-bulk="export">Export</button></div>':'';
+  var body=rows.map(function(m){
+    return '<tr>'+
+      '<td><input type="checkbox" data-sel="'+m.id+'"'+(ADMIN.sel[m.id]?' checked':'')+'/></td>'+
+      '<td><span class="nm" data-open="'+m.id+'">'+m.name+'</span></td>'+
+      '<td><span class="tag-b '+(m.level==='Gold'?'lv-gold':'lv-basic')+'">'+m.level+'</span></td>'+
+      '<td>'+m.zip+'</td>'+
+      '<td>'+m.intent+'</td>'+
+      '<td>'+navName(m.nav)+'</td>'+
+      '<td>'+scoreCell(m.score)+'</td>'+
+      '<td><span class="tag-b '+statusClass(m.status)+'">'+m.status+'</span></td>'+
+      '<td>'+m.last+'d ago</td>'+
+      '<td>'+nextActionFor(m)+'</td>'+
+      '<td><button class="rowact" data-open="'+m.id+'">Open</button></td>'+
+    '</tr>';
+  }).join('')||'<tr><td colspan="11"><div class="empty-note">No members match these filters.</div></td></tr>';
+  var h=head('Members CRM',MEMBERS.length+' members · '+rows.length+' shown','<button class="mini-btn" data-bulk="export">Export all (CSV)</button>');
+  h+=filters+bulk;
+  h+='<div class="tbl-wrap"><table class="tbl"><thead><tr>'+
+     '<th></th><th>Name</th><th>Level</th><th>ZIP</th><th>Need/Give</th><th>Navigator</th><th>Thrive</th><th>Status</th><th>Last activity</th><th>Next action</th><th></th>'+
+     '</tr></thead><tbody>'+body+'</tbody></table></div>';
+  return h;
+}
+
+/* ===== 3. Member Profile ===== */
+function viewProfile(m){
+  if(!m)return viewMembers();
+  var h='<button class="crumb" id="backCrumb">&larr; Back to members</button>';
+  h+=head(m.name,m.level+' Member · '+m.intent+' · joined '+m.joined,
+    '<button class="mini-btn" data-promote="'+m.id+'">Promote to Gold</button> <button class="mini-btn" data-refnew="'+m.id+'">Send referral</button>');
+  /* overview + thrive */
+  h+='<div class="acols side">';
+  h+='<div>';
+  h+='<div class="panel"><span class="section-eyebrow">Thrive Lights</span><h2>Life domains</h2><p class="sub">Current state across all 8 domains. Click a domain to advance Red → Yellow → Green.</p><div class="dom-list">'+
+     m.tlArr.map(function(s,i){return '<div class="dom-row"><span><span class="dotm bg-'+SCLASS[s]+'"></span>'+ADOM[i]+'</span>'+
+       '<button class="rowact" data-tl="'+m.id+':'+i+'" style="justify-self:start">'+STATE_TXT[s]+'</button>'+
+       '<span class="mover st-'+SCLASS[s]+'" style="font-weight:700">'+['red','yellow','green'][s]+'</span></div>';}).join('')+
+     '</div><div class="pm" style="margin-top:14px"><div class="row" style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted)"><span>Overall Thrive score</span><span>'+m.score+'%</span></div><div class="pm-bar"><span style="width:'+m.score+'%"></span></div></div></div>';
+  h+='<div class="panel"><span class="section-eyebrow">Goals</span><h2>Active goals</h2>'+
+     goalsFor(m).map(function(g){return '<div class="goal"><div class="gt">'+g.title+'</div><div class="gm"><span>Status: <b>'+g.status+'</b></span><span>Due '+g.due+'</span><span>Owner: '+g.owner+'</span>'+(g.verify?'<span style="color:var(--coral)">Verification required</span>':'')+'</span></div></div>';}).join('')+'</div>';
+  h+='<div class="panel"><span class="section-eyebrow">History</span><h2>Activity timeline</h2><div class="timeline">'+
+     activityFor(m).map(function(e){return '<div class="tl-ev"><div class="ee">'+e.ee+'</div><div class="ed">'+e.ed+'</div></div>';}).join('')+'</div></div>';
+  h+='</div>';
+  /* right column: contact + stars + notes */
+  h+='<div>';
+  h+='<div class="panel"><span class="section-eyebrow">Overview</span><h2>Contact</h2>'+
+     '<div class="gm" style="display:grid;gap:8px;margin-top:8px;font-size:13px;color:var(--navy)">'+
+     '<div><b>Email</b><br/>'+m.email+'</div><div><b>Phone</b><br/>'+m.phone+'</div>'+
+     '<div><b>ZIP</b> '+m.zip+' &nbsp; <b>Navigator</b> '+navName(m.nav)+'</div>'+
+     '<div><b>Tags</b><div class="chiprow" style="margin-top:4px">'+m.tags.map(function(t){return '<span class="chip-s">'+t+'</span>';}).join('')+'</div></div></div></div>';
+  h+='<div class="panel"><span class="section-eyebrow">Stars</span><h2>'+m.stars.a+'★ approved</h2><p class="sub">'+m.stars.e+' earned · '+m.stars.p+' pending · '+m.stars.a+' approved</p>'+
+     (m.stars.p>0?'<button class="btn btn-gold btn-sm btn-full" data-approve="'+m.id+'" style="margin-top:12px">Verify &amp; approve '+m.stars.p+'★</button>':'<p class="sub" style="margin-top:10px">No stars pending verification.</p>')+'</div>';
+  h+='<div class="panel"><span class="section-eyebrow">Private notes</span><h2>Navigator notes</h2><div id="noteList">'+
+     (notesFor(m).length?notesFor(m).map(function(n){return '<div class="note-it">'+n.t+'<div class="meta">'+n.a+' · '+n.d+'</div></div>';}).join(''):'<p class="sub">No notes yet.</p>')+
+     '</div><div class="note-form"><input id="noteInput" placeholder="Add a private note…"/><button class="mini-btn" data-note="'+m.id+'">Add</button></div></div>';
+  h+='</div></div>';
+  return h;
+}
+
+/* ===== 4. Navigator Queue ===== */
+function viewQueue(){
+  var follow=MEMBERS.filter(function(m){return m.last>14&&m.status!=='Stalled';});
+  var verify=MEMBERS.filter(function(m){return m.stars.p>0;});
+  var ready=MEMBERS.filter(function(m){return m.status==='Gold-ready';});
+  var stalled=MEMBERS.filter(function(m){return m.status==='Stalled';});
+  function card(title,sub,list,renderRight,actions){
+    return '<div class="panel"><span class="section-eyebrow">'+sub+'</span><h2>'+title+' <span style="color:var(--gold)">('+list.length+')</span></h2>'+
+      (list.length?list.map(function(m){return '<div class="adm-row"><div class="info"><div class="nm" data-open="'+m.id+'" style="cursor:pointer">'+m.name+'</div><div class="meta">'+renderRight(m)+'</div></div>'+actions(m)+'</div>';}).join(''):'<p class="sub" style="margin-top:8px">Nothing here right now. 🎉</p>')+'</div>';
+  }
+  var h=head('Navigator Queue','Who needs attention — prioritized by overdue follow-ups, pending verifications, and Gold-readiness.');
+  h+='<div class="acols two">';
+  h+=card('Needs follow-up','Overdue > 14 days',follow,function(m){return 'Last activity '+m.last+' days ago · '+navName(m.nav);},function(m){return '<button class="rowact" data-q="schedule:'+m.id+'">Schedule</button>';});
+  h+=card('Needs verification','Member-submitted milestones',verify,function(m){return m.stars.p+'★ awaiting approval · '+navName(m.nav);},function(m){return '<button class="rowact" data-approve="'+m.id+'">Approve</button>';});
+  h+='</div><div class="acols two" style="margin-top:18px">';
+  h+=card('Ready for Gold','Profile · Thrive · goals · verified · meeting',ready,function(m){return 'All requirements met — '+m.score+'% Thrive';},function(m){return '<button class="rowact" data-promote="'+m.id+'">Promote</button>';});
+  h+=card('Recently stalled','No progress 30+ days',stalled,function(m){return m.last+' days inactive · '+navName(m.nav);},function(m){return '<button class="rowact" data-q="message:'+m.id+'">Message</button>';});
+  h+='</div>';
+  return h;
+}
+
+/* ===== 5. Thrive Lights Analytics ===== */
+function viewThrive(){
+  /* distribution by domain */
+  var dist=ADOM.map(function(d,i){var c=[0,0,0];MEMBERS.forEach(function(m){c[m.tlArr[i]]++;});return {d:d,c:c};});
+  var distHtml=dist.map(function(r){var tot=MEMBERS.length;
+    return '<div class="row"><span class="lab">'+r.d+'</span><span class="barx">'+
+      [0,1,2].map(function(s){return r.c[s]?'<span style="width:'+(r.c[s]/tot*100)+'%;background:'+STATE_COL[s]+'"></span>':'';}).join('')+
+      '</span></div>';}).join('');
+  /* avg by ZIP */
+  var byZip={};MEMBERS.forEach(function(m){(byZip[m.zip]=byZip[m.zip]||[]).push(m.score);});
+  var zipRows=Object.keys(byZip).sort().map(function(z){var arr=byZip[z];var avg=Math.round(arr.reduce(function(a,b){return a+b;},0)/arr.length);return {z:z,avg:avg,n:arr.length};});
+  var zipHtml=zipRows.map(function(r){return '<div class="bar-row"><span class="nm">'+r.z+' ('+r.n+')</span><span class="track"><span style="width:'+r.avg+'%"></span></span><span class="ct">'+r.avg+'%</span></div>';}).join('');
+  /* heatmap zip x domain avg state */
+  var heat='<div class="hrow"><span></span>'+ADOM_SHORT.map(function(d){return '<span class="hh">'+d+'</span>';}).join('')+'</div>';
+  heat+=zipRows.map(function(r){
+    var cells=ADOM.map(function(d,i){
+      var vals=MEMBERS.filter(function(m){return m.zip===r.z;}).map(function(m){return m.tlArr[i];});
+      var avg=vals.reduce(function(a,b){return a+b;},0)/vals.length;var st=avg<0.67?0:avg<1.34?1:2;
+      return '<span class="cell" style="background:'+STATE_COL[st]+'">'+avg.toFixed(1)+'</span>';
+    }).join('');
+    return '<div class="hrow"><span class="zl">'+r.z+'</span>'+cells+'</div>';
+  }).join('');
+  /* biggest improvement areas (most red = biggest opportunity) / highest barriers */
+  var barriers=dist.map(function(r){return {d:r.d,red:r.c[0]};}).sort(function(a,b){return b.red-a.red;}).slice(0,4);
+  var strengths=dist.map(function(r){return {d:r.d,green:r.c[2]};}).sort(function(a,b){return b.green-a.green;}).slice(0,4);
+  /* progress over time sparkline */
+  var pts=[38,41,44,46,49,52,55,58];
+  var spW=320,spH=70,mx=Math.max.apply(null,pts),mn=Math.min.apply(null,pts);
+  var path=pts.map(function(v,i){var x=i/(pts.length-1)*spW;var y=spH-((v-mn)/(mx-mn||1))*(spH-10)-5;return (i?'L':'M')+x.toFixed(0)+' '+y.toFixed(0);}).join(' ');
+
+  var legend='<div class="legend-h"><span><i style="background:'+STATE_COL[0]+'"></i>Needs support</span><span><i style="background:'+STATE_COL[1]+'"></i>Working on it</span><span><i style="background:'+STATE_COL[2]+'"></i>Thriving</span></div>';
+  var h=head('Thrive Lights Analytics','Admin-wide view of well-being across every domain, ZIP, and over time.');
+  h+='<div class="acols two">';
+  h+='<div class="panel"><span class="section-eyebrow">Distribution</span><h2>By domain</h2><div class="dist">'+distHtml+'</div>'+legend+'</div>';
+  h+='<div class="panel"><span class="section-eyebrow">Geography</span><h2>Avg score by ZIP</h2>'+zipHtml+'</div>';
+  h+='</div>';
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Trend</span><h2>Progress over time</h2><p class="sub">Average member Thrive score, last 8 months.</p>'+
+     '<svg class="spark" viewBox="0 0 '+spW+' '+spH+'" preserveAspectRatio="none"><polyline points="" fill="none"/><path d="'+path+'" fill="none" stroke="var(--sage)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Heatmap</span><h2>ZIP × domain</h2><p class="sub">Average state per domain (0 red → 2 green).</p><div class="heat" style="margin-top:12px">'+heat+'</div></div>';
+  h+='<div class="acols two" style="margin-top:18px">';
+  h+='<div class="panel"><span class="section-eyebrow">Opportunity</span><h2>Highest barriers</h2>'+barriers.map(function(b){return '<div class="bar-row"><span class="nm">'+b.d+'</span><span class="track"><span style="width:'+(b.red/MEMBERS.length*100)+'%;background:var(--coral)"></span></span><span class="ct" style="color:var(--coral)">'+b.red+'</span></div>';}).join('')+'</div>';
+  h+='<div class="panel"><span class="section-eyebrow">Strengths</span><h2>Biggest improvement areas</h2>'+strengths.map(function(b){return '<div class="bar-row"><span class="nm">'+b.d+'</span><span class="track"><span style="width:'+(b.green/MEMBERS.length*100)+'%"></span></span><span class="ct">'+b.green+'</span></div>';}).join('')+'</div>';
+  h+='</div>';
+  return h;
+}
+
+/* ===== 6. Partner Referral System ===== */
+function viewReferrals(){
+  var counts={};REF_STATUSES.forEach(function(s){counts[s]=0;});
+  REFERRALS.forEach(function(r){counts[r.status]++;});
+  var sent=REFERRALS.length;
+  var completed=counts['Completed'];
+  var conv=Math.round(completed/sent*100);
+  var pipeline='<div class="pipeline">'+REF_STATUSES.map(function(s,i){
+    return (i?'<div class="pl-arrow">›</div>':'')+'<div class="pl-step"><div class="pv">'+counts[s]+'</div><div class="pk">'+s+'</div></div>';
+  }).join('')+'</div>';
+  var partnerView=ADMIN.role==='partner';
+  var rows=REFERRALS.map(function(r){
+    var mem=memberById(r.mid),p=partnerById(r.pid);
+    var sel='<select class="statset" data-refstat="'+r.id+'">'+REF_STATUSES.map(function(s){return '<option'+(s===r.status?' selected':'')+'>'+s+'</option>';}).join('')+'</select>';
+    return '<tr><td>'+r.date+'</td><td class="nm" data-open="'+r.mid+'">'+(mem?mem.name:'—')+'</td><td>'+(p?p.name:'—')+'</td><td style="white-space:normal;min-width:200px">'+r.reason+'</td><td>'+sel+'</td></tr>';
+  }).join('');
+  var h=head(partnerView?'Referrals to your organization':'Partner Referral System',
+    sent+' referrals · '+conv+'% conversion · avg response 2.4 days',
+    partnerView?'':'<button class="mini-btn" id="newRefBtn">+ New referral</button>');
+  if(!partnerView){
+    h+='<div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)"><div class="kpi"><div class="k">Referrals sent</div><div class="v">'+sent+'</div>'+trend('8',1)+'</div>'+
+       '<div class="kpi"><div class="k">Conversion %</div><div class="v">'+conv+'%</div>'+trend('4%',1)+'</div>'+
+       '<div class="kpi"><div class="k">Avg response time</div><div class="v">2.4d</div>'+trend('0.3d',1)+'</div></div>';
+  }
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Pipeline</span><h2>Referral statuses</h2>'+pipeline+'</div>';
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Referrals</span><h2>All referrals</h2><div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:680px"><thead><tr><th>Date</th><th>Member</th><th>Partner</th><th>Reason</th><th>Status</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+  if(!partnerView){
+    h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Network</span><h2>Partners</h2><div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:640px"><thead><tr><th>Partner</th><th>Category</th><th>Capacity</th><th>Contact</th><th>Status</th></tr></thead><tbody>'+
+       PARTNERS.map(function(p){return '<tr><td class="nm">'+p.name+'</td><td>'+p.cat+'</td><td>'+p.capacity+'</td><td>'+p.contact+'</td><td><button class="rowact" data-ptoggle="'+p.id+'">'+(p.active?'Active':'Inactive')+'</button></td></tr>';}).join('')+
+       '</tbody></table></div></div>';
+  }
+  return h;
+}
+
+/* ===== 7. Bank of Solutions (CMS) ===== */
+function viewSolutions(){
+  var cats=['Financial','Transportation','Housing','Workforce','Health','Education','Community'];
+  var h=head('Bank of Solutions','Manage the benefits members can access now or unlock with stars. These feed the live member dashboard.');
+  h+='<div class="panel"><span class="section-eyebrow">Catalog</span><h2>Benefits ('+STORE.benefits.length+')</h2>'+
+     '<div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:560px"><thead><tr><th>Benefit</th><th>Category</th><th>Tier</th><th>Access</th><th></th></tr></thead><tbody>'+
+     STORE.benefits.map(function(b){return '<tr><td class="nm">'+b.name+'</td><td>'+(b.cat||'—')+'</td><td><span class="tag-b '+(b.tier==='Gold'?'lv-gold':'lv-basic')+'">'+(b.tier||'Basic')+'</span></td><td>'+(b.unlockAt>0?'<span class="tag-b lv-gold">Unlocks at '+b.unlockAt+'★</span>':'<span class="tag-b st-active">Available now</span>')+'</td><td><button class="rowact" data-delb="'+b.id+'">Archive</button></td></tr>';}).join('')+
+     '</tbody></table></div>'+
+     '<form class="adm-form" id="benefitForm" style="margin-top:16px"><div><label>Benefit name</label><input id="bName" placeholder="e.g. Bus pass" required/></div>'+
+     '<div><label>Category</label><input id="bCat" list="catList" placeholder="e.g. Transportation"/><datalist id="catList">'+cats.map(function(c){return '<option value="'+c+'">';}).join('')+'</datalist></div>'+
+     '<div><label>Unlock at (★)</label><input id="bUnlock" type="number" min="0" value="0"/></div>'+'<div><label>Tier</label><select id="bTier"><option value="Basic">Basic</option><option value="Gold">Gold</option></select></div>'+
+     '<button class="btn btn-navy btn-sm" type="submit">Add benefit</button></form></div>';
+  /* by category summary */
+  var byCat={};STORE.benefits.forEach(function(b){var c=b.cat||'Other';byCat[c]=(byCat[c]||0)+1;});
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Coverage</span><h2>Benefits by category</h2>'+
+     Object.keys(byCat).map(function(c){return '<div class="bar-row"><span class="nm">'+c+'</span><span class="track"><span style="width:'+(byCat[c]/STORE.benefits.length*100)+'%"></span></span><span class="ct">'+byCat[c]+'</span></div>';}).join('')+'</div>';
+  return h;
+}
+
+/* ===== 8. Stars + Rewards Engine ===== */
+function viewStars(){
+  var earned=totalStars('e'),pending=totalStars('p'),approved=totalStars('a');
+  var rl=rewardList();
+  var unlocks=rl.map(function(rw){var ct=MEMBERS.filter(function(m){return m.stars.a>=rw.th;}).length;return {t:rw.t,th:rw.th,ct:ct};});
+  var leaders=MEMBERS.slice().sort(function(a,b){return b.stars.a-a.stars.a;}).slice(0,6);
+  var funnel=[['Actions started',MEMBERS.length*4],['Submitted for verify',Math.round(earned/10)],['Stars approved',Math.round(approved/10)],['Rewards unlocked',unlocks.reduce(function(a,u){return a+u.ct;},0)]];
+  var h=head('Stars & Rewards Engine','Earned → pending → approved. Stars are only issued when a navigator verifies progress.');
+  h+='<div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)"><div class="kpi"><div class="k">Stars earned</div><div class="v">'+earned+'</div></div>'+
+     '<div class="kpi"><div class="k">Pending verification</div><div class="v" style="color:var(--gold)">'+pending+'</div></div>'+
+     '<div class="kpi"><div class="k">Approved &amp; issued</div><div class="v" style="color:var(--sage)">'+approved+'</div></div></div>';
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Workflow</span><h2>Approval pipeline</h2><div class="pipeline">'+
+     ['Member action','Navigator verify','Stars issued','Reward unlocked'].map(function(s,i){return (i?'<div class="pl-arrow">›</div>':'')+'<div class="pl-step"><div class="pv">'+funnel[i][1]+'</div><div class="pk">'+s+'</div></div>';}).join('')+'</div></div>';
+  h+='<div class="acols two" style="margin-top:18px">';
+  h+='<div class="panel"><span class="section-eyebrow">Engagement</span><h2>Top earners</h2>'+leaders.map(function(m,i){return '<div class="lead-row"><span class="rank">'+(i+1)+'</span><span class="nm" data-open="'+m.id+'" style="cursor:pointer">'+m.name+'</span><span class="s">★ '+m.stars.a+'</span></div>';}).join('')+'</div>';
+  h+='<div class="panel"><span class="section-eyebrow">Levels</span><h2>Rewards</h2>'+
+     '<div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:0"><thead><tr><th>Reward</th><th>Threshold</th><th>Unlocked by</th><th></th></tr></thead><tbody>'+
+     STORE.rewards.map(function(r){var ct=MEMBERS.filter(function(m){return m.stars.a>=r.th;}).length;return '<tr><td class="nm">'+r.name+'</td><td>'+r.th+'★</td><td>'+ct+' members</td><td><button class="rowact" data-delr="'+r.id+'">Remove</button></td></tr>';}).join('')+
+     '</tbody></table></div>'+
+     '<form class="adm-form" id="rewardForm" style="margin-top:14px"><div><label>Reward name</label><input id="rName" placeholder="e.g. Nike — 25% off" required/></div><div><label>Threshold (★)</label><input id="rTh" type="number" min="1" value="25"/></div><button class="btn btn-navy btn-sm" type="submit">Add</button></form></div>';
+  h+='</div>';
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Redemption funnel</span><h2>Perks earned</h2><p class="sub">Members who have reached each reward threshold.</p>'+
+     unlocks.map(function(u){var max=Math.max(1,unlocks[0].ct);return '<div class="bar-row"><span class="nm">'+u.t.split(' — ')[0]+'</span><span class="track"><span style="width:'+(u.ct/MEMBERS.length*100)+'%"></span></span><span class="ct">'+u.ct+'</span></div>';}).join('')+'</div>';
+  return h;
+}
+
+/* ===== 9. Impact Dashboard (Board) ===== */
+function viewImpact(){
+  var m=ADMIN.range==='7d'?0.25:1; /* reuse range as period scaler is odd; use dedicated below */
+  var period=ADMIN._period||'Quarter';
+  var pm=period==='Month'?0.34:period==='Year'?3.6:1;
+  function val(base){return Math.round(base*pm);}
+  var goalsDone=MEMBERS.reduce(function(a,x){return a+goalsFor(x).filter(function(g){return g.status!=='Not started';}).length;},0);
+  var metrics=[
+    ['Members served',val(MEMBERS.length*3),'people'],
+    ['Goals completed',val(goalsDone*2),'check'],
+    ['Red → Green moves',val(48),'up'],
+    ['Employment gains',val(22),'work'],
+    ['Housing placements',val(14),'home'],
+    ['Transportation solutions',val(31),'bus'],
+    ['Savings accumulated','$'+val(86)+'k','wallet'],
+    ['Partner engagements',val(REFERRALS.length*4),'link'],
+    ['Gold conversion %',Math.round(MEMBERS.filter(function(x){return x.level==='Gold';}).length/MEMBERS.length*100)+'%','star']
+  ];
+  var seg='<div class="seg-light" id="periodSeg">'+['Month','Quarter','Year'].map(function(p){return '<button data-p="'+p+'"'+(p===period?' class="active"':'')+'>'+p+'</button>';}).join('')+'</div>';
+  var h=head('Impact Dashboard','Executive outcomes across the EPE ecosystem — stability → progress → contribution.',
+    seg+' <button class="mini-btn" id="expCsv">Export CSV</button> <button class="mini-btn" id="expPdf">Export PDF</button>');
+  h+='<div class="kpi-grid">'+metrics.map(function(k){return '<div class="kpi"><div class="k">'+k[0]+'</div><div class="v">'+k[1]+'</div>'+trend('vs prior '+period.toLowerCase(),1)+'</div>';}).join('')+'</div>';
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Narrative</span><h2>Movement, not just activity</h2>'+
+     '<p class="sub">This '+period.toLowerCase()+', members moved '+val(48)+' life domains from red toward green. '+val(22)+' secured employment, '+val(14)+' reached stable housing, and '+val(31)+' resolved a transportation barrier — each a concrete step from stability to contribution.</p></div>';
+  return h;
+}
+
+/* ===== 10. Site Content Management ===== */
+function viewContent(){
+  function field(id,label,multi,val){return '<div class="cms-field"><label>'+label+'</label>'+(multi?'<textarea id="'+id+'">'+val+'</textarea>':'<input id="'+id+'" value="'+val.replace(/"/g,'&quot;')+'"/>')+'</div>';}
+  var h=head('Site Content','Edit the public site without code. Saved to this browser for the prototype.');
+  h+='<div class="acols two">';
+  h+='<div class="panel"><span class="section-eyebrow">Homepage</span><h2>Hero &amp; messaging</h2>'+
+     field('cmHeroTitle','Hero title',false,CMS.heroTitle)+
+     field('cmHeroSub','Hero subtitle',true,CMS.heroSub)+
+     field('cmWhy','“Why this matters” lead',true,CMS.whyLead)+
+     field('cmCta','Primary CTA button',false,CMS.ctaButton)+'</div>';
+  h+='<div class="panel"><span class="section-eyebrow">Network &amp; FAQ</span><h2>Partners, stories &amp; FAQ</h2>'+
+     field('cmPartners','Partner list (comma-separated)',true,CMS.partners)+
+     field('cmFaq','FAQ (one Q/A per line)',true,CMS.faq)+'</div>';
+  h+='</div><div class="save-row"><button class="btn btn-navy btn-sm" id="cmsSave">Save changes</button><span class="saved-flag" id="cmsSaved">Saved ✓</span></div>';
+  h+='<p class="av-sub" style="margin-top:10px">Membership levels and benefits are managed in <b>Bank of Solutions</b>; rewards in <b>Stars &amp; Rewards</b>.</p>';
+  return h;
+}
+
+/* ===== 11. Notifications ===== */
+function viewNotifs(){
+  var h=head('Notifications','Trigger events and the channels that fire when they happen. (SMS is prototype-only.)');
+  h+=NOTIFS.map(function(n){
+    return '<div class="set-row"><div class="info"><div class="st">'+n.name+'</div><div class="sd">'+n.desc+'</div></div>'+
+      '<div style="text-align:center;font-size:11px;color:var(--muted)">Email<br/><button class="switch'+(n.email?' on':'')+'" data-notif="'+n.id+':email"></button></div>'+
+      '<div style="text-align:center;font-size:11px;color:var(--muted)">SMS<br/><button class="switch'+(n.sms?' on':'')+'" data-notif="'+n.id+':sms"></button></div></div>';
+  }).join('');
+  return h;
+}
+
+/* ===== 12. Settings ===== */
+function viewSettings(){
+  var perms=[
+    ['Manage users','✓','','',''],['Manage rewards','✓','','',''],['Manage partners','✓','','',''],
+    ['Verify progress / stars','✓','✓','',''],['Create referrals','✓','✓','',''],
+    ['Update referral status','✓','✓','✓',''],['View analytics & impact','✓','✓','','✓'],['Edit site content','✓','','','']
+  ];
+  var cols=['Super','Navigator','Partner','Board'];
+  var h=head('Settings','Roles, tags, boundaries, and the rules that drive the platform.');
+  h+='<div class="acols two">';
+  h+='<div class="panel"><span class="section-eyebrow">Access</span><h2>Roles &amp; permissions</h2><div class="perm-grid" style="margin-top:10px"><table><thead><tr><th>Capability</th>'+cols.map(function(c){return '<th>'+c+'</th>';}).join('')+'</tr></thead><tbody>'+
+     perms.map(function(p){return '<tr><td>'+p[0]+'</td>'+[1,2,3,4].map(function(i){return '<td class="'+(p[i]?'yes':'no')+'">'+(p[i]||'—')+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table></div></div>';
+  h+='<div class="panel"><span class="section-eyebrow">Taxonomy</span><h2>Tags &amp; ZIP boundaries</h2>'+
+     '<div class="cms-field"><label>Member tags</label><div class="chiprow" style="margin-top:4px">'+['Mentor','Employed','Housing','Health','Transport','Childcare','Justice-involved','Single parent','Workforce','Savings','Education'].map(function(t){return '<span class="chip-s">'+t+'</span>';}).join('')+'</div></div>'+
+     '<div class="cms-field"><label>Service-area ZIPs</label><div class="chiprow" style="margin-top:4px">'+['67202','67203','67204','67211','67214','67217','67218','67220'].map(function(z){return '<span class="chip-s">'+z+'</span>';}).join('')+'</div></div></div>';
+  h+='</div>';
+  h+='<div class="acols two" style="margin-top:18px">';
+  h+='<div class="panel"><span class="section-eyebrow">Rules</span><h2>Star &amp; referral rules</h2>'+
+     '<div class="set-row"><div class="info"><div class="st">Require navigator verification</div><div class="sd">Stars only issue after in-person verification.</div></div><button class="switch on" data-rule="verify"></button></div>'+
+     '<div class="set-row"><div class="info"><div class="st">Auto-flag stalled at 30 days</div><div class="sd">Move inactive members into the queue automatically.</div></div><button class="switch on" data-rule="stall"></button></div>'+
+     '<div class="set-row"><div class="info"><div class="st">Auto-close referrals after 60 days</div><div class="sd">Close referrals with no partner response.</div></div><button class="switch" data-rule="autoclose"></button></div></div>';
+  h+='<div class="panel"><span class="section-eyebrow">Compliance</span><h2>Audit log</h2><div style="margin-top:10px">'+
+     AUDIT.map(function(a){return '<div class="audit"><b>'+a.who+'</b> '+a.what+' · <span style="color:var(--navy-300)">'+a.when+'</span></div>';}).join('')+'</div></div>';
+  h+='</div>';
+  return h;
+}
+
+/* ===== open / events ===== */
+function openAdmin(){
+  ADMIN.role=document.getElementById('admRole').value||'super';
+  ADMIN.view=AROLES[ADMIN.role].views[0];
+  ADMIN.openId=null; ADMIN.sel={}; ADMIN.flt={};
+  renderAdminNav(); renderView();
+}
+document.getElementById('admRole').addEventListener('change',function(){
+  ADMIN.role=this.value; ADMIN.openId=null;
+  if(AROLES[ADMIN.role].views.indexOf(ADMIN.view)<0)ADMIN.view=AROLES[ADMIN.role].views[0];
+  renderAdminNav(); renderView();
+});
+function navClick(e){var b=e.target.closest('[data-view]');if(!b)return;setView(b.getAttribute('data-view'));}
+document.getElementById('admNav').addEventListener('click',navClick);
+document.getElementById('admTabs').addEventListener('click',navClick);
+
+/* delegated events inside the view */
+document.getElementById('admView').addEventListener('click',function(e){
+  var t=e.target,el2;
+  if((el2=t.closest('[data-open]'))){ADMIN.openId=el2.getAttribute('data-open');renderView();return;}
+  if(t.id==='backCrumb'){ADMIN.openId=null;renderView();return;}
+  if((el2=t.closest('[data-tl]'))){var pr=el2.getAttribute('data-tl').split(':');var m=memberById(pr[0]);var i=+pr[1];m.tlArr[i]=(m.tlArr[i]+1)%3;m.score=Math.round(m.tlArr.reduce(function(a,b){return a+b;},0)/(m.tlArr.length*2)*100);renderView();return;}
+  if((el2=t.closest('[data-approve]'))){var m2=memberById(el2.getAttribute('data-approve'));if(m2&&m2.stars.p>0){m2.stars.a+=m2.stars.p;m2.stars.p=0;if(m2.status==='At risk')m2.status='Active';}renderView();return;}
+  if((el2=t.closest('[data-promote]'))){var m3=memberById(el2.getAttribute('data-promote'));if(m3){m3.level='Gold';if(m3.status==='Gold-ready')m3.status='Active';if(m3.tags.indexOf('Gold')<0)m3.tags.push('Gold');}renderView();return;}
+  if((el2=t.closest('[data-sel]'))){return;} /* checkbox handled on change */
+  if((el2=t.closest('[data-bulk]'))){bulkAction(el2.getAttribute('data-bulk'));return;}
+  if((el2=t.closest('[data-q]'))){var q=el2.getAttribute('data-q').split(':');var mm=memberById(q[1]);alert((q[0]==='schedule'?'Scheduling a check-in with ':q[0]==='message'?'Opening a message to ':'Action for ')+(mm?mm.name:'')+' (prototype).');return;}
+  if((el2=t.closest('[data-note]'))){var inp=document.getElementById('noteInput');var mn=memberById(el2.getAttribute('data-note'));if(inp&&inp.value.trim()&&mn){mn._notes=(notesFor(mn)).slice();mn._notes.unshift({a:AROLES[ADMIN.role].label,d:'just now',t:inp.value.trim()});renderView();}return;}
+  if((el2=t.closest('[data-delb]'))){var id=el2.getAttribute('data-delb');STORE.benefits=STORE.benefits.filter(function(x){return x.id!==id;});saveStore();renderView();return;}
+  if((el2=t.closest('[data-delr]'))){var id2=el2.getAttribute('data-delr');STORE.rewards=STORE.rewards.filter(function(x){return x.id!==id2;});saveStore();renderView();return;}
+  if((el2=t.closest('[data-ptoggle]'))){var p=partnerById(el2.getAttribute('data-ptoggle'));if(p)p.active=!p.active;renderView();return;}
+  if((el2=t.closest('[data-notif]'))){var nf=el2.getAttribute('data-notif').split(':');var n=NOTIFS.filter(function(x){return x.id===nf[0];})[0];if(n){n[nf[1]]=!n[nf[1]];saveNotif();}el2.classList.toggle('on');return;}
+  if((el2=t.closest('[data-rule]'))){el2.classList.toggle('on');return;}
+  if(t.id==='cmsSave'){saveCmsFromForm();return;}
+  if(t.id==='expCsv'){exportImpactCsv();return;}
+  if(t.id==='expPdf'){window.print();return;}
+  if(t.id==='newRefBtn'||t.closest('[data-refnew]')){alert('New referral form (prototype) — choose a member and partner, add a reason, and it enters the pipeline as “Created”.');return;}
+  if((el2=t.closest('#rangeSeg [data-r]'))){ADMIN.range=el2.getAttribute('data-r');renderView();return;}
+  if((el2=t.closest('#periodSeg [data-p]'))){ADMIN._period=el2.getAttribute('data-p');renderView();return;}
+});
+document.getElementById('admView').addEventListener('change',function(e){
+  var t=e.target,el2;
+  if((el2=t.closest('[data-sel]'))){ADMIN.sel[el2.getAttribute('data-sel')]=t.checked;renderView();return;}
+  if((el2=t.closest('[data-refstat]'))){var r=REFERRALS.filter(function(x){return x.id===el2.getAttribute('data-refstat');})[0];if(r){r.status=t.value;saveRefs();renderView();}return;}
+  if(['fQ','fZip','fLevel','fStatus','fNav'].indexOf(t.id)>=0){applyFilters();return;}
+});
+document.getElementById('admView').addEventListener('input',function(e){
+  if(e.target.id==='fQ'){ADMIN.flt.q=e.target.value;
+    /* re-filter without losing focus: only update tbody */
+    var tb=document.querySelector('#admView .tbl tbody');if(tb){renderMembersBody();}}
+});
+document.getElementById('admView').addEventListener('submit',function(e){
+  if(e.target.id==='benefitForm'){e.preventDefault();var n=document.getElementById('bName').value.trim();if(!n)return;
+    STORE.benefits.push({id:'b'+Date.now(),name:n,cat:document.getElementById('bCat').value.trim(),unlockAt:Math.max(0,parseInt(document.getElementById('bUnlock').value,10)||0),tier:document.getElementById('bTier').value});saveStore();renderView();return;}
+  if(e.target.id==='rewardForm'){e.preventDefault();var n2=document.getElementById('rName').value.trim();if(!n2)return;
+    STORE.rewards.push({id:'r'+Date.now(),name:n2,th:Math.max(1,parseInt(document.getElementById('rTh').value,10)||1)});saveStore();renderView();return;}
+});
+function applyFilters(){
+  ADMIN.flt.q=(document.getElementById('fQ')||{}).value||'';
+  ADMIN.flt.zip=(document.getElementById('fZip')||{}).value||'';
+  ADMIN.flt.level=(document.getElementById('fLevel')||{}).value||'';
+  ADMIN.flt.status=(document.getElementById('fStatus')||{}).value||'';
+  ADMIN.flt.nav=(document.getElementById('fNav')||{}).value||'';
+  renderView();
+}
+function renderMembersBody(){/* lightweight rerender keeping search focus */renderView();var fq=document.getElementById('fQ');if(fq){fq.focus();fq.setSelectionRange(fq.value.length,fq.value.length);}}
+function bulkAction(kind){
+  var ids=Object.keys(ADMIN.sel).filter(function(k){return ADMIN.sel[k];});
+  if(kind==='export'){exportMembersCsv(ids.length?ids:null);return;}
+  var names=ids.map(function(i){return (memberById(i)||{}).name;}).join(', ');
+  if(kind==='assign')alert('Assign navigator to: '+(names||'all')+' (prototype).');
+  else if(kind==='tag')alert('Add a tag to: '+(names||'all')+' (prototype).');
+  else if(kind==='outreach')alert('Send outreach to: '+(names||'all')+' (prototype).');
+}
+function exportMembersCsv(ids){
+  var list=ids?MEMBERS.filter(function(m){return ids.indexOf(m.id)>=0;}):MEMBERS;
+  var rows=[['Name','Email','Phone','Level','ZIP','Intent','Navigator','ThriveScore','Status','LastDays','Stars']];
+  list.forEach(function(m){rows.push([m.name,m.email,m.phone,m.level,m.zip,m.intent,navName(m.nav),m.score+'%',m.status,m.last,m.stars.a]);});
+  downloadCsv('epe-members.csv',rows);
+}
+function exportImpactCsv(){
+  var rows=[['Metric','Value'],['Members served',MEMBERS.length*3],['Goals completed',120],['Red→Green moves',48],['Employment gains',22],['Housing placements',14],['Transportation solutions',31],['Savings ($k)',86],['Gold conversion %',Math.round(MEMBERS.filter(function(x){return x.level==='Gold';}).length/MEMBERS.length*100)]];
+  downloadCsv('epe-impact.csv',rows);
+}
+function downloadCsv(name,rows){
+  var csv=rows.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  var blob=new Blob([csv],{type:'text/csv'});var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+}
+function saveCmsFromForm(){
+  CMS.heroTitle=document.getElementById('cmHeroTitle').value;
+  CMS.heroSub=document.getElementById('cmHeroSub').value;
+  CMS.whyLead=document.getElementById('cmWhy').value;
+  CMS.ctaButton=document.getElementById('cmCta').value;
+  CMS.partners=document.getElementById('cmPartners').value;
+  CMS.faq=document.getElementById('cmFaq').value;
+  saveCms(); applyCmsToSite();
+  var f=document.getElementById('cmsSaved');if(f){f.classList.add('show');setTimeout(function(){f.classList.remove('show');},1600);}
+}
+function applyCmsToSite(){
+  try{
+    var ht=document.querySelector('.hero h1');if(ht)ht.textContent=CMS.heroTitle;
+    var hs=document.querySelector('.hero .sub');if(hs)hs.textContent=CMS.heroSub;
+    var wl=document.querySelector('.why .lead');if(wl)wl.textContent=CMS.whyLead;
+    if(CMS.partners){document.getElementById('partnerChips').innerHTML=CMS.partners.split(',').map(function(p){return '<span class="chip-p">'+p.trim()+'</span>';}).join('');}
+  }catch(e){}
+}
+applyCmsToSite();
+
+document.getElementById('adminLogout').addEventListener('click',function(){
+  document.getElementById('admin').classList.remove('open'); document.body.style.overflow='';
+});
+
+/* ================= prototype navigator ================= */
+var NAV_META={
+  "Marcus T.":{priority:"Transportation",last:"3 days ago"},
+  "Olivia M.":{priority:"Education",last:"1 week ago"},
+  "Jamal W.":{priority:"Income & Work",last:"today"},
+  "Sofia G.":{priority:"Financial Health",last:"2 weeks ago"},
+  "Andre P.":{priority:"Transportation",last:"5 days ago"}
+};
+var NAV_QUEUE=[
+  {id:'q1',member:"Marcus T.",action:"Earn your bike (Bike Walk)",cat:"Transportation",pts:15,hub:"Phoenix"},
+  {id:'q2',member:"Olivia M.",action:"Attend classes",cat:"Education",pts:10,hub:"WSU Tech"},
+  {id:'q3',member:"Jamal W.",action:"Complete Empower Workforce intake",cat:"Income & Work",pts:10,hub:"Empower"},
+  {id:'q4',member:"Sofia G.",action:"Attend a financial class",cat:"Financial Health",pts:10,hub:"Army of Normal Folks"},
+  {id:'q5',member:"Andre P.",action:"Take a transportation class",cat:"Transportation",pts:10,hub:"Phoenix"}
+];
+var NAV_HIST=[];
+function nMember(n){for(var i=0;i<MEMBERS.length;i++){if(MEMBERS[i].name===n)return MEMBERS[i];}return null;}
+function renderNav(){
+  document.getElementById('navStats').innerHTML=[
+    ['My members',Object.keys(NAV_META).length],
+    ['Pending verifications',NAV_QUEUE.length],
+    ['Verified this session',NAV_HIST.filter(function(h){return h.pts>0;}).length],
+    ['Stars awarded',NAV_HIST.reduce(function(a,h){return a+h.pts;},0)]
+  ].map(function(s){return '<div class="stat"><div class="v">'+s[1]+'</div><div class="k">'+s[0]+'</div></div>';}).join('');
+  document.getElementById('navQueue').innerHTML=NAV_QUEUE.length?NAV_QUEUE.map(function(q){
+    return '<div class="adm-row"><div class="info"><div class="nm">'+q.member+'</div><div class="q-meta">'+q.action+' · '+q.cat+' · '+q.hub+'</div></div><span class="pill">+'+q.pts+'★</span><button class="vbtn" data-verify="'+q.id+'">Verify</button></div>';
+  }).join(''):'<p class="sub">Queue is clear — nothing awaiting verification.</p>';
+  document.getElementById('navCase').innerHTML=MEMBERS.filter(function(m){return NAV_META[m.name];}).map(function(m){
+    var meta=NAV_META[m.name];
+    return '<div class="adm-row"><div class="info"><div class="nm">'+m.name+'</div><div class="q-meta">Priority: '+meta.priority+' · Last check-in: '+meta.last+'</div></div><span class="pill">★ '+m.stars+'</span><button class="vbtn" style="background:var(--navy)" data-checkin="'+m.name+'">Log check-in</button></div>';
+  }).join('');
+  document.getElementById('navHist').innerHTML=NAV_HIST.length?NAV_HIST.map(function(h){
+    return '<div class="row"><span>'+h.member+' — '+h.action+'</span>'+(h.pts>0?'<span class="s">+'+h.pts+'★</span>':'')+'</div>';
+  }).join(''):'<div class="empty">No verifications yet this session.</div>';
+}
+document.getElementById('navQueue').addEventListener('click',function(e){
+  var b=e.target.closest('[data-verify]'); if(!b)return;
+  var id=b.getAttribute('data-verify'),item=null;
+  NAV_QUEUE=NAV_QUEUE.filter(function(q){if(q.id===id){item=q;return false;}return true;});
+  if(item){var m=nMember(item.member); if(m)m.stars+=item.pts; NAV_HIST.unshift({member:item.member,action:item.action,pts:item.pts});}
+  renderNav();
+});
+document.getElementById('navCase').addEventListener('click',function(e){
+  var b=e.target.closest('[data-checkin]'); if(!b)return;
+  var name=b.getAttribute('data-checkin'); if(NAV_META[name])NAV_META[name].last='just now';
+  NAV_HIST.unshift({member:name,action:'Check-in logged',pts:0});
+  renderNav();
+});
+document.getElementById('navLogout').addEventListener('click',function(){
+  document.getElementById('navdash').classList.remove('open'); document.body.style.overflow='';
+});
+
+/* ================= prototype partner org ================= */
+var PARTNER_NAME="Empower";
+var REF_STATUS=["New","Contacted","Enrolled"];
+var PARTNER_REF=[
+  {id:'pr1',member:"Jamal W.",program:"Workforce program",status:0},
+  {id:'pr2',member:"Sofia G.",program:"Transportation consultation",status:1},
+  {id:'pr3',member:"Andre P.",program:"Small business consultation",status:0},
+  {id:'pr4',member:"Marcus T.",program:"Workforce program",status:2}
+];
+var PARTNER_QUEUE=[
+  {id:'pq1',member:"Jamal W.",action:"Completed Workforce intake",pts:10},
+  {id:'pq2',member:"Andre P.",action:"Attended small-business session",pts:10},
+  {id:'pq3',member:"Sofia G.",action:"Finished transportation plan",pts:5}
+];
+var PARTNER_HIST=[];
+function renderPartner(){
+  document.getElementById('partnerName').textContent=PARTNER_NAME;
+  var served={};PARTNER_REF.forEach(function(r){served[r.member]=1;});PARTNER_HIST.forEach(function(h){served[h.member]=1;});
+  var stats=[['New referrals',PARTNER_REF.filter(function(r){return r.status===0;}).length],['Enrolled',PARTNER_REF.filter(function(r){return r.status===2;}).length],['Verified',PARTNER_HIST.length],['Members served',Object.keys(served).length]];
+  document.getElementById('partnerStats').innerHTML=stats.map(function(s){return '<div class="stat"><div class="v">'+s[1]+'</div><div class="k">'+s[0]+'</div></div>';}).join('');
+  document.getElementById('partnerRef').innerHTML=PARTNER_REF.map(function(r){
+    return '<div class="adm-row"><div class="info"><div class="nm">'+r.member+'</div><div class="q-meta">'+r.program+'</div></div><button class="vbtn" style="background:var(--navy)" data-refadv="'+r.id+'">'+REF_STATUS[r.status]+(r.status<2?' →':'')+'</button></div>';
+  }).join('');
+  document.getElementById('partnerQueue').innerHTML=PARTNER_QUEUE.length?PARTNER_QUEUE.map(function(q){
+    return '<div class="adm-row"><div class="info"><div class="nm">'+q.member+'</div><div class="q-meta">'+q.action+'</div></div><span class="pill">+'+q.pts+'★</span><button class="vbtn" data-pverify="'+q.id+'">Verify</button></div>';
+  }).join(''):'<p class="sub">Nothing awaiting verification.</p>';
+  document.getElementById('partnerParts').innerHTML=Object.keys(served).map(function(nm){
+    var m=nMember(nm);return '<div class="adm-row"><div class="info"><div class="nm">'+nm+'</div></div><span class="pill">★ '+(m?m.stars:0)+'</span></div>';
+  }).join('');
+  document.getElementById('partnerHist').innerHTML=PARTNER_HIST.length?PARTNER_HIST.map(function(h){return '<div class="row"><span>'+h.member+' — '+h.action+'</span><span class="s">+'+h.pts+'★</span></div>';}).join(''):'<div class="empty">No verifications yet this session.</div>';
+}
+document.getElementById('partnerRef').addEventListener('click',function(e){
+  var b=e.target.closest('[data-refadv]'); if(!b)return; var id=b.getAttribute('data-refadv');
+  PARTNER_REF.forEach(function(r){if(r.id===id&&r.status<2)r.status++;}); renderPartner();
+});
+document.getElementById('partnerQueue').addEventListener('click',function(e){
+  var b=e.target.closest('[data-pverify]'); if(!b)return; var id=b.getAttribute('data-pverify'),item=null;
+  PARTNER_QUEUE=PARTNER_QUEUE.filter(function(q){if(q.id===id){item=q;return false;}return true;});
+  if(item){var m=nMember(item.member);if(m)m.stars+=item.pts;PARTNER_HIST.unshift({member:item.member,action:item.action,pts:item.pts});}
+  renderPartner();
+});
+document.getElementById('partnerLogout').addEventListener('click',function(){
+  document.getElementById('partnerdash').classList.remove('open'); document.body.style.overflow='';
+});
+
+/* auth */
+var loginModal=document.getElementById('loginModal');
+function openLogin(){loginModal.classList.add('open');}
+function closeLogin(){loginModal.classList.remove('open');}
+Array.prototype.forEach.call(document.querySelectorAll('.js-login'),function(b){b.addEventListener('click',function(){menu.classList.remove('open');openLogin();});});
+document.getElementById('loginClose').addEventListener('click',closeLogin);
+loginModal.addEventListener('click',function(e){if(e.target===loginModal)closeLogin();});
+var authMode='login';
+function setAuthMode(m){authMode=m;
+  document.getElementById('authTitle').textContent=(m==='signup')?'Create your account':'Log in';
+  document.getElementById('authHint').textContent=(m==='signup')?'Join EPE — it only takes a minute.':'Sign in to your EPE dashboard.';
+  document.getElementById('nameRow').style.display=(m==='signup')?'block':'none';
+  document.getElementById('authSubmit').textContent=(m==='signup')?'Sign up':'Log in';
+  document.getElementById('authToggle').innerHTML=(m==='signup')?'Already have an account? <a href="#" id="toLogin">Log in</a>':'New here? <a href="#" id="toSignup">Create an account</a>';
+  var er=document.getElementById('loginErr'); er.textContent=''; er.style.display='none';
+}
+setAuthMode('login');
+document.getElementById('authToggle').addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;e.preventDefault();setAuthMode(a.id==='toSignup'?'signup':'login');});
+function authErr(msg){var el=document.getElementById('loginErr');el.textContent=msg;el.style.display='block';}
+function hideAllDash(){['dashboard','navdash','partnerdash','admin'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove('open');});document.body.style.overflow='';}
+function routeByRole(profile,member,email){
+  hideAllDash();
+  var role=(profile&&profile.role)||'member';
+  if(role==='admin'){document.getElementById('admin').classList.add('open');document.body.style.overflow='hidden';openAdmin();}
+  else if(role==='navigator'){document.getElementById('navdash').classList.add('open');document.body.style.overflow='hidden';renderNav();}
+  else if(role==='partner'){document.getElementById('partnerdash').classList.add('open');document.body.style.overflow='hidden';renderPartner();}
+  else {
+    var nm=(profile&&profile.full_name)||'Member';
+    document.getElementById('dashHello').textContent='Welcome, '+nm;
+    var pn=document.getElementById('profName'); if(pn)pn.textContent=nm;
+    var ld=document.querySelector('#dashboard .lead'); if(ld)ld.textContent='Live account: '+(email||'')+' — your data will fill in as you use the app.';
+    document.getElementById('dashboard').classList.add('open');document.body.style.overflow='hidden';
+    loadLiveMember(profile);
+  }
+}
+function applyLiveMember(mem,profile){
+  var st=CUR.stars||0;
+  var ds=document.getElementById('dashStars'); if(ds)ds.innerHTML='&#9733; '+st;
+  var pn=document.getElementById('profName'); if(pn)pn.textContent=(profile&&profile.full_name)||'Member';
+  var sub=document.querySelector('#profName + .sub'); if(sub)sub.textContent=(((mem&&mem.level)||'basic')==='gold'?'Gold Member':'Basic Member')+((mem&&mem.joined_at)?(' · since '+new Date(mem.joined_at).toLocaleDateString()):'');
+  var ld=document.querySelector('#dashboard .lead'); if(ld)ld.textContent='Live account: '+(CUR.email||'');
+  renderInfoReview();
+}
+function applyAssessment(asmt,rows){
+  var map={red:0,yellow:1,green:2};
+  var inds=(rows||[]).map(function(r){return {name:r.indicator,domain:r.domain||'Other',status:map[r.status]};});
+  DASH.tlIndicators=inds;
+  var domStat={};
+  inds.forEach(function(ind){var d=ind.domain; if(d&&d!=='Other'){ if(domStat[d]===undefined||ind.status<domStat[d])domStat[d]=ind.status; }});
+  DASH.tl=DASH.tl.map(function(row){return (domStat[row.c]!==undefined)?{c:row.c,s:domStat[row.c]}:row;});
+  DASH.tlDate=asmt.assessed_on?new Date(asmt.assessed_on+'T00:00:00').toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'}):'';
+  DASH.tlSummary=(asmt.green||0)+' green · '+(asmt.yellow||0)+' yellow · '+(asmt.red||0)+' red';
+  DASH.tlImported=true;
+}
+function saveAssessment(r){
+  var iso=null; if(r.date){var dd=new Date(r.date); if(!isNaN(dd.getTime())) iso=dd.toISOString().slice(0,10);}
+  sb.from('assessments').insert({member_id:CUR.uid,assessed_on:iso,source:'import',green:r.green,yellow:r.yellow,red:r.red}).select('id').single().then(function(a){
+    if(a.error||!a.data)return;
+    var aid=a.data.id;
+    var rows=(r.indicators||[]).map(function(ind){return {assessment_id:aid,indicator:ind.name,domain:ind.domain,status:['red','yellow','green'][ind.status]};});
+    if(rows.length)sb.from('assessment_indicators').insert(rows);
+  });
+}
+function loadLiveMember(profile){
+  var nm=(profile&&profile.full_name)||'Member';
+  document.getElementById('dashHello').textContent='Welcome, '+nm;
+  document.getElementById('dashboard').classList.add('open'); document.body.style.overflow='hidden';
+  DASH.tlImported=false; DASH.tlIndicators=[]; DASH.tlDate='';
+  renderDash(); renderOnboard(); loadProfileForm();
+  sb.from('members').select('level,stars,joined_at').eq('profile_id',CUR.uid).maybeSingle().then(function(m){
+    var mem=(m&&m.data)||{level:'basic',stars:0};
+    CUR.stars=mem.stars||0; CUR.level=mem.level||'basic';
+    applyLiveMember(mem,profile);
+    sb.from('assessments').select('id,assessed_on,green,yellow,red').eq('member_id',CUR.uid).order('assessed_on',{ascending:false}).limit(1).maybeSingle().then(function(a){
+      var asmt=a&&a.data; if(!asmt)return;
+      sb.from('assessment_indicators').select('indicator,domain,status').eq('assessment_id',asmt.id).then(function(ind){
+        applyAssessment(asmt,(ind&&ind.data)||[]); renderDash(); renderOnboard(); applyLiveMember(mem,profile);
+      });
+    });
+  });
+}
+function pfFillSeg(id,val,attr){var seg=document.getElementById(id);if(!seg)return;var bs=seg.querySelectorAll('.seg-btn');for(var i=0;i<bs.length;i++){bs[i].classList.toggle('active',bs[i].getAttribute(attr)===val);}}
+function loadProfileForm(){
+  if(!CUR.live||!CUR.uid)return;
+  sb.from('profiles').select('phone,zip').eq('id',CUR.uid).maybeSingle().then(function(p){var d=(p&&p.data)||{};var a=document.getElementById('pfPhone');if(a)a.value=d.phone||'';var b=document.getElementById('pfZip');if(b)b.value=d.zip||'';});
+  sb.from('members').select('want_help,employment_status,employment_detail').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfStatus',d.employment_status,'data-st');var dt=document.getElementById('pfDetail');if(dt)dt.value=d.employment_detail||'';});
+}
+function saveProfile(){
+  var msg=document.getElementById('pfMsg');
+  if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Demo mode — sign in with a real account to save.';return;}
+  var phone=(document.getElementById('pfPhone').value||'').trim(),zip=(document.getElementById('pfZip').value||'').trim();
+  var stBtn=document.querySelector('#pfStatus .seg-btn.active'),hpBtn=document.querySelector('#pfHelp .seg-btn.active');
+  var st=stBtn?stBtn.getAttribute('data-st'):null,hp=hpBtn?hpBtn.getAttribute('data-hp'):null;
+  var detail=(document.getElementById('pfDetail').value||'').trim();
+  if(msg)msg.textContent='Saving…';
+  Promise.all([
+    sb.from('profiles').update({phone:phone,zip:zip}).eq('id',CUR.uid),
+    sb.from('members').update({want_help:hp,employment_status:st,employment_detail:detail}).eq('profile_id',CUR.uid)
+  ]).then(function(res){var err=(res[0]&&res[0].error)||(res[1]&&res[1].error);if(msg)msg.textContent=err?('Could not save: '+err.message):'Saved \u2713';},function(){if(msg)msg.textContent='Network error — try again.';});
+}
+(function(){var sv=document.getElementById('pfSave');if(sv)sv.addEventListener('click',saveProfile);})();
+function openDemo(role){
+  CUR.live=false; CUR.uid=null;
+  hideAllDash();
+  if(role==='admin'){document.getElementById('admin').classList.add('open');document.body.style.overflow='hidden';openAdmin();}
+  else if(role==='navigator'){document.getElementById('navdash').classList.add('open');document.body.style.overflow='hidden';renderNav();}
+  else if(role==='partner'){document.getElementById('partnerdash').classList.add('open');document.body.style.overflow='hidden';renderPartner();}
+  else {document.getElementById('dashHello').textContent='Welcome back, User (Demo)';var ld=document.querySelector('#dashboard .lead');if(ld)ld.textContent='Demo mode — sample data, no account.';document.getElementById('dashboard').classList.add('open');document.body.style.overflow='hidden';DASH.tlImported=false;DASH.tlChoice=null;DASH.tlIndicators=[];renderDash();renderOnboard();}
+}
+function afterAuth(){
+  return sb.auth.getUser().then(function(res){
+    var u=res.data&&res.data.user; if(!u)return;
+    CUR.live=true; CUR.uid=u.id; CUR.email=u.email;
+    return sb.from('profiles').select('full_name,role').eq('id',u.id).maybeSingle().then(function(p){
+      var profile=(p&&p.data)||{role:'member',full_name:(u.user_metadata&&u.user_metadata.full_name)||''};
+      return sb.from('members').select('level,stars').eq('profile_id',u.id).maybeSingle().then(function(m){
+        closeLogin(); routeByRole(profile,(m&&m.data)||null,u.email);
+      },function(){closeLogin();routeByRole(profile,null,u.email);});
+    });
+  });
+}
+document.getElementById('loginForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var email=document.getElementById('lemail').value.trim(),pass=document.getElementById('lpass').value,name=document.getElementById('lname').value.trim();
+  var er=document.getElementById('loginErr'); er.style.display='none';
+  if(!email||!pass){authErr('Please enter your email and password.');return;}
+  if(authMode==='login'){
+    var DEMO={'user-demo':'member','navigator-demo':'navigator','partner-demo':'partner','admin-demo':'admin'};
+    var lid=email.toLowerCase();
+    if(DEMO[lid]&&pass==='password'){er.style.display='none';closeLogin();openDemo(DEMO[lid]);return;}
+  }
+  var btn=document.getElementById('authSubmit'); btn.disabled=true;
+  function done(){btn.disabled=false;}
+  if(authMode==='signup'){
+    if(!name){authErr('Please enter your name.');done();return;}
+    sb.auth.signUp({email:email,password:pass,options:{data:{full_name:name,source:'website'}}}).then(function(r){
+      if(r.error){authErr(r.error.message);done();return;}
+      if(!r.data.session){authErr('Account created — check your email to confirm, then log in.');setAuthMode('login');done();return;}
+      afterAuth().then(done,done);
+    },function(e2){authErr('Network error — please try again.');done();});
+  } else {
+    sb.auth.signInWithPassword({email:email,password:pass}).then(function(r){
+      if(r.error){authErr(r.error.message);done();return;}
+      afterAuth().then(done,done);
+    },function(e2){authErr('Network error — please try again.');done();});
+  }
+});
+function epeLogout(){sb.auth.signOut().then(hideAllDash,hideAllDash);}
+['logoutBtn','navLogout','partnerLogout','adminLogout'].forEach(function(id){var b=document.getElementById(id);if(b)b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();epeLogout();});});
+sb.auth.getSession().then(function(r){if(r&&r.data&&r.data.session){afterAuth();}});
+
+function jv(id){var e=document.getElementById(id);return e?(e.value||'').trim():'';}
+(function(){var jf=document.getElementById('joinForm');if(!jf)return;jf.addEventListener('submit',function(e){
+  e.preventDefault();
+  var name=jv('jName'),email=jv('jEmail'),phone=jv('jPhone'),zip=jv('jZip'),pass=(document.getElementById('jPass').value||'');
+  var cb=document.querySelector('#jContact .seg-btn.active');var contact=cb?(cb.getAttribute('data-val')==='yes'):true;
+  var er=document.getElementById('joinErr');er.style.display='none';er.textContent='';
+  if(!name||!email||!pass){er.textContent='Please enter your name, email, and a password.';er.style.display='block';return;}
+  var btn=jf.querySelector('button[type=submit]');btn.disabled=true;
+  sb.auth.signUp({email:email,password:pass,options:{data:{full_name:name,source:'website'}}}).then(function(r){
+    if(r.error){er.textContent=r.error.message;er.style.display='block';btn.disabled=false;return;}
+    if(!r.data.session){er.textContent='Account created — check your email to confirm, then log in.';er.style.display='block';btn.disabled=false;return;}
+    var uid=r.data.user.id;
+    Promise.all([sb.from('profiles').update({phone:phone,zip:zip}).eq('id',uid),sb.from('members').update({personal_contact:contact}).eq('profile_id',uid)]).then(function(){btn.disabled=false;afterAuth();},function(){btn.disabled=false;afterAuth();});
+  },function(){er.textContent='Network error — please try again.';er.style.display='block';btn.disabled=false;});
+});})();
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
