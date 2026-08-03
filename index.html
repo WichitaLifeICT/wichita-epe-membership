@@ -417,6 +417,10 @@ h2.sec.light{color:#fff;}
 .ascale-lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:6px;}
 .a-input{width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--ink);background:#fff;}
 .a-nav{display:flex;justify-content:space-between;gap:12px;margin-top:32px;}
+.assess-prog-inline{position:static;top:auto;height:6px;border-radius:4px;overflow:hidden;margin:14px 0 4px;}
+#assessInline .a-wrap{max-width:none;margin:0;padding:4px 0 0;}
+#assessInline .a-h1{font-size:22px;}
+#assessInline .a-nav{margin-top:24px;}
 .a-prio{margin-top:14px;background:var(--gold-soft);border-radius:12px;padding:12px 16px;font-size:14px;color:var(--navy);}
 .a-results{margin-top:16px;display:grid;gap:12px;}
 .a-rcard{border:1px solid var(--border);border-radius:14px;padding:16px;}
@@ -842,7 +846,7 @@ svg.ic{width:24px;height:24px;}
       <button type="submit" id="authSubmit" class="btn btn-gold btn-full" style="margin-top:18px;">Log in</button>
     </form>
     <p class="demo-creds" id="authToggle">New here? <a href="#" id="toSignup">Create an account</a></p>
-    <p class="demo-creds" style="margin-top:8px;">Demo (no account, password <b>password</b>): <b>user-demo</b> · <b>navigator-demo</b> · <b>partner-demo</b> · <b>admin-demo</b></p>
+    <p class="demo-creds" style="margin-top:8px;">Demo (no account, password <b>password</b>): <b>user-demo</b> · <b>partner-demo</b> · <b>admin-demo</b></p>
   </div>
 </div>
 
@@ -882,16 +886,25 @@ svg.ic{width:24px;height:24px;}
           <button type="button" class="seg-btn" data-hp="both">Both</button>
         </div>
       </div>
+      <div class="pf-l" id="pfSolutionWrap" style="display:none;">
+        <span class="pf-cap">What solution can you provide?</span>
+        <textarea class="pf-i" id="pfSolution" rows="3" placeholder="Tell us what you can offer — a service, skill, resource, mentorship, opportunity…" style="resize:vertical;"></textarea>
+      </div>
       <button type="button" class="btn btn-gold btn-full" id="pfSave" style="margin-top:14px;max-width:240px;">Save profile</button>
       <p class="sub" id="pfMsg" style="margin-top:8px;"></p>
     </div>
-    <div class="panel" style="margin-top:24px;">
+    <div class="panel" style="margin-top:24px;" id="checkinPanel">
       <span class="section-eyebrow">Getting started</span>
       <h2>Review your info</h2>
       <div id="infoReview"></div>
-      <a href="#" id="startAssess" class="btn btn-gold" style="margin-top:14px;display:inline-block;">Step 1 — Start your 7 Essentials check-in</a>
-      <div class="steps2" id="obSteps" style="margin-top:14px;"></div>
-      <div id="tlOnboard" style="margin-top:12px;"></div>
+      <div id="assessIntro">
+        <p class="sub" style="margin-top:12px;">When you’re ready, take your 7 Human Essentials check-in. There’s nothing required — answer only what you’d like, and every bit helps us tailor your support.</p>
+        <a href="#" id="startAssess" class="btn btn-gold" style="margin-top:6px;display:inline-block;">Start your 7 Human Essentials check-in</a>
+      </div>
+      <div id="assessInline" style="display:none;">
+        <div class="assess-prog assess-prog-inline"><span id="assessBar"></span></div>
+        <div class="a-wrap" id="assessBody"></div>
+      </div>
     </div>
 
     <div class="dash-grid">
@@ -899,7 +912,7 @@ svg.ic{width:24px;height:24px;}
         <div class="panel" id="prioPanel">
           <span class="section-eyebrow">Your focus right now</span>
           <h2>Recommended next actions</h2>
-          <p class="sub">Based on your Thrive Lights results — we start where you need the most support.</p>
+          <p class="sub">Based on your 7 Human Essentials check-in — we start where you need the most support.</p>
           <div id="prioList"></div>
         </div>
         <div class="panel">
@@ -934,21 +947,6 @@ svg.ic{width:24px;height:24px;}
           </div>
         </div>
 
-        <div class="panel">
-          <span class="section-eyebrow">Thrive Lights</span>
-          <h2>Your results</h2>
-          <p class="sub" id="tlDate"></p>
-          <div class="tl-grid" id="tlGrid"></div>
-          <div id="tlDetail"></div>
-        </div>
-        <div class="panel nav-card">
-          <span class="section-eyebrow" style="color:var(--gold-light)">Member ↔ Hub ↔ Navigator</span>
-          <h2>Your navigator</h2>
-          <p class="sub">Progress is validated in person — not self-reported.</p>
-          <div class="hub"><span>Phoenix</span><span>Army of Normal Folks</span><span>Partner locations</span></div>
-          <button class="btn btn-gold btn-full" id="checkinBtn" style="margin-top:14px;">Simulate navigator check-in</button>
-          <p class="sub" id="pendingNote" style="margin-top:8px;"></p>
-        </div>
         <div class="panel">
           <span class="section-eyebrow">Progress history</span>
           <h2>Verified milestones</h2>
@@ -1057,15 +1055,6 @@ svg.ic{width:24px;height:24px;}
 </div>
 
 <!-- 7 ESSENTIALS CHECK-IN -->
-<div class="dash" id="assessment">
-  <div class="dash-bar">
-    <div class="brand"><span class="brand-mark">E</span><span class="brand-name">7 Essentials Check-in</span></div>
-    <div class="who"><button class="btn btn-outline-light btn-sm" id="assessClose">Save &amp; close</button></div>
-  </div>
-  <div class="assess-prog"><span id="assessBar"></span></div>
-  <div class="a-wrap" id="assessBody"></div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 /* ---------- Supabase (LIVE) ---------- */
@@ -1259,6 +1248,7 @@ document.querySelectorAll('.seg').forEach(function(seg){
     var b=e.target.closest('.seg-btn'); if(!b)return;
     seg.querySelectorAll('.seg-btn').forEach(function(x){x.classList.remove('active');});
     b.classList.add('active');
+    if(seg.id==='pfHelp')pfToggleSolution();
   });
 });
 
@@ -1309,9 +1299,7 @@ var DASH={
     ]
   },
   state:{},
-  ob:[
-    {t:"Set goals based on your current situation",d:"Choose your focus areas and set 1–2 goals to start your journey.",done:false}
-  ],
+  ob:[],
   supports:[
     {t:"Bus pass",d:"Immediate transit support to get where you need to go."},
     {t:"Bike",d:"Earn a bike through Bike Walk ride hours."},
@@ -1339,10 +1327,10 @@ function dPending(){var n=0;Object.keys(DASH.journeys).forEach(function(c){DASH.
 function renderDash(){
   var stars=dStars();
   document.getElementById('dashStars').innerHTML='&#9733; '+stars;
-  document.getElementById('obSteps').innerHTML=DASH.ob.map(function(o,i){
+  var _obEl=document.getElementById('obSteps'); if(_obEl)_obEl.innerHTML=DASH.ob.map(function(o,i){
     return '<div class="ob-step'+(o.done?' done':'')+'"><span class="n">'+(o.done?'✓':(i+1))+'</span><div><div class="t">'+o.t+'</div><div class="d">'+o.d+'</div></div><button type="button" class="btn '+(o.done?'btn-outline':'btn-navy')+' btn-sm go" data-ob="'+i+'">'+(o.done?'Done':'Set goals')+'</button></div>';
   }).join('');
-  document.getElementById('tlGrid').innerHTML=DASH.tl.map(function(r){
+  var _tlG=document.getElementById('tlGrid'); if(_tlG)_tlG.innerHTML=DASH.tl.map(function(r){
     return '<div class="tl-cell"><div><span class="dot bg-'+SCLASS[r.s]+'"></span><span class="c">'+r.c+'</span></div><div class="s st-'+SCLASS[r.s]+'">'+SLABEL[r.s]+'</div></div>';
   }).join('');
   (function(){var dt=document.getElementById('tlDate');if(dt)dt.textContent=DASH.tlDate?('Assessed '+DASH.tlDate):'';
@@ -1358,24 +1346,18 @@ function renderDash(){
       }).join('');
     } else { det.innerHTML=''; }
   })();
-  var prio;
-  if(DASH.tlIndicators&&DASH.tlIndicators.length){
-    var agg={};
-    DASH.tlIndicators.forEach(function(ind){var d=ind.domain;if(!d||!DASH.journeys[d])return;if(!agg[d])agg[d]={c:d,s:2,sev:0,need:0};if(ind.status<2){agg[d].sev+=(2-ind.status);agg[d].need++;if(ind.status<agg[d].s)agg[d].s=ind.status;}});
-    prio=Object.keys(agg).map(function(k){return agg[k];}).filter(function(r){return r.sev>0;}).sort(function(a,b){return b.sev-a.sev;});
-  } else {
-    prio=DASH.tl.filter(function(r){return r.s<2 && DASH.journeys[r.c];}).sort(function(a,b){return a.s-b.s;}).map(function(r){return {c:r.c,s:r.s,need:0};});
-  }
-  document.getElementById('prioList').innerHTML=prio.map(function(r){
-    var lead=(r.s===0?'You are red in '+r.c:'You are working on '+r.c)+(r.need?(' \u2014 '+r.need+' area'+(r.need>1?'s':'')+' need attention. Here are your next actions:'):' \u2014 here are your next actions:');
-    var acts=DASH.journeys[r.c].map(function(a){
-      var st=DASH.state[a.id]||0,cls=st===2?'verified':st===1?'pending':'todo';
-      var badge=st===2?'Verified':st===1?'Pending check-in':'To do';
-      var box=st===2?'\u2713':st===1?'\u2026':'';
-      return '<div class="action '+cls+'" data-id="'+a.id+'"><span class="box">'+box+'</span><span class="lbl">'+a.label+'</span><span class="pts">+'+a.pts+'\u2605</span><span class="badge">'+badge+'</span></div>';
-    }).join('');
-    return '<div class="prio'+(r.s===1?' amber':'')+'"><h3>'+r.c+'</h3><p class="lead">'+lead+'</p><div class="actions-list">'+acts+'</div></div>';
-  }).join('')||'<p class="sub">No priority areas flagged right now \u2014 nice work.</p>';
+  var prio, _sc=window._essScores;
+  if(_sc){
+    prio=ESS7.map(function(e){var pct=_sc[e.key];var st=essStatus(pct);return {key:e.key,name:e.name,pct:(pct==null?0:pct),c:st.c,label:st.t};})
+      .filter(function(r){return r.c==='red'||r.c==='amber';})
+      .sort(function(a,b){return b.pct-a.pct;});
+  } else { prio=[]; }
+  document.getElementById('prioList').innerHTML = _sc ? (prio.map(function(r){
+    var lead=(r.c==='red'?'A priority area':'An opportunity to grow')+' \u2014 here\u2019s who can help:';
+    var refs=(REFERRALS[r.key]||[]).slice(0,3);
+    var acts=refs.map(function(p){return '<div class="action todo"><span class="box"></span><span class="lbl">'+p+'</span></div>';}).join('');
+    return '<div class="prio'+(r.c==='amber'?' amber':'')+'"><h3>'+r.name+' <span class="a-pill p-'+r.c+'" style="font-size:11px;vertical-align:middle;margin-left:6px;">'+r.label+'</span></h3><p class="lead">'+lead+'</p><div class="actions-list">'+acts+'</div></div>';
+  }).join('') || '<p class="sub">Great news \u2014 nothing is flagged as a priority right now. Keep it up!</p>') : '<p class="sub">Take your <b>7 Human Essentials check-in</b> above and we\u2019ll show your top focus areas and who can help.</p>';
   (function(){var gg=document.querySelector('#dashboard .dash-grid'); if(gg)gg.style.display='';})(); renderInfoReview(); renderEssentialsPanel();
   document.getElementById('supportsList').innerHTML=STORE.benefits.filter(function(b){return b.unlockAt===0;}).map(function(b){
     return '<div class="mini"><div class="t">'+b.name+'</div><div class="d">'+(b.cat||'')+'</div><span class="tag">Available now</span></div>';
@@ -1391,17 +1373,17 @@ function renderDash(){
   if(next){document.getElementById('nextReward').textContent=(next.th-stars)+'★ to '+next.t.split(' — ')[0];document.getElementById('rwFill').style.width=Math.min(100,Math.round(stars/next.th*100))+'%';}
   else{document.getElementById('nextReward').textContent='All unlocked';document.getElementById('rwFill').style.width='100%';}
   var p=dPending();
-  document.getElementById('pendingNote').textContent=p?(p+' action'+(p>1?'s':'')+' awaiting verification.'):'No actions pending verification.';
+  var _pn=document.getElementById('pendingNote'); if(_pn)_pn.textContent=p?(p+' action'+(p>1?'s':'')+' awaiting verification.'):'No actions pending verification.';
   var h=document.getElementById('histList');
   h.innerHTML=DASH.history.length?DASH.history.map(function(x){return '<div class="row"><span>'+x.label+'</span><span class="s">+'+x.pts+'★</span></div><div class="d" style="font-size:11px;color:var(--muted);margin-top:-4px;">Verified at '+x.hub+' · '+x.date+'</div>';}).join(''):'<div class="empty">No verified milestones yet. Start actions, then check in with your navigator.</div>';
 }
 
 document.getElementById('prioList').addEventListener('click',function(e){
   var a=e.target.closest('.action'); if(!a)return;
-  var id=a.getAttribute('data-id'),st=DASH.state[id]||0;
+  var id=a.getAttribute('data-id'); if(!id)return; var st=DASH.state[id]||0;
   if(st===2)return; DASH.state[id]=st===1?0:1; renderDash();
 });
-document.getElementById('obSteps').addEventListener('click',function(e){
+var _obC=document.getElementById('obSteps'); if(_obC)_obC.addEventListener('click',function(e){
   var b=e.target.closest('[data-ob]'); if(!b)return;
   var i=+b.getAttribute('data-ob'); DASH.ob[i].done=!DASH.ob[i].done; renderDash();
 });
@@ -1499,23 +1481,16 @@ function tlDoImport(){
     }).catch(function(e){psFlash('Sorry — could not read that PDF. Please upload your Poverty Stoplight life map (PDF).');});
   },function(){psFlash('Could not load the PDF reader (check your connection) — please try again.');});
 }
-document.getElementById('tlOnboard').addEventListener('click',function(e){
+var _tlOb=document.getElementById('tlOnboard'); if(_tlOb)_tlOb.addEventListener('click',function(e){
   var samp=e.target.closest('[data-tlsample]'); if(samp){e.preventDefault();DASH.tlImported=true;DASH.tlDate='Sample';DASH.tlSummary='sample data';DASH.tlIndicators=[];renderDash();renderOnboard();return;}
   var c=e.target.closest('[data-tl]'); if(c){DASH.tlChoice=c.getAttribute('data-tl');renderOnboard();return;}
   if(e.target.closest('[data-tlimport]')){tlDoImport();return;}
   if(e.target.closest('[data-tlreset]')){DASH.tlImported=false;DASH.tlChoice='yes';DASH.tlFile='';renderOnboard();return;}
 });
-document.getElementById('tlOnboard').addEventListener('change',function(e){
+if(_tlOb)_tlOb.addEventListener('change',function(e){
   var f=e.target; if(f&&f.id==='tlFile'&&f.files&&f.files[0]){DASH.tlFileObj=f.files[0];DASH.tlFile=f.files[0].name;var nm=document.getElementById('tlFileName');if(nm)nm.textContent=f.files[0].name;}
 });
-document.getElementById('checkinBtn').addEventListener('click',function(){
-  var date=new Date().toLocaleDateString(),hubs=['Phoenix','Army of Normal Folks','WSU Tech'],any=false;
-  Object.keys(DASH.journeys).forEach(function(c){DASH.journeys[c].forEach(function(a){
-    if(DASH.state[a.id]===1){DASH.state[a.id]=2;any=true;DASH.history.unshift({label:a.label,pts:a.pts,hub:hubs[Math.floor(Math.random()*hubs.length)],date:date});}
-  });});
-  if(!any){document.getElementById('pendingNote').textContent='Nothing pending — start an action above first.';return;}
-  renderDash();
-});
+/* navigator check-in removed for now */
 
 /* ================= prototype admin back end ================= */
 var STORE_KEY='epe_admin_store_v1';
@@ -2357,7 +2332,7 @@ function routeByRole(profile,member,email){
   hideAllDash();
   var role=(profile&&profile.role)||'member';
   if(role==='admin'){document.getElementById('admin').classList.add('open');document.body.style.overflow='hidden';openAdmin();}
-  else if(role==='navigator'){document.getElementById('navdash').classList.add('open');document.body.style.overflow='hidden';renderNav();}
+  /* navigator dashboard archived for now */
   else if(role==='partner'){document.getElementById('partnerdash').classList.add('open');document.body.style.overflow='hidden';renderPartner();}
   else {
     var nm=(profile&&profile.full_name)||'Member';
@@ -2415,10 +2390,11 @@ function loadLiveMember(profile){
   });
 }
 function pfFillSeg(id,val,attr){var seg=document.getElementById(id);if(!seg)return;var bs=seg.querySelectorAll('.seg-btn');for(var i=0;i<bs.length;i++){bs[i].classList.toggle('active',bs[i].getAttribute(attr)===val);}}
+function pfToggleSolution(){var hpBtn=document.querySelector('#pfHelp .seg-btn.active');var hp=hpBtn?hpBtn.getAttribute('data-hp'):null;var w=document.getElementById('pfSolutionWrap');if(w)w.style.display=(hp==='give'||hp==='both')?'block':'none';}
 function loadProfileForm(){
   if(!CUR.live||!CUR.uid)return;
   sb.from('profiles').select('phone,zip').eq('id',CUR.uid).maybeSingle().then(function(p){var d=(p&&p.data)||{};var a=document.getElementById('pfPhone');if(a)a.value=d.phone||'';var b=document.getElementById('pfZip');if(b)b.value=d.zip||'';});
-  sb.from('members').select('want_help,employment_status,employment_detail').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfStatus',d.employment_status,'data-st');var dt=document.getElementById('pfDetail');if(dt)dt.value=d.employment_detail||'';});
+  sb.from('members').select('want_help,employment_status,employment_detail,solution_offer').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfStatus',d.employment_status,'data-st');var dt=document.getElementById('pfDetail');if(dt)dt.value=d.employment_detail||'';var so=document.getElementById('pfSolution');if(so)so.value=d.solution_offer||'';pfToggleSolution();});
 }
 function saveProfile(){
   var msg=document.getElementById('pfMsg');
@@ -2427,10 +2403,11 @@ function saveProfile(){
   var stBtn=document.querySelector('#pfStatus .seg-btn.active'),hpBtn=document.querySelector('#pfHelp .seg-btn.active');
   var st=stBtn?stBtn.getAttribute('data-st'):null,hp=hpBtn?hpBtn.getAttribute('data-hp'):null;
   var detail=(document.getElementById('pfDetail').value||'').trim();
+  var soEl=document.getElementById('pfSolution');var solution=(soEl&&soEl.value||'').trim();
   if(msg)msg.textContent='Saving…';
   Promise.all([
     sb.from('profiles').update({phone:phone,zip:zip}).eq('id',CUR.uid),
-    sb.from('members').update({want_help:hp,employment_status:st,employment_detail:detail}).eq('profile_id',CUR.uid)
+    sb.from('members').update({want_help:hp,employment_status:st,employment_detail:detail,solution_offer:solution}).eq('profile_id',CUR.uid)
   ]).then(function(res){var err=(res[0]&&res[0].error)||(res[1]&&res[1].error);if(msg)msg.textContent=err?('Could not save: '+err.message):'Saved \u2713';},function(){if(msg)msg.textContent='Network error — try again.';});
 }
 (function(){var sv=document.getElementById('pfSave');if(sv)sv.addEventListener('click',saveProfile);})();
@@ -2438,7 +2415,7 @@ function openDemo(role){
   CUR.live=false; CUR.uid=null;
   hideAllDash();
   if(role==='admin'){document.getElementById('admin').classList.add('open');document.body.style.overflow='hidden';openAdmin();}
-  else if(role==='navigator'){document.getElementById('navdash').classList.add('open');document.body.style.overflow='hidden';renderNav();}
+  /* navigator dashboard archived for now */
   else if(role==='partner'){document.getElementById('partnerdash').classList.add('open');document.body.style.overflow='hidden';renderPartner();}
   else {document.getElementById('dashHello').textContent='Welcome back, User (Demo)';var ld=document.querySelector('#dashboard .lead');if(ld)ld.textContent='Demo mode — sample data, no account.';document.getElementById('dashboard').classList.add('open');document.body.style.overflow='hidden';DASH.tlImported=false;DASH.tlChoice=null;DASH.tlIndicators=[];renderDash();renderOnboard();}
 }
@@ -2460,7 +2437,7 @@ document.getElementById('loginForm').addEventListener('submit',function(e){
   var er=document.getElementById('loginErr'); er.style.display='none';
   if(!email||!pass){authErr('Please enter your email and password.');return;}
   if(authMode==='login'){
-    var DEMO={'user-demo':'member','navigator-demo':'navigator','partner-demo':'partner','admin-demo':'admin'};
+    var DEMO={'user-demo':'member','partner-demo':'partner','admin-demo':'admin'};
     var lid=email.toLowerCase();
     if(DEMO[lid]&&pass==='password'){er.style.display='none';closeLogin();openDemo(DEMO[lid]);return;}
   }
@@ -2505,7 +2482,8 @@ var ESS7=[
 {key:'transportation',name:'Transportation',intro:'Getting where you need to go.',q:[
  {id:'tp_rel',t:'Do you have reliable transportation?',type:'choice',opts:['Yes','Sometimes','No'],req:true,score:{Yes:0,Sometimes:2,No:4}},
  {id:'tp_type',t:'What type?',type:'choice',opts:['Personal vehicle','Family vehicle','Employer vehicle'],showIf:{tp_rel:'Yes'}},
- {id:'tp_year',t:'Vehicle year (optional)',type:'text',showIf:{tp_rel:'Yes'}},
+ {id:'tp_year',t:'Vehicle year',type:'text',showIf:{tp_rel:'Yes'}},
+ {id:'tp_miles',t:'Rough mileage',type:'text',showIf:{tp_rel:'Yes'}},
  {id:'tp_around',t:'How do you usually get around?',type:'multi',opts:['Bus','Friend','Family','Uber/Lyft','Walk','Bike','Other'],showIf:{tp_rel:['Sometimes','No']}},
  {id:'tp_missed',t:'Have you missed work, school, or appointments because of transportation?',type:'choice',opts:['Never','Occasionally','Frequently'],req:true,score:{Never:0,Occasionally:2,Frequently:4}},
  {id:'tp_limit',t:'How much does transportation limit your opportunities?',type:'scale',req:true,score:'scale'}
@@ -2516,7 +2494,7 @@ var ESS7=[
  {id:'fn_emerg',t:'How much do you have in emergency savings?',type:'choice',opts:['None','Under $500','$500–$1,000','Over $1,000'],req:true,score:{'None':4,'Under $500':3,'$500–$1,000':2,'Over $1,000':0}},
  {id:'fn_credit',t:'Do you know your credit score?',type:'yn',score:{Yes:0,No:2}},
  {id:'fn_improve',t:'Are you working to improve your credit?',type:'yn'},
- {id:'fn_goal',t:'What financial goal would help you most?',type:'choice',opts:['Budgeting','Debt reduction','Credit improvement','Saving','Homeownership','Starting a business']}
+ {id:'fn_goal',t:'Which financial goals would help you most? (Select all that apply)',type:'multi',opts:['Budgeting','Debt reduction','Credit improvement','Saving','Homeownership','Starting a business']}
 ]},
 {key:'housing',name:'Safe & Affordable Housing',intro:'A stable place to call home.',q:[
  {id:'ho_cur',t:'What is your current housing?',type:'choice',opts:['Own','Rent','Living with family','Temporary housing','Shelter'],req:true},
@@ -2536,7 +2514,7 @@ var ESS7=[
  {id:'ed_high',t:'Highest education completed?',type:'choice',opts:['High school','GED','Some college','Associate','Bachelor’s','Graduate','Trade school'],req:true},
  {id:'ed_want',t:'Would you like additional education or training?',type:'choice',opts:['Yes','Maybe','No'],req:true,score:{Yes:2,Maybe:1,No:0}},
  {id:'ed_int',t:'Interested in any of these?',type:'multi',opts:['College','Trade school','Apprenticeship','Professional certification','GED','Computer skills','English classes'],showIf:{ed_want:['Yes','Maybe']}},
- {id:'ed_barrier',t:'What is your biggest barrier?',type:'choice',opts:['Cost','Time','Transportation','Childcare','Not sure where to start'],showIf:{ed_want:['Yes','Maybe']},score:{Cost:2,Time:2,Transportation:2,Childcare:2,'Not sure where to start':2}}
+ {id:'ed_barrier',t:'What are your biggest barriers? (Select all that apply)',type:'multi',opts:['Cost','Time','Transportation','Childcare','Not sure where to start'],showIf:{ed_want:['Yes','Maybe']}}
 ]},
 {key:'health',name:'Health & Wellness',intro:'Your body and mind.',q:[
  {id:'he_all',t:'How is your overall health?',type:'choice',opts:['Excellent','Good','Fair','Poor'],req:true,score:{Excellent:0,Good:1,Fair:3,Poor:4}},
@@ -2565,7 +2543,7 @@ function aVisible(q){if(!q.showIf)return true;for(var k in q.showIf){var want=q.
 function aMax(sc){if(sc==='scale')return 4;var m=0;for(var k in sc){if(sc[k]>m)m=sc[k];}return m;}
 function scoreEssential(e){var pts=0,max=0;e.q.forEach(function(q){if(!q.score||!aVisible(q))return;var a=ANS[q.id];if(a===undefined||a==='')return;max+=aMax(q.score);pts+=(q.score==='scale')?(parseInt(a,10)-1):(q.score[a]||0);});if(max===0)return null;return Math.round(pts/max*100);}
 function essStatus(pct){if(pct===null||pct===undefined)return{t:'Not assessed',c:'muted'};if(pct>=55)return{t:'Needs attention',c:'red'};if(pct>=30)return{t:'Opportunity',c:'amber'};return{t:'Strength',c:'green'};}
-function renderQ(q){var v=ANS[q.id];var h='<div class="aq"><p class="aq-t">'+q.t+(q.req?' <span class="aq-req">*</span>':'')+'</p>';
+function renderQ(q){var v=ANS[q.id];var h='<div class="aq"><p class="aq-t">'+q.t+'</p>';
   if(q.type==='scale'){h+='<div class="ascale">';for(var n=1;n<=5;n++){h+='<button type="button" class="aopt'+(v===n?' active':'')+'" data-q="'+q.id+'" data-v="'+n+'" data-scale="1">'+n+'</button>';}h+='</div><div class="ascale-lbl"><span>Not at all</span><span>A lot</span></div>';}
   else if(q.type==='text'){h+='<input class="a-input" type="text" data-q="'+q.id+'" value="'+(v?aEsc(v):'')+'" placeholder="Type here (optional)"/>';}
   else if(q.type==='multi'){h+='<div class="aopts">';q.opts.forEach(function(o){var on=Array.isArray(v)&&v.indexOf(o)>=0;h+='<button type="button" class="aopt'+(on?' active':'')+'" data-q="'+q.id+'" data-v="'+aEsc(o)+'" data-multi="1">'+o+'</button>';});h+='</div>';}
@@ -2574,13 +2552,13 @@ function renderQ(q){var v=ANS[q.id];var h='<div class="aq"><p class="aq-t">'+q.t
 function renderEssentialStep(e,i){var h='<p class="a-eyebrow">Essential '+(i+1)+' of '+ESS7.length+'</p><h1 class="a-h1">'+e.name+'</h1><p class="a-sub">'+e.intro+'</p>';e.q.forEach(function(q){if(aVisible(q))h+=renderQ(q);});h+='<div class="a-nav">'+(i>0?'<button class="btn btn-outline" data-aback>Back</button>':'<span></span>')+'<button class="btn btn-gold" data-anext>Next</button></div>';return h;}
 function renderGoalsStep(){var g=ANS._goals||[],p=ANS._priority;var h='<p class="a-eyebrow">Almost done</p><h1 class="a-h1">Your goals</h1><p class="a-sub">Pick up to three goals for the next year.</p><div class="aq"><div class="aopts">';GOAL_OPTS.forEach(function(o){var on=g.indexOf(o)>=0;h+='<button type="button" class="aopt'+(on?' active':'')+'" data-q="_goals" data-v="'+aEsc(o)+'" data-multi="1">'+o+'</button>';});h+='</div></div>';h+='<div class="aq"><p class="aq-t">Which ONE area would make the biggest difference right now? <span class="aq-req">*</span></p><div class="aopts">';PRIORITY_OPTS.forEach(function(o){h+='<button type="button" class="aopt'+(p===o?' active':'')+'" data-q="_priority" data-v="'+aEsc(o)+'">'+o+'</button>';});h+='</div></div><div class="a-nav"><button class="btn btn-outline" data-aback>Back</button><button class="btn btn-gold" data-anext>See my results</button></div>';return h;}
 function renderResultsStep(){var arr=ESS7.map(function(e){return {e:e,pct:scoreEssential(e)};});arr.sort(function(a,b){return (b.pct||0)-(a.pct||0);});var h='<p class="a-eyebrow">Your check-in</p><h1 class="a-h1">Here is what we heard</h1><p class="a-sub">Your strengths, your opportunities, and where we can help most.</p>';if(ANS._priority)h+='<div class="a-prio">Your top priority right now: <b>'+ANS._priority+'</b></div>';h+='<div class="a-results">';arr.forEach(function(r){var st=essStatus(r.pct),cc=(st.c==='muted'?'amber':st.c),need=r.pct==null?0:r.pct;h+='<div class="a-rcard"><div class="a-rhead"><span class="c">'+r.e.name+'</span><span class="a-pill p-'+cc+'">'+st.t+'</span></div><div class="a-bar"><span class="bg-'+cc+'" style="width:'+need+'%"></span></div>';if(st.c==='red'||st.c==='amber')h+='<div class="a-refs">We can connect you with: '+REFERRALS[r.e.key].slice(0,3).join(' · ')+'</div>';h+='</div>';});h+='</div><div class="a-nav"><button class="btn btn-outline" data-aretake>Retake</button><button class="btn btn-gold" data-afinish>Done</button></div>';return h;}
-function renderAStep(){var body=document.getElementById('assessBody');if(!body)return;var total=ESS7.length+2;var bar=document.getElementById('assessBar');if(bar)bar.style.width=Math.round(ASTEP/(total-1)*100)+'%';if(ASTEP<ESS7.length)body.innerHTML=renderEssentialStep(ESS7[ASTEP],ASTEP);else if(ASTEP===ESS7.length)body.innerHTML=renderGoalsStep();else body.innerHTML=renderResultsStep();window.scrollTo(0,0);}
-function validateAStep(){if(ASTEP<ESS7.length){var e=ESS7[ASTEP],ok=true;e.q.forEach(function(q){if(q.req&&aVisible(q)){var a=ANS[q.id];if(a===undefined||a===''||(Array.isArray(a)&&!a.length))ok=false;}});if(!ok)alert('Please answer the questions marked with a star.');return ok;}if(ASTEP===ESS7.length){if(!ANS._priority){alert('Please pick the one area that would help most.');return false;}return true;}return true;}
+function renderAStep(){var body=document.getElementById('assessBody');if(!body)return;var total=ESS7.length+2;var bar=document.getElementById('assessBar');if(bar)bar.style.width=Math.round(ASTEP/(total-1)*100)+'%';if(ASTEP<ESS7.length)body.innerHTML=renderEssentialStep(ESS7[ASTEP],ASTEP);else if(ASTEP===ESS7.length)body.innerHTML=renderGoalsStep();else body.innerHTML=renderResultsStep();var _cp=document.getElementById('checkinPanel');if(_cp)_cp.scrollIntoView({block:'start'});}
+function validateAStep(){return true;}
 function finishAssessment(){var scores={};ESS7.forEach(function(e){scores[e.key]=scoreEssential(e);});window._essScores=scores;if(CUR.live&&CUR.uid){sb.from('essential_assessments').insert({member_id:CUR.uid,answers:ANS,scores:scores,priority:ANS._priority||null});}renderEssentialsPanel();}
-function openAssessment(){ASTEP=0;document.getElementById('assessment').classList.add('open');document.body.style.overflow='hidden';renderAStep();}
-function closeAssessment(){document.getElementById('assessment').classList.remove('open');document.body.style.overflow='';}
+function openAssessment(){ASTEP=0;var intro=document.getElementById('assessIntro'),inl=document.getElementById('assessInline');if(intro)intro.style.display='none';if(inl)inl.style.display='';renderAStep();var cp=document.getElementById('checkinPanel');if(cp)cp.scrollIntoView({block:'start'});}
+function closeAssessment(){var intro=document.getElementById('assessIntro'),inl=document.getElementById('assessInline');if(inl)inl.style.display='none';if(intro)intro.style.display='';renderEssentialsPanel();var pl=document.getElementById('prioList');if(pl)renderDash();var cp=document.getElementById('checkinPanel');if(cp)cp.scrollIntoView({block:'start'});}
 function renderEssentialsPanel(){var el=document.getElementById('essList');if(!el)return;var sc=window._essScores;if(!sc){el.innerHTML='<p class="sub">Take your <b>7 Essentials check-in</b> to see where you stand and get matched to help.</p><button class="btn btn-gold btn-sm" id="startAssess2" style="margin-top:8px;">Start check-in</button>';return;}el.innerHTML=ESS7.map(function(e){var st=essStatus(sc[e.key]),cc=(st.c==='muted'?'amber':st.c);return '<div class="tl-cell" style="margin-bottom:8px;"><div><span class="dot bg-'+cc+'"></span><span class="c">'+e.name+'</span></div><div class="s st-'+cc+'">'+st.t+'</div></div>';}).join('');}
-function loadEssScores(){if(!CUR.live||!CUR.uid)return;sb.from('essential_assessments').select('scores').eq('member_id',CUR.uid).order('created_at',{ascending:false}).limit(1).maybeSingle().then(function(a){if(a&&a.data&&a.data.scores){window._essScores=a.data.scores;renderEssentialsPanel();}});}
+function loadEssScores(){if(!CUR.live||!CUR.uid)return;sb.from('essential_assessments').select('scores').eq('member_id',CUR.uid).order('created_at',{ascending:false}).limit(1).maybeSingle().then(function(a){if(a&&a.data&&a.data.scores){window._essScores=a.data.scores;renderEssentialsPanel();var _pl=document.getElementById('prioList');if(_pl)renderDash();}});}
 (function(){var b=document.getElementById('assessBody');if(!b)return;
  b.addEventListener('click',function(e){
    var opt=e.target.closest('[data-q][data-v]');
@@ -2596,7 +2574,7 @@ function loadEssScores(){if(!CUR.live||!CUR.uid)return;sb.from('essential_assess
  });
  b.addEventListener('input',function(e){var t=e.target.closest('input[data-q]');if(t)ANS[t.getAttribute('data-q')]=t.value;});
 })();
-document.getElementById('assessClose').addEventListener('click',closeAssessment);
+var _ac=document.getElementById('assessClose'); if(_ac)_ac.addEventListener('click',closeAssessment);
 document.addEventListener('click',function(e){var t=e.target.closest('#startAssess,#startAssess2');if(t){e.preventDefault();openAssessment();}});
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
