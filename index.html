@@ -951,7 +951,9 @@ svg.ic{width:24px;height:24px;}
         <div class="panel" data-collapsible>
           <span class="section-eyebrow">EPE Rewards</span>
           <h2>Rewards coming soon…</h2>
-          <p class="sub">What would <b>you</b> like to see — discounts or free food from your favorite local spots? Something else? Let your navigator know.</p>
+          <p class="sub">What would <b>you</b> like to see — discounts or free food from your favorite local spots? Something else?</p>
+          <input class="pf-i" id="rewardWish" type="text" placeholder="I’d love to see…" style="margin-top:10px;"/>
+          <div style="margin-top:10px;"><button type="button" class="btn btn-gold btn-sm" id="rewardWishSave">Share idea</button><span class="sub" id="rewardWishMsg" style="margin-left:10px;"></span></div>
         </div>
       </div>
       <div>
@@ -2450,10 +2452,12 @@ function loadLiveMember(profile){
 }
 function pfFillSeg(id,val,attr){var seg=document.getElementById(id);if(!seg)return;var bs=seg.querySelectorAll('.seg-btn');for(var i=0;i<bs.length;i++){bs[i].classList.toggle('active',bs[i].getAttribute(attr)===val);}}
 function pfToggleSolution(){var hpBtn=document.querySelector('#pfHelp .seg-btn.active');var hp=hpBtn?hpBtn.getAttribute('data-hp'):null;var w=document.getElementById('pfSolutionWrap');if(w)w.style.display=(hp==='give'||hp==='both')?'block':'none';}
+function saveRewardWish(){var el=document.getElementById('rewardWish'),msg=document.getElementById('rewardWishMsg');var v=(el&&el.value||'').trim();if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Demo mode — sign in to save.';return;}if(msg)msg.textContent='Saving…';sb.from('members').update({reward_wish:v}).eq('profile_id',CUR.uid).then(function(r){if(msg)msg.textContent=(r&&r.error)?'Could not save.':'Thanks — we hear you! \u2713';},function(){if(msg)msg.textContent='Network error — try again.';});}
+(function(){var b=document.getElementById('rewardWishSave');if(b)b.addEventListener('click',saveRewardWish);})();
 function loadProfileForm(){
   if(!CUR.live||!CUR.uid)return;
   sb.from('profiles').select('phone,zip').eq('id',CUR.uid).maybeSingle().then(function(p){var d=(p&&p.data)||{};var a=document.getElementById('pfPhone');if(a)a.value=d.phone||'';var b=document.getElementById('pfZip');if(b)b.value=d.zip||'';});
-  sb.from('members').select('want_help,employment_status,employment_detail,solution_offer').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfStatus',d.employment_status,'data-st');var dt=document.getElementById('pfDetail');if(dt)dt.value=d.employment_detail||'';var so=document.getElementById('pfSolution');if(so)so.value=d.solution_offer||'';pfToggleSolution();});
+  sb.from('members').select('want_help,employment_status,employment_detail,solution_offer,reward_wish').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfStatus',d.employment_status,'data-st');var dt=document.getElementById('pfDetail');if(dt)dt.value=d.employment_detail||'';var so=document.getElementById('pfSolution');if(so)so.value=d.solution_offer||'';var rw=document.getElementById('rewardWish');if(rw)rw.value=d.reward_wish||'';pfToggleSolution();});
 }
 function saveProfile(){
   var msg=document.getElementById('pfMsg');
