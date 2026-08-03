@@ -419,6 +419,14 @@ h2.sec.light{color:#fff;}
 .panel.collapsed .panel-chev{transform:rotate(-90deg);}
 .panel-body{margin-top:6px;}
 .panel.collapsed>.panel-body{display:none;}
+.sup-group{border:1px solid var(--border);border-radius:12px;padding:10px 13px;margin-bottom:10px;}
+.sup-head{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;padding:0;cursor:pointer;font-family:inherit;font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.07em;}
+.sup-count{color:var(--muted);font-weight:600;}
+.sup-chev{color:var(--muted);font-size:12px;transition:transform .2s;margin-left:8px;}
+.sup-group.collapsed .sup-chev{transform:rotate(-90deg);}
+.sup-group .sup-body{margin-top:10px;}
+.sup-group.collapsed .sup-body{display:none;}
+.prio-sol{display:inline-block;margin-top:10px;font-size:13px;font-weight:700;color:var(--sage);text-decoration:underline;}
 .ascale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
 .ascale .aopt{padding:14px 0;text-align:center;font-weight:700;font-size:16px;border-radius:12px;}
 .ascale-lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:6px;}
@@ -915,6 +923,13 @@ svg.ic{width:24px;height:24px;}
       </div>
     </div>
 
+    <div class="panel" style="margin-top:24px;" data-collapsible>
+      <span class="section-eyebrow">Your goals</span>
+      <h2>What you’re working toward</h2>
+      <p class="sub">Pick up to three goals and rank the areas that matter most right now.</p>
+      <div id="goalsBox"></div>
+    </div>
+
     <div class="dash-grid">
       <div>
         <div class="panel" id="prioPanel" data-collapsible>
@@ -1374,12 +1389,21 @@ function renderDash(){
     var lead=(r.c==='red'?'A priority area':'An opportunity to grow')+' \u2014 here\u2019s who can help:';
     var refs=(REFERRALS[r.key]||[]).slice(0,3);
     var acts=refs.map(function(p){return '<div class="action todo"><span class="box"></span><span class="lbl">'+p+'</span></div>';}).join('');
-    return '<div class="prio'+(r.c==='amber'?' amber':'')+'"><h3>'+r.name+' <span class="a-pill p-'+r.c+'" style="font-size:11px;vertical-align:middle;margin-left:6px;">'+r.label+'</span></h3><p class="lead">'+lead+'</p><div class="actions-list">'+acts+'</div></div>';
+    var sol=(typeof SOLUTION_LINKS!=='undefined'&&SOLUTION_LINKS[r.key])?'<a class="prio-sol" href="'+SOLUTION_LINKS[r.key]+'" target="_blank" rel="noopener">Explore more solutions \u2197</a>':'';
+    return '<div class="prio'+(r.c==='amber'?' amber':'')+'"><h3>'+r.name+' <span class="a-pill p-'+r.c+'" style="font-size:11px;vertical-align:middle;margin-left:6px;">'+r.label+'</span></h3><p class="lead">'+lead+'</p><div class="actions-list">'+acts+'</div>'+sol+'</div>';
   }).join('') || '<p class="sub">Great news \u2014 nothing is flagged as a priority right now. Keep it up!</p>') : '<p class="sub">Take your <b>7 Human Essentials check-in</b> above and we\u2019ll show your top focus areas and who can help.</p>';
-  (function(){var gg=document.querySelector('#dashboard .dash-grid'); if(gg)gg.style.display='';})(); renderInfoReview(); renderEssentialsPanel();
-  document.getElementById('supportsList').innerHTML=STORE.benefits.filter(function(b){return b.unlockAt===0;}).map(function(b){
-    return '<div class="mini"><div class="t">'+b.name+'</div><div class="d">'+(b.cat||'')+'</div><span class="tag">Available now</span></div>';
-  }).join('');
+  (function(){var gg=document.querySelector('#dashboard .dash-grid'); if(gg)gg.style.display='';})(); renderInfoReview(); renderEssentialsPanel(); renderGoalsBox();
+  (function(){
+    var CAT2ESS={'Transportation':'Transportation','Financial':'Financial Tools','Financial Health':'Financial Tools','Housing':'Safe & Affordable Housing','Workforce':'Economic Opportunity','Employment':'Economic Opportunity','Education':'Education','Health':'Health & Wellness','Health & Wellness':'Health & Wellness','Community':'Relationships','Relationships':'Relationships','People Development':'Other'};
+    var ORDER=['Transportation','Financial Tools','Safe & Affordable Housing','Economic Opportunity','Education','Health & Wellness','Relationships','Other'];
+    var groups={};
+    STORE.benefits.filter(function(b){return b.unlockAt===0;}).forEach(function(b){var g=CAT2ESS[b.cat]||'Other';(groups[g]=groups[g]||[]).push(b);});
+    var html=ORDER.filter(function(g){return groups[g]&&groups[g].length;}).map(function(g){
+      var cards=groups[g].map(function(b){return '<div class="mini"><div class="t">'+b.name+'</div><div class="d">'+(b.cat||'')+'</div><span class="tag">Available now</span></div>';}).join('');
+      return '<div class="sup-group"><button type="button" class="sup-head"><span>'+g+' <span class="sup-count">('+groups[g].length+')</span></span><span class="sup-chev">\u25be</span></button><div class="sup-body cards2">'+cards+'</div></div>';
+    }).join('')||'<p class="sub">No supports listed yet.</p>';
+    document.getElementById('supportsList').innerHTML=html;
+  })();
   var _rl=document.getElementById('rewardsList'); if(_rl)_rl.innerHTML=rewardList().map(function(rw){
     var unlocked=stars>=rw.th;
     return '<div class="reward '+(unlocked?'unlocked':'locked')+'"><span class="star">★</span><div><div class="t">'+rw.t+'</div><div class="th">'+rw.th+' stars</div></div><span class="state">'+(unlocked?'Unlocked':(rw.th-stars)+' to go')+'</span></div>';
@@ -1401,6 +1425,15 @@ document.getElementById('prioList').addEventListener('click',function(e){
   var a=e.target.closest('.action'); if(!a)return;
   var id=a.getAttribute('data-id'); if(!id)return; var st=DASH.state[id]||0;
   if(st===2)return; DASH.state[id]=st===1?0:1; renderDash();
+});
+document.getElementById('supportsList').addEventListener('click',function(e){var h=e.target.closest('.sup-head');if(!h)return;h.parentNode.classList.toggle('collapsed');});
+document.getElementById('goalsBox').addEventListener('click',function(e){
+  var sv=e.target.closest('#goalsSave'); if(sv){saveGoals();return;}
+  var opt=e.target.closest('[data-q][data-v]'); if(!opt)return;
+  var id=opt.getAttribute('data-q'),val=opt.getAttribute('data-v');
+  var arr=Array.isArray(ANS[id])?ANS[id]:[];var ix=arr.indexOf(val);
+  if(ix>=0)arr.splice(ix,1);else if(!(id==='_goals'&&arr.length>=3))arr.push(val);
+  ANS[id]=arr;var _y=window.scrollY;renderGoalsBox();window.scrollTo(0,_y);
 });
 var _obC=document.getElementById('obSteps'); if(_obC)_obC.addEventListener('click',function(e){
   var b=e.target.closest('[data-ob]'); if(!b)return;
@@ -2556,6 +2589,7 @@ var ESS7=[
 var GOAL_OPTS=['Better job','Reliable transportation','Buy a home','Improve credit','Save money','Finish school','Learn a trade','Start a business','Improve physical health','Improve mental health','Strengthen relationships','Other'];
 var PRIORITY_OPTS=['Transportation','Financial Tools','Housing','Employment','Education','Health','Relationships'];
 var REFERRALS={transportation:['Empower','Bike Walk Wichita','EPE Drive & Thrive'],financial:['Bank On ICT','Operation Hope','Create Campaign'],housing:['Family Promise','Hope CDC','Meritrust / Sycamore'],economic:['WSU Tech Career Services','Wichita Workforce Center','Empower Workforce'],education:['WSU Tech','Learning Lab','GED & English programs'],health:['HopeNet','YMCA','Local clinics'],relationships:['Live the Life','Army of Normal Folks','The Phoenix']};
+var SOLUTION_LINKS={transportation:'https://wichita-transportation-solutions.netlify.app/#get-involved',financial:'https://wichitaremedialbank.netlify.app',housing:'https://hopecdc.org/'};
 var ANS={}, ASTEP=0;
 function aEsc(x){return String(x).replace(/"/g,'&quot;');}
 function aVisible(q){if(!q.showIf)return true;for(var k in q.showIf){var want=q.showIf[k],have=ANS[k];if(Array.isArray(want)){if(want.indexOf(have)<0)return false;}else if(have!==want)return false;}return true;}
@@ -2571,14 +2605,28 @@ function renderQ(q){var v=ANS[q.id];var h='<div class="aq"><p class="aq-t">'+q.t
 function renderEssentialStep(e,i){var h='<p class="a-eyebrow">Essential '+(i+1)+' of '+ESS7.length+'</p><h1 class="a-h1">'+e.name+'</h1><p class="a-sub">'+e.intro+'</p>';e.q.forEach(function(q){if(aVisible(q))h+=renderQ(q);});h+='<div class="a-nav">'+(i>0?'<button class="btn btn-outline" data-aback>Back</button>':'<span></span>')+'<button class="btn btn-gold" data-anext>Next</button></div>';return h;}
 function renderGoalsStep(){var g=ANS._goals||[],p=ANS._priority;var h='<p class="a-eyebrow">Almost done</p><h1 class="a-h1">Your goals</h1><p class="a-sub">Pick up to three goals for the next year.</p><div class="aq"><div class="aopts">';GOAL_OPTS.forEach(function(o){var on=g.indexOf(o)>=0;h+='<button type="button" class="aopt'+(on?' active':'')+'" data-q="_goals" data-v="'+aEsc(o)+'" data-multi="1">'+o+'</button>';});h+='</div></div>';var pr=Array.isArray(ANS._priority)?ANS._priority:(ANS._priority?[ANS._priority]:[]);h+='<div class="aq"><p class="aq-t">Which areas would make the biggest difference right now?</p><p class="a-sub" style="margin-top:-2px;margin-bottom:10px;">Tap in order of priority — your first tap is your top priority.</p><div class="aopts">';PRIORITY_OPTS.forEach(function(o){var rank=pr.indexOf(o),on=rank>=0;h+='<button type="button" class="aopt'+(on?' active':'')+'" data-q="_priority" data-v="'+aEsc(o)+'" data-multi="1">'+(on?'<span class="prio-rank">'+(rank+1)+'</span>':'')+o+'</button>';});h+='</div></div><div class="a-nav"><button class="btn btn-outline" data-aback>Back</button><button class="btn btn-gold" data-anext>See my results</button></div>';return h;}
 function renderResultsStep(){var arr=ESS7.map(function(e){return {e:e,pct:scoreEssential(e)};});arr.sort(function(a,b){return (b.pct||0)-(a.pct||0);});var h='<p class="a-eyebrow">Your check-in</p><h1 class="a-h1">Here is what we heard</h1><p class="a-sub">Your strengths, your opportunities, and where we can help most.</p>';var _pr=Array.isArray(ANS._priority)?ANS._priority:(ANS._priority?[ANS._priority]:[]);if(_pr.length)h+='<div class="a-prio">Your priorities: <b>'+_pr.join('</b> &rsaquo; <b>')+'</b></div>';h+='<div class="a-results">';arr.forEach(function(r){var st=essStatus(r.pct),cc=(st.c==='muted'?'amber':st.c),need=r.pct==null?0:r.pct;h+='<div class="a-rcard"><div class="a-rhead"><span class="c">'+r.e.name+'</span><span class="a-pill p-'+cc+'">'+st.t+'</span></div><div class="a-bar"><span class="bg-'+cc+'" style="width:'+need+'%"></span></div>';if(st.c==='red'||st.c==='amber')h+='<div class="a-refs">We can connect you with: '+REFERRALS[r.e.key].slice(0,3).join(' · ')+'</div>';h+='</div>';});h+='</div><div class="a-nav"><button class="btn btn-outline" data-aretake>Retake</button><button class="btn btn-gold" data-afinish>Done</button></div>';return h;}
-function renderAStep(){var body=document.getElementById('assessBody');if(!body)return;var total=ESS7.length+2;var bar=document.getElementById('assessBar');if(bar)bar.style.width=Math.round(ASTEP/(total-1)*100)+'%';if(ASTEP<ESS7.length)body.innerHTML=renderEssentialStep(ESS7[ASTEP],ASTEP);else if(ASTEP===ESS7.length)body.innerHTML=renderGoalsStep();else body.innerHTML=renderResultsStep();}
+function renderGoalsBox(){
+  var el=document.getElementById('goalsBox'); if(!el)return;
+  var g=Array.isArray(ANS._goals)?ANS._goals:[];
+  var pr=Array.isArray(ANS._priority)?ANS._priority:(ANS._priority?[ANS._priority]:[]);
+  var h='<p class="aq-t" style="margin-top:4px;">Your top goals <span class="sup-count">(up to 3)</span></p><div class="aopts">';
+  GOAL_OPTS.forEach(function(o){var on=g.indexOf(o)>=0;h+='<button type="button" class="aopt'+(on?' active':'')+'" data-q="_goals" data-v="'+aEsc(o)+'" data-multi="1">'+o+'</button>';});
+  h+='</div><p class="aq-t" style="margin-top:18px;">Which areas would make the biggest difference right now?</p><p class="sub" style="margin-top:-2px;margin-bottom:10px;">Tap in order of priority — your first tap is your top priority.</p><div class="aopts">';
+  PRIORITY_OPTS.forEach(function(o){var rank=pr.indexOf(o),on=rank>=0;h+='<button type="button" class="aopt'+(on?' active':'')+'" data-q="_priority" data-v="'+aEsc(o)+'" data-multi="1">'+(on?'<span class="prio-rank">'+(rank+1)+'</span>':'')+o+'</button>';});
+  h+='</div><button type="button" class="btn btn-gold" id="goalsSave" style="margin-top:16px;">Save goals</button><span class="sub" id="goalsMsg" style="margin-left:10px;"></span>';
+  el.innerHTML=h;
+}
+function saveCheckin(cb){var scores={};ESS7.forEach(function(e){scores[e.key]=scoreEssential(e);});window._essScores=scores;if(!(CUR.live&&CUR.uid)){if(cb)cb(null);return;}sb.from('essential_assessments').insert({member_id:CUR.uid,answers:ANS,scores:scores,priority:(Array.isArray(ANS._priority)?ANS._priority.join(', '):ANS._priority)||null}).then(function(r){if(cb)cb(r&&r.error);},function(){if(cb)cb(true);});}
+function saveGoals(){var msg=document.getElementById('goalsMsg');if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Demo mode — sign in with a real account to save.';return;}if(msg)msg.textContent='Saving…';try{window._essLast=new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(e){}saveCheckin(function(err){if(msg)msg.textContent=err?'Could not save — try again.':'Saved ✓';renderEssentialsPanel();var _pl=document.getElementById('prioList');if(_pl)renderDash();});}
+function renderAStep(){var body=document.getElementById('assessBody');if(!body)return;var total=ESS7.length+1;var bar=document.getElementById('assessBar');if(bar)bar.style.width=Math.round(ASTEP/(total-1)*100)+'%';if(ASTEP<ESS7.length)body.innerHTML=renderEssentialStep(ESS7[ASTEP],ASTEP);else body.innerHTML=renderResultsStep();}
 function aScroll(){var _cp=document.getElementById('checkinPanel');if(_cp)_cp.scrollIntoView({block:'start'});}
 function validateAStep(){return true;}
-function finishAssessment(){var scores={};ESS7.forEach(function(e){scores[e.key]=scoreEssential(e);});window._essScores=scores;if(CUR.live&&CUR.uid){sb.from('essential_assessments').insert({member_id:CUR.uid,answers:ANS,scores:scores,priority:(Array.isArray(ANS._priority)?ANS._priority.join(', '):ANS._priority)||null});}renderEssentialsPanel();}
+function finishAssessment(){var scores={};ESS7.forEach(function(e){scores[e.key]=scoreEssential(e);});window._essScores=scores;if(CUR.live&&CUR.uid){sb.from('essential_assessments').insert({member_id:CUR.uid,answers:ANS,scores:scores,priority:(Array.isArray(ANS._priority)?ANS._priority.join(', '):ANS._priority)||null});}try{window._essLast=new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(e){}renderEssentialsPanel();updateAssessIntro();}
 function openAssessment(){ASTEP=0;var intro=document.getElementById('assessIntro'),inl=document.getElementById('assessInline');if(intro)intro.style.display='none';if(inl)inl.style.display='';renderAStep();var cp=document.getElementById('checkinPanel');if(cp)cp.scrollIntoView({block:'start'});}
 function closeAssessment(){var intro=document.getElementById('assessIntro'),inl=document.getElementById('assessInline');if(inl)inl.style.display='none';if(intro)intro.style.display='';renderEssentialsPanel();var pl=document.getElementById('prioList');if(pl)renderDash();var cp=document.getElementById('checkinPanel');if(cp)cp.scrollIntoView({block:'start'});}
 function renderEssentialsPanel(){var el=document.getElementById('essList');if(!el)return;var sc=window._essScores;if(!sc){el.innerHTML='<p class="sub">Take your <b>7 Essentials check-in</b> to see where you stand and get matched to help.</p><button class="btn btn-gold btn-sm" id="startAssess2" style="margin-top:8px;">Start check-in</button>';return;}el.innerHTML=ESS7.map(function(e){var st=essStatus(sc[e.key]),cc=(st.c==='muted'?'amber':st.c);return '<div class="tl-cell" style="margin-bottom:8px;"><div><span class="dot bg-'+cc+'"></span><span class="c">'+e.name+'</span></div><div class="s st-'+cc+'">'+st.t+'</div></div>';}).join('');}
-function loadEssScores(){if(!CUR.live||!CUR.uid)return;sb.from('essential_assessments').select('scores').eq('member_id',CUR.uid).order('created_at',{ascending:false}).limit(1).maybeSingle().then(function(a){if(a&&a.data&&a.data.scores){window._essScores=a.data.scores;renderEssentialsPanel();var _pl=document.getElementById('prioList');if(_pl)renderDash();}});}
+function loadEssScores(){if(!CUR.live||!CUR.uid)return;sb.from('essential_assessments').select('answers,scores,created_at').eq('member_id',CUR.uid).order('created_at',{ascending:false}).limit(1).maybeSingle().then(function(a){if(a&&a.data){if(a.data.answers&&typeof a.data.answers==='object')ANS=a.data.answers;if(a.data.scores)window._essScores=a.data.scores;if(a.data.created_at){try{window._essLast=new Date(a.data.created_at).toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(e){}}renderEssentialsPanel();var _pl=document.getElementById('prioList');if(_pl)renderDash();updateAssessIntro();}});}
+function updateAssessIntro(){var intro=document.getElementById('assessIntro');if(!intro)return;if(window._essLast){var p=intro.querySelector('p');if(p)p.innerHTML='You last updated your check-in on <b>'+window._essLast+'</b>. Your answers are saved \u2014 just update anything that\u2019s changed.';var btn=document.getElementById('startAssess');if(btn)btn.textContent='Review or update my check-in';}}
 (function(){var b=document.getElementById('assessBody');if(!b)return;
  b.addEventListener('click',function(e){
    var opt=e.target.closest('[data-q][data-v]');
@@ -2588,7 +2636,7 @@ function loadEssScores(){if(!CUR.live||!CUR.uid)return;sb.from('essential_assess
      else ANS[id]=val;
      var _y=window.scrollY;renderAStep();window.scrollTo(0,_y);return;}
    if(e.target.closest('[data-aback]')){ASTEP--;renderAStep();aScroll();return;}
-   if(e.target.closest('[data-anext]')){if(validateAStep()){ASTEP++;if(ASTEP===ESS7.length+1)finishAssessment();renderAStep();aScroll();}return;}
+   if(e.target.closest('[data-anext]')){if(validateAStep()){ASTEP++;if(ASTEP===ESS7.length)finishAssessment();renderAStep();aScroll();}return;}
    if(e.target.closest('[data-aretake]')){ANS={};ASTEP=0;renderAStep();return;}
    if(e.target.closest('[data-afinish]')){closeAssessment();return;}
  });
