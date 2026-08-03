@@ -419,13 +419,17 @@ h2.sec.light{color:#fff;}
 .panel.collapsed .panel-chev{transform:rotate(-90deg);}
 .panel-body{margin-top:6px;}
 .panel.collapsed>.panel-body{display:none;}
-.sup-group{border:1px solid var(--border);border-radius:12px;padding:10px 13px;margin-bottom:10px;}
-.sup-head{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;padding:0;cursor:pointer;font-family:inherit;font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.07em;}
+.sup-group{border:1px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden;}
+.sup-head{display:flex;align-items:center;justify-content:space-between;width:100%;background:var(--cream-200);border:none;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.07em;}
+.sup-head:hover{background:rgba(14,39,69,.06);}
 .sup-count{color:var(--muted);font-weight:600;}
 .sup-chev{color:var(--muted);font-size:12px;transition:transform .2s;margin-left:8px;}
 .sup-group.collapsed .sup-chev{transform:rotate(-90deg);}
-.sup-group .sup-body{margin-top:10px;}
+.sup-group .sup-body{padding:12px 14px;display:flex;flex-direction:column;gap:10px;}
 .sup-group.collapsed .sup-body{display:none;}
+.sup-body .mini{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.sup-body .mini .tag{margin-top:0;flex:none;}
+.mini-main .d{margin-top:2px;}
 .prio-sol{display:inline-block;margin-top:10px;font-size:13px;font-weight:700;color:var(--sage);text-decoration:underline;}
 .ascale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
 .ascale .aopt{padding:14px 0;text-align:center;font-weight:700;font-size:16px;border-radius:12px;}
@@ -942,7 +946,7 @@ svg.ic{width:24px;height:24px;}
           <span class="section-eyebrow">Supports</span>
           <h2>Available to you now</h2>
           <p class="sub">Things to help you stabilize — no points required.</p>
-          <div class="cards2" id="supportsList"></div>
+          <div id="supportsList"></div>
         </div>
         <div class="panel" data-collapsible>
           <span class="section-eyebrow">EPE Rewards</span>
@@ -952,7 +956,7 @@ svg.ic{width:24px;height:24px;}
       </div>
       <div>
         <div class="panel" data-collapsible>
-          <span class="section-eyebrow">Your 7 Essentials</span>
+          <span class="section-eyebrow">7 Human Essentials</span>
           <h2>Where you stand</h2>
           <div id="essList"></div>
         </div>
@@ -960,6 +964,7 @@ svg.ic{width:24px;height:24px;}
         <div class="panel" data-collapsible>
           <span class="section-eyebrow">Progress history</span>
           <h2>Verified milestones</h2>
+          <p class="sub" id="memberSince" style="margin-bottom:12px;"></p>
           <div class="hist" id="histList"></div>
         </div>
       </div>
@@ -1399,8 +1404,8 @@ function renderDash(){
     var groups={};
     STORE.benefits.filter(function(b){return b.unlockAt===0;}).forEach(function(b){var g=CAT2ESS[b.cat]||'Other';(groups[g]=groups[g]||[]).push(b);});
     var html=ORDER.filter(function(g){return groups[g]&&groups[g].length;}).map(function(g){
-      var cards=groups[g].map(function(b){return '<div class="mini"><div class="t">'+b.name+'</div><div class="d">'+(b.cat||'')+'</div><span class="tag">Available now</span></div>';}).join('');
-      return '<div class="sup-group"><button type="button" class="sup-head"><span>'+g+' <span class="sup-count">('+groups[g].length+')</span></span><span class="sup-chev">\u25be</span></button><div class="sup-body cards2">'+cards+'</div></div>';
+      var cards=groups[g].map(function(b){return '<div class="mini"><div class="mini-main"><div class="t">'+b.name+'</div><div class="d">'+(b.cat||'')+'</div></div><span class="tag">Available now</span></div>';}).join('');
+      return '<div class="sup-group"><button type="button" class="sup-head"><span>'+g+' <span class="sup-count">('+groups[g].length+')</span></span><span class="sup-chev">\u25be</span></button><div class="sup-body">'+cards+'</div></div>';
     }).join('')||'<p class="sub">No supports listed yet.</p>';
     document.getElementById('supportsList').innerHTML=html;
   })();
@@ -2395,12 +2400,14 @@ function routeByRole(profile,member,email){
     loadLiveMember(profile); loadEssScores();
   }
 }
+function renderMemberSince(){var el=document.getElementById('memberSince');if(!el)return;var j=CUR.joined;if(!j){el.textContent='';return;}var d=new Date(j);if(isNaN(d.getTime())){el.textContent='';return;}var days=Math.max(0,Math.floor((Date.now()-d.getTime())/86400000));el.innerHTML='<b>EPE Membership</b> since '+d.toLocaleDateString()+' \u00b7 '+days+' day'+(days===1?'':'s');}
 function applyLiveMember(mem,profile){
   var st=CUR.stars||0;
   var ds=document.getElementById('dashStars'); if(ds)ds.innerHTML='&#9733; '+st;
   var pn=document.getElementById('profName'); if(pn)pn.textContent=(profile&&profile.full_name)||'Member';
   var sub=document.querySelector('#profName + .sub'); if(sub)sub.textContent=(((mem&&mem.level)||'basic')==='gold'?'Gold Member':'Basic Member')+((mem&&mem.joined_at)?(' · since '+new Date(mem.joined_at).toLocaleDateString()):'');
   var ld=document.querySelector('#dashboard .lead'); if(ld)ld.textContent='Live account: '+(CUR.email||'');
+  CUR.joined=(mem&&mem.joined_at)||null; renderMemberSince();
   renderInfoReview();
 }
 function applyAssessment(asmt,rows){
@@ -2624,7 +2631,12 @@ function validateAStep(){return true;}
 function finishAssessment(){var scores={};ESS7.forEach(function(e){scores[e.key]=scoreEssential(e);});window._essScores=scores;if(CUR.live&&CUR.uid){sb.from('essential_assessments').insert({member_id:CUR.uid,answers:ANS,scores:scores,priority:(Array.isArray(ANS._priority)?ANS._priority.join(', '):ANS._priority)||null});}try{window._essLast=new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(e){}renderEssentialsPanel();updateAssessIntro();}
 function openAssessment(){ASTEP=0;var intro=document.getElementById('assessIntro'),inl=document.getElementById('assessInline');if(intro)intro.style.display='none';if(inl)inl.style.display='';renderAStep();var cp=document.getElementById('checkinPanel');if(cp)cp.scrollIntoView({block:'start'});}
 function closeAssessment(){var intro=document.getElementById('assessIntro'),inl=document.getElementById('assessInline');if(inl)inl.style.display='none';if(intro)intro.style.display='';renderEssentialsPanel();var pl=document.getElementById('prioList');if(pl)renderDash();var cp=document.getElementById('checkinPanel');if(cp)cp.scrollIntoView({block:'start'});}
-function renderEssentialsPanel(){var el=document.getElementById('essList');if(!el)return;var sc=window._essScores;if(!sc){el.innerHTML='<p class="sub">Take your <b>7 Essentials check-in</b> to see where you stand and get matched to help.</p><button class="btn btn-gold btn-sm" id="startAssess2" style="margin-top:8px;">Start check-in</button>';return;}el.innerHTML=ESS7.map(function(e){var st=essStatus(sc[e.key]),cc=(st.c==='muted'?'amber':st.c);return '<div class="tl-cell" style="margin-bottom:8px;"><div><span class="dot bg-'+cc+'"></span><span class="c">'+e.name+'</span></div><div class="s st-'+cc+'">'+st.t+'</div></div>';}).join('');}
+var PRIO2KEY={'Transportation':'transportation','Financial Tools':'financial','Housing':'housing','Employment':'economic','Education':'education','Health':'health','Relationships':'relationships'};
+function renderEssentialsPanel(){var el=document.getElementById('essList');if(!el)return;var sc=window._essScores;if(!sc){el.innerHTML='<p class="sub">Take your <b>7 Human Essentials check-in</b> to see where you stand and get matched to help.</p><button class="btn btn-gold btn-sm" id="startAssess2" style="margin-top:8px;">Start check-in</button>';return;}
+  var pr=Array.isArray(ANS._priority)?ANS._priority:(ANS._priority?[ANS._priority]:[]);
+  var prKeys=pr.map(function(l){return PRIO2KEY[l];}).filter(Boolean);
+  var ordered=ESS7.slice().sort(function(a,b){var ai=prKeys.indexOf(a.key),bi=prKeys.indexOf(b.key);ai=ai<0?999:ai;bi=bi<0?999:bi;if(ai!==bi)return ai-bi;return (sc[b.key]||0)-(sc[a.key]||0);});
+  el.innerHTML=ordered.map(function(e){var st=essStatus(sc[e.key]),cc=(st.c==='muted'?'amber':st.c);var rk=prKeys.indexOf(e.key);return '<div class="tl-cell" style="margin-bottom:8px;"><div>'+(rk>=0?'<span class="prio-rank">'+(rk+1)+'</span>':'<span class="dot bg-'+cc+'"></span>')+'<span class="c">'+e.name+'</span></div><div class="s st-'+cc+'">'+st.t+'</div></div>';}).join('');}
 function loadEssScores(){if(!CUR.live||!CUR.uid)return;sb.from('essential_assessments').select('answers,scores,created_at').eq('member_id',CUR.uid).order('created_at',{ascending:false}).limit(1).maybeSingle().then(function(a){if(a&&a.data){if(a.data.answers&&typeof a.data.answers==='object')ANS=a.data.answers;if(a.data.scores)window._essScores=a.data.scores;if(a.data.created_at){try{window._essLast=new Date(a.data.created_at).toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(e){}}renderEssentialsPanel();var _pl=document.getElementById('prioList');if(_pl)renderDash();updateAssessIntro();}});}
 function updateAssessIntro(){var intro=document.getElementById('assessIntro');if(!intro)return;if(window._essLast){var p=intro.querySelector('p');if(p)p.innerHTML='You last updated your check-in on <b>'+window._essLast+'</b>. Your answers are saved \u2014 just update anything that\u2019s changed.';var btn=document.getElementById('startAssess');if(btn)btn.textContent='Review or update my check-in';}}
 (function(){var b=document.getElementById('assessBody');if(!b)return;
