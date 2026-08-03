@@ -399,6 +399,34 @@ h2.sec.light{color:#fff;}
 .ir-row b{color:var(--navy);font-weight:600;}
 .pf-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 @media(max-width:520px){.pf-2{grid-template-columns:1fr;}}
+.assess-prog{position:sticky;top:64px;height:5px;background:var(--cream-200);z-index:4;}
+.assess-prog>span{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--sage));transition:width .3s;width:0;}
+.a-wrap{max-width:640px;margin:0 auto;padding:24px 1.25rem 96px;}
+.a-eyebrow{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--sage);}
+.a-h1{font-family:var(--display);font-weight:600;font-size:30px;color:var(--navy);margin-top:6px;}
+.a-sub{color:var(--muted);margin-top:6px;}
+.aq{margin-top:22px;}
+.aq-t{font-size:16px;font-weight:600;color:var(--navy);margin-bottom:10px;}
+.aq-req{color:var(--coral);}
+.aopts{display:flex;flex-wrap:wrap;gap:8px;}
+.aopt{border:1.5px solid var(--border);background:#fff;border-radius:999px;padding:10px 16px;font-size:14px;font-weight:500;color:var(--navy);cursor:pointer;font-family:var(--sans);transition:all .12s;}
+.aopt:hover{border-color:var(--navy-300);}
+.aopt.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+.ascale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+.ascale .aopt{padding:14px 0;text-align:center;font-weight:700;font-size:16px;border-radius:12px;}
+.ascale-lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:6px;}
+.a-input{width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--ink);background:#fff;}
+.a-nav{display:flex;justify-content:space-between;gap:12px;margin-top:32px;}
+.a-prio{margin-top:14px;background:var(--gold-soft);border-radius:12px;padding:12px 16px;font-size:14px;color:var(--navy);}
+.a-results{margin-top:16px;display:grid;gap:12px;}
+.a-rcard{border:1px solid var(--border);border-radius:14px;padding:16px;}
+.a-rhead{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.a-rhead .c{font-weight:700;color:var(--navy);}
+.a-pill{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 10px;border-radius:999px;white-space:nowrap;}
+.p-green{background:var(--sage-light);color:var(--sage);} .p-amber{background:var(--gold-soft);color:#8a6516;} .p-red{background:rgba(200,85,61,.13);color:var(--coral);}
+.a-bar{height:8px;border-radius:999px;background:var(--cream-200);overflow:hidden;margin-top:10px;}
+.a-bar>span{display:block;height:100%;}
+.a-refs{font-size:13px;color:var(--muted);margin-top:10px;}
 .tl-choice{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;}
 .tl-panel{margin-top:14px;border:1px solid var(--border);border-radius:12px;padding:16px;background:var(--cream);}
 .tl-panel .d{font-size:13px;color:var(--muted);margin-bottom:10px;}
@@ -861,6 +889,7 @@ svg.ic{width:24px;height:24px;}
       <span class="section-eyebrow">Getting started</span>
       <h2>Review your info</h2>
       <div id="infoReview"></div>
+      <a href="#" id="startAssess" class="btn btn-gold" style="margin-top:14px;display:inline-block;">Step 1 — Start your 7 Essentials check-in</a>
       <div class="steps2" id="obSteps" style="margin-top:14px;"></div>
       <div id="tlOnboard" style="margin-top:12px;"></div>
     </div>
@@ -886,6 +915,11 @@ svg.ic{width:24px;height:24px;}
         </div>
       </div>
       <div>
+        <div class="panel">
+          <span class="section-eyebrow">Your 7 Essentials</span>
+          <h2>Where you stand</h2>
+          <div id="essList"></div>
+        </div>
         <div class="panel">
           <span class="section-eyebrow">Account</span>
           <h2 id="profName">User</h2>
@@ -1020,6 +1054,16 @@ svg.ic{width:24px;height:24px;}
       </div>
     </div>
   </div>
+</div>
+
+<!-- 7 ESSENTIALS CHECK-IN -->
+<div class="dash" id="assessment">
+  <div class="dash-bar">
+    <div class="brand"><span class="brand-mark">E</span><span class="brand-name">7 Essentials Check-in</span></div>
+    <div class="who"><button class="btn btn-outline-light btn-sm" id="assessClose">Save &amp; close</button></div>
+  </div>
+  <div class="assess-prog"><span id="assessBar"></span></div>
+  <div class="a-wrap" id="assessBody"></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1332,7 +1376,7 @@ function renderDash(){
     }).join('');
     return '<div class="prio'+(r.s===1?' amber':'')+'"><h3>'+r.c+'</h3><p class="lead">'+lead+'</p><div class="actions-list">'+acts+'</div></div>';
   }).join('')||'<p class="sub">No priority areas flagged right now \u2014 nice work.</p>';
-  (function(){var gg=document.querySelector('#dashboard .dash-grid'); if(gg)gg.style.display='';})(); renderInfoReview();
+  (function(){var gg=document.querySelector('#dashboard .dash-grid'); if(gg)gg.style.display='';})(); renderInfoReview(); renderEssentialsPanel();
   document.getElementById('supportsList').innerHTML=STORE.benefits.filter(function(b){return b.unlockAt===0;}).map(function(b){
     return '<div class="mini"><div class="t">'+b.name+'</div><div class="d">'+(b.cat||'')+'</div><span class="tag">Available now</span></div>';
   }).join('');
@@ -2321,7 +2365,7 @@ function routeByRole(profile,member,email){
     var pn=document.getElementById('profName'); if(pn)pn.textContent=nm;
     var ld=document.querySelector('#dashboard .lead'); if(ld)ld.textContent='Live account: '+(email||'')+' — your data will fill in as you use the app.';
     document.getElementById('dashboard').classList.add('open');document.body.style.overflow='hidden';
-    loadLiveMember(profile);
+    loadLiveMember(profile); loadEssScores();
   }
 }
 function applyLiveMember(mem,profile){
@@ -2455,6 +2499,105 @@ function jv(id){var e=document.getElementById(id);return e?(e.value||'').trim():
     Promise.all([sb.from('profiles').update({phone:phone,zip:zip}).eq('id',uid),sb.from('members').update({personal_contact:contact}).eq('profile_id',uid)]).then(function(){btn.disabled=false;afterAuth();},function(){btn.disabled=false;afterAuth();});
   },function(){er.textContent='Network error — please try again.';er.style.display='block';btn.disabled=false;});
 });})();
+
+/* ================= 7 Essentials assessment ================= */
+var ESS7=[
+{key:'transportation',name:'Transportation',intro:'Getting where you need to go.',q:[
+ {id:'tp_rel',t:'Do you have reliable transportation?',type:'choice',opts:['Yes','Sometimes','No'],req:true,score:{Yes:0,Sometimes:2,No:4}},
+ {id:'tp_type',t:'What type?',type:'choice',opts:['Personal vehicle','Family vehicle','Employer vehicle'],showIf:{tp_rel:'Yes'}},
+ {id:'tp_year',t:'Vehicle year (optional)',type:'text',showIf:{tp_rel:'Yes'}},
+ {id:'tp_around',t:'How do you usually get around?',type:'multi',opts:['Bus','Friend','Family','Uber/Lyft','Walk','Bike','Other'],showIf:{tp_rel:['Sometimes','No']}},
+ {id:'tp_missed',t:'Have you missed work, school, or appointments because of transportation?',type:'choice',opts:['Never','Occasionally','Frequently'],req:true,score:{Never:0,Occasionally:2,Frequently:4}},
+ {id:'tp_limit',t:'How much does transportation limit your opportunities?',type:'scale',req:true,score:'scale'}
+]},
+{key:'financial',name:'Financial Tools',intro:'Your money tools and stability.',q:[
+ {id:'fn_acct',t:'Do you have any of these?',type:'multi',opts:['Checking account','Savings account']},
+ {id:'fn_bills',t:'Can you usually pay your bills on time?',type:'choice',opts:['Always','Usually','Sometimes','Rarely'],req:true,score:{Always:0,Usually:1,Sometimes:3,Rarely:4}},
+ {id:'fn_emerg',t:'How much do you have in emergency savings?',type:'choice',opts:['None','Under $500','$500–$1,000','Over $1,000'],req:true,score:{'None':4,'Under $500':3,'$500–$1,000':2,'Over $1,000':0}},
+ {id:'fn_credit',t:'Do you know your credit score?',type:'yn',score:{Yes:0,No:2}},
+ {id:'fn_improve',t:'Are you working to improve your credit?',type:'yn'},
+ {id:'fn_goal',t:'What financial goal would help you most?',type:'choice',opts:['Budgeting','Debt reduction','Credit improvement','Saving','Homeownership','Starting a business']}
+]},
+{key:'housing',name:'Safe & Affordable Housing',intro:'A stable place to call home.',q:[
+ {id:'ho_cur',t:'What is your current housing?',type:'choice',opts:['Own','Rent','Living with family','Temporary housing','Shelter'],req:true},
+ {id:'ho_6mo',t:'Do you expect to still be living there in 6 months?',type:'choice',opts:['Yes','Unsure','No'],req:true,score:{Yes:0,Unsure:2,No:4}},
+ {id:'ho_afford',t:'Is your housing affordable for you?',type:'choice',opts:['Yes','Somewhat','No'],req:true,score:{Yes:0,Somewhat:2,No:4}},
+ {id:'ho_safe',t:'Do you feel safe where you live?',type:'choice',opts:['Always','Usually','Rarely'],req:true,score:{Always:0,Usually:1,Rarely:4}},
+ {id:'ho_int',t:'Are you interested in any of these?',type:'multi',opts:['Buying a home','Home repairs','Finding affordable housing']}
+]},
+{key:'economic',name:'Economic Opportunity',intro:'Work and income that fit your life.',q:[
+ {id:'eo_status',t:'What is your employment status?',type:'choice',opts:['Full-time','Part-time','Self-employed','Unemployed'],req:true,score:{'Full-time':0,'Part-time':2,'Self-employed':1,'Unemployed':4}},
+ {id:'eo_happy',t:'Are you happy with your current job?',type:'choice',opts:['Very','Somewhat','Not really'],score:{Very:0,Somewhat:2,'Not really':4}},
+ {id:'eo_income',t:'Does your income meet your needs?',type:'choice',opts:['Yes','Mostly','No'],req:true,score:{Yes:0,Mostly:2,No:4}},
+ {id:'eo_look',t:'Are you looking for any of these?',type:'multi',opts:['Better job','Higher pay','Promotion','Career change','Start a business']},
+ {id:'eo_skills',t:'Do your skills match the job you want?',type:'choice',opts:['Yes','Somewhat','No'],score:{Yes:0,Somewhat:2,No:4}}
+]},
+{key:'education',name:'Education',intro:'Learning and training for what is next.',q:[
+ {id:'ed_high',t:'Highest education completed?',type:'choice',opts:['High school','GED','Some college','Associate','Bachelor’s','Graduate','Trade school'],req:true},
+ {id:'ed_want',t:'Would you like additional education or training?',type:'choice',opts:['Yes','Maybe','No'],req:true,score:{Yes:2,Maybe:1,No:0}},
+ {id:'ed_int',t:'Interested in any of these?',type:'multi',opts:['College','Trade school','Apprenticeship','Professional certification','GED','Computer skills','English classes'],showIf:{ed_want:['Yes','Maybe']}},
+ {id:'ed_barrier',t:'What is your biggest barrier?',type:'choice',opts:['Cost','Time','Transportation','Childcare','Not sure where to start'],showIf:{ed_want:['Yes','Maybe']},score:{Cost:2,Time:2,Transportation:2,Childcare:2,'Not sure where to start':2}}
+]},
+{key:'health',name:'Health & Wellness',intro:'Your body and mind.',q:[
+ {id:'he_all',t:'How is your overall health?',type:'choice',opts:['Excellent','Good','Fair','Poor'],req:true,score:{Excellent:0,Good:1,Fair:3,Poor:4}},
+ {id:'he_ins',t:'Do you have health insurance?',type:'yn',score:{Yes:0,No:3}},
+ {id:'he_pcp',t:'Do you have a primary care doctor?',type:'yn',score:{Yes:0,No:2}},
+ {id:'he_seen',t:'Have you seen a doctor in the last year?',type:'yn',score:{Yes:0,No:2}},
+ {id:'he_stress',t:'How often do stress or anxiety interfere with daily life?',type:'choice',opts:['Never','Sometimes','Often'],req:true,score:{Never:0,Sometimes:2,Often:4}},
+ {id:'he_habits',t:'Which of these are true for you?',type:'multi',opts:['I exercise regularly','I have reliable access to healthy food','I usually get enough sleep']},
+ {id:'he_concern',t:'Is there a health concern preventing you from reaching your goals?',type:'yn',score:{Yes:3,No:0}}
+]},
+{key:'relationships',name:'Relationships',intro:'Support and connection.',q:[
+ {id:'re_rely',t:'Do you have someone you can rely on?',type:'choice',opts:['Yes','Sometimes','No'],req:true,score:{Yes:0,Sometimes:2,No:4}},
+ {id:'re_supp',t:'Do you feel supported by any of these?',type:'multi',opts:['Family','Friends']},
+ {id:'re_conn',t:'Do you feel connected to your community?',type:'yn',score:{Yes:0,No:2}},
+ {id:'re_inv',t:'Are you involved in any of these?',type:'multi',opts:['Church','Club','Community organization','Nonprofit','None']},
+ {id:'re_safe',t:'Do you feel safe and respected in your closest relationships?',type:'choice',opts:['Always','Usually','Rarely'],req:true,score:{Always:0,Usually:1,Rarely:4}},
+ {id:'re_int',t:'Would you be interested in any of these?',type:'multi',opts:['Marriage classes','Parenting support','Mentorship','Support groups','Community events']}
+]}
+];
+var GOAL_OPTS=['Better job','Reliable transportation','Buy a home','Improve credit','Save money','Finish school','Learn a trade','Start a business','Improve physical health','Improve mental health','Strengthen relationships','Other'];
+var PRIORITY_OPTS=['Transportation','Financial Tools','Housing','Employment','Education','Health','Relationships'];
+var REFERRALS={transportation:['Empower','Bike Walk Wichita','EPE Drive & Thrive'],financial:['Bank On ICT','Operation Hope','Create Campaign'],housing:['Family Promise','Hope CDC','Meritrust / Sycamore'],economic:['WSU Tech Career Services','Wichita Workforce Center','Empower Workforce'],education:['WSU Tech','Learning Lab','GED & English programs'],health:['HopeNet','YMCA','Local clinics'],relationships:['Live the Life','Army of Normal Folks','The Phoenix']};
+var ANS={}, ASTEP=0;
+function aEsc(x){return String(x).replace(/"/g,'&quot;');}
+function aVisible(q){if(!q.showIf)return true;for(var k in q.showIf){var want=q.showIf[k],have=ANS[k];if(Array.isArray(want)){if(want.indexOf(have)<0)return false;}else if(have!==want)return false;}return true;}
+function aMax(sc){if(sc==='scale')return 4;var m=0;for(var k in sc){if(sc[k]>m)m=sc[k];}return m;}
+function scoreEssential(e){var pts=0,max=0;e.q.forEach(function(q){if(!q.score||!aVisible(q))return;var a=ANS[q.id];if(a===undefined||a==='')return;max+=aMax(q.score);pts+=(q.score==='scale')?(parseInt(a,10)-1):(q.score[a]||0);});if(max===0)return null;return Math.round(pts/max*100);}
+function essStatus(pct){if(pct===null||pct===undefined)return{t:'Not assessed',c:'muted'};if(pct>=55)return{t:'Needs attention',c:'red'};if(pct>=30)return{t:'Opportunity',c:'amber'};return{t:'Strength',c:'green'};}
+function renderQ(q){var v=ANS[q.id];var h='<div class="aq"><p class="aq-t">'+q.t+(q.req?' <span class="aq-req">*</span>':'')+'</p>';
+  if(q.type==='scale'){h+='<div class="ascale">';for(var n=1;n<=5;n++){h+='<button type="button" class="aopt'+(v===n?' active':'')+'" data-q="'+q.id+'" data-v="'+n+'" data-scale="1">'+n+'</button>';}h+='</div><div class="ascale-lbl"><span>Not at all</span><span>A lot</span></div>';}
+  else if(q.type==='text'){h+='<input class="a-input" type="text" data-q="'+q.id+'" value="'+(v?aEsc(v):'')+'" placeholder="Type here (optional)"/>';}
+  else if(q.type==='multi'){h+='<div class="aopts">';q.opts.forEach(function(o){var on=Array.isArray(v)&&v.indexOf(o)>=0;h+='<button type="button" class="aopt'+(on?' active':'')+'" data-q="'+q.id+'" data-v="'+aEsc(o)+'" data-multi="1">'+o+'</button>';});h+='</div>';}
+  else{var opts=q.type==='yn'?['Yes','No']:q.opts;h+='<div class="aopts">';opts.forEach(function(o){h+='<button type="button" class="aopt'+(v===o?' active':'')+'" data-q="'+q.id+'" data-v="'+aEsc(o)+'">'+o+'</button>';});h+='</div>';}
+  return h+'</div>';}
+function renderEssentialStep(e,i){var h='<p class="a-eyebrow">Essential '+(i+1)+' of '+ESS7.length+'</p><h1 class="a-h1">'+e.name+'</h1><p class="a-sub">'+e.intro+'</p>';e.q.forEach(function(q){if(aVisible(q))h+=renderQ(q);});h+='<div class="a-nav">'+(i>0?'<button class="btn btn-outline" data-aback>Back</button>':'<span></span>')+'<button class="btn btn-gold" data-anext>Next</button></div>';return h;}
+function renderGoalsStep(){var g=ANS._goals||[],p=ANS._priority;var h='<p class="a-eyebrow">Almost done</p><h1 class="a-h1">Your goals</h1><p class="a-sub">Pick up to three goals for the next year.</p><div class="aq"><div class="aopts">';GOAL_OPTS.forEach(function(o){var on=g.indexOf(o)>=0;h+='<button type="button" class="aopt'+(on?' active':'')+'" data-q="_goals" data-v="'+aEsc(o)+'" data-multi="1">'+o+'</button>';});h+='</div></div>';h+='<div class="aq"><p class="aq-t">Which ONE area would make the biggest difference right now? <span class="aq-req">*</span></p><div class="aopts">';PRIORITY_OPTS.forEach(function(o){h+='<button type="button" class="aopt'+(p===o?' active':'')+'" data-q="_priority" data-v="'+aEsc(o)+'">'+o+'</button>';});h+='</div></div><div class="a-nav"><button class="btn btn-outline" data-aback>Back</button><button class="btn btn-gold" data-anext>See my results</button></div>';return h;}
+function renderResultsStep(){var arr=ESS7.map(function(e){return {e:e,pct:scoreEssential(e)};});arr.sort(function(a,b){return (b.pct||0)-(a.pct||0);});var h='<p class="a-eyebrow">Your check-in</p><h1 class="a-h1">Here is what we heard</h1><p class="a-sub">Your strengths, your opportunities, and where we can help most.</p>';if(ANS._priority)h+='<div class="a-prio">Your top priority right now: <b>'+ANS._priority+'</b></div>';h+='<div class="a-results">';arr.forEach(function(r){var st=essStatus(r.pct),cc=(st.c==='muted'?'amber':st.c),need=r.pct==null?0:r.pct;h+='<div class="a-rcard"><div class="a-rhead"><span class="c">'+r.e.name+'</span><span class="a-pill p-'+cc+'">'+st.t+'</span></div><div class="a-bar"><span class="bg-'+cc+'" style="width:'+need+'%"></span></div>';if(st.c==='red'||st.c==='amber')h+='<div class="a-refs">We can connect you with: '+REFERRALS[r.e.key].slice(0,3).join(' · ')+'</div>';h+='</div>';});h+='</div><div class="a-nav"><button class="btn btn-outline" data-aretake>Retake</button><button class="btn btn-gold" data-afinish>Done</button></div>';return h;}
+function renderAStep(){var body=document.getElementById('assessBody');if(!body)return;var total=ESS7.length+2;var bar=document.getElementById('assessBar');if(bar)bar.style.width=Math.round(ASTEP/(total-1)*100)+'%';if(ASTEP<ESS7.length)body.innerHTML=renderEssentialStep(ESS7[ASTEP],ASTEP);else if(ASTEP===ESS7.length)body.innerHTML=renderGoalsStep();else body.innerHTML=renderResultsStep();window.scrollTo(0,0);}
+function validateAStep(){if(ASTEP<ESS7.length){var e=ESS7[ASTEP],ok=true;e.q.forEach(function(q){if(q.req&&aVisible(q)){var a=ANS[q.id];if(a===undefined||a===''||(Array.isArray(a)&&!a.length))ok=false;}});if(!ok)alert('Please answer the questions marked with a star.');return ok;}if(ASTEP===ESS7.length){if(!ANS._priority){alert('Please pick the one area that would help most.');return false;}return true;}return true;}
+function finishAssessment(){var scores={};ESS7.forEach(function(e){scores[e.key]=scoreEssential(e);});window._essScores=scores;if(CUR.live&&CUR.uid){sb.from('essential_assessments').insert({member_id:CUR.uid,answers:ANS,scores:scores,priority:ANS._priority||null});}renderEssentialsPanel();}
+function openAssessment(){ASTEP=0;document.getElementById('assessment').classList.add('open');document.body.style.overflow='hidden';renderAStep();}
+function closeAssessment(){document.getElementById('assessment').classList.remove('open');document.body.style.overflow='';}
+function renderEssentialsPanel(){var el=document.getElementById('essList');if(!el)return;var sc=window._essScores;if(!sc){el.innerHTML='<p class="sub">Take your <b>7 Essentials check-in</b> to see where you stand and get matched to help.</p><button class="btn btn-gold btn-sm" id="startAssess2" style="margin-top:8px;">Start check-in</button>';return;}el.innerHTML=ESS7.map(function(e){var st=essStatus(sc[e.key]),cc=(st.c==='muted'?'amber':st.c);return '<div class="tl-cell" style="margin-bottom:8px;"><div><span class="dot bg-'+cc+'"></span><span class="c">'+e.name+'</span></div><div class="s st-'+cc+'">'+st.t+'</div></div>';}).join('');}
+function loadEssScores(){if(!CUR.live||!CUR.uid)return;sb.from('essential_assessments').select('scores').eq('member_id',CUR.uid).order('created_at',{ascending:false}).limit(1).maybeSingle().then(function(a){if(a&&a.data&&a.data.scores){window._essScores=a.data.scores;renderEssentialsPanel();}});}
+(function(){var b=document.getElementById('assessBody');if(!b)return;
+ b.addEventListener('click',function(e){
+   var opt=e.target.closest('[data-q][data-v]');
+   if(opt){var id=opt.getAttribute('data-q'),val=opt.getAttribute('data-v');
+     if(opt.getAttribute('data-scale'))ANS[id]=parseInt(val,10);
+     else if(opt.getAttribute('data-multi')){var arr=Array.isArray(ANS[id])?ANS[id]:[];var ix=arr.indexOf(val);if(ix>=0)arr.splice(ix,1);else if(!(id==='_goals'&&arr.length>=3))arr.push(val);ANS[id]=arr;}
+     else ANS[id]=val;
+     renderAStep();return;}
+   if(e.target.closest('[data-aback]')){ASTEP--;renderAStep();return;}
+   if(e.target.closest('[data-anext]')){if(validateAStep()){ASTEP++;if(ASTEP===ESS7.length+1)finishAssessment();renderAStep();}return;}
+   if(e.target.closest('[data-aretake]')){ANS={};ASTEP=0;renderAStep();return;}
+   if(e.target.closest('[data-afinish]')){closeAssessment();return;}
+ });
+ b.addEventListener('input',function(e){var t=e.target.closest('input[data-q]');if(t)ANS[t.getAttribute('data-q')]=t.value;});
+})();
+document.getElementById('assessClose').addEventListener('click',closeAssessment);
+document.addEventListener('click',function(e){var t=e.target.closest('#startAssess,#startAssess2');if(t){e.preventDefault();openAssessment();}});
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 </body>
