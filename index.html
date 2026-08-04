@@ -1861,7 +1861,7 @@ function loadAnalytics(){
     function recent(a){return a.filter(function(x){var t=new Date(x.created_at).getTime();return t>=since;}).length;}
     var byLabel={}; clicks.forEach(function(x){var l=x.label||'(unlabeled)';byLabel[l]=(byLabel[l]||0)+1;});
     var top=Object.keys(byLabel).map(function(l){return {l:l,n:byLabel[l]};}).sort(function(a,b){return b.n-a.n;}).slice(0,15);
-    var h='<div class="ins-tiles"><div class="ins-tile"><div class="v">'+views.length+'</div><div class="l">Total views</div></div><div class="ins-tile"><div class="v">'+Object.keys(uniq).length+'</div><div class="l">Unique visitors</div></div><div class="ins-tile"><div class="v">'+clicks.length+'</div><div class="l">Total clicks</div></div></div>';
+    var h=(ev.length===0?'<div class="panel" style="border-color:var(--gold)"><p class="sub"><b>No analytics data yet.</b> Either the newest site is not uploaded (so nothing is being logged) or the events table policies are not set. Upload the latest index.html, browse a few pages, then refresh.</p></div>':'')+'<div class="ins-tiles"><div class="ins-tile"><div class="v">'+views.length+'</div><div class="l">Total views</div></div><div class="ins-tile"><div class="v">'+Object.keys(uniq).length+'</div><div class="l">Unique visitors</div></div><div class="ins-tile"><div class="v">'+clicks.length+'</div><div class="l">Total clicks</div></div></div>';
     h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Last 7 days</span><h2>Recent activity</h2><p class="sub">'+recent(views)+' views \u00b7 '+recent(clicks)+' clicks</p></div>';
     var byAct={};actions.forEach(function(x){var l=x.label||'(action)';byAct[l]=(byAct[l]||0)+1;});var actList=Object.keys(byAct).map(function(l){return {l:l,n:byAct[l]};}).sort(function(a,b){return b.n-a.n;});
     h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Funnel</span><h2>Key actions</h2>'+(actList.length?('<div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:360px"><thead><tr><th>Action</th><th>Count</th></tr></thead><tbody>'+actList.map(function(t){return '<tr><td class="nm">'+esc(t.l)+'</td><td>'+t.n+'</td></tr>';}).join('')+'</tbody></table></div>'):'<p class="sub">No key actions tracked yet.</p>')+'</div>';
@@ -2843,7 +2843,7 @@ var ESS_STEPS={
  financial:[{t:'Save Match Grow (Empower)',u:'https://empowernorthend.org/event/save-match-grow/'},{t:'Micro loans (instead of payday loans)',u:'mailto:info@empowernorthend.org?subject=I%20am%20interested%20in%20a%20microloan'}],
  housing:[{t:'Talk with a housing navigator (Hope CDC)',u:'https://hopecdc.org/'}],
  economic:[{t:'Empower Career Path Discovery',u:'https://wsutech.edu/financialaid/'},{t:'WSU Tech',u:'https://wsutech.edu/financialaid/'}],
- education:[{t:'Find education & training options',u:''}],
+ education:[{t:'WSU Tech',u:'https://wsutech.edu/financialaid/'},{t:'Empower Career Path Discovery',u:'https://wsutech.edu/financialaid/'}],
  health:[{t:'Connect with health & wellness resources',u:''}],
  relationships:[{t:'Find community & connection',u:''}]
 };
