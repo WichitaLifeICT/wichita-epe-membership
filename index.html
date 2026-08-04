@@ -445,6 +445,14 @@ h2.sec.light{color:#fff;}
 .sup-link{color:var(--navy);font-weight:600;text-decoration:none;}
 .sup-link:hover{color:var(--sage);text-decoration:underline;}
 .tag-soon{background:rgba(14,39,69,.06)!important;color:var(--muted)!important;}
+.chat-thread{max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:4px 2px;margin-bottom:10px;}
+.chat-msg{max-width:85%;padding:9px 12px;border-radius:14px;font-size:14px;line-height:1.45;}
+.chat-msg.me{align-self:flex-end;background:var(--navy);color:#fff;border-bottom-right-radius:4px;}
+.chat-msg.them{align-self:flex-start;background:var(--cream-200);color:var(--navy);border-bottom-left-radius:4px;}
+.chat-msg .who{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;opacity:.7;margin-bottom:2px;}
+.chat-input{display:flex;gap:8px;}
+.chat-input input{flex:1;border:1px solid var(--border);border-radius:10px;padding:9px 12px;font-size:14px;font-family:var(--sans);background:#fff;}
+.chat-input input:focus{outline:none;border-color:var(--gold);}
 .mini-link{text-decoration:none;color:inherit;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:border-color .12s,background .12s;}
 .mini-link:hover{border-color:var(--gold);background:var(--cream);}
 .mini-link .t{color:var(--navy);}
@@ -909,7 +917,6 @@ svg.ic{width:24px;height:24px;}
     </form>
     <p class="demo-creds" id="forgotRow" style="margin-top:8px;"><a href="#" id="toForgot">Forgot your password?</a></p>
     <p class="demo-creds" id="authToggle">New here? <a href="#" id="toSignup">Create an account</a></p>
-    <p class="demo-creds" style="margin-top:8px;">Demo (no account, password <b>password</b>): <b>user-demo</b> · <b>partner-demo</b> · <b>admin-demo</b></p>
   </div>
 </div>
 
@@ -1013,6 +1020,12 @@ svg.ic{width:24px;height:24px;}
           <p class="sub" id="memberSince" style="margin-bottom:12px;"></p>
           <div class="hist" id="histList"></div>
         </div>
+        <div class="panel" data-collapsible>
+          <span class="section-eyebrow">Messages</span>
+          <h2>How can we help you?</h2>
+          <div id="chatThread" class="chat-thread"><p class="sub">No messages yet — send one and your navigator will get it.</p></div>
+          <div class="chat-input"><input id="chatInput" type="text" placeholder="Type a message…" autocomplete="off"/><button type="button" id="chatSend" class="btn btn-gold btn-sm">Send</button></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1021,7 +1034,7 @@ svg.ic{width:24px;height:24px;}
 <!-- ADMIN BACK END (prototype) -->
 <div class="dash adash" id="admin">
   <div class="dash-bar">
-    <div class="brand"><span class="brand-mark">E</span><span class="brand-name">Wichita EPE · Admin (Demo)</span></div>
+    <div class="brand"><span class="brand-mark">E</span><span class="brand-name">Wichita EPE · Admin</span></div>
     <div class="who">
       <select class="role-select" id="admRole" aria-label="Switch role">
         <option value="super">Super Admin</option>
@@ -1607,16 +1620,16 @@ var STATE_TXT=['Needs support','Working on it','Thriving'];
 
 /* roles -> which modules they can open + label */
 var AROLES={
-  super:{label:'Super Admin',views:['home','members','insights','analytics','ideas','referrals','solutions','stars','impact','content','notifications','settings']},
-  navigator:{label:'Navigator',views:['home','members','referrals','stars']},
-  partner:{label:'Partner Org',views:['referrals']},
-  board:{label:'Read-Only / Board',views:['home','impact']}
+  super:{label:'Admin',views:['insights','messages','analytics','ideas','solutions','content','notifications','settings']},
+  navigator:{label:'Navigator',views:['insights','ideas']},
+  partner:{label:'Partner Org',views:['insights','solutions']},
+  board:{label:'Read-Only / Board',views:['insights','analytics']}
 };
 var NAVMETA={
   home:['Dashboard','grid'], members:['Members CRM','people'], queue:['Navigator Queue','flag'],
   thrive:['Thrive Analytics','chart'], referrals:['Partner Referrals','link'], solutions:['Bank of Solutions','bank'],
   stars:['Stars & Rewards','star'], impact:['Impact (Board)','trophy'], content:['Site Content','edit'],
-  notifications:['Notifications','bell'], settings:['Settings','gear'], ideas:['Ideas & Offers','bell'], insights:['Member Insights','chart'], analytics:['Analytics','chart']
+  notifications:['Notifications','bell'], settings:['Settings','gear'], ideas:['Ideas & Offers','bell'], insights:['Members','people'], analytics:['Analytics','chart'], messages:['Messages','bell']
 };
 var AICONS={
   grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
@@ -1926,6 +1939,29 @@ function showInsights(){
     '</tbody></table></div></div>';
   box.innerHTML=h;
 }
+function viewMessages(){
+  var h=head('Messages','Conversations with members. Click a member to read and reply.');
+  h+='<div id="msgBox"><p class="sub">Loading…</p></div>';
+  return h;
+}
+function loadAdminMessages(){
+  var box=document.getElementById('msgBox'); if(!box)return;
+  function esc(x){return String(x==null?'':x).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':'&gt;';});}
+  box.innerHTML='<p class="sub">Loading…</p>';
+  sb.from('messages').select('member_id,sender,body,created_at,profiles(full_name,email)').order('created_at',{ascending:true}).then(function(r){
+    if(!r||r.error||!r.data){box.innerHTML='<div class="panel"><p class="sub">Could not load — admin login required, and make sure the <b>messages</b> table exists.</p></div>';return;}
+    var convs={};r.data.forEach(function(m){var c=convs[m.member_id]||(convs[m.member_id]={id:m.member_id,name:(m.profiles&&m.profiles.full_name)||'Member',email:(m.profiles&&m.profiles.email)||'',msgs:[],last:null});c.msgs.push(m);c.last=m.created_at;});
+    if(window._msgConv){
+      var c=convs[window._msgConv];
+      var h='<button class="btn btn-outline btn-sm" data-msgback>\u2190 All conversations</button>';
+      if(!c){box.innerHTML=h+'<p class="sub" style="margin-top:12px">No messages in this conversation.</p>';return;}
+      h+='<div class="panel" style="margin-top:12px"><span class="section-eyebrow">Conversation</span><h2>'+esc(c.name)+'</h2><p class="sub">'+esc(c.email)+'</p><div class="chat-thread" style="max-height:360px;margin-top:12px">'+c.msgs.map(function(m){var staff=m.sender==='staff';return '<div class="chat-msg '+(staff?'me':'them')+'"><span class="who">'+(staff?'You (team)':esc(c.name))+'</span>'+esc(m.body)+'</div>';}).join('')+'</div><div class="chat-input" style="margin-top:10px"><input id="msgReply" type="text" placeholder="Reply\u2026" autocomplete="off"/><button type="button" id="msgSend" class="btn btn-gold btn-sm">Send</button></div></div>';
+      box.innerHTML=h; var tw=box.querySelector('.chat-thread'); if(tw)tw.scrollTop=tw.scrollHeight; return;
+    }
+    var list=Object.keys(convs).map(function(k){return convs[k];}).sort(function(a,b){return (b.last||'').localeCompare(a.last||'');});
+    box.innerHTML='<div class="panel"><span class="section-eyebrow">Inbox</span><h2>Conversations ('+list.length+')</h2>'+(list.length?list.map(function(c){var lm=c.msgs[c.msgs.length-1];return '<div class="mini mini-link" style="margin-top:8px" data-msgconv="'+c.id+'"><div class="mini-main"><div class="t">'+esc(c.name)+'</div><div class="d">'+esc((lm.sender==='staff'?'You: ':'')+lm.body).slice(0,90)+'</div></div><span class="tag">'+c.msgs.length+'</span></div>';}).join(''):'<p class="sub">No member messages yet.</p>')+'</div>';
+  },function(){box.innerHTML='<div class="panel"><p class="sub">Network error loading messages.</p></div>';});
+}
 function renderView(){
   var v=ADMIN.view,h='';
   if(ADMIN.openId)h=viewProfile(memberById(ADMIN.openId));
@@ -1943,10 +1979,12 @@ function renderView(){
   else if(v==='ideas')h=viewIdeas();
   else if(v==='insights')h=viewInsights();
   else if(v==='analytics')h=viewAnalytics();
+  else if(v==='messages')h=viewMessages();
   document.getElementById('admView').innerHTML=h;
   if(v==='ideas')loadIdeas();
   if(v==='insights')loadInsights();
   if(v==='analytics')loadAnalytics();
+  if(v==='messages'){window._msgConv=null;loadAdminMessages();}
 }
 function head(title,sub,right){
   return '<div class="av-head"><div><div class="av-title">'+title+'</div>'+(sub?'<div class="av-sub">'+sub+'</div>':'')+'</div>'+(right?'<div>'+right+'</div>':'')+'</div>';
@@ -2355,6 +2393,9 @@ document.getElementById('admView').addEventListener('click',function(e){
   if((el2=t.closest('[data-insmem]'))){window._insMember=el2.getAttribute('data-insmem');showInsights();return;}
   if(t.closest('[data-insback]')){window._insMember=null;showInsights();return;}
   if(t.closest('#insCsv')){insExportCsv();return;}
+  if((el2=t.closest('[data-msgconv]'))){window._msgConv=el2.getAttribute('data-msgconv');loadAdminMessages();return;}
+  if(t.closest('[data-msgback]')){window._msgConv=null;loadAdminMessages();return;}
+  if(t.closest('#msgSend')){var _mi=document.getElementById('msgReply');var _mb=(_mi&&_mi.value||'').trim();if(_mb&&window._msgConv){sb.from('messages').insert({member_id:window._msgConv,sender:'staff',body:_mb}).then(function(){loadAdminMessages();});}return;}
   if(t.closest('#seedSol')){var sb0=t.closest('#seedSol');sb0.textContent='Importing…';seedSolutions(function(){renderView();});return;}
   if((el2=t.closest('[data-delr]'))){var id2=el2.getAttribute('data-delr');STORE.rewards=STORE.rewards.filter(function(x){return x.id!==id2;});saveStore();renderView();return;}
   if((el2=t.closest('[data-ptoggle]'))){var p=partnerById(el2.getAttribute('data-ptoggle'));if(p)p.active=!p.active;renderView();return;}
@@ -2626,7 +2667,7 @@ function loadLiveMember(profile){
   document.getElementById('dashHello').textContent='Welcome, '+nm;
   document.getElementById('dashboard').classList.add('open'); document.body.style.overflow='hidden';
   DASH.tlImported=false; DASH.tlIndicators=[]; DASH.tlDate='';
-  renderDash(); renderOnboard(); loadProfileForm(); loadSolutions(function(){renderDash();});
+  renderDash(); renderOnboard(); loadProfileForm(); loadSolutions(function(){renderDash();}); loadMessages();
   sb.from('members').select('level,stars,joined_at').eq('profile_id',CUR.uid).maybeSingle().then(function(m){
     var mem=(m&&m.data)||{level:'basic',stars:0};
     CUR.stars=mem.stars||0; CUR.level=mem.level||'basic';
@@ -2694,11 +2735,6 @@ document.getElementById('loginForm').addEventListener('submit',function(e){
     return;
   }
   if(!email||!pass){authErr('Please enter your email and password.');return;}
-  if(authMode==='login'){
-    var DEMO={'user-demo':'member','partner-demo':'partner','admin-demo':'admin'};
-    var lid=email.toLowerCase();
-    if(DEMO[lid]&&pass==='password'){er.style.display='none';closeLogin();openDemo(DEMO[lid]);return;}
-  }
   var btn=document.getElementById('authSubmit'); btn.disabled=true;
   function done(){btn.disabled=false;}
   if(authMode==='signup'){
@@ -2842,6 +2878,15 @@ function finishAssessment(){var scores={};ESS7.forEach(function(e){scores[e.key]
   function setMsg(t){var m=document.getElementById('assessSaveMsg');if(m)m.textContent=t;}
   if(CUR.live&&CUR.uid){setMsg('Saving your answers…');sb.from('essential_assessments').insert({member_id:CUR.uid,answers:ANS,scores:scores,priority:(Array.isArray(ANS._priority)?ANS._priority.join(', '):ANS._priority)||null}).then(function(r){setMsg((r&&r.error)?('Could not save: '+r.error.message):'Saved \u2713 — your answers will be here next time.');},function(){setMsg('Network error — not saved. Try again.');});}
   else{setMsg('Demo mode — sign in with a real account to save.');}}
+function chatEsc(x){return String(x==null?'':x).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':'&gt;';});}
+function renderChat(msgs){var el=document.getElementById('chatThread');if(!el)return;if(!msgs||!msgs.length){el.innerHTML='<p class="sub">No messages yet — send one and your navigator will get it.</p>';return;}el.innerHTML=msgs.map(function(m){var me=m.sender==='member';return '<div class="chat-msg '+(me?'me':'them')+'"><span class="who">'+(me?'You':'EPE Team')+'</span>'+chatEsc(m.body)+'</div>';}).join('');el.scrollTop=el.scrollHeight;}
+function loadMessages(){if(!CUR.live||!CUR.uid)return;sb.from('messages').select('sender,body,created_at').eq('member_id',CUR.uid).order('created_at',{ascending:true}).then(function(r){if(r&&!r.error&&r.data)renderChat(r.data);});}
+function sendMessage(){var inp=document.getElementById('chatInput');if(!inp)return;var body=(inp.value||'').trim();if(!body||!CUR.live||!CUR.uid)return;inp.value='';sb.from('messages').insert({member_id:CUR.uid,sender:'member',body:body}).then(function(){loadMessages();try{logEvent('action','Message sent');}catch(e){}});}
+(function(){
+  document.addEventListener('click',function(e){if(e.target.closest('#chatSend'))sendMessage();});
+  document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target&&e.target.id==='chatInput'){e.preventDefault();sendMessage();}});
+  setInterval(function(){var d=document.getElementById('dashboard');if(CUR.live&&CUR.uid&&d&&d.classList.contains('open'))loadMessages();},20000);
+})();
 function openAssessment(){ASTEP=0;logEvent('action','Check-in started');var intro=document.getElementById('assessIntro'),inl=document.getElementById('assessInline');if(intro)intro.style.display='none';if(inl)inl.style.display='';renderAStep();var cp=document.getElementById('checkinPanel');if(cp)cp.scrollIntoView({block:'start'});}
 function closeAssessment(){var intro=document.getElementById('assessIntro'),inl=document.getElementById('assessInline');if(inl)inl.style.display='none';if(intro)intro.style.display='';renderEssentialsPanel();var pl=document.getElementById('prioList');if(pl)renderDash();var cp=document.getElementById('checkinPanel');if(cp)cp.scrollIntoView({block:'start'});}
 var PRIO2KEY={'Transportation':'transportation','Financial Tools':'financial','Housing':'housing','Employment':'economic','Education':'education','Health':'health','Relationships':'relationships'};
