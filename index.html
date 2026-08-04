@@ -2671,7 +2671,7 @@ function saveAssessment(r){
     if(a.error||!a.data)return;
     var aid=a.data.id;
     var rows=(r.indicators||[]).map(function(ind){return {assessment_id:aid,indicator:ind.name,domain:ind.domain,status:['red','yellow','green'][ind.status]};});
-    if(rows.length)sb.from('assessment_indicators').insert(rows);
+    if(rows.length)sb.from('assessment_indicators').insert(rows).then(function(){},function(){});
   });
 }
 function loadLiveMember(profile){
@@ -2949,7 +2949,7 @@ var _ac=document.getElementById('assessClose'); if(_ac)_ac.addEventListener('cli
 document.addEventListener('click',function(e){var t=e.target.closest('#startAssess,#startAssess2');if(t){e.preventDefault();openAssessment();}});
 /* ---------- lightweight analytics ---------- */
 function epeVid(){try{var k='epe_vid',v=localStorage.getItem(k);if(!v){v=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('v'+Math.random().toString(36).slice(2)+(+new Date()));localStorage.setItem(k,v);}return v;}catch(e){return 'anon';}}
-function logEvent(type,label){try{if(!window.sb)return;sb.from('events').insert({type:type,visitor:epeVid(),label:String(label||'').slice(0,180),path:String(location.hash||location.pathname||'/').slice(0,120)});}catch(e){}}
+function logEvent(type,label){try{if(!window.sb)return;sb.from('events').insert({type:type,visitor:epeVid(),label:String(label||'').slice(0,180),path:String(location.hash||location.pathname||'/').slice(0,120)}).then(function(){},function(){});}catch(e){}}
 (function(){ try{logEvent('view','Main page');}catch(e){}
   document.addEventListener('click',function(e){
     var a=e.target.closest('a[href]');
@@ -2964,7 +2964,7 @@ function logEvent(type,label){try{if(!window.sb)return;sb.from('events').insert(
 /* ---------- session time tracking ---------- */
 var _sess={id:null,start:0};
 function startSession(fresh){try{if(!(CUR.live&&CUR.uid))return;_sess.start=+new Date();_sess.id=null;sb.from('sessions').insert({uid:CUR.uid,email:CUR.email||null,visitor:epeVid(),seconds:0,kind:fresh?'login':'resume'}).select('id').single().then(function(r){if(r&&r.data)_sess.id=r.data.id;},function(){});}catch(e){}}
-function pingSession(){try{if(!_sess.id)return;var secs=Math.round((+new Date()-_sess.start)/1000);sb.from('sessions').update({last_seen:new Date().toISOString(),seconds:secs}).eq('id',_sess.id);}catch(e){}}
+function pingSession(){try{if(!_sess.id)return;var secs=Math.round((+new Date()-_sess.start)/1000);sb.from('sessions').update({last_seen:new Date().toISOString(),seconds:secs}).eq('id',_sess.id).then(function(){},function(){});}catch(e){}}
 setInterval(function(){if(document.visibilityState!=='hidden')pingSession();},30000);
 document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')pingSession();});
 window.addEventListener('pagehide',pingSession);
