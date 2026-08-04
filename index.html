@@ -86,7 +86,7 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(251,247,239,.85);bac
 .card-wrap{position:relative;}
 
 /* membership card */
-.epe-card{position:relative;overflow:hidden;width:100%;max-width:420px;aspect-ratio:1.6/1;line-height:1.35;border-radius:16px;background:var(--navy);color:var(--cream);padding:26px 26px;box-shadow:0 25px 50px -12px rgba(14,39,69,.45);transform:rotate(-3deg);}
+.epe-card{position:relative;overflow:hidden;flex:none;align-self:center;width:100%;max-width:420px;aspect-ratio:1.6/1;line-height:1.35;border-radius:16px;background:var(--navy);color:var(--cream);padding:26px;box-shadow:0 25px 50px -12px rgba(14,39,69,.45);transform:rotate(-3deg);}
 .epe-card .glow1{position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:rgba(216,162,58,.3);filter:blur(40px);}
 .epe-card .glow2{position:absolute;bottom:-48px;left:-32px;width:160px;height:160px;border-radius:50%;background:rgba(79,138,99,.2);filter:blur(40px);}
 .epe-card .inner{position:relative;height:100%;display:flex;flex-direction:column;justify-content:space-between;}
@@ -696,7 +696,6 @@ svg.ic{width:24px;height:24px;}
     <a href="#top" class="brand"><span class="brand-mark">E</span><span class="brand-name">Wichita EPE</span></a>
     <nav class="nav-links">
       <a href="#how">How It Works</a>
-      <a href="#thrive">Thrive Lights</a>
       <a href="#levels">Levels</a>
       <a href="#partners">Partners</a>
       <div class="nav-dd">
@@ -718,7 +717,6 @@ svg.ic{width:24px;height:24px;}
   </div>
   <div class="mobile-menu" id="mobileMenu">
     <a href="#how">How It Works</a>
-    <a href="#thrive">Thrive Lights</a>
     <a href="#levels">Levels</a>
     <a href="#partners">Partners</a>
     <div class="mm-head">Current Solutions</div>
@@ -779,7 +777,7 @@ svg.ic{width:24px;height:24px;}
 </section>
 
 <!-- THRIVE LIGHTS -->
-<section id="thrive" class="bg-dots" style="background-color:var(--cream-200);">
+<section id="thrive" class="bg-dots" style="background-color:var(--cream-200);display:none;">
   <div class="wrap pad">
     <div style="max-width:640px;">
       <p class="eyebrow">Thrive Lights</p>
@@ -1289,7 +1287,7 @@ document.querySelectorAll('.seg').forEach(function(seg){
       head.addEventListener('click',function(){p.classList.toggle('collapsed');});
     })(ps[i]);}
   }
-  initCollapsibles();
+  window.initCollapsibles=initCollapsibles; initCollapsibles();
 })();
 
 /* ================= prototype member dashboard ================= */
@@ -1871,11 +1869,11 @@ function loadAnalytics(){
     var _st=new Date(); _st.setHours(0,0,0,0); var _stMs=_st.getTime();
     function inLast(a,ms){return a.filter(function(x){return (Date.now()-new Date(x.created_at).getTime())<=ms;}).length;}
     var cToday=clicks.filter(function(x){return new Date(x.created_at).getTime()>=_stMs;}).length;
-    h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Clicks</span><h2>Click activity</h2><div class="ins-tiles" style="margin-top:12px"><div class="ins-tile"><div class="v">'+cToday+'</div><div class="l">Today</div></div><div class="ins-tile"><div class="v">'+inLast(clicks,7*864e5)+'</div><div class="l">Last 7 days</div></div><div class="ins-tile"><div class="v">'+clicks.length+'</div><div class="l">All time</div></div></div><p class="sub" style="margin-top:12px">'+inLast(views,7*864e5)+' views in the last 7 days.</p></div>';
+    h+='<div class="panel" style="margin-top:18px" data-collapsible><span class="section-eyebrow">Clicks</span><h2>Click activity</h2><div class="ins-tiles" style="margin-top:12px"><div class="ins-tile"><div class="v">'+cToday+'</div><div class="l">Today</div></div><div class="ins-tile"><div class="v">'+inLast(clicks,7*864e5)+'</div><div class="l">Last 7 days</div></div><div class="ins-tile"><div class="v">'+clicks.length+'</div><div class="l">All time</div></div></div><p class="sub" style="margin-top:12px">'+inLast(views,7*864e5)+' views in the last 7 days.</p></div>';
     var byAct={};actions.forEach(function(x){var l=x.label||'(action)';byAct[l]=(byAct[l]||0)+1;});var actList=Object.keys(byAct).map(function(l){return {l:l,n:byAct[l]};}).sort(function(a,b){return b.n-a.n;});
-    h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Funnel</span><h2>Key actions</h2>'+(actList.length?('<div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:360px"><thead><tr><th>Action</th><th>Count</th></tr></thead><tbody>'+actList.map(function(t){return '<tr><td class="nm">'+esc(t.l)+'</td><td>'+t.n+'</td></tr>';}).join('')+'</tbody></table></div>'):'<p class="sub">No key actions tracked yet.</p>')+'</div>';
-    h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Engagement</span><h2>Most-clicked links &amp; actions</h2>'+(top.length?('<div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:420px"><thead><tr><th>Link / action</th><th>Clicks</th></tr></thead><tbody>'+top.map(function(t){return '<tr><td class="nm">'+esc(t.l)+'</td><td>'+t.n+'</td></tr>';}).join('')+'</tbody></table></div>'):'<p class="sub">No clicks tracked yet.</p>')+'</div>';
-    box.innerHTML=h;
+    h+='<div class="panel" style="margin-top:18px" data-collapsible><span class="section-eyebrow">Funnel</span><h2>Key actions</h2>'+(actList.length?('<div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:360px"><thead><tr><th>Action</th><th>Count</th></tr></thead><tbody>'+actList.map(function(t){return '<tr><td class="nm">'+esc(t.l)+'</td><td>'+t.n+'</td></tr>';}).join('')+'</tbody></table></div>'):'<p class="sub">No key actions tracked yet.</p>')+'</div>';
+    h+='<div class="panel" style="margin-top:18px" data-collapsible><span class="section-eyebrow">Engagement</span><h2>Most-clicked links &amp; actions</h2>'+(top.length?('<div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:420px"><thead><tr><th>Link / action</th><th>Clicks</th></tr></thead><tbody>'+top.map(function(t){return '<tr><td class="nm">'+esc(t.l)+'</td><td>'+t.n+'</td></tr>';}).join('')+'</tbody></table></div>'):'<p class="sub">No clicks tracked yet.</p>')+'</div>';
+    box.innerHTML=h; if(window.initCollapsibles)window.initCollapsibles();
   },function(){box.innerHTML='<div class="panel"><p class="sub">Network error loading analytics.</p></div>';});
 }
 function viewInsights(){
