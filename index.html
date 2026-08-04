@@ -902,11 +902,12 @@ svg.ic{width:24px;height:24px;}
     <p class="hint" id="authHint">Sign in to your EPE dashboard.</p>
     <form id="loginForm">
       <label id="nameRow" style="display:none;">Full name<input type="text" id="lname" autocomplete="name" placeholder="Your name"/></label>
-      <label>Email or demo login<input type="text" id="lemail" autocomplete="email" placeholder="you@example.com"/></label>
+      <label id="emailRow">Email or demo login<input type="text" id="lemail" autocomplete="email" placeholder="you@example.com"/></label>
       <label>Password<input type="password" id="lpass" autocomplete="current-password" placeholder="At least 6 characters"/></label>
       <p class="modal-err" id="loginErr"></p>
       <button type="submit" id="authSubmit" class="btn btn-gold btn-full" style="margin-top:18px;">Log in</button>
     </form>
+    <p class="demo-creds" id="forgotRow" style="margin-top:8px;"><a href="#" id="toForgot">Forgot your password?</a></p>
     <p class="demo-creds" id="authToggle">New here? <a href="#" id="toSignup">Create an account</a></p>
     <p class="demo-creds" style="margin-top:8px;">Demo (no account, password <b>password</b>): <b>user-demo</b> · <b>partner-demo</b> · <b>admin-demo</b></p>
   </div>
@@ -2551,16 +2552,28 @@ document.getElementById('loginClose').addEventListener('click',closeLogin);
 loginModal.addEventListener('click',function(e){if(e.target===loginModal)closeLogin();});
 var authMode='login';
 function setAuthMode(m){authMode=m;
-  document.getElementById('authTitle').textContent=(m==='signup')?'Create your account':'Log in';
-  document.getElementById('authHint').textContent=(m==='signup')?'Join EPE — it only takes a minute.':'Sign in to your EPE dashboard.';
-  document.getElementById('nameRow').style.display=(m==='signup')?'block':'none';
-  document.getElementById('authSubmit').textContent=(m==='signup')?'Sign up':'Log in';
-  document.getElementById('authToggle').innerHTML=(m==='signup')?'Already have an account? <a href="#" id="toLogin">Log in</a>':'New here? <a href="#" id="toSignup">Create an account</a>';
+  var signup=m==='signup', rec=m==='recovery';
+  document.getElementById('authTitle').textContent=rec?'Set a new password':(signup?'Create your account':'Log in');
+  document.getElementById('authHint').textContent=rec?'Choose a new password for your account.':(signup?'Join EPE — it only takes a minute.':'Sign in to your EPE dashboard.');
+  document.getElementById('nameRow').style.display=signup?'block':'none';
+  var emr=document.getElementById('emailRow'); if(emr)emr.style.display=rec?'none':'block';
+  var lp=document.getElementById('lpass'); if(lp)lp.placeholder=rec?'New password (min 6 characters)':'At least 6 characters';
+  document.getElementById('authSubmit').textContent=rec?'Update password':(signup?'Sign up':'Log in');
+  var tog=document.getElementById('authToggle'); tog.style.display=rec?'none':'block';
+  var fr=document.getElementById('forgotRow'); if(fr)fr.style.display=(m==='login')?'block':'none';
+  tog.innerHTML=signup?'Already have an account? <a href="#" id="toLogin">Log in</a>':'New here? <a href="#" id="toSignup">Create an account</a>';
   var er=document.getElementById('loginErr'); er.textContent=''; er.style.display='none';
 }
 setAuthMode('login');
+document.addEventListener('click',function(e){var f=e.target.closest('#toForgot');if(!f)return;e.preventDefault();
+  var email=(document.getElementById('lemail').value||'').trim();
+  if(!email){authErr('Enter your email above first, then tap Forgot your password?');return;}
+  var btn=document.getElementById('authSubmit'); btn.disabled=true;
+  sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname}).then(function(r){btn.disabled=false;if(r&&r.error){authErr(r.error.message);return;}var er=document.getElementById('loginErr');er.style.color='var(--sage)';er.textContent='Check your email for a password reset link.';er.style.display='block';},function(){btn.disabled=false;authErr('Network error — please try again.');});
+});
+if(window.sb&&sb.auth&&sb.auth.onAuthStateChange){sb.auth.onAuthStateChange(function(ev){if(ev==='PASSWORD_RECOVERY'){openLogin();setAuthMode('recovery');}});}
 document.getElementById('authToggle').addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;e.preventDefault();setAuthMode(a.id==='toSignup'?'signup':'login');});
-function authErr(msg){var el=document.getElementById('loginErr');el.textContent=msg;el.style.display='block';}
+function authErr(msg){var el=document.getElementById('loginErr');el.style.color='';el.textContent=msg;el.style.display='block';}
 function hideAllDash(){['dashboard','navdash','partnerdash','admin'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove('open');});document.body.style.overflow='';}
 function routeByRole(profile,member,email){
   hideAllDash();
@@ -2674,6 +2687,12 @@ document.getElementById('loginForm').addEventListener('submit',function(e){
   e.preventDefault();
   var email=document.getElementById('lemail').value.trim(),pass=document.getElementById('lpass').value,name=document.getElementById('lname').value.trim();
   var er=document.getElementById('loginErr'); er.style.display='none';
+  if(authMode==='recovery'){
+    if(!pass||pass.length<6){authErr('Enter a new password (at least 6 characters).');return;}
+    var rbtn=document.getElementById('authSubmit'); rbtn.disabled=true;
+    sb.auth.updateUser({password:pass}).then(function(r){if(r&&r.error){authErr(r.error.message);rbtn.disabled=false;return;}try{history.replaceState(null,'',location.pathname);}catch(x){}rbtn.disabled=false;afterAuth(true);},function(){authErr('Network error — please try again.');rbtn.disabled=false;});
+    return;
+  }
   if(!email||!pass){authErr('Please enter your email and password.');return;}
   if(authMode==='login'){
     var DEMO={'user-demo':'member','partner-demo':'partner','admin-demo':'admin'};
@@ -2698,7 +2717,7 @@ document.getElementById('loginForm').addEventListener('submit',function(e){
 });
 function epeLogout(){sb.auth.signOut().then(hideAllDash,hideAllDash);}
 ['logoutBtn','navLogout','partnerLogout','adminLogout'].forEach(function(id){var b=document.getElementById(id);if(b)b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();epeLogout();});});
-sb.auth.getSession().then(function(r){if(r&&r.data&&r.data.session){afterAuth(false);}});
+sb.auth.getSession().then(function(r){if(r&&r.data&&r.data.session){ if(location.hash.indexOf('type=recovery')<0) afterAuth(false); }});
 
 function jv(id){var e=document.getElementById(id);return e?(e.value||'').trim():'';}
 (function(){var jf=document.getElementById('joinForm');if(!jf)return;jf.addEventListener('submit',function(e){
