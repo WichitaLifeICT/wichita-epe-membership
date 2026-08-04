@@ -445,6 +445,10 @@ h2.sec.light{color:#fff;}
 .sup-link{color:var(--navy);font-weight:600;text-decoration:none;}
 .sup-link:hover{color:var(--sage);text-decoration:underline;}
 .tag-soon{background:rgba(14,39,69,.06)!important;color:var(--muted)!important;}
+.idea-h{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:4px 0 6px;}
+.idea-row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--cream-200);border-radius:10px;padding:8px 12px;margin-bottom:6px;font-size:14px;color:var(--navy);}
+.idea-x{background:none;border:none;color:var(--muted);font-size:18px;line-height:1;cursor:pointer;padding:0 2px;flex:none;}
+.idea-x:hover{color:var(--coral);}
 .chat-thread{max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:4px 2px;margin-bottom:10px;}
 .chat-msg{max-width:85%;padding:9px 12px;border-radius:14px;font-size:14px;line-height:1.45;}
 .chat-msg.me{align-self:flex-end;background:var(--navy);color:#fff;border-bottom-right-radius:4px;}
@@ -1007,8 +1011,9 @@ svg.ic{width:24px;height:24px;}
           <span class="section-eyebrow">EPE Rewards</span>
           <h2>Rewards coming soon…</h2>
           <p class="sub">What would <b>you</b> like to see — discounts or free food from your favorite local spots? Something else?</p>
-          <input class="pf-i" id="rewardWish" type="text" placeholder="I’d love to see…" style="margin-top:10px;"/>
-          <div style="margin-top:10px;"><button type="button" class="btn btn-gold btn-sm" id="rewardWishSave">Share idea</button><span class="sub" id="rewardWishMsg" style="margin-left:10px;"></span></div>
+          <div id="ideaList"></div>
+          <div class="chat-input" style="margin-top:10px;"><input class="pf-i" id="rewardWish" type="text" placeholder="I’d love to see…" autocomplete="off"/><button type="button" class="btn btn-gold btn-sm" id="rewardWishSave">Add</button></div>
+          <p class="sub" id="rewardWishMsg" style="margin-top:8px;"></p>
         </div>
       </div>
       <div>
@@ -1826,20 +1831,21 @@ function viewIdeas(){
 }
 function loadIdeas(){
   var box=document.getElementById('ideasBox'); if(!box)return;
-  try{
-    sb.from('members').select('reward_wish,solution_offer,want_help,profiles(full_name,email)').then(function(r){
-      if(!r||r.error||!r.data){box.innerHTML='<div class="panel"><p class="sub">Could not load. Make sure you are logged in as an admin.</p></div>';return;}
-      function esc(x){return String(x||'').replace(/[&<>]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':'&gt;';});}
-      function who(m){var p=m.profiles||{};return esc(p.full_name||'Member')+(p.email?' · <span style="color:var(--muted)">'+esc(p.email)+'</span>':'');}
-      var wishes=r.data.filter(function(m){return m.reward_wish&&(''+m.reward_wish).trim();});
-      var offers=r.data.filter(function(m){return m.solution_offer&&(''+m.solution_offer).trim();});
-      var h2='<div class="panel"><span class="section-eyebrow">EPE Rewards</span><h2>Reward ideas ('+wishes.length+')</h2>'+
-        (wishes.length?wishes.map(function(m){return '<div class="mini" style="margin-top:8px"><div class="mini-main"><div class="t">'+esc(m.reward_wish)+'</div><div class="d">'+who(m)+'</div></div></div>';}).join(''):'<p class="sub">No reward ideas submitted yet.</p>')+'</div>';
-      h2+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Provide a Solution</span><h2>Solutions members can offer ('+offers.length+')</h2>'+
-        (offers.length?offers.map(function(m){return '<div class="mini" style="margin-top:8px"><div class="mini-main"><div class="t">'+esc(m.solution_offer)+'</div><div class="d">'+who(m)+'</div></div></div>';}).join(''):'<p class="sub">No solution offers submitted yet.</p>')+'</div>';
-      box.innerHTML=h2;
-    },function(){box.innerHTML='<div class="panel"><p class="sub">Network error loading ideas.</p></div>';});
-  }catch(e){box.innerHTML='<div class="panel"><p class="sub">Could not load ideas.</p></div>';}
+  function esc(x){return String(x||'').replace(/[&<>]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':'&gt;';});}
+  function who(p){p=p||{};return esc(p.full_name||'Member')+(p.email?' · <span style="color:var(--muted)">'+esc(p.email)+'</span>':'');}
+  Promise.all([
+    sb.from('reward_ideas').select('body,created_at,profiles(full_name,email)').order('created_at',{ascending:false}),
+    sb.from('members').select('solution_offer,profiles(full_name,email)')
+  ]).then(function(res){
+    if((res[0]&&res[0].error)||(res[1]&&res[1].error)){box.innerHTML='<div class="panel"><p class="sub">Could not load. Make sure you are logged in as an admin (and that the reward_ideas table exists).</p></div>';return;}
+    var ideas=(res[0]&&res[0].data)||[];
+    var offers=((res[1]&&res[1].data)||[]).filter(function(m){return m.solution_offer&&(''+m.solution_offer).trim();});
+    var h2='<div class="panel"><span class="section-eyebrow">EPE Rewards</span><h2>Reward ideas ('+ideas.length+')</h2>'+
+      (ideas.length?ideas.map(function(m){return '<div class="mini" style="margin-top:8px"><div class="mini-main"><div class="t">'+esc(m.body)+'</div><div class="d">'+who(m.profiles)+'</div></div></div>';}).join(''):'<p class="sub">No reward ideas submitted yet.</p>')+'</div>';
+    h2+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Provide a Solution</span><h2>Solutions members can offer ('+offers.length+')</h2>'+
+      (offers.length?offers.map(function(m){return '<div class="mini" style="margin-top:8px"><div class="mini-main"><div class="t">'+esc(m.solution_offer)+'</div><div class="d">'+who(m.profiles)+'</div></div></div>';}).join(''):'<p class="sub">No solution offers submitted yet.</p>')+'</div>';
+    box.innerHTML=h2;
+  },function(){box.innerHTML='<div class="panel"><p class="sub">Network error loading ideas.</p></div>';});
 }
 function viewAnalytics(){
   var h=head('Analytics','Site traffic and engagement — views, unique visitors, and clicks (last 5,000 events).');
@@ -2688,12 +2694,20 @@ function loadLiveMember(profile){
 }
 function pfFillSeg(id,val,attr){var seg=document.getElementById(id);if(!seg)return;var bs=seg.querySelectorAll('.seg-btn');for(var i=0;i<bs.length;i++){bs[i].classList.toggle('active',bs[i].getAttribute(attr)===val);}}
 function pfToggleSolution(){var hpBtn=document.querySelector('#pfHelp .seg-btn.active');var hp=hpBtn?hpBtn.getAttribute('data-hp'):null;var w=document.getElementById('pfSolutionWrap');if(w)w.style.display=(hp==='give'||hp==='both')?'block':'none';}
-function saveRewardWish(){var el=document.getElementById('rewardWish'),msg=document.getElementById('rewardWishMsg');var v=(el&&el.value||'').trim();if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Demo mode — sign in to save.';return;}if(msg)msg.textContent='Saving…';sb.from('members').update({reward_wish:v}).eq('profile_id',CUR.uid).then(function(r){if(msg)msg.textContent=(r&&r.error)?'Could not save.':'Thanks — we hear you! \u2713';},function(){if(msg)msg.textContent='Network error — try again.';});}
-(function(){var b=document.getElementById('rewardWishSave');if(b)b.addEventListener('click',saveRewardWish);})();
+function renderIdeas(rows){var el=document.getElementById('ideaList');if(!el)return;if(!rows||!rows.length){el.innerHTML='';return;}el.innerHTML='<div class="idea-h">Your ideas</div>'+rows.map(function(x){return '<div class="idea-row"><span>'+chatEsc(x.body)+'</span><button type="button" class="idea-x" data-ideadel="'+x.id+'" aria-label="Delete idea">&times;</button></div>';}).join('');}
+function loadIdeasMine(){if(!CUR.live||!CUR.uid)return;sb.from('reward_ideas').select('id,body,created_at').eq('member_id',CUR.uid).order('created_at',{ascending:false}).then(function(r){if(r&&!r.error&&r.data)renderIdeas(r.data);});}
+function addRewardIdea(){var inp=document.getElementById('rewardWish'),msg=document.getElementById('rewardWishMsg');var body=(inp&&inp.value||'').trim();if(!body)return;if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Sign in to share an idea.';return;}inp.value='';if(msg)msg.textContent='';sb.from('reward_ideas').insert({member_id:CUR.uid,body:body}).then(function(r){if(r&&r.error){if(msg)msg.textContent='Could not save — try again.';return;}loadIdeasMine();try{logEvent('action','Reward idea shared');}catch(e){}},function(){if(msg)msg.textContent='Network error — try again.';});}
+(function(){
+  document.addEventListener('click',function(e){
+    if(e.target.closest('#rewardWishSave')){addRewardIdea();return;}
+    var d=e.target.closest('[data-ideadel]'); if(d&&CUR.live&&CUR.uid){sb.from('reward_ideas').delete().eq('id',d.getAttribute('data-ideadel')).then(function(){loadIdeasMine();});}
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target&&e.target.id==='rewardWish'){e.preventDefault();addRewardIdea();}});
+})();
 function loadProfileForm(){
   if(!CUR.live||!CUR.uid)return;
   sb.from('profiles').select('phone,zip').eq('id',CUR.uid).maybeSingle().then(function(p){var d=(p&&p.data)||{};var a=document.getElementById('pfPhone');if(a)a.value=d.phone||'';var b=document.getElementById('pfZip');if(b)b.value=d.zip||'';if(d.phone||d.zip){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
-  sb.from('members').select('want_help,employment_status,employment_detail,solution_offer,reward_wish').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfStatus',d.employment_status,'data-st');var dt=document.getElementById('pfDetail');if(dt)dt.value=d.employment_detail||'';var so=document.getElementById('pfSolution');if(so)so.value=d.solution_offer||'';var rw=document.getElementById('rewardWish');if(rw)rw.value=d.reward_wish||'';pfToggleSolution();if(d.want_help||d.employment_status||d.employment_detail||d.solution_offer){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
+  sb.from('members').select('want_help,employment_status,employment_detail,solution_offer,reward_wish').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfStatus',d.employment_status,'data-st');var dt=document.getElementById('pfDetail');if(dt)dt.value=d.employment_detail||'';var so=document.getElementById('pfSolution');if(so)so.value=d.solution_offer||'';loadIdeasMine();pfToggleSolution();if(d.want_help||d.employment_status||d.employment_detail||d.solution_offer){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
 }
 function saveProfile(){
   var msg=document.getElementById('pfMsg');
@@ -2759,7 +2773,7 @@ document.getElementById('loginForm').addEventListener('submit',function(e){
 });
 function epeLogout(){sb.auth.signOut().then(hideAllDash,hideAllDash);}
 ['logoutBtn','navLogout','partnerLogout','adminLogout'].forEach(function(id){var b=document.getElementById(id);if(b)b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();epeLogout();});});
-sb.auth.getSession().then(function(r){if(r&&r.data&&r.data.session){ if(location.hash.indexOf('type=recovery')<0) afterAuth(false); }});
+sb.auth.getSession().then(function(r){if(r&&r.data&&r.data.session){ if(location.hash.indexOf('type=recovery')<0) afterAuth(false); } else { try{logEvent('action','Visited (not logged in)');}catch(e){} }});
 
 function jv(id){var e=document.getElementById(id);return e?(e.value||'').trim():'';}
 (function(){var jf=document.getElementById('joinForm');if(!jf)return;jf.addEventListener('submit',function(e){
@@ -2936,11 +2950,15 @@ document.addEventListener('click',function(e){var t=e.target.closest('#startAsse
 /* ---------- lightweight analytics ---------- */
 function epeVid(){try{var k='epe_vid',v=localStorage.getItem(k);if(!v){v=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('v'+Math.random().toString(36).slice(2)+(+new Date()));localStorage.setItem(k,v);}return v;}catch(e){return 'anon';}}
 function logEvent(type,label){try{if(!window.sb)return;sb.from('events').insert({type:type,visitor:epeVid(),label:String(label||'').slice(0,180),path:String(location.hash||location.pathname||'/').slice(0,120)});}catch(e){}}
-(function(){ try{logEvent('view','pageview');}catch(e){}
+(function(){ try{logEvent('view','Main page');}catch(e){}
   document.addEventListener('click',function(e){
     var a=e.target.closest('a[href]');
     if(a){var href=a.getAttribute('href')||'';if(/^(https?:|mailto:)/i.test(href)){logEvent('click',((a.textContent||href).replace(/\s+/g,' ').trim().slice(0,120))||href);return;}}
-    var d=e.target.closest('[data-track]'); if(d){logEvent('click',d.getAttribute('data-track'));}
+    var d=e.target.closest('[data-track]'); if(d){logEvent('click',d.getAttribute('data-track'));return;}
+    if(!e.target.closest('.dash')){
+      var el=e.target.closest('.btn, .choose, .nav-links a, .nav-dd-menu a, .mobile-menu a, a[href^="#"]');
+      if(el){var t=(el.textContent||'').replace(/\s+/g,' ').trim().slice(0,60); if(t)logEvent('click',t);}
+    }
   },true);
 })();
 /* ---------- session time tracking ---------- */
