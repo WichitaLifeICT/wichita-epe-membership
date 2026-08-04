@@ -2631,7 +2631,7 @@ function routeByRole(profile,member,email){
     loadLiveMember(profile); loadEssScores();
   }
 }
-function renderMemberSince(){var el=document.getElementById('memberSince');if(!el)return;var j=CUR.joined;if(!j){el.textContent='';return;}var d=new Date(j);if(isNaN(d.getTime())){el.textContent='';return;}var days=Math.max(0,Math.floor((Date.now()-d.getTime())/86400000));el.innerHTML='<b>EPE Membership</b> since '+d.toLocaleDateString()+' \u00b7 '+days+' day'+(days===1?'':'s');}
+function renderMemberSince(){var el=document.getElementById('memberSince');if(!el)return;var j=CUR.joined||CUR.authCreated;if(!j){el.textContent='';return;}var d=new Date(j);if(isNaN(d.getTime())){el.textContent='';return;}var days=Math.max(0,Math.floor((Date.now()-d.getTime())/86400000));el.innerHTML='<b>EPE Membership</b> since '+d.toLocaleDateString()+' \u00b7 '+days+' day'+(days===1?'':'s');}
 function applyLiveMember(mem,profile){
   var st=CUR.stars||0;
   var ds=document.getElementById('dashStars'); if(ds)ds.innerHTML='&#9733; '+st;
@@ -2715,7 +2715,7 @@ function openDemo(role){
 function afterAuth(fresh){logEvent('action','Signed in');
   return sb.auth.getUser().then(function(res){
     var u=res.data&&res.data.user; if(!u)return;
-    CUR.live=true; CUR.uid=u.id; CUR.email=u.email; startSession(fresh);
+    CUR.live=true; CUR.uid=u.id; CUR.email=u.email; CUR.authCreated=u.created_at||null; startSession(fresh);
     return sb.from('profiles').select('full_name,role').eq('id',u.id).maybeSingle().then(function(p){
       var profile=(p&&p.data)||{role:'member',full_name:(u.user_metadata&&u.user_metadata.full_name)||''};
       return sb.from('members').select('level,stars').eq('profile_id',u.id).maybeSingle().then(function(m){
