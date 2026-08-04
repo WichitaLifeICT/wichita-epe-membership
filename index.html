@@ -286,7 +286,7 @@ h2.sec.light{color:#fff;}
 .demo-creds{margin-top:14px;font-size:12px;color:var(--navy-300);background:var(--cream-200);border-radius:8px;padding:8px 10px;}
 
 /* ===== dashboard ===== */
-.dash{position:fixed;inset:0;z-index:200;display:none;overflow-y:auto;background:var(--cream);}
+.dash{position:fixed;inset:0;z-index:200;display:none;overflow-y:auto;overflow-x:hidden;background:var(--cream);}
 .dash.open{display:block;}
 .dash-bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 1.25rem;background:var(--navy);color:var(--cream);}
 .dash-bar .brand-name{color:var(--cream);}
@@ -301,6 +301,14 @@ h2.sec.light{color:#fff;}
 @media(min-width:900px){.dash-grid{grid-template-columns:1.6fr 1fr;}}
 .panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
 .panel+.panel{margin-top:20px;}
+@media(max-width:520px){
+  .dash-wrap{padding:20px 14px 72px;}
+  .panel{padding:18px 15px;}
+  .dash-bar{padding:0 14px;}
+  .dash-wrap h1{font-size:26px;}
+  .a-results,.a-rcard{min-width:0;}
+  .prow{padding:11px 10px;}
+}
 .panel h2{font-family:var(--display);font-weight:600;font-size:18px;color:var(--navy);margin-top:4px;}
 .panel .sub{font-size:13px;color:var(--muted);margin-top:4px;}
 .section-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--sage);}
@@ -457,6 +465,20 @@ h2.sec.light{color:#fff;}
 .ascale-lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:6px;}
 .a-input{width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-size:14px;font-family:var(--sans);color:var(--ink);background:#fff;}
 .a-nav{display:flex;justify-content:space-between;gap:12px;margin-top:32px;}
+.a-nav-r{display:flex;gap:10px;align-items:center;}
+.ins-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+@media(max-width:640px){.ins-tiles{grid-template-columns:1fr;}}
+.ins-tile{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;}
+.ins-tile .v{font-size:26px;font-weight:700;color:var(--navy);font-family:var(--display);}
+.ins-tile .l{font-size:12px;color:var(--muted);margin-top:2px;}
+.ins-ess{margin-top:12px;}
+.ins-ess-h{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:var(--navy);gap:10px;}
+.ins-bar{display:flex;height:10px;border-radius:6px;overflow:hidden;margin-top:6px;background:var(--cream-200);}
+.ins-bar>span{display:block;height:100%;}
+.ins-legend{font-size:11px;color:var(--muted);margin-top:4px;}
+.ins-filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px;}
+.ins-filters select{border:1px solid var(--border);border-radius:8px;padding:7px 10px;font-size:13px;font-family:var(--sans);background:#fff;color:var(--navy);}
+.ins-count{font-size:12px;color:var(--muted);margin-left:auto;}
 .assess-prog-inline{position:static;top:auto;height:6px;border-radius:4px;overflow:hidden;margin:14px 0 4px;}
 #assessInline .a-wrap{max-width:none;margin:0;padding:4px 0 0;}
 #assessInline .a-h1{font-size:22px;}
@@ -1345,11 +1367,10 @@ function renderDash(){
   var prKeys=orderedPriorities().map(function(l){return PRIO2KEY[l];}).filter(Boolean);
   var focus=prKeys.filter(function(k){return ESS_STEPS[k]&&ESS_STEPS[k].length;}).slice(0,4);
   document.getElementById('prioList').innerHTML = focus.length ? focus.map(function(k,i){
-    var step=ESS_STEPS[k][0];
     var st=_sc?essStatus(_sc[k]):null;
     var cc=st?(st.c==='muted'?'amber':st.c):'';
     var pill=st?' <span class="a-pill p-'+cc+'" style="font-size:11px;vertical-align:middle;margin-left:6px;">'+st.t+'</span>':'';
-    var act=step.u?('<a class="step-link" href="'+step.u+'" target="_blank" rel="noopener"><span class="lbl">'+step.t+'</span><span class="step-go">Start ↗</span></a>'):('<div class="step-note">'+step.t+'</div>');
+    var act=ESS_STEPS[k].map(function(step){return step.u?('<a class="step-link" href="'+step.u+'" target="_blank" rel="noopener"><span class="lbl">'+step.t+'</span><span class="step-go">Start ↗</span></a>'):('<div class="step-note">'+step.t+'</div>');}).join('');
     var sol=(SOLUTION_LINKS[k])?'<a class="prio-sol" href="'+SOLUTION_LINKS[k]+'" target="_blank" rel="noopener">Explore more solutions ↗</a>':'';
     return '<div class="prio"><h3><span class="prio-rank">'+(i+1)+'</span>'+FNAMES[k]+pill+'</h3><div class="actions-list">'+act+'</div>'+sol+'</div>';
   }).join('') : '<p class="sub">Set your priorities in <b>Your goals</b> to see your focus steps.</p>';
@@ -1585,7 +1606,7 @@ var STATE_TXT=['Needs support','Working on it','Thriving'];
 
 /* roles -> which modules they can open + label */
 var AROLES={
-  super:{label:'Super Admin',views:['home','members','ideas','referrals','solutions','stars','impact','content','notifications','settings']},
+  super:{label:'Super Admin',views:['home','members','insights','analytics','ideas','referrals','solutions','stars','impact','content','notifications','settings']},
   navigator:{label:'Navigator',views:['home','members','referrals','stars']},
   partner:{label:'Partner Org',views:['referrals']},
   board:{label:'Read-Only / Board',views:['home','impact']}
@@ -1594,7 +1615,7 @@ var NAVMETA={
   home:['Dashboard','grid'], members:['Members CRM','people'], queue:['Navigator Queue','flag'],
   thrive:['Thrive Analytics','chart'], referrals:['Partner Referrals','link'], solutions:['Bank of Solutions','bank'],
   stars:['Stars & Rewards','star'], impact:['Impact (Board)','trophy'], content:['Site Content','edit'],
-  notifications:['Notifications','bell'], settings:['Settings','gear'], ideas:['Ideas & Offers','bell']
+  notifications:['Notifications','bell'], settings:['Settings','gear'], ideas:['Ideas & Offers','bell'], insights:['Member Insights','chart'], analytics:['Analytics','chart']
 };
 var AICONS={
   grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
@@ -1801,6 +1822,109 @@ function loadIdeas(){
     },function(){box.innerHTML='<div class="panel"><p class="sub">Network error loading ideas.</p></div>';});
   }catch(e){box.innerHTML='<div class="panel"><p class="sub">Could not load ideas.</p></div>';}
 }
+function viewAnalytics(){
+  var h=head('Analytics','Site traffic and engagement — views, unique visitors, and clicks (last 5,000 events).');
+  h+='<div id="anaBox"><p class="sub">Loading…</p></div>';
+  return h;
+}
+function loadAnalytics(){
+  var box=document.getElementById('anaBox'); if(!box)return;
+  function esc(x){return String(x==null?'':x).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':'&gt;';});}
+  box.innerHTML='<p class="sub">Loading…</p>';
+  sb.from('events').select('type,visitor,label,created_at').order('created_at',{ascending:false}).limit(5000).then(function(r){
+    if(!r||r.error||!r.data){box.innerHTML='<div class="panel"><p class="sub">Could not load — admin login required, and make sure the <b>events</b> table exists.</p></div>';return;}
+    var ev=r.data;
+    var views=ev.filter(function(x){return x.type==='view';});
+    var clicks=ev.filter(function(x){return x.type==='click';});
+    var actions=ev.filter(function(x){return x.type==='action';});
+    var uniq={}; ev.forEach(function(x){if(x.visitor)uniq[x.visitor]=1;});
+    var since=Date.now()-7*864e5;
+    function recent(a){return a.filter(function(x){var t=new Date(x.created_at).getTime();return t>=since;}).length;}
+    var byLabel={}; clicks.forEach(function(x){var l=x.label||'(unlabeled)';byLabel[l]=(byLabel[l]||0)+1;});
+    var top=Object.keys(byLabel).map(function(l){return {l:l,n:byLabel[l]};}).sort(function(a,b){return b.n-a.n;}).slice(0,15);
+    var h='<div class="ins-tiles"><div class="ins-tile"><div class="v">'+views.length+'</div><div class="l">Total views</div></div><div class="ins-tile"><div class="v">'+Object.keys(uniq).length+'</div><div class="l">Unique visitors</div></div><div class="ins-tile"><div class="v">'+clicks.length+'</div><div class="l">Total clicks</div></div></div>';
+    h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Last 7 days</span><h2>Recent activity</h2><p class="sub">'+recent(views)+' views \u00b7 '+recent(clicks)+' clicks</p></div>';
+    var byAct={};actions.forEach(function(x){var l=x.label||'(action)';byAct[l]=(byAct[l]||0)+1;});var actList=Object.keys(byAct).map(function(l){return {l:l,n:byAct[l]};}).sort(function(a,b){return b.n-a.n;});
+    h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Funnel</span><h2>Key actions</h2>'+(actList.length?('<div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:360px"><thead><tr><th>Action</th><th>Count</th></tr></thead><tbody>'+actList.map(function(t){return '<tr><td class="nm">'+esc(t.l)+'</td><td>'+t.n+'</td></tr>';}).join('')+'</tbody></table></div>'):'<p class="sub">No key actions tracked yet.</p>')+'</div>';
+    h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Engagement</span><h2>Most-clicked links &amp; actions</h2>'+(top.length?('<div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:420px"><thead><tr><th>Link / action</th><th>Clicks</th></tr></thead><tbody>'+top.map(function(t){return '<tr><td class="nm">'+esc(t.l)+'</td><td>'+t.n+'</td></tr>';}).join('')+'</tbody></table></div>'):'<p class="sub">No clicks tracked yet.</p>')+'</div>';
+    box.innerHTML=h;
+  },function(){box.innerHTML='<div class="panel"><p class="sub">Network error loading analytics.</p></div>';});
+}
+function viewInsights(){
+  var h=head('Member Insights','Aggregate 7 Human Essentials data across every member — filter, export, and dive into any individual check-in.');
+  h+='<div id="insBox"><p class="sub">Loading…</p></div>';
+  return h;
+}
+function _insEsc(x){return String(x==null?'':x).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':'&gt;';});}
+function _insDt(x){try{return new Date(x).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});}catch(e){return '';}}
+function _insDur(sec){sec=sec||0;var h=Math.floor(sec/3600),m=Math.round((sec%3600)/60);return h?(h+'h '+m+'m'):(m?(m+'m'):(sec>0?'<1m':'—'));}
+function _insPass(r){var f=window._insFlt||{};if(f.zip&&r.zip!==f.zip)return false;if(f.prio){var tp=(r.a&&r.a.priority)?String(r.a.priority).split(',')[0].trim():'';if(tp!==f.prio)return false;}if(f.need){var e=ESS7.filter(function(x){return x.name===f.need;})[0];if(e){if(!(r.a&&r.a.scores))return false;if(essStatus(r.a.scores[e.key]).c!=='red')return false;}}return true;}
+function loadInsights(){
+  window._insMember=null; window._insFlt={zip:'',prio:'',need:''};
+  var box=document.getElementById('insBox'); if(box)box.innerHTML='<p class="sub">Loading…</p>';
+  Promise.all([
+    sb.from('members').select('profile_id,level,joined_at,profiles(full_name,email,zip)'),
+    sb.from('essential_assessments').select('member_id,answers,scores,priority,created_at').order('created_at',{ascending:false}),
+    sb.from('sessions').select('uid,seconds,last_seen,kind')
+  ]).then(function(res){
+    var box=document.getElementById('insBox'); if(!box)return;
+    var mres=res[0],ares=res[1];
+    if((mres&&mres.error)||(ares&&ares.error)){box.innerHTML='<div class="panel"><p class="sub">Could not load — make sure you are logged in as an admin.</p></div>';return;}
+    var latest={}; ((ares&&ares.data)||[]).forEach(function(a){if(!latest[a.member_id])latest[a.member_id]=a;});
+    var sagg={}; ((res[2]&&res[2].data)||[]).forEach(function(x){if(!x.uid)return;var g=sagg[x.uid]||(sagg[x.uid]={logins:0,seconds:0,last:null});if(x.kind!=='resume')g.logins++;g.seconds+=(x.seconds||0);if(x.last_seen&&(!g.last||x.last_seen>g.last))g.last=x.last_seen;});
+    window._insRows=((mres&&mres.data)||[]).map(function(m){var p=m.profiles||{};return {id:m.profile_id,name:p.full_name||'Member',email:p.email||'',zip:p.zip||'',level:m.level||'basic',a:latest[m.profile_id],sess:sagg[m.profile_id]};});
+    showInsights();
+  },function(){var box=document.getElementById('insBox'); if(box)box.innerHTML='<div class="panel"><p class="sub">Network error loading insights.</p></div>';});
+}
+function insExportCsv(){
+  var rows=(window._insRows||[]).filter(_insPass);
+  var cols=['Name','Email','ZIP','Level','Top priority','Needs attention','Logins','Time (min)'].concat(ESS7.map(function(e){return e.name;})).concat(['Last check-in']);
+  var lines=[cols.join(',')];
+  rows.forEach(function(r){var sc=r.a&&r.a.scores;var tp=(r.a&&r.a.priority)?String(r.a.priority).split(',')[0].trim():'';var need=sc?ESS7.filter(function(e){return essStatus(sc[e.key]).c==='red';}).length:'';
+    var cells=[r.name,r.email,r.zip,(r.level==='gold'?'Gold':'Basic'),tp,need,(r.sess?r.sess.logins:0),(r.sess?Math.round(r.sess.seconds/60):0)].concat(ESS7.map(function(e){return sc?essStatus(sc[e.key]).t:'';})).concat([r.a?_insDt(r.a.created_at):'']);
+    lines.push(cells.map(function(c){c=String(c==null?'':c);return /[",\n]/.test(c)?('"'+c.replace(/"/g,'""')+'"'):c;}).join(','));});
+  var a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(lines.join('\n'));a.download='member-insights.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);
+}
+function showInsights(){
+  var box=document.getElementById('insBox'); if(!box)return;
+  if(!window._insRows){loadInsights();return;}
+  var rows=window._insRows,cc=function(st){return st.c==='muted'?'amber':st.c;};
+  if(window._insMember){
+    var r=rows.filter(function(x){return x.id===window._insMember;})[0];
+    var h='<button class="btn btn-outline btn-sm" data-insback>\u2190 All members</button>';
+    if(!r){box.innerHTML=h+'<p class="sub" style="margin-top:12px">Member not found.</p>';return;}
+    var a=r.a,sc=a&&a.scores;
+    h+='<div class="panel" style="margin-top:12px"><span class="section-eyebrow">Member</span><h2>'+_insEsc(r.name)+'</h2><p class="sub">'+_insEsc(r.email)+(r.zip?' \u00b7 '+_insEsc(r.zip):'')+' \u00b7 '+(r.level==='gold'?'Gold':'Basic')+' Member'+(a?(' \u00b7 checked in '+_insDt(a.created_at)):'')+'</p>'+(r.sess?('<p class="sub" style="margin-top:4px"><b>'+r.sess.logins+'</b> logins · <b>'+_insDur(r.sess.seconds)+'</b> total time'+(r.sess.last?(' · last active '+_insDt(r.sess.last)):'')+'</p>'):'');
+    if(sc){
+      h+='<p class="grouplabel" style="margin-top:16px">7 Human Essentials</p>'+ESS7.map(function(e){var pct=sc[e.key];var st=essStatus(pct);var c=cc(st);return '<div class="ins-ess"><div class="ins-ess-h"><span>'+e.name+'</span><span class="a-pill p-'+c+'">'+st.t+'</span></div><div class="a-bar"><span class="bg-'+c+'" style="width:'+(pct==null?0:pct)+'%"></span></div></div>';}).join('');
+      var prio=a.answers&&a.answers._priority; if(prio)h+='<p class="grouplabel" style="margin-top:16px">Priorities</p><p class="sub">'+_insEsc(Array.isArray(prio)?prio.join(' \u203a '):prio)+'</p>';
+      var goals=(a.answers&&a.answers._goals)||[]; if(goals.length)h+='<p class="grouplabel" style="margin-top:16px">Goals</p><p class="sub">'+goals.map(_insEsc).join(' \u00b7 ')+'</p>';
+    } else { h+='<p class="sub" style="margin-top:12px">No check-in completed yet.</p>'; }
+    h+='</div>'; box.innerHTML=h; return;
+  }
+  var withc=rows.filter(function(r){return r.a&&r.a.scores;});
+  var agg={}; ESS7.forEach(function(e){agg[e.key]={red:0,amber:0,green:0,n:0};});
+  var needsTotal=0;
+  withc.forEach(function(r){var need=0;ESS7.forEach(function(e){var pct=r.a.scores[e.key];if(pct==null)return;var st=essStatus(pct),c=cc(st);agg[e.key][c]++;agg[e.key].n++;if(c==='red')need++;});needsTotal+=need;});
+  var avgNeed=withc.length?(needsTotal/withc.length).toFixed(1):'0';
+  var h='<div class="ins-tiles"><div class="ins-tile"><div class="v">'+rows.length+'</div><div class="l">Members</div></div><div class="ins-tile"><div class="v">'+withc.length+'</div><div class="l">Completed check-in</div></div><div class="ins-tile"><div class="v">'+avgNeed+'</div><div class="l">Avg. areas needing attention</div></div></div>';
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">By Essential</span><h2>Where members stand</h2>'+
+    ESS7.map(function(e){var g=agg[e.key],tot=g.n||1;return '<div class="ins-ess"><div class="ins-ess-h"><span>'+e.name+'</span><span class="sub" style="font-weight:500">'+g.n+' assessed</span></div><div class="ins-bar"><span class="bg-red" style="width:'+(g.red/tot*100)+'%"></span><span class="bg-amber" style="width:'+(g.amber/tot*100)+'%"></span><span class="bg-green" style="width:'+(g.green/tot*100)+'%"></span></div><div class="ins-legend">'+g.red+' need attention \u00b7 '+g.amber+' opportunity \u00b7 '+g.green+' strength</div></div>';}).join('')+'</div>';
+  var zips=[]; rows.forEach(function(r){if(r.zip&&zips.indexOf(r.zip)<0)zips.push(r.zip);}); zips.sort();
+  var f=window._insFlt||{};
+  var filtered=rows.filter(_insPass);
+  var fbar='<div class="ins-filters">'+
+    '<select id="insZip"><option value="">All ZIPs</option>'+zips.map(function(z){return '<option value="'+z+'"'+(f.zip===z?' selected':'')+'>'+z+'</option>';}).join('')+'</select>'+
+    '<select id="insPrio"><option value="">Any top priority</option>'+PRIORITY_OPTS.map(function(p){return '<option value="'+p+'"'+(f.prio===p?' selected':'')+'>Priority: '+p+'</option>';}).join('')+'</select>'+
+    '<select id="insNeed"><option value="">Any Essential</option>'+ESS7.map(function(e){return '<option value="'+e.name+'"'+(f.need===e.name?' selected':'')+'>Needs attention: '+e.name+'</option>';}).join('')+'</select>'+
+    '<button class="btn btn-outline btn-sm" id="insCsv">Export CSV</button>'+
+    '<span class="ins-count">'+filtered.length+' of '+rows.length+'</span></div>';
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Members</span><h2>Individual check-ins</h2>'+fbar+
+    '<div class="tbl-wrap"><table class="tbl" style="min-width:640px"><thead><tr><th>Name</th><th>Top priority</th><th>Needs attention</th><th>Logins</th><th>Time</th><th>Last check-in</th><th></th></tr></thead><tbody>'+
+    (filtered.length?filtered.map(function(r){var need=(r.a&&r.a.scores)?ESS7.filter(function(e){return essStatus(r.a.scores[e.key]).c==='red';}).length:'\u2014';var prio=(r.a&&r.a.priority)?String(r.a.priority).split(',')[0]:'\u2014';var date=r.a?_insDt(r.a.created_at):'No check-in';return '<tr><td class="nm">'+_insEsc(r.name)+'<div style="font-size:11px;color:var(--muted)">'+_insEsc(r.email)+'</div></td><td>'+_insEsc(prio)+'</td><td>'+need+'</td><td>'+(r.sess?r.sess.logins:0)+'</td><td>'+(r.sess?_insDur(r.sess.seconds):'—')+'</td><td>'+date+'</td><td>'+(r.a?'<button class="rowact" data-insmem="'+r.id+'">View</button>':'')+'</td></tr>';}).join(''):'<tr><td colspan="7" style="color:var(--muted)">No members match these filters.</td></tr>')+
+    '</tbody></table></div></div>';
+  box.innerHTML=h;
+}
 function renderView(){
   var v=ADMIN.view,h='';
   if(ADMIN.openId)h=viewProfile(memberById(ADMIN.openId));
@@ -1816,8 +1940,12 @@ function renderView(){
   else if(v==='notifications')h=viewNotifs();
   else if(v==='settings')h=viewSettings();
   else if(v==='ideas')h=viewIdeas();
+  else if(v==='insights')h=viewInsights();
+  else if(v==='analytics')h=viewAnalytics();
   document.getElementById('admView').innerHTML=h;
   if(v==='ideas')loadIdeas();
+  if(v==='insights')loadInsights();
+  if(v==='analytics')loadAnalytics();
 }
 function head(title,sub,right){
   return '<div class="av-head"><div><div class="av-title">'+title+'</div>'+(sub?'<div class="av-sub">'+sub+'</div>':'')+'</div>'+(right?'<div>'+right+'</div>':'')+'</div>';
@@ -2223,6 +2351,9 @@ document.getElementById('admView').addEventListener('click',function(e){
   if((el2=t.closest('[data-delb]'))){var id=el2.getAttribute('data-delb');if(window._editBenefit===id)window._editBenefit=null;sb.from('solutions').delete().eq('id',id).then(function(){loadSolutions(function(){renderView();});},function(){loadSolutions(function(){renderView();});});return;}
   if((el2=t.closest('[data-editb]'))){window._editBenefit=el2.getAttribute('data-editb');renderView();return;}
   if(t.closest('#bReset')){window._editBenefit=null;renderView();return;}
+  if((el2=t.closest('[data-insmem]'))){window._insMember=el2.getAttribute('data-insmem');showInsights();return;}
+  if(t.closest('[data-insback]')){window._insMember=null;showInsights();return;}
+  if(t.closest('#insCsv')){insExportCsv();return;}
   if(t.closest('#seedSol')){var sb0=t.closest('#seedSol');sb0.textContent='Importing…';seedSolutions(function(){renderView();});return;}
   if((el2=t.closest('[data-delr]'))){var id2=el2.getAttribute('data-delr');STORE.rewards=STORE.rewards.filter(function(x){return x.id!==id2;});saveStore();renderView();return;}
   if((el2=t.closest('[data-ptoggle]'))){var p=partnerById(el2.getAttribute('data-ptoggle'));if(p)p.active=!p.active;renderView();return;}
@@ -2239,6 +2370,7 @@ document.getElementById('admView').addEventListener('change',function(e){
   var t=e.target,el2;
   if((el2=t.closest('[data-sel]'))){ADMIN.sel[el2.getAttribute('data-sel')]=t.checked;renderView();return;}
   if((el2=t.closest('[data-refstat]'))){var r=REFERRALS.filter(function(x){return x.id===el2.getAttribute('data-refstat');})[0];if(r){r.status=t.value;saveRefs();renderView();}return;}
+  if(['insZip','insPrio','insNeed'].indexOf(t.id)>=0){window._insFlt=window._insFlt||{};window._insFlt[t.id==='insZip'?'zip':t.id==='insPrio'?'prio':'need']=t.value;showInsights();return;}
   if(['fQ','fZip','fLevel','fStatus','fNav'].indexOf(t.id)>=0){applyFilters();return;}
 });
 document.getElementById('admView').addEventListener('input',function(e){
@@ -2511,7 +2643,7 @@ function saveProfile(){
   var st=stBtn?stBtn.getAttribute('data-st'):null,hp=hpBtn?hpBtn.getAttribute('data-hp'):null;
   var detail=(document.getElementById('pfDetail').value||'').trim();
   var soEl=document.getElementById('pfSolution');var solution=(soEl&&soEl.value||'').trim();
-  if(msg)msg.textContent='Saving…';
+  if(msg)msg.textContent='Saving…'; logEvent('action','Profile saved');
   Promise.all([
     sb.from('profiles').update({phone:phone,zip:zip}).eq('id',CUR.uid),
     sb.from('members').update({want_help:hp,employment_status:st,employment_detail:detail,solution_offer:solution}).eq('profile_id',CUR.uid)
@@ -2526,10 +2658,10 @@ function openDemo(role){
   else if(role==='partner'){document.getElementById('partnerdash').classList.add('open');document.body.style.overflow='hidden';renderPartner();}
   else {document.getElementById('dashHello').textContent='Welcome back, User (Demo)';var ld=document.querySelector('#dashboard .lead');if(ld)ld.textContent='Demo mode — sample data, no account.';document.getElementById('dashboard').classList.add('open');document.body.style.overflow='hidden';DASH.tlImported=false;DASH.tlChoice=null;DASH.tlIndicators=[];renderDash();renderOnboard();}
 }
-function afterAuth(){
+function afterAuth(fresh){logEvent('action','Signed in');
   return sb.auth.getUser().then(function(res){
     var u=res.data&&res.data.user; if(!u)return;
-    CUR.live=true; CUR.uid=u.id; CUR.email=u.email;
+    CUR.live=true; CUR.uid=u.id; CUR.email=u.email; startSession(fresh);
     return sb.from('profiles').select('full_name,role').eq('id',u.id).maybeSingle().then(function(p){
       var profile=(p&&p.data)||{role:'member',full_name:(u.user_metadata&&u.user_metadata.full_name)||''};
       return sb.from('members').select('level,stars').eq('profile_id',u.id).maybeSingle().then(function(m){
@@ -2555,18 +2687,18 @@ document.getElementById('loginForm').addEventListener('submit',function(e){
     sb.auth.signUp({email:email,password:pass,options:{data:{full_name:name,source:'website'}}}).then(function(r){
       if(r.error){authErr(r.error.message);done();return;}
       if(!r.data.session){authErr('Account created — check your email to confirm, then log in.');setAuthMode('login');done();return;}
-      afterAuth().then(done,done);
+      afterAuth(true).then(done,done);
     },function(e2){authErr('Network error — please try again.');done();});
   } else {
     sb.auth.signInWithPassword({email:email,password:pass}).then(function(r){
       if(r.error){authErr(r.error.message);done();return;}
-      afterAuth().then(done,done);
+      afterAuth(true).then(done,done);
     },function(e2){authErr('Network error — please try again.');done();});
   }
 });
 function epeLogout(){sb.auth.signOut().then(hideAllDash,hideAllDash);}
 ['logoutBtn','navLogout','partnerLogout','adminLogout'].forEach(function(id){var b=document.getElementById(id);if(b)b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();epeLogout();});});
-sb.auth.getSession().then(function(r){if(r&&r.data&&r.data.session){afterAuth();}});
+sb.auth.getSession().then(function(r){if(r&&r.data&&r.data.session){afterAuth(false);}});
 
 function jv(id){var e=document.getElementById(id);return e?(e.value||'').trim():'';}
 (function(){var jf=document.getElementById('joinForm');if(!jf)return;jf.addEventListener('submit',function(e){
@@ -2575,12 +2707,12 @@ function jv(id){var e=document.getElementById(id);return e?(e.value||'').trim():
   var cb=document.querySelector('#jContact .seg-btn.active');var contact=cb?(cb.getAttribute('data-val')==='yes'):true;
   var er=document.getElementById('joinErr');er.style.display='none';er.textContent='';
   if(!name||!email||!pass){er.textContent='Please enter your name, email, and a password.';er.style.display='block';return;}
-  var btn=jf.querySelector('button[type=submit]');btn.disabled=true;
+  logEvent('action','Signup submitted'); var btn=jf.querySelector('button[type=submit]');btn.disabled=true;
   sb.auth.signUp({email:email,password:pass,options:{data:{full_name:name,source:'website'}}}).then(function(r){
     if(r.error){er.textContent=r.error.message;er.style.display='block';btn.disabled=false;return;}
     if(!r.data.session){er.textContent='Account created — check your email to confirm, then log in.';er.style.display='block';btn.disabled=false;return;}
     var uid=r.data.user.id;
-    Promise.all([sb.from('profiles').update({phone:phone,zip:zip}).eq('id',uid),sb.from('members').update({personal_contact:contact}).eq('profile_id',uid)]).then(function(){btn.disabled=false;afterAuth();},function(){btn.disabled=false;afterAuth();});
+    Promise.all([sb.from('profiles').update({phone:phone,zip:zip}).eq('id',uid),sb.from('members').update({personal_contact:contact}).eq('profile_id',uid)]).then(function(){btn.disabled=false;afterAuth(true);},function(){btn.disabled=false;afterAuth(true);});
   },function(){er.textContent='Network error — please try again.';er.style.display='block';btn.disabled=false;});
 });})();
 
@@ -2649,7 +2781,7 @@ var ESS_STEPS={
  transportation:[{t:'Connect with transportation support',u:'https://wichita-transportation-solutions.netlify.app/#find-a-fit'}],
  financial:[{t:'Save Match Grow (Empower)',u:'https://empowernorthend.org/event/save-match-grow/'},{t:'Micro loans (instead of payday loans)',u:'mailto:info@empowernorthend.org?subject=I%20am%20interested%20in%20a%20microloan'}],
  housing:[{t:'Talk with a housing navigator (Hope CDC)',u:'https://hopecdc.org/'}],
- economic:[{t:'Explore jobs & workforce support',u:''}],
+ economic:[{t:'Empower Career Path Discovery',u:'https://wsutech.edu/financialaid/'},{t:'WSU Tech',u:'https://wsutech.edu/financialaid/'}],
  education:[{t:'Find education & training options',u:''}],
  health:[{t:'Connect with health & wellness resources',u:''}],
  relationships:[{t:'Find community & connection',u:''}]
@@ -2667,7 +2799,7 @@ function renderQ(q){var v=ANS[q.id];var h='<div class="aq"><p class="aq-t">'+q.t
   else{var opts=q.type==='yn'?['Yes','No']:q.opts;h+='<div class="aopts">';opts.forEach(function(o){h+='<button type="button" class="aopt'+(v===o?' active':'')+'" data-q="'+q.id+'" data-v="'+aEsc(o)+'">'+o+'</button>';});h+='</div>';}
   return h+'</div>';}
 function essNav(cur){var S={transportation:'Transportation',financial:'Financial',housing:'Affordable Housing',economic:'Economic',education:'Education',health:'Health',relationships:'Relationships'};return '<div class="ess-nav">'+ESS7.map(function(e,i){return '<button type="button" class="ess-chip'+(i===cur?' active':'')+'" data-ajump="'+i+'">'+(S[e.key]||e.name)+'</button>';}).join('')+'</div>';}
-function renderEssentialStep(e,i){var h='<p class="a-eyebrow">Essential '+(i+1)+' of '+ESS7.length+'</p>'+essNav(i)+'<h1 class="a-h1">'+e.name+'</h1><p class="a-sub">'+e.intro+'</p>';e.q.forEach(function(q){if(aVisible(q))h+=renderQ(q);});h+='<div class="a-nav">'+(i>0?'<button class="btn btn-outline" data-aback>Back</button>':'<span></span>')+'<button class="btn btn-gold" data-anext>Next</button></div>';return h;}
+function renderEssentialStep(e,i){var h='<p class="a-eyebrow">Essential '+(i+1)+' of '+ESS7.length+'</p>'+essNav(i)+'<h1 class="a-h1">'+e.name+'</h1><p class="a-sub">'+e.intro+'</p>';e.q.forEach(function(q){if(aVisible(q))h+=renderQ(q);});h+='<div class="a-nav">'+(i>0?'<button class="btn btn-outline" data-aback>Back</button>':'<span></span>')+'<span class="a-nav-r"><button class="btn btn-outline btn-sm" data-asave>Save</button><button class="btn btn-gold" data-anext>Next</button></span></div><p class="sub" id="aSaveMsg" style="margin-top:8px;text-align:right;"></p>';return h;}
 function renderGoalsStep(){var g=ANS._goals||[],p=ANS._priority;var h='<p class="a-eyebrow">Almost done</p><h1 class="a-h1">Your goals</h1><p class="a-sub">Pick up to three goals for the next year.</p><div class="aq"><div class="aopts">';GOAL_OPTS.forEach(function(o){var on=g.indexOf(o)>=0;h+='<button type="button" class="aopt'+(on?' active':'')+'" data-q="_goals" data-v="'+aEsc(o)+'" data-multi="1">'+o+'</button>';});h+='</div></div>';var pr=Array.isArray(ANS._priority)?ANS._priority:(ANS._priority?[ANS._priority]:[]);h+='<div class="aq"><p class="aq-t">Which areas would make the biggest difference right now?</p><p class="a-sub" style="margin-top:-2px;margin-bottom:10px;">Tap in order of priority — your first tap is your top priority.</p><div class="aopts">';PRIORITY_OPTS.forEach(function(o){var rank=pr.indexOf(o),on=rank>=0;h+='<button type="button" class="aopt'+(on?' active':'')+'" data-q="_priority" data-v="'+aEsc(o)+'" data-multi="1">'+(on?'<span class="prio-rank">'+(rank+1)+'</span>':'')+o+'</button>';});h+='</div></div><div class="a-nav"><button class="btn btn-outline" data-aback>Back</button><button class="btn btn-gold" data-anext>See my results</button></div>';return h;}
 function renderResultsStep(){var arr=ESS7.map(function(e){return {e:e,pct:scoreEssential(e)};});arr.sort(function(a,b){return (b.pct||0)-(a.pct||0);});var h='<p class="a-eyebrow">Your check-in</p><h1 class="a-h1">Here is what we heard</h1><p class="a-sub">Your strengths, your opportunities, and where we can help most.</p>';var _pr=Array.isArray(ANS._priority)?ANS._priority:(ANS._priority?[ANS._priority]:[]);if(_pr.length)h+='<div class="a-prio">Your priorities: <b>'+_pr.join('</b> &rsaquo; <b>')+'</b></div>';h+='<div class="a-results">';arr.forEach(function(r){var st=essStatus(r.pct),cc=(st.c==='muted'?'amber':st.c),need=r.pct==null?0:r.pct;h+='<div class="a-rcard"><div class="a-rhead"><span class="c">'+r.e.name+'</span><span class="a-pill p-'+cc+'">'+st.t+'</span></div><div class="a-bar"><span class="bg-'+cc+'" style="width:'+need+'%"></span></div>';if(st.c==='red'||st.c==='amber')h+='<div class="a-refs">We can connect you with: '+REFERRALS[r.e.key].slice(0,3).join(' · ')+'</div>';h+='</div>';});h+='</div><p class="sub" id="assessSaveMsg" style="margin-top:14px;"></p><div class="a-nav"><button class="btn btn-outline" data-aretake>Retake</button><button class="btn btn-gold" data-afinish>Done</button></div>';return h;}
 function orderedPriorities(){var pr=Array.isArray(ANS._priority)?ANS._priority.slice():[];pr=pr.filter(function(o){return PRIORITY_OPTS.indexOf(o)>=0;});PRIORITY_OPTS.forEach(function(o){if(pr.indexOf(o)<0)pr.push(o);});return pr;}
@@ -2683,15 +2815,15 @@ function renderGoalsBox(){
   el.innerHTML=h;
 }
 function saveCheckin(cb){var scores={};ESS7.forEach(function(e){scores[e.key]=scoreEssential(e);});window._essScores=scores;if(!(CUR.live&&CUR.uid)){if(cb)cb(null);return;}sb.from('essential_assessments').insert({member_id:CUR.uid,answers:ANS,scores:scores,priority:(Array.isArray(ANS._priority)?ANS._priority.join(', '):ANS._priority)||null}).then(function(r){if(cb)cb(r&&r.error);},function(){if(cb)cb(true);});}
-function saveGoals(){var msg=document.getElementById('goalsMsg');if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Demo mode — sign in with a real account to save.';return;}if(msg)msg.textContent='Saving…';try{window._essLast=new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(e){}saveCheckin(function(err){if(msg)msg.textContent=err?'Could not save — try again.':'Saved ✓';renderEssentialsPanel();var _pl=document.getElementById('prioList');if(_pl)renderDash();});}
+function saveGoals(){var msg=document.getElementById('goalsMsg');if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Demo mode — sign in with a real account to save.';return;}if(msg)msg.textContent='Saving…';try{window._essLast=new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(e){}logEvent('action','Goals saved');saveCheckin(function(err){if(msg)msg.textContent=err?'Could not save — try again.':'Saved ✓';renderEssentialsPanel();var _pl=document.getElementById('prioList');if(_pl)renderDash();});}
 function renderAStep(){var body=document.getElementById('assessBody');if(!body)return;var total=ESS7.length+1;var bar=document.getElementById('assessBar');if(bar)bar.style.width=Math.round(ASTEP/(total-1)*100)+'%';if(ASTEP<ESS7.length)body.innerHTML=renderEssentialStep(ESS7[ASTEP],ASTEP);else body.innerHTML=renderResultsStep();}
 function aScroll(){var _cp=document.getElementById('checkinPanel');if(_cp)_cp.scrollIntoView({block:'start'});}
 function validateAStep(){return true;}
-function finishAssessment(){var scores={};ESS7.forEach(function(e){scores[e.key]=scoreEssential(e);});window._essScores=scores;try{window._essLast=new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(e){}renderEssentialsPanel();updateAssessIntro();
+function finishAssessment(){var scores={};ESS7.forEach(function(e){scores[e.key]=scoreEssential(e);});window._essScores=scores;logEvent('action','Check-in completed');try{window._essLast=new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(e){}renderEssentialsPanel();updateAssessIntro();
   function setMsg(t){var m=document.getElementById('assessSaveMsg');if(m)m.textContent=t;}
   if(CUR.live&&CUR.uid){setMsg('Saving your answers…');sb.from('essential_assessments').insert({member_id:CUR.uid,answers:ANS,scores:scores,priority:(Array.isArray(ANS._priority)?ANS._priority.join(', '):ANS._priority)||null}).then(function(r){setMsg((r&&r.error)?('Could not save: '+r.error.message):'Saved \u2713 — your answers will be here next time.');},function(){setMsg('Network error — not saved. Try again.');});}
   else{setMsg('Demo mode — sign in with a real account to save.');}}
-function openAssessment(){ASTEP=0;var intro=document.getElementById('assessIntro'),inl=document.getElementById('assessInline');if(intro)intro.style.display='none';if(inl)inl.style.display='';renderAStep();var cp=document.getElementById('checkinPanel');if(cp)cp.scrollIntoView({block:'start'});}
+function openAssessment(){ASTEP=0;logEvent('action','Check-in started');var intro=document.getElementById('assessIntro'),inl=document.getElementById('assessInline');if(intro)intro.style.display='none';if(inl)inl.style.display='';renderAStep();var cp=document.getElementById('checkinPanel');if(cp)cp.scrollIntoView({block:'start'});}
 function closeAssessment(){var intro=document.getElementById('assessIntro'),inl=document.getElementById('assessInline');if(inl)inl.style.display='none';if(intro)intro.style.display='';renderEssentialsPanel();var pl=document.getElementById('prioList');if(pl)renderDash();var cp=document.getElementById('checkinPanel');if(cp)cp.scrollIntoView({block:'start'});}
 var PRIO2KEY={'Transportation':'transportation','Financial Tools':'financial','Housing':'housing','Employment':'economic','Education':'education','Health':'health','Relationships':'relationships'};
 function renderEssentialsPanel(){var el=document.getElementById('essList');if(!el)return;var sc=window._essScores;if(!sc){el.innerHTML='<p class="sub">Take your <b>7 Human Essentials check-in</b> to see where you stand and get matched to help.</p><button class="btn btn-gold btn-sm" id="startAssess2" style="margin-top:8px;">Start check-in</button>';return;}
@@ -2711,6 +2843,7 @@ function updateAssessIntro(){var intro=document.getElementById('assessIntro');if
      var _y=window.scrollY;renderAStep();window.scrollTo(0,_y);return;}
    var _j=e.target.closest('[data-ajump]'); if(_j){ASTEP=+_j.getAttribute('data-ajump');renderAStep();aScroll();return;}
    if(e.target.closest('[data-aback]')){ASTEP--;renderAStep();aScroll();return;}
+   if(e.target.closest('[data-asave]')){var mm=document.getElementById('aSaveMsg');if(!CUR.live||!CUR.uid){if(mm)mm.textContent='Demo mode — sign in with a real account to save.';return;}if(mm)mm.textContent='Saving…';try{window._essLast=new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(x){}saveCheckin(function(err){if(mm)mm.textContent=err?'Could not save — try again.':'Saved \u2713';renderEssentialsPanel();updateAssessIntro();var _pl=document.getElementById('prioList');if(_pl)renderDash();});return;}
    if(e.target.closest('[data-anext]')){if(validateAStep()){ASTEP++;if(ASTEP===ESS7.length)finishAssessment();renderAStep();aScroll();}return;}
    if(e.target.closest('[data-aretake]')){ANS={};ASTEP=0;renderAStep();return;}
    if(e.target.closest('[data-afinish]')){closeAssessment();return;}
@@ -2719,6 +2852,23 @@ function updateAssessIntro(){var intro=document.getElementById('assessIntro');if
 })();
 var _ac=document.getElementById('assessClose'); if(_ac)_ac.addEventListener('click',closeAssessment);
 document.addEventListener('click',function(e){var t=e.target.closest('#startAssess,#startAssess2');if(t){e.preventDefault();openAssessment();}});
+/* ---------- lightweight analytics ---------- */
+function epeVid(){try{var k='epe_vid',v=localStorage.getItem(k);if(!v){v=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():('v'+Math.random().toString(36).slice(2)+(+new Date()));localStorage.setItem(k,v);}return v;}catch(e){return 'anon';}}
+function logEvent(type,label){try{if(!window.sb)return;sb.from('events').insert({type:type,visitor:epeVid(),label:String(label||'').slice(0,180),path:String(location.hash||location.pathname||'/').slice(0,120)});}catch(e){}}
+(function(){ try{logEvent('view','pageview');}catch(e){}
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href]');
+    if(a){var href=a.getAttribute('href')||'';if(/^(https?:|mailto:)/i.test(href)){logEvent('click',((a.textContent||href).replace(/\s+/g,' ').trim().slice(0,120))||href);return;}}
+    var d=e.target.closest('[data-track]'); if(d){logEvent('click',d.getAttribute('data-track'));}
+  },true);
+})();
+/* ---------- session time tracking ---------- */
+var _sess={id:null,start:0};
+function startSession(fresh){try{if(!(CUR.live&&CUR.uid))return;_sess.start=+new Date();_sess.id=null;sb.from('sessions').insert({uid:CUR.uid,email:CUR.email||null,visitor:epeVid(),seconds:0,kind:fresh?'login':'resume'}).select('id').single().then(function(r){if(r&&r.data)_sess.id=r.data.id;},function(){});}catch(e){}}
+function pingSession(){try{if(!_sess.id)return;var secs=Math.round((+new Date()-_sess.start)/1000);sb.from('sessions').update({last_seen:new Date().toISOString(),seconds:secs}).eq('id',_sess.id);}catch(e){}}
+setInterval(function(){if(document.visibilityState!=='hidden')pingSession();},30000);
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')pingSession();});
+window.addEventListener('pagehide',pingSession);
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 </body>
