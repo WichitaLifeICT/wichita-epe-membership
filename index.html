@@ -498,6 +498,23 @@ h2.sec.light{color:#fff;}
 .qa-row{display:flex;justify-content:space-between;gap:16px;font-size:13px;padding:5px 0;border-bottom:1px solid var(--border);}
 .qa-q{color:var(--muted);}
 .qa-a{color:var(--navy);font-weight:600;text-align:right;}
+.ep-row{margin-top:12px;}
+.ep-h{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:var(--navy);gap:10px;}
+.ep-star{color:var(--gold);font-size:18px;line-height:1;}
+.ep-bar{height:8px;border-radius:5px;background:var(--cream-200);overflow:hidden;margin-top:6px;}
+.ep-bar>span{display:block;height:100%;border-radius:5px;transition:width .4s;}
+.gold-prog{margin-top:18px;padding:14px 15px;border:1px solid var(--gold);border-radius:12px;background:rgba(216,162,58,.07);}
+.gp-h{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin-bottom:10px;}
+.gp-row{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--navy);}
+.gp-bar{height:8px;border-radius:5px;background:#fff;overflow:hidden;margin-top:5px;border:1px solid var(--border);}
+.gp-bar>span{display:block;height:100%;background:var(--gold);transition:width .4s;}
+.gp-status{font-size:12px;color:var(--muted);margin-top:11px;line-height:1.5;}
+.ep-goals{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.ep-goal{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);background:#fff;border-radius:999px;padding:5px 12px 5px 8px;font-size:12px;font-weight:600;color:var(--navy);cursor:pointer;font-family:var(--sans);}
+.ep-goal .ep-check{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;border:1.5px solid var(--border);font-size:10px;color:#fff;flex:none;}
+.ep-goal.done{background:var(--sage-light);border-color:var(--sage);color:var(--sage);}
+.ep-goal.done .ep-check{background:var(--sage);border-color:var(--sage);}
+.ep-none{font-size:12px;color:var(--muted);margin:6px 0 0;}
 .ins-ess-h{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:var(--navy);gap:10px;}
 .ins-bar{display:flex;height:10px;border-radius:6px;overflow:hidden;margin-top:6px;background:var(--cream-200);}
 .ins-bar>span{display:block;height:100%;}
@@ -1026,9 +1043,10 @@ svg.ic{width:24px;height:24px;}
 
         <div class="panel" data-collapsible>
           <span class="section-eyebrow">Progress history</span>
-          <h2>Verified milestones</h2>
-          <p class="sub" id="memberSince" style="margin-bottom:12px;"></p>
-          <div class="hist" id="histList"></div>
+          <h2>Your progress</h2>
+          <p class="sub" id="memberSince" style="margin-bottom:14px;"></p>
+          <div id="essProgress"></div>
+          <div class="hist" id="histList" style="display:none;"></div>
         </div>
         <div class="panel" data-collapsible>
           <span class="section-eyebrow">Messages</span>
@@ -1187,9 +1205,12 @@ var LEVELS=[
   {
     name:"Gold Member",accent:"gold",featured:true,
     tagline:"For members actively working, growing, and contributing.",
-    req:["Sign up and set goals","Be an EPE Member for 30 days"],
-    benefitsNote:"Gold member-worthy benefits coming soon.",
-    groups:[]
+    req:["Sign up and set goals","Earn 4 gold stars (reach Strength in 4 Essentials)","Be an EPE Member for 30 days"],
+    benefitsNote:"Everything in Basic, plus:",
+    groups:[
+      {cat:"Priority Access",items:[{t:"Priority for Hope CDC Home Ownership"},{t:"Priority for Drive & Thrive — Car Repair or Earn-a-Car Program"}]},
+      {cat:"Perks",items:[{t:"A gift or meal on your birthday"},{t:"Entry to win prizes"},{t:"More coming soon"}]}
+    ]
   }
 ];
 var CATS=[["Goal Setting & Progress","target"],["Workforce & Training","briefcase"],["Financial Coaching","wallet"],["Transportation","bus"],["Housing & Homeownership","home"],["Family Stability","family"],["Community Contribution","heart"]];
@@ -2928,7 +2949,37 @@ function sendMessage(){var inp=document.getElementById('chatInput');if(!inp)retu
 function openAssessment(){ASTEP=0;logEvent('action','Check-in started');var intro=document.getElementById('assessIntro'),inl=document.getElementById('assessInline');if(intro)intro.style.display='none';if(inl)inl.style.display='';renderAStep();var cp=document.getElementById('checkinPanel');if(cp)cp.scrollIntoView({block:'start'});}
 function closeAssessment(){var intro=document.getElementById('assessIntro'),inl=document.getElementById('assessInline');if(inl)inl.style.display='none';if(intro)intro.style.display='';renderEssentialsPanel();var pl=document.getElementById('prioList');if(pl)renderDash();var cp=document.getElementById('checkinPanel');if(cp)cp.scrollIntoView({block:'start'});}
 var PRIO2KEY={'Transportation':'transportation','Financial Tools':'financial','Housing':'housing','Employment':'economic','Education':'education','Health':'health','Relationships':'relationships'};
-function renderEssentialsPanel(){var el=document.getElementById('essList');if(!el)return;var sc=window._essScores;if(!sc){el.innerHTML='<p class="sub">Take your <b>7 Human Essentials check-in</b> to see where you stand and get matched to help.</p><button class="btn btn-gold btn-sm" id="startAssess2" style="margin-top:8px;">Start check-in</button>';return;}
+function renderEssProgress(){
+  var el=document.getElementById('essProgress');if(!el)return;
+  var sc=window._essScores;
+  var goalsSel=Array.isArray(ANS._goals)?ANS._goals:[];
+  var done=Array.isArray(ANS._done)?ANS._done:[];
+  if(!sc&&!goalsSel.length){el.innerHTML='<p class="sub">Complete your <b>7 Human Essentials check-in</b> and set goals to start earning stars.</p>';return;}
+  var pr=Array.isArray(ANS._priority)?ANS._priority:(ANS._priority?[ANS._priority]:[]);
+  var prKeys=pr.map(function(l){return (typeof PRIO2KEY!=='undefined')?PRIO2KEY[l]:null;}).filter(Boolean);
+  var ordered=ESS7.slice().sort(function(a,b){var ai=prKeys.indexOf(a.key),bi=prKeys.indexOf(b.key);ai=ai<0?999:ai;bi=bi<0?999:bi;return ai-bi;});
+  var stars=0;
+  var bars=ordered.map(function(e){
+    var eg=(typeof ESS_GOALS!=='undefined'?(ESS_GOALS[e.key]||[]):[]).filter(function(x){return goalsSel.indexOf(x)>=0;});
+    var dc=eg.filter(function(x){return done.indexOf(x)>=0;}).length;
+    var bp=eg.length?Math.round(dc/eg.length*100):0;
+    var star=(eg.length>0&&dc===eg.length); if(star)stars++;
+    var st=sc?essStatus(sc[e.key]):null;
+    var right=star?'<span class="ep-star">\u2605</span>':(st?'<span class="a-pill p-'+(st.c==='muted'?'amber':st.c)+'">'+st.t+'</span>':'');
+    var goalsHtml=eg.length?('<div class="ep-goals">'+eg.map(function(g){var d=done.indexOf(g)>=0;return '<button type="button" class="ep-goal'+(d?' done':'')+'" data-goaldone="'+aEsc(g)+'"><span class="ep-check">'+(d?'\u2713':'')+'</span>'+g+'</button>';}).join('')+'</div>'):'<p class="ep-none">No goals set here yet \u2014 add some in the check-in.</p>';
+    return '<div class="ep-row"><div class="ep-h"><span>'+e.name+'</span>'+right+'</div><div class="ep-bar"><span class="bg-'+(star?'green':'amber')+'" style="width:'+bp+'%"></span></div>'+goalsHtml+'</div>';
+  }).join('');
+  var days=0;var j=CUR.joined||CUR.authCreated;if(j){var dd=new Date(j);if(!isNaN(dd.getTime()))days=Math.max(0,Math.floor((Date.now()-dd.getTime())/86400000));}
+  var gold=(stars>=4&&days>=30);
+  if(gold&&CUR.live&&CUR.uid&&CUR.level!=='gold'){CUR.level='gold';try{sb.from('members').update({level:'gold'}).eq('profile_id',CUR.uid).then(function(){},function(){});logEvent('action','Reached Gold membership');}catch(e){}var _lv=document.getElementById('profLevel');if(_lv)_lv.textContent='Gold Member';}
+  var summary='<div class="gold-prog"><div class="gp-h">\u2605 Rewards \u2014 earn Gold membership</div>'+
+    '<div class="gp-row"><span>Gold stars (finish your goals in an Essential)</span><b>'+stars+' / 4</b></div><div class="gp-bar"><span style="width:'+Math.min(100,stars/4*100)+'%"></span></div>'+
+    '<div class="gp-row" style="margin-top:9px"><span>Days as a member</span><b>'+days+' / 30</b></div><div class="gp-bar"><span style="width:'+Math.min(100,days/30*100)+'%"></span></div>'+
+    '<p class="gp-status">'+(gold?'You have earned <b>Gold membership</b> \u2014 welcome!':'Finish all your goals in an Essential to earn a \u2605. Collect <b>4 stars + 30 days</b> to unlock Gold.')+'</p></div>';
+  el.innerHTML='<p class="sub" style="margin-bottom:12px">Tap a goal to mark it done. Finish all your goals in an Essential to earn a \u2605 \u2014 4 stars + 30 days unlocks Gold.</p>'+bars+summary;
+}
+document.addEventListener('click',function(e){var g=e.target.closest('[data-goaldone]');if(!g)return;var val=g.getAttribute('data-goaldone');var done=Array.isArray(ANS._done)?ANS._done:[];var ix=done.indexOf(val);if(ix>=0)done.splice(ix,1);else done.push(val);ANS._done=done;renderEssProgress();if(CUR.live&&CUR.uid){try{saveCheckin(function(){});}catch(x){}}try{logEvent('action','Goal marked done');}catch(x){}});
+function renderEssentialsPanel(){renderEssProgress();var el=document.getElementById('essList');if(!el)return;var sc=window._essScores;if(!sc){el.innerHTML='<p class="sub">Take your <b>7 Human Essentials check-in</b> to see where you stand and get matched to help.</p><button class="btn btn-gold btn-sm" id="startAssess2" style="margin-top:8px;">Start check-in</button>';return;}
   var pr=Array.isArray(ANS._priority)?ANS._priority:(ANS._priority?[ANS._priority]:[]);
   var prKeys=pr.map(function(l){return PRIO2KEY[l];}).filter(Boolean);
   var ordered=ESS7.slice().sort(function(a,b){var ai=prKeys.indexOf(a.key),bi=prKeys.indexOf(b.key);ai=ai<0?999:ai;bi=bi<0?999:bi;if(ai!==bi)return ai-bi;return (sc[b.key]||0)-(sc[a.key]||0);});
