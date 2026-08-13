@@ -268,6 +268,8 @@ h2.sec.light{color:#fff;}
 .seg-btn.active{background:var(--gold);color:var(--navy);}
 .seg.seg-2{grid-template-columns:repeat(2,1fr);}
 .pf-l{display:block;margin-top:12px;font-size:13px;font-weight:600;color:var(--navy);}
+.pf-consent{display:flex;align-items:flex-start;gap:9px;margin-top:16px;padding:11px 13px;border:1px solid var(--border);border-radius:10px;background:var(--cream-200);font-size:12.5px;line-height:1.4;color:var(--ink);cursor:pointer;}
+.pf-consent input{margin-top:2px;width:16px;height:16px;flex:none;accent-color:var(--gold);cursor:pointer;}
 .pf-cap{display:block;margin-bottom:4px;}
 .pf-i{width:100%;margin-top:5px;border:1px solid var(--border);border-radius:10px;padding:10px 13px;font-size:14px;font-family:var(--sans);color:var(--ink);background:#fff;}
 .pf-i:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
@@ -468,6 +470,23 @@ h2.sec.light{color:#fff;}
 .path-sn{width:38px;height:38px;border:1.5px solid var(--border);background:#fff;border-radius:9px;font-weight:700;color:var(--navy);cursor:pointer;font-family:var(--sans);}
 .path-sn.on{background:var(--navy);color:#fff;border-color:var(--navy);}
 .path-sat-lbl{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:5px;}
+.path-sat-top{border:1px solid var(--gold);border-radius:12px;background:rgba(216,162,58,.06);padding:12px 14px;margin-bottom:16px;}
+.path-sat-top .path-sat-q{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:9px;}
+.path-meta{font-size:12px;color:var(--muted);margin:2px 0 12px;}
+.pi-card{padding:14px 0;border-bottom:1px solid var(--border);}
+.pi-card:last-child{border-bottom:none;}
+.pi-card.na{opacity:.5;}
+.pi-hd{font-size:14px;font-weight:700;color:var(--navy);}
+.pi-def{font-size:12px;color:var(--muted);margin:2px 0 10px;}
+.pi-cols{display:grid;gap:12px;}
+@media(min-width:640px){.pi-cols{grid-template-columns:1fr 1fr;}}
+.pi-col-h{font-size:12.5px;font-weight:800;color:var(--navy);}
+.pi-col-s{font-size:11px;color:var(--muted);margin:1px 0 8px;}
+.pi-note{font-size:11.5px;color:var(--muted);background:var(--cream-200);border-radius:8px;padding:8px 11px;margin-top:11px;}
+.pi-skip{background:none;border:none;color:var(--gold);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:9px;padding:0;text-decoration:underline;}
+.pi-na-tag{display:none;font-size:11px;font-weight:700;color:var(--muted);}
+.pi-card.na .pi-cols,.pi-card.na .pi-note,.pi-card.na .pi-skip{display:none;}
+.pi-card.na .pi-na-tag{display:inline-block;margin-top:6px;}
 .mile-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);}
 .mile-row:last-child{border-bottom:none;}
 .mile-t{font-size:14px;font-weight:600;color:var(--navy);}
@@ -1030,6 +1049,7 @@ svg.ic{width:24px;height:24px;}
       <div class="pf-l" style="margin-top:18px;"><span class="pf-cap" style="font-weight:800;color:var(--navy);font-size:14px;">A few quick questions</span>
         <p class="sub" style="font-size:12px;margin-top:2px;">Optional — helps us understand who we serve. Never shared publicly.</p>
       </div>
+      <label class="pf-l">Race / ethnicity<select class="pf-i" id="pfRace"></select></label>
       <label class="pf-l">Your income<select class="pf-i" id="pfIncome"></select></label>
       <label class="pf-l">Household income<select class="pf-i" id="pfHhIncome"></select></label>
       <label class="pf-l">Is English your first language?<select class="pf-i" id="pfEnglish"><option value="">Select…</option><option>Yes</option><option>No</option></select></label>
@@ -1038,6 +1058,7 @@ svg.ic{width:24px;height:24px;}
         <label class="pf-l">How many under 18?<input class="pf-i" id="pfHhKids" type="number" min="0" placeholder="e.g. 2"/></label>
       </div>
       <label class="pf-l">When did you start your journey with this organization?<input class="pf-i" id="pfJourney" type="date"/></label>
+      <label class="pf-consent"><input type="checkbox" id="pfConsent"/><span>I agree that my information may be shared with trusted nonprofit partners so they can help support my journey. You can change this anytime.</span></label>
       <button type="button" class="btn btn-gold btn-full" id="pfSave" style="margin-top:14px;max-width:240px;">Save profile</button>
       <p class="sub" id="pfMsg" style="margin-top:8px;"></p>
     </div>
@@ -1054,6 +1075,13 @@ svg.ic{width:24px;height:24px;}
       </div>
     </div>
 
+    <div class="panel" style="margin-top:24px;" id="pathPanel" data-collapsible>
+      <span class="section-eyebrow">Full Path Assessment</span>
+      <h2>The full picture</h2>
+      <p class="sub">A deeper self-check across all seven essentials. Rate where you are <b>today</b> and where you were <b>when your journey began</b> — 🟢 🟡 🔴. Come back anytime; you only need to update what has changed.</p>
+      <div id="pathBox"></div>
+    </div>
+
     <div class="dash-grid">
       <div>
         <div class="panel" id="prioPanel" data-collapsible>
@@ -1061,12 +1089,6 @@ svg.ic{width:24px;height:24px;}
           <h2>Your next steps</h2>
           <p class="sub">One step to take in each of your top priorities. Reorder them anytime in <b>Your goals</b>.</p>
           <div id="prioList"></div>
-        </div>
-        <div class="panel" data-collapsible>
-          <span class="section-eyebrow">Full Path Assessment</span>
-          <h2>The full picture</h2>
-          <p class="sub">A deeper self-check across all seven essentials — rate each area 🟢 🟡 🔴. Tap a category to open it.</p>
-          <div id="pathBox"></div>
         </div>
         <div class="panel" data-collapsible>
           <span class="section-eyebrow">Bank of Solutions</span>
@@ -2733,7 +2755,7 @@ function routeByRole(profile,member,email){
     loadLiveMember(profile); loadEssScores();
   }
 }
-function renderMemberSince(){var el=document.getElementById('memberSince');if(!el)return;var j=CUR.joined||CUR.authCreated;if(!j){el.textContent='';return;}var d=new Date(j);if(isNaN(d.getTime())){el.textContent='';return;}var days=Math.max(0,Math.floor((Date.now()-d.getTime())/86400000));el.innerHTML='<b>EPE Membership</b> since '+d.toLocaleDateString()+' \u00b7 '+days+' day'+(days===1?'':'s');}
+function renderMemberSince(){var el=document.getElementById('memberSince');if(!el)return;var j=CUR.journeyStart||CUR.joined||CUR.authCreated;if(!j){el.textContent='';return;}var d=new Date(j);if(isNaN(d.getTime())){el.textContent='';return;}var days=Math.max(0,Math.floor((Date.now()-d.getTime())/86400000));el.innerHTML='<b>EPE Membership</b> since '+d.toLocaleDateString()+' \u00b7 '+days+' day'+(days===1?'':'s');}
 function applyLiveMember(mem,profile){
   var st=CUR.stars||0;
   var ds=document.getElementById('dashStars'); if(ds)ds.innerHTML='&#9733; '+st;
@@ -2797,7 +2819,7 @@ function addRewardIdea(){var inp=document.getElementById('rewardWish'),msg=docum
 function loadProfileForm(){
   if(!CUR.live||!CUR.uid)return;
   sb.from('profiles').select('phone,zip').eq('id',CUR.uid).maybeSingle().then(function(p){var d=(p&&p.data)||{};var a=document.getElementById('pfPhone');if(a)a.value=d.phone||'';var b=document.getElementById('pfZip');if(b)b.value=d.zip||'';if(d.phone||d.zip){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
-  sb.from('members').select('want_help,employment_status,employment_detail,solution_offer,reward_wish,income,household_income,english_first,household_size,household_under18,journey_start').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfStatus',d.employment_status,'data-st');var dt=document.getElementById('pfDetail');if(dt)dt.value=d.employment_detail||'';var so=document.getElementById('pfSolution');if(so)so.value=d.solution_offer||'';fillIntakeOptions();var setv=function(id,v){var el=document.getElementById(id);if(el)el.value=(v==null?'':v);};setv('pfIncome',d.income);setv('pfHhIncome',d.household_income);setv('pfEnglish',d.english_first);setv('pfHhSize',d.household_size);setv('pfHhKids',d.household_under18);setv('pfJourney',d.journey_start);loadIdeasMine();pfToggleSolution();if(d.want_help||d.employment_status||d.employment_detail||d.solution_offer){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
+  sb.from('members').select('want_help,employment_status,employment_detail,solution_offer,reward_wish,race,income,household_income,english_first,household_size,household_under18,journey_start,share_consent').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfStatus',d.employment_status,'data-st');var dt=document.getElementById('pfDetail');if(dt)dt.value=d.employment_detail||'';var so=document.getElementById('pfSolution');if(so)so.value=d.solution_offer||'';fillIntakeOptions();var setv=function(id,v){var el=document.getElementById(id);if(el)el.value=(v==null?'':v);};setv('pfRace',d.race);setv('pfIncome',d.income);setv('pfHhIncome',d.household_income);setv('pfEnglish',d.english_first);setv('pfHhSize',d.household_size);setv('pfHhKids',d.household_under18);setv('pfJourney',d.journey_start);var _cc=document.getElementById('pfConsent');if(_cc)_cc.checked=!!d.share_consent;CUR.journeyStart=d.journey_start||null;renderMemberSince();loadIdeasMine();pfToggleSolution();if(d.want_help||d.employment_status||d.employment_detail||d.solution_offer){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
 }
 function saveProfile(){
   var msg=document.getElementById('pfMsg');
@@ -2808,17 +2830,18 @@ function saveProfile(){
   var detail=(document.getElementById('pfDetail').value||'').trim();
   var soEl=document.getElementById('pfSolution');var solution=(soEl&&soEl.value||'').trim();
   function _gv(id){var el=document.getElementById(id);return el?(el.value||''):'';}
-  var i_inc=_gv('pfIncome'),i_hhi=_gv('pfHhIncome'),i_eng=_gv('pfEnglish'),i_hs=_gv('pfHhSize'),i_hk=_gv('pfHhKids'),i_j=_gv('pfJourney');
+  var i_race=_gv('pfRace'),i_inc=_gv('pfIncome'),i_hhi=_gv('pfHhIncome'),i_eng=_gv('pfEnglish'),i_hs=_gv('pfHhSize'),i_hk=_gv('pfHhKids'),i_j=_gv('pfJourney');var _cc=document.getElementById('pfConsent'),i_consent=!!(_cc&&_cc.checked);
   if(msg)msg.textContent='Saving…'; logEvent('action','Profile saved');
   Promise.all([
     sb.from('profiles').update({phone:phone,zip:zip}).eq('id',CUR.uid),
-    sb.from('members').update({want_help:hp,employment_status:st,employment_detail:detail,solution_offer:solution,income:i_inc,household_income:i_hhi,english_first:i_eng,household_size:(i_hs===''?null:parseInt(i_hs,10)),household_under18:(i_hk===''?null:parseInt(i_hk,10)),journey_start:(i_j||null)}).eq('profile_id',CUR.uid)
+    sb.from('members').update({want_help:hp,employment_status:st,employment_detail:detail,solution_offer:solution,race:i_race,income:i_inc,household_income:i_hhi,english_first:i_eng,household_size:(i_hs===''?null:parseInt(i_hs,10)),household_under18:(i_hk===''?null:parseInt(i_hk,10)),journey_start:(i_j||null),share_consent:i_consent}).eq('profile_id',CUR.uid)
   ]).then(function(res){var err=(res[0]&&res[0].error)||(res[1]&&res[1].error);if(msg)msg.textContent=err?('Could not save: '+err.message):'Saved \u2713';},function(){if(msg)msg.textContent='Network error — try again.';});
 }
 (function(){var sv=document.getElementById('pfSave');if(sv)sv.addEventListener('click',saveProfile);})();
 var INTAKE_INCOME=["Under $10,000","$10,000–$19,999","$20,000–$29,999","$30,000–$39,999","$40,000–$49,999","$50,000–$59,999","$60,000–$69,999","$70,000–$79,999","$80,000–$89,999","$90,000–$99,999","$100,000 or more","Prefer not to say"];
-function fillIntakeSel(id){var el=document.getElementById(id);if(!el||el.options.length>1)return;el.innerHTML='<option value="">Select…</option>'+INTAKE_INCOME.map(function(o){return '<option>'+o+'</option>';}).join('');}
-function fillIntakeOptions(){fillIntakeSel('pfIncome');fillIntakeSel('pfHhIncome');}
+var INTAKE_RACE=["American Indian or Alaska Native","Asian","Black or African American","Hispanic or Latino","Middle Eastern or North African","Native Hawaiian or Pacific Islander","White","Another race or ethnicity","Prefer not to say"];
+function fillIntakeSel(id,opts){var el=document.getElementById(id);if(!el||el.options.length>1)return;el.innerHTML='<option value="">Select…</option>'+(opts||INTAKE_INCOME).map(function(o){return '<option>'+o+'</option>';}).join('');}
+function fillIntakeOptions(){fillIntakeSel('pfRace',INTAKE_RACE);fillIntakeSel('pfIncome',INTAKE_INCOME);fillIntakeSel('pfHhIncome',INTAKE_INCOME);}
 fillIntakeOptions();
 function openDemo(role){
   CUR.live=false; CUR.uid=null;
@@ -3269,39 +3292,55 @@ var PATH_IND = [
 ];
 
 var PATH_BUCKETS=[{key:"health",name:"Health & Wellness",icon:"🩺"},{key:"education",name:"Education",icon:"📚"},{key:"economic",name:"Economic Opportunity",icon:"📈"},{key:"housing",name:"Safe & Affordable Housing",icon:"🏠"},{key:"financial",name:"Financial Resources",icon:"💳"},{key:"transport",name:"Transportation",icon:"🚌"},{key:"relationships",name:"Relationships",icon:"🤝"}];
-var PATH_ANS={}, PATH_SAT=null;
+var PATH_NOW={}, PATH_THEN={}, PATH_NA={}, PATH_SAT=null, PATH_LAST=null, PATH_COUNT=0;
 function pEsc(x){return String(x==null?'':x).replace(/[&<>"]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':c==='>'?'&gt;':'&quot;';});}
 function pathShort(k){return ({health:'Health',education:'Education',economic:'Economic',housing:'Housing',financial:'Financial',transport:'Transportation',relationships:'Relationships'})[k]||k;}
+function pathDoneCount(x){return (PATH_NA[x.id]||PATH_NOW[x.id])?1:0;}
+function pathOptsHtml(x,col,cur){
+  return '<div class="pi-opts">'+
+    '<button type="button" class="path-o g'+(cur==='g'?' on':'')+'" data-pi="'+x.id+'" data-pc="'+col+'" data-pv="g">'+pEsc(x.g)+'</button>'+
+    '<button type="button" class="path-o y'+(cur==='y'?' on':'')+'" data-pi="'+x.id+'" data-pc="'+col+'" data-pv="y">'+pEsc(x.y)+'</button>'+
+    '<button type="button" class="path-o r'+(cur==='r'?' on':'')+'" data-pi="'+x.id+'" data-pc="'+col+'" data-pv="r">'+pEsc(x.r)+'</button>'+
+    '</div>';
+}
 function renderPath(){
   var el=document.getElementById('pathBox'); if(!el)return;
   var byB={}; PATH_IND.forEach(function(x){(byB[x.b]=byB[x.b]||[]).push(x);});
-  var h='<div class="ess-nav" style="margin-bottom:14px;">'+PATH_BUCKETS.filter(function(bk){return (byB[bk.key]||[]).length;}).map(function(bk){return '<button type="button" class="ess-chip" data-pathjump="'+bk.key+'">'+pathShort(bk.key)+'</button>';}).join('')+'</div>';
+  var h='<div class="path-sat-top"><div class="path-sat-q">How satisfied are you with life as a whole these days?</div><div class="path-sat">';
+  for(var n=1;n<=10;n++){h+='<button type="button" class="path-sn'+(PATH_SAT===n?' on':'')+'" data-psat="'+n+'">'+n+'</button>';}
+  h+='</div><div class="path-sat-lbl"><span>1 - Not at all</span><span>10 - Completely</span></div></div>';
+  if(PATH_LAST){h+='<div class="path-meta">Last saved '+pEsc(PATH_LAST)+(PATH_COUNT>1?(' &middot; '+PATH_COUNT+' assessments logged'):'')+'. Update only what has changed, then save a new log.</div>';}
+  h+='<div class="ess-nav" style="margin-bottom:14px;">'+PATH_BUCKETS.filter(function(bk){return (byB[bk.key]||[]).length;}).map(function(bk){return '<button type="button" class="ess-chip" data-pathjump="'+bk.key+'">'+pathShort(bk.key)+'</button>';}).join('')+'</div>';
   PATH_BUCKETS.forEach(function(bk){
     var items=byB[bk.key]||[]; if(!items.length)return;
-    var ansN=items.filter(function(x){return PATH_ANS[x.id];}).length;
+    var ansN=items.reduce(function(a,x){return a+pathDoneCount(x);},0);
     h+='<div class="path-b"><button type="button" class="path-bh" data-pathb="'+bk.key+'"><span>'+bk.icon+' '+bk.name+'</span><span class="path-count">'+ansN+'/'+items.length+'</span></button><div class="path-body" id="pathb-'+bk.key+'" style="display:none;">';
-    items.forEach(function(x){var cur=PATH_ANS[x.id];
-      h+='<div class="path-q"><div class="path-qt">'+pEsc(x.q)+'</div><div class="path-qd">'+pEsc(x.def)+'</div><div class="path-opts">'+
-        '<button type="button" class="path-o g'+(cur==='g'?' on':'')+'" data-pi="'+x.id+'" data-pv="g">'+pEsc(x.g)+'</button>'+
-        '<button type="button" class="path-o y'+(cur==='y'?' on':'')+'" data-pi="'+x.id+'" data-pv="y">'+pEsc(x.y)+'</button>'+
-        '<button type="button" class="path-o r'+(cur==='r'?' on':'')+'" data-pi="'+x.id+'" data-pv="r">'+pEsc(x.r)+'</button>'+
-        '</div></div>';
+    items.forEach(function(x){var na=!!PATH_NA[x.id];
+      h+='<div class="pi-card'+(na?' na':'')+'" data-picard="'+x.id+'"><div class="pi-hd">'+pEsc(x.q)+'</div><div class="pi-def">'+pEsc(x.def)+'</div>'+
+        '<div class="pi-cols">'+
+          '<div><div class="pi-col-h">1. Where are you now?</div><div class="pi-col-s">Best describes you today</div>'+pathOptsHtml(x,'now',PATH_NOW[x.id])+'</div>'+
+          '<div><div class="pi-col-h">2. Where were you when your journey began?</div><div class="pi-col-s">Think back to when you first connected with EPE</div>'+pathOptsHtml(x,'then',PATH_THEN[x.id])+'</div>'+
+        '</div>'+
+        '<div class="pi-note">&#128202; Your response helps us understand your progress and connect you with the right support.</div>'+
+        '<button type="button" class="pi-skip" data-pina="'+x.id+'">This doesn’t apply to us →</button>'+
+        '<span class="pi-na-tag">Marked &ldquo;doesn’t apply.&rdquo; <a href="#" data-piundo="'+x.id+'" style="color:var(--gold)">Undo</a></span>'+
+      '</div>';
     });
     h+='</div></div>';
   });
-  h+='<div class="path-b"><div class="path-bh" style="cursor:default"><span>How satisfied are you with life as a whole these days?</span></div><div style="padding:12px 14px"><div class="path-sat">';
-  for(var n=1;n<=10;n++){h+='<button type="button" class="path-sn'+(PATH_SAT===n?' on':'')+'" data-psat="'+n+'">'+n+'</button>';}
-  h+='</div><div class="path-sat-lbl"><span>Not at all</span><span>Completely</span></div></div></div>';
-  h+='<button type="button" class="btn btn-gold" id="pathSave" style="margin-top:14px;">Save Full Path Assessment</button><span class="sub" id="pathMsg" style="margin-left:10px;"></span>';
+  h+='<button type="button" class="btn btn-gold" id="pathSave" style="margin-top:16px;">Save Full Path Assessment</button><span class="sub" id="pathMsg" style="margin-left:10px;"></span>';
   el.innerHTML=h;
 }
-function savePath(){var msg=document.getElementById('pathMsg');if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Sign in with a real account to save.';return;}if(msg)msg.textContent='Saving…';sb.from('path_assessments').insert({member_id:CUR.uid,answers:PATH_ANS,satisfaction:PATH_SAT}).then(function(r){if(msg)msg.textContent=(r&&r.error)?('Could not save: '+r.error.message):'Saved \u2713';try{logEvent('action','Full Path Assessment saved');}catch(e){}},function(){if(msg)msg.textContent='Network error — try again.';});}
-function loadPath(){if(!CUR.live||!CUR.uid)return;sb.from('path_assessments').select('answers,satisfaction').eq('member_id',CUR.uid).order('created_at',{ascending:false}).limit(1).maybeSingle().then(function(r){if(r&&!r.error&&r.data){if(r.data.answers&&typeof r.data.answers==='object')PATH_ANS=r.data.answers;if(r.data.satisfaction!=null)PATH_SAT=r.data.satisfaction;renderPath();}});}
+function pathBadge(bkey){var items=PATH_IND.filter(function(x){return x.b===bkey;});var an=items.reduce(function(a,x){return a+pathDoneCount(x);},0);var badge=document.querySelector('[data-pathb="'+bkey+'"] .path-count');if(badge)badge.textContent=an+'/'+items.length;}
+function savePath(){var msg=document.getElementById('pathMsg');if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Sign in with a real account to save.';return;}if(msg)msg.textContent='Saving…';sb.from('path_assessments').insert({member_id:CUR.uid,answers:{now:PATH_NOW,then:PATH_THEN,na:PATH_NA},satisfaction:PATH_SAT}).then(function(r){if(r&&r.error){if(msg)msg.textContent='Could not save: '+r.error.message;return;}if(msg)msg.textContent='Saved \u2713 new log recorded.';try{logEvent('action','Full Path Assessment saved');}catch(e){}loadPath();},function(){if(msg)msg.textContent='Network error — try again.';});}
+function loadPath(){if(!CUR.live||!CUR.uid)return;sb.from('path_assessments').select('answers,satisfaction,created_at',{count:'exact'}).eq('member_id',CUR.uid).order('created_at',{ascending:false}).limit(1).then(function(r){if(r&&r.error)return;PATH_COUNT=(r&&typeof r.count==='number')?r.count:0;var d=(r&&r.data&&r.data[0])?r.data[0]:null;if(d){var a=d.answers;if(a&&typeof a==='object'){if(a.now||a.then||a.na){PATH_NOW=a.now||{};PATH_THEN=a.then||{};PATH_NA=a.na||{};}else{PATH_NOW=a;PATH_THEN={};PATH_NA={};}}if(d.satisfaction!=null)PATH_SAT=d.satisfaction;if(d.created_at){try{PATH_LAST=new Date(d.created_at).toLocaleDateString();}catch(e){PATH_LAST=(''+d.created_at).slice(0,10);}}}renderPath();});}
 (function(){var pb=document.getElementById('pathBox'); if(!pb)return;
   pb.addEventListener('click',function(e){
     var pj=e.target.closest('[data-pathjump]'); if(pj){var k=pj.getAttribute('data-pathjump');var bd=document.getElementById('pathb-'+k);if(bd)bd.style.display='';var hh=document.querySelector('[data-pathb="'+k+'"]');if(hh){hh.classList.add('open');hh.scrollIntoView({block:'start'});}var ch=pb.querySelectorAll('[data-pathjump]');for(var q=0;q<ch.length;q++)ch[q].classList.remove('active');pj.classList.add('active');return;}
     var bh=e.target.closest('[data-pathb]'); if(bh){var bd=document.getElementById('pathb-'+bh.getAttribute('data-pathb'));if(bd)bd.style.display=(bd.style.display==='none')?'':'none';bh.classList.toggle('open');return;}
-    var o=e.target.closest('[data-pi]'); if(o){var id=o.getAttribute('data-pi'),v=o.getAttribute('data-pv');PATH_ANS[id]=v;var opts=o.parentNode;var bs=opts.querySelectorAll('.path-o');for(var i=0;i<bs.length;i++)bs[i].classList.remove('on');o.classList.add('on');var body=o.closest('.path-body');if(body){var bkey=body.id.replace('pathb-','');var items=PATH_IND.filter(function(x){return x.b===bkey;});var an=items.filter(function(x){return PATH_ANS[x.id];}).length;var badge=document.querySelector('[data-pathb="'+bkey+'"] .path-count');if(badge)badge.textContent=an+'/'+items.length;}return;}
+    var undo=e.target.closest('[data-piundo]'); if(undo){e.preventDefault();var uid=undo.getAttribute('data-piundo');delete PATH_NA[uid];var uc=pb.querySelector('[data-picard="'+uid+'"]');if(uc)uc.classList.remove('na');pathBadge(PATH_IND.filter(function(x){return x.id===uid;})[0].b);return;}
+    var na=e.target.closest('[data-pina]'); if(na){var nid=na.getAttribute('data-pina');PATH_NA[nid]=true;var nc=pb.querySelector('[data-picard="'+nid+'"]');if(nc)nc.classList.add('na');pathBadge(PATH_IND.filter(function(x){return x.id===nid;})[0].b);return;}
+    var o=e.target.closest('[data-pi]'); if(o){var id=o.getAttribute('data-pi'),v=o.getAttribute('data-pv'),col=o.getAttribute('data-pc');if(col==='then'){PATH_THEN[id]=v;}else{PATH_NOW[id]=v;delete PATH_NA[id];}var opts=o.closest('.pi-opts');var bs=opts.querySelectorAll('.path-o');for(var i=0;i<bs.length;i++)bs[i].classList.remove('on');o.classList.add('on');var card=o.closest('.pi-card');if(card)card.classList.remove('na');pathBadge(PATH_IND.filter(function(x){return x.id===id;})[0].b);return;}
     var sn=e.target.closest('[data-psat]'); if(sn){PATH_SAT=+sn.getAttribute('data-psat');var ss=sn.parentNode.querySelectorAll('.path-sn');for(var j=0;j<ss.length;j++)ss[j].classList.remove('on');sn.classList.add('on');return;}
     if(e.target.closest('#pathSave')){savePath();return;}
   });
