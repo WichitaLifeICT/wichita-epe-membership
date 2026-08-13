@@ -491,6 +491,19 @@ h2.sec.light{color:#fff;}
 .ins-pd-dt{font-size:11px;color:var(--muted);margin-left:8px;}
 .ins-path-b{margin-top:11px;}
 .ins-path-bh{font-size:12px;font-weight:800;color:var(--navy);margin-bottom:2px;}
+.results-card{max-width:580px;max-height:88vh;overflow-y:auto;padding:26px 24px;}
+.pr-block{margin:14px 0;padding:13px 15px;border:1px solid var(--border);border-radius:12px;background:var(--cream-200);}
+.pr-h{font-size:12px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px;}
+.pr-sat-big{font-size:34px;font-weight:800;color:var(--navy);line-height:1;}
+.pr-sat-big span{font-size:15px;font-weight:600;color:var(--muted);margin-left:4px;}
+.pr-stats{display:flex;gap:10px;margin:14px 0 6px;}
+.pr-stat{flex:1;text-align:center;border-radius:12px;padding:12px 6px;background:var(--cream-200);border:1px solid var(--border);}
+.pr-stat b{display:block;font-size:24px;font-weight:800;line-height:1;}
+.pr-stat span{font-size:11px;color:var(--muted);font-weight:600;}
+.pr-stat.g b{color:#3f9d72;}.pr-stat.y b{color:#e0a531;}.pr-stat.r b{color:#d8584a;}
+.pr-li{font-size:13px;color:var(--navy);padding:5px 0;display:flex;align-items:center;gap:8px;}
+.pr-b{margin-top:12px;}
+.pr-b-h{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:5px;}
 .pi-cols{display:grid;gap:12px;}
 @media(min-width:640px){.pi-cols{grid-template-columns:1fr 1fr;}}
 .pi-col-h{font-size:12.5px;font-weight:800;color:var(--navy);}
@@ -1019,6 +1032,14 @@ svg.ic{width:24px;height:24px;}
   </div>
 </div>
 
+<div class="modal" id="pathResultsModal" role="dialog" aria-modal="true" aria-label="Full assessment results">
+  <div class="modal-card results-card">
+    <button class="modal-x" id="pathResultsClose" aria-label="Close">&times;</button>
+    <h3>Full Assessment Results</h3>
+    <div id="pathResultsBody" style="margin-top:12px;"></div>
+  </div>
+</div>
+
 <!-- MEMBER DASHBOARD (prototype) -->
 <div class="dash" id="dashboard">
   <div class="dash-bar">
@@ -1096,6 +1117,7 @@ svg.ic{width:24px;height:24px;}
       <span class="section-eyebrow">Full Path Assessment</span>
       <h2>The full picture</h2>
       <p class="sub">A deeper self-check across all seven essentials. Rate where you are <b>today</b> and where you were <b>when your journey began</b> — 🟢 🟡 🔴. Come back anytime; you only need to update what has changed.</p>
+      <button type="button" class="btn btn-outline btn-sm" data-pathresults style="margin-bottom:10px;">📊 View full assessment results</button>
       <div id="pathBox"></div>
     </div>
 
@@ -3359,9 +3381,41 @@ function renderPath(){
     });
     h+='</div></div>';
   });
-  h+='<button type="button" class="btn btn-gold" id="pathSave" style="margin-top:16px;">Save Full Path Assessment</button><span class="sub" id="pathMsg" style="margin-left:10px;"></span>';
+  h+='<div style="margin-top:16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px;"><button type="button" class="btn btn-gold" id="pathSave">Save Full Path Assessment</button><button type="button" class="btn btn-outline" data-pathresults>\ud83d\udcca View full results</button><span class="sub" id="pathMsg"></span></div>';
   el.innerHTML=h;
 }
+function pathRank(v){return v==='g'?3:v==='y'?2:v==='r'?1:0;}
+function renderPathResults(){
+  var body=document.getElementById('pathResultsBody'); if(!body)return;
+  var answered=PATH_IND.filter(function(x){return PATH_NOW[x.id]||PATH_NA[x.id];});
+  var answeredReal=answered.filter(function(x){return !PATH_NA[x.id];});
+  if(!answered.length&&PATH_SAT==null){body.innerHTML='<p class="sub">You haven\u2019t filled out the Full Path Assessment yet. Rate your indicators and save, then your results summary will appear here.</p>';return;}
+  var h='<p class="sub" style="margin-bottom:14px">'+(PATH_LAST?('Based on your latest save on '+pEsc(PATH_LAST)+'. '):'')+answeredReal.length+' of '+PATH_IND.length+' indicators answered.</p>';
+  if(PATH_SAT!=null){
+    var trend='';
+    if(PATH_SAT_TREND.length>1){var f=PATH_SAT_TREND[0],l=PATH_SAT_TREND[PATH_SAT_TREND.length-1],diff=l.v-f.v,cls=diff>0?'up':(diff<0?'down':'flat'),ar=diff>0?'\u2191':(diff<0?'\u2193':'\u2192');trend='<div class="sat-trend '+cls+'" style="border:none;padding:0;margin-top:8px">'+PATH_SAT_TREND.slice(-8).map(function(p){return '<span class="st-pt">'+pEsc(p.d)+' \u00b7 <b>'+p.v+'</b></span>';}).join('<span class="st-ar">\u2192</span>')+' <span class="st-net">'+ar+' '+(diff>0?'+':'')+diff+'</span></div>';}
+    h+='<div class="pr-block"><div class="pr-h">Life satisfaction</div><div class="pr-sat-big">'+PATH_SAT+'<span>/ 10</span></div>'+trend+'</div>';
+  }
+  var gc=0,yc=0,rc=0,imp=0,dec=0,same=0;
+  answeredReal.forEach(function(x){var nv=PATH_NOW[x.id];if(nv==='g')gc++;else if(nv==='y')yc++;else if(nv==='r')rc++;var tv=PATH_THEN[x.id];if(tv){var d=pathRank(nv)-pathRank(tv);if(d>0)imp++;else if(d<0)dec++;else same++;}});
+  h+='<div class="pr-stats"><div class="pr-stat g"><b>'+gc+'</b><span>Strengths</span></div><div class="pr-stat y"><b>'+yc+'</b><span>Doing okay</span></div><div class="pr-stat r"><b>'+rc+'</b><span>Need support</span></div></div>';
+  if(imp+dec+same>0){h+='<p class="sub" style="margin:2px 0 14px">Since your journey began: <b style="color:var(--sage)">'+imp+' improved</b> \u00b7 '+same+' unchanged'+(dec?(' \u00b7 <b style="color:var(--coral)">'+dec+' declined</b>'):'')+'.</p>';}
+  var focus=answeredReal.filter(function(x){return PATH_NOW[x.id]==='r';});
+  var strengths=answeredReal.filter(function(x){return PATH_NOW[x.id]==='g';});
+  if(focus.length)h+='<div class="pr-block"><div class="pr-h">Areas to focus on</div>'+focus.map(function(x){return '<div class="pr-li"><span class="pdot r"></span>'+pEsc(x.q)+'</div>';}).join('')+'</div>';
+  if(strengths.length)h+='<div class="pr-block"><div class="pr-h">Your strengths</div>'+strengths.map(function(x){return '<div class="pr-li"><span class="pdot g"></span>'+pEsc(x.q)+'</div>';}).join('')+'</div>';
+  var byB={};answered.forEach(function(x){(byB[x.b]=byB[x.b]||[]).push(x);});
+  h+='<div class="pr-h" style="margin-top:18px">By Human Essential</div>';
+  PATH_BUCKETS.forEach(function(bk){var items=byB[bk.key]||[];if(!items.length)return;
+    var g=0,y=0,r=0;items.forEach(function(x){if(PATH_NA[x.id])return;var v=PATH_NOW[x.id];if(v==='g')g++;else if(v==='y')y++;else if(v==='r')r++;});var tot=g+y+r||1;
+    h+='<div class="pr-b"><div class="pr-b-h">'+bk.icon+' '+bk.name+'</div><div class="ins-bar"><span class="bg-red" style="width:'+(r/tot*100)+'%"></span><span class="bg-amber" style="width:'+(y/tot*100)+'%"></span><span class="bg-green" style="width:'+(g/tot*100)+'%"></span></div>'+
+      items.map(function(x){var na=PATH_NA[x.id],nv=PATH_NOW[x.id],tv=PATH_THEN[x.id];var chip=na?'<span class="sub" style="font-size:11px">Does not apply</span>':('<span class="pdot '+nv+'"></span>'+(tv&&tv!==nv?'<span class="ins-then">was <span class="pdot '+tv+'"></span></span>':''));var dt=PATH_IND_DATE[x.id]?'<span class="ins-pd-dt">'+pEsc(PATH_IND_DATE[x.id])+'</span>':'';return '<div class="qa-row"><span class="qa-q">'+pEsc(x.q)+'</span><span class="qa-a">'+chip+' '+dt+'</span></div>';}).join('')+'</div>';
+  });
+  body.innerHTML=h;
+}
+function openPathResults(){renderPathResults();var m=document.getElementById('pathResultsModal');if(m)m.classList.add('open');try{logEvent('view','Full Assessment Results');}catch(e){}}
+function closePathResults(){var m=document.getElementById('pathResultsModal');if(m)m.classList.remove('open');}
+document.addEventListener('click',function(e){if(e.target.closest('[data-pathresults]')){openPathResults();return;}if(e.target.id==='pathResultsClose'){closePathResults();return;}var m=document.getElementById('pathResultsModal');if(m&&e.target===m){closePathResults();return;}});
 function pathBadge(bkey){var items=PATH_IND.filter(function(x){return x.b===bkey;});var an=items.reduce(function(a,x){return a+pathDoneCount(x);},0);var badge=document.querySelector('[data-pathb="'+bkey+'"] .path-count');if(badge)badge.textContent=an+'/'+items.length;}
 function savePath(){var msg=document.getElementById('pathMsg');if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Sign in with a real account to save.';return;}if(msg)msg.textContent='Saving…';sb.from('path_assessments').insert({member_id:CUR.uid,answers:{now:PATH_NOW,then:PATH_THEN,na:PATH_NA},satisfaction:PATH_SAT}).then(function(r){if(r&&r.error){if(msg)msg.textContent='Could not save: '+r.error.message;return;}if(msg)msg.textContent='Saved \u2713 new log recorded.';try{logEvent('action','Full Path Assessment saved');}catch(e){}loadPath();},function(){if(msg)msg.textContent='Network error — try again.';});}
 function loadPath(){if(!CUR.live||!CUR.uid)return;sb.from('path_assessments').select('answers,satisfaction,created_at').eq('member_id',CUR.uid).order('created_at',{ascending:true}).then(function(r){if(r&&r.error)return;var rows=(r&&r.data)||[];PATH_COUNT=rows.length;PATH_SAT_TREND=[];PATH_IND_DATE={};var prev={};function fmt(t){try{return new Date(t).toLocaleDateString();}catch(e){return(''+t).slice(0,10);}}rows.forEach(function(row){var ds=fmt(row.created_at);if(row.satisfaction!=null)PATH_SAT_TREND.push({d:ds,v:row.satisfaction});var a=row.answers||{};var nowMap,naMap;if(a&&(a.now||a.then||a.na)){nowMap=a.now||{};naMap=a.na||{};}else{nowMap=a||{};naMap={};}var eff={};Object.keys(nowMap).forEach(function(k){eff[k]=nowMap[k];});Object.keys(naMap).forEach(function(k){if(naMap[k])eff[k]='na';});Object.keys(eff).forEach(function(k){if(prev[k]!==eff[k]){PATH_IND_DATE[k]=ds;prev[k]=eff[k];}});});var d=rows.length?rows[rows.length-1]:null;if(d){var a=d.answers;if(a&&typeof a==='object'){if(a.now||a.then||a.na){PATH_NOW=a.now||{};PATH_THEN=a.then||{};PATH_NA=a.na||{};}else{PATH_NOW=a;PATH_THEN={};PATH_NA={};}}if(d.satisfaction!=null)PATH_SAT=d.satisfaction;PATH_LAST=fmt(d.created_at);}renderPath();});}
