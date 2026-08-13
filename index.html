@@ -478,6 +478,13 @@ h2.sec.light{color:#fff;}
 .pi-card.na{opacity:.5;}
 .pi-hd{font-size:14px;font-weight:700;color:var(--navy);}
 .pi-def{font-size:12px;color:var(--muted);margin:2px 0 10px;}
+.pi-last{font-size:11px;color:var(--muted);margin:-5px 0 9px;font-style:italic;}
+.sat-trend{margin-top:11px;padding-top:10px;border-top:1px solid rgba(216,162,58,.3);font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;align-items:center;gap:5px;line-height:1.6;}
+.sat-trend .st-pt{white-space:nowrap;}
+.sat-trend .st-ar{color:var(--muted);opacity:.6;}
+.sat-trend .st-net{font-weight:700;border-radius:999px;padding:2px 9px;background:var(--cream-200);color:var(--navy);white-space:nowrap;}
+.sat-trend.up .st-net{background:var(--sage-light);color:var(--sage);}
+.sat-trend.down .st-net{background:rgba(216,88,74,.14);color:var(--coral);}
 .pi-cols{display:grid;gap:12px;}
 @media(min-width:640px){.pi-cols{grid-template-columns:1fr 1fr;}}
 .pi-col-h{font-size:12.5px;font-weight:800;color:var(--navy);}
@@ -1052,7 +1059,6 @@ svg.ic{width:24px;height:24px;}
       <div class="pf-l" style="margin-top:18px;"><span class="pf-cap" style="font-weight:800;color:var(--navy);font-size:14px;">A few quick questions</span>
         <p class="sub" style="font-size:12px;margin-top:2px;">Optional — helps us understand who we serve. Never shared publicly.</p>
       </div>
-      <label class="pf-l">Race / ethnicity<select class="pf-i" id="pfRace"></select></label>
       <label class="pf-l">Your income<select class="pf-i" id="pfIncome"></select></label>
       <label class="pf-l">Household income<select class="pf-i" id="pfHhIncome"></select></label>
       <label class="pf-l">Is English your first language?<select class="pf-i" id="pfEnglish"><option value="">Select…</option><option>Yes</option><option>No</option></select></label>
@@ -2818,7 +2824,7 @@ function addRewardIdea(){var inp=document.getElementById('rewardWish'),msg=docum
 function loadProfileForm(){
   if(!CUR.live||!CUR.uid)return;
   sb.from('profiles').select('phone,zip').eq('id',CUR.uid).maybeSingle().then(function(p){var d=(p&&p.data)||{};var a=document.getElementById('pfPhone');if(a)a.value=d.phone||'';var b=document.getElementById('pfZip');if(b)b.value=d.zip||'';if(d.phone||d.zip){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
-  sb.from('members').select('want_help,employment_status,employment_detail,solution_offer,reward_wish,race,income,household_income,english_first,household_size,household_under18,journey_start,share_consent,partner_org').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfStatus',d.employment_status,'data-st');var dt=document.getElementById('pfDetail');if(dt)dt.value=d.employment_detail||'';var so=document.getElementById('pfSolution');if(so)so.value=d.solution_offer||'';fillIntakeOptions();var setv=function(id,v){var el=document.getElementById(id);if(el)el.value=(v==null?'':v);};setv('pfRace',d.race);setv('pfIncome',d.income);setv('pfHhIncome',d.household_income);setv('pfEnglish',d.english_first);setv('pfHhSize',d.household_size);setv('pfHhKids',d.household_under18);setv('pfJourney',d.journey_start);setPartner(d.partner_org);var _cc=document.getElementById('pfConsent');if(_cc)_cc.checked=!!d.share_consent;CUR.journeyStart=d.journey_start||null;renderMemberSince();loadIdeasMine();pfToggleSolution();if(d.want_help||d.employment_status||d.employment_detail||d.solution_offer){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
+  sb.from('members').select('want_help,employment_status,employment_detail,solution_offer,reward_wish,income,household_income,english_first,household_size,household_under18,journey_start,share_consent,partner_org').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfStatus',d.employment_status,'data-st');var dt=document.getElementById('pfDetail');if(dt)dt.value=d.employment_detail||'';var so=document.getElementById('pfSolution');if(so)so.value=d.solution_offer||'';fillIntakeOptions();var setv=function(id,v){var el=document.getElementById(id);if(el)el.value=(v==null?'':v);};setv('pfIncome',d.income);setv('pfHhIncome',d.household_income);setv('pfEnglish',d.english_first);setv('pfHhSize',d.household_size);setv('pfHhKids',d.household_under18);setv('pfJourney',d.journey_start);setPartner(d.partner_org);var _cc=document.getElementById('pfConsent');if(_cc)_cc.checked=!!d.share_consent;CUR.journeyStart=d.journey_start||null;renderMemberSince();loadIdeasMine();pfToggleSolution();if(d.want_help||d.employment_status||d.employment_detail||d.solution_offer){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
 }
 function saveProfile(){
   var msg=document.getElementById('pfMsg');
@@ -2829,11 +2835,11 @@ function saveProfile(){
   var detail=(document.getElementById('pfDetail').value||'').trim();
   var soEl=document.getElementById('pfSolution');var solution=(soEl&&soEl.value||'').trim();
   function _gv(id){var el=document.getElementById(id);return el?(el.value||''):'';}
-  var i_race=_gv('pfRace'),i_inc=_gv('pfIncome'),i_hhi=_gv('pfHhIncome'),i_eng=_gv('pfEnglish'),i_hs=_gv('pfHhSize'),i_hk=_gv('pfHhKids'),i_j=_gv('pfJourney');var _cc=document.getElementById('pfConsent'),i_consent=!!(_cc&&_cc.checked);var _ps=document.getElementById('pfPartner'),_po=document.getElementById('pfPartnerOther'),i_partner=(_ps&&_ps.value==='__other__')?((_po&&_po.value.trim())||''):((_ps&&_ps.value)||'');
+  var i_inc=_gv('pfIncome'),i_hhi=_gv('pfHhIncome'),i_eng=_gv('pfEnglish'),i_hs=_gv('pfHhSize'),i_hk=_gv('pfHhKids'),i_j=_gv('pfJourney');var _cc=document.getElementById('pfConsent'),i_consent=!!(_cc&&_cc.checked);var _ps=document.getElementById('pfPartner'),_po=document.getElementById('pfPartnerOther'),i_partner=(_ps&&_ps.value==='__other__')?((_po&&_po.value.trim())||''):((_ps&&_ps.value)||'');
   if(msg)msg.textContent='Saving…'; logEvent('action','Profile saved');
   Promise.all([
     sb.from('profiles').update({phone:phone,zip:zip}).eq('id',CUR.uid),
-    sb.from('members').update({want_help:hp,employment_status:st,employment_detail:detail,solution_offer:solution,race:i_race,income:i_inc,household_income:i_hhi,english_first:i_eng,household_size:(i_hs===''?null:parseInt(i_hs,10)),household_under18:(i_hk===''?null:parseInt(i_hk,10)),journey_start:(i_j||null),share_consent:i_consent,partner_org:(i_partner||null)}).eq('profile_id',CUR.uid)
+    sb.from('members').update({want_help:hp,employment_status:st,employment_detail:detail,solution_offer:solution,income:i_inc,household_income:i_hhi,english_first:i_eng,household_size:(i_hs===''?null:parseInt(i_hs,10)),household_under18:(i_hk===''?null:parseInt(i_hk,10)),journey_start:(i_j||null),share_consent:i_consent,partner_org:(i_partner||null)}).eq('profile_id',CUR.uid)
   ]).then(function(res){var err=(res[0]&&res[0].error)||(res[1]&&res[1].error);if(msg)msg.textContent=err?('Could not save: '+err.message):'Saved \u2713';},function(){if(msg)msg.textContent='Network error — try again.';});
 }
 (function(){var sv=document.getElementById('pfSave');if(sv)sv.addEventListener('click',saveProfile);var ps=document.getElementById('pfPartner');if(ps)ps.addEventListener('change',pfTogglePartner);})();
@@ -2844,7 +2850,7 @@ function fillPartnerSel(){var el=document.getElementById('pfPartner');if(!el||el
 function pfTogglePartner(){var el=document.getElementById('pfPartner'),w=document.getElementById('pfPartnerOtherWrap');if(w)w.style.display=(el&&el.value==='__other__')?'':'none';}
 function setPartner(v){var el=document.getElementById('pfPartner'),oi=document.getElementById('pfPartnerOther');if(!el)return;v=v||'';if(!v){el.value='';if(oi)oi.value='';}else if(PARTNER_ORGS.indexOf(v)>=0){el.value=v;if(oi)oi.value='';}else{el.value='__other__';if(oi)oi.value=v;}pfTogglePartner();}
 function fillIntakeSel(id,opts){var el=document.getElementById(id);if(!el||el.options.length>1)return;el.innerHTML='<option value="">Select…</option>'+(opts||INTAKE_INCOME).map(function(o){return '<option>'+o+'</option>';}).join('');}
-function fillIntakeOptions(){fillIntakeSel('pfRace',INTAKE_RACE);fillIntakeSel('pfIncome',INTAKE_INCOME);fillIntakeSel('pfHhIncome',INTAKE_INCOME);fillPartnerSel();}
+function fillIntakeOptions(){fillIntakeSel('pfIncome',INTAKE_INCOME);fillIntakeSel('pfHhIncome',INTAKE_INCOME);fillPartnerSel();}
 fillIntakeOptions();
 function openDemo(role){
   CUR.live=false; CUR.uid=null;
@@ -3303,7 +3309,7 @@ var PATH_IND = [
 ];
 
 var PATH_BUCKETS=[{key:"health",name:"Health & Wellness",icon:"🩺"},{key:"education",name:"Education",icon:"📚"},{key:"economic",name:"Economic Opportunity",icon:"📈"},{key:"housing",name:"Safe & Affordable Housing",icon:"🏠"},{key:"financial",name:"Financial Resources",icon:"💳"},{key:"transport",name:"Transportation",icon:"🚌"},{key:"relationships",name:"Relationships",icon:"🤝"}];
-var PATH_NOW={}, PATH_THEN={}, PATH_NA={}, PATH_SAT=null, PATH_LAST=null, PATH_COUNT=0;
+var PATH_NOW={}, PATH_THEN={}, PATH_NA={}, PATH_SAT=null, PATH_LAST=null, PATH_COUNT=0, PATH_SAT_TREND=[], PATH_IND_DATE={};
 function pEsc(x){return String(x==null?'':x).replace(/[&<>"]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':c==='>'?'&gt;':'&quot;';});}
 function pathShort(k){return ({health:'Health',education:'Education',economic:'Economic',housing:'Housing',financial:'Financial',transport:'Transportation',relationships:'Relationships'})[k]||k;}
 function pathDoneCount(x){return (PATH_NA[x.id]||PATH_NOW[x.id])?1:0;}
@@ -3319,7 +3325,9 @@ function renderPath(){
   var byB={}; PATH_IND.forEach(function(x){(byB[x.b]=byB[x.b]||[]).push(x);});
   var h='<div class="path-sat-top"><div class="path-sat-q">How satisfied are you with life as a whole these days?</div><div class="path-sat">';
   for(var n=1;n<=10;n++){h+='<button type="button" class="path-sn'+(PATH_SAT===n?' on':'')+'" data-psat="'+n+'">'+n+'</button>';}
-  h+='</div><div class="path-sat-lbl"><span>1 - Not at all</span><span>10 - Completely</span></div></div>';
+  var satTrendHtml='';
+  if(PATH_SAT_TREND.length>1){var _f=PATH_SAT_TREND[0],_l=PATH_SAT_TREND[PATH_SAT_TREND.length-1],_diff=_l.v-_f.v,_cls=_diff>0?'up':(_diff<0?'down':'flat'),_ar=_diff>0?'\u2191':(_diff<0?'\u2193':'\u2192');var _rec=PATH_SAT_TREND.slice(-6);satTrendHtml='<div class="sat-trend '+_cls+'">Satisfaction over time: '+_rec.map(function(p){return '<span class="st-pt">'+pEsc(p.d)+' \u00b7 <b>'+p.v+'</b></span>';}).join('<span class="st-ar">\u2192</span>')+' <span class="st-net">'+_ar+' '+(_diff>0?'+':'')+_diff+' since '+pEsc(_f.d)+'</span></div>';}
+  h+='</div><div class="path-sat-lbl"><span>1 - Not at all</span><span>10 - Completely</span></div>'+satTrendHtml+'</div>';
   if(PATH_LAST){h+='<div class="path-meta">Last saved '+pEsc(PATH_LAST)+(PATH_COUNT>1?(' &middot; '+PATH_COUNT+' assessments logged'):'')+'. Update only what has changed, then save a new log.</div>';}
   h+='<div class="ess-nav" style="margin-bottom:14px;">'+PATH_BUCKETS.filter(function(bk){return (byB[bk.key]||[]).length;}).map(function(bk){return '<button type="button" class="ess-chip" data-pathjump="'+bk.key+'">'+pathShort(bk.key)+'</button>';}).join('')+'</div>';
   PATH_BUCKETS.forEach(function(bk){
@@ -3327,7 +3335,7 @@ function renderPath(){
     var ansN=items.reduce(function(a,x){return a+pathDoneCount(x);},0);
     h+='<div class="path-b"><button type="button" class="path-bh" data-pathb="'+bk.key+'"><span>'+bk.icon+' '+bk.name+'</span><span class="path-count">'+ansN+'/'+items.length+'</span></button><div class="path-body" id="pathb-'+bk.key+'" style="display:none;">';
     items.forEach(function(x){var na=!!PATH_NA[x.id];
-      h+='<div class="pi-card'+(na?' na':'')+'" data-picard="'+x.id+'"><div class="pi-hd">'+pEsc(x.q)+'</div><div class="pi-def">'+pEsc(x.def)+'</div>'+
+      h+='<div class="pi-card'+(na?' na':'')+'" data-picard="'+x.id+'"><div class="pi-hd">'+pEsc(x.q)+'</div><div class="pi-def">'+pEsc(x.def)+'</div>'+(PATH_IND_DATE[x.id]?'<div class="pi-last">Last answered '+pEsc(PATH_IND_DATE[x.id])+'</div>':'')+
         '<div class="pi-cols">'+
           '<div><div class="pi-col-h">1. Where are you now?</div><div class="pi-col-s">Best describes you today</div>'+pathOptsHtml(x,'now',PATH_NOW[x.id])+'</div>'+
           '<div><div class="pi-col-h">2. Where were you when your journey began?</div><div class="pi-col-s">Think back to when you first connected with EPE</div>'+pathOptsHtml(x,'then',PATH_THEN[x.id])+'</div>'+
@@ -3344,7 +3352,7 @@ function renderPath(){
 }
 function pathBadge(bkey){var items=PATH_IND.filter(function(x){return x.b===bkey;});var an=items.reduce(function(a,x){return a+pathDoneCount(x);},0);var badge=document.querySelector('[data-pathb="'+bkey+'"] .path-count');if(badge)badge.textContent=an+'/'+items.length;}
 function savePath(){var msg=document.getElementById('pathMsg');if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Sign in with a real account to save.';return;}if(msg)msg.textContent='Saving…';sb.from('path_assessments').insert({member_id:CUR.uid,answers:{now:PATH_NOW,then:PATH_THEN,na:PATH_NA},satisfaction:PATH_SAT}).then(function(r){if(r&&r.error){if(msg)msg.textContent='Could not save: '+r.error.message;return;}if(msg)msg.textContent='Saved \u2713 new log recorded.';try{logEvent('action','Full Path Assessment saved');}catch(e){}loadPath();},function(){if(msg)msg.textContent='Network error — try again.';});}
-function loadPath(){if(!CUR.live||!CUR.uid)return;sb.from('path_assessments').select('answers,satisfaction,created_at',{count:'exact'}).eq('member_id',CUR.uid).order('created_at',{ascending:false}).limit(1).then(function(r){if(r&&r.error)return;PATH_COUNT=(r&&typeof r.count==='number')?r.count:0;var d=(r&&r.data&&r.data[0])?r.data[0]:null;if(d){var a=d.answers;if(a&&typeof a==='object'){if(a.now||a.then||a.na){PATH_NOW=a.now||{};PATH_THEN=a.then||{};PATH_NA=a.na||{};}else{PATH_NOW=a;PATH_THEN={};PATH_NA={};}}if(d.satisfaction!=null)PATH_SAT=d.satisfaction;if(d.created_at){try{PATH_LAST=new Date(d.created_at).toLocaleDateString();}catch(e){PATH_LAST=(''+d.created_at).slice(0,10);}}}renderPath();});}
+function loadPath(){if(!CUR.live||!CUR.uid)return;sb.from('path_assessments').select('answers,satisfaction,created_at').eq('member_id',CUR.uid).order('created_at',{ascending:true}).then(function(r){if(r&&r.error)return;var rows=(r&&r.data)||[];PATH_COUNT=rows.length;PATH_SAT_TREND=[];PATH_IND_DATE={};var prev={};function fmt(t){try{return new Date(t).toLocaleDateString();}catch(e){return(''+t).slice(0,10);}}rows.forEach(function(row){var ds=fmt(row.created_at);if(row.satisfaction!=null)PATH_SAT_TREND.push({d:ds,v:row.satisfaction});var a=row.answers||{};var nowMap,naMap;if(a&&(a.now||a.then||a.na)){nowMap=a.now||{};naMap=a.na||{};}else{nowMap=a||{};naMap={};}var eff={};Object.keys(nowMap).forEach(function(k){eff[k]=nowMap[k];});Object.keys(naMap).forEach(function(k){if(naMap[k])eff[k]='na';});Object.keys(eff).forEach(function(k){if(prev[k]!==eff[k]){PATH_IND_DATE[k]=ds;prev[k]=eff[k];}});});var d=rows.length?rows[rows.length-1]:null;if(d){var a=d.answers;if(a&&typeof a==='object'){if(a.now||a.then||a.na){PATH_NOW=a.now||{};PATH_THEN=a.then||{};PATH_NA=a.na||{};}else{PATH_NOW=a;PATH_THEN={};PATH_NA={};}}if(d.satisfaction!=null)PATH_SAT=d.satisfaction;PATH_LAST=fmt(d.created_at);}renderPath();});}
 (function(){var pb=document.getElementById('pathBox'); if(!pb)return;
   pb.addEventListener('click',function(e){
     var pj=e.target.closest('[data-pathjump]'); if(pj){var k=pj.getAttribute('data-pathjump');var bd=document.getElementById('pathb-'+k);if(bd)bd.style.display='';var hh=document.querySelector('[data-pathb="'+k+'"]');if(hh){hh.classList.add('open');hh.scrollIntoView({block:'start'});}var ch=pb.querySelectorAll('[data-pathjump]');for(var q=0;q<ch.length;q++)ch[q].classList.remove('active');pj.classList.add('active');return;}
