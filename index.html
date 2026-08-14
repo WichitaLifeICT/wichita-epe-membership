@@ -495,6 +495,7 @@ h2.sec.light{color:#fff;}
 .ins-pd-dt{font-size:11px;color:var(--muted);margin-left:8px;}
 .ins-path-b{margin-top:11px;}
 .ins-path-bh{font-size:12px;font-weight:800;color:var(--navy);margin-bottom:2px;}
+.ins-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
 .results-card{max-width:580px;max-height:88vh;overflow-y:auto;padding:26px 24px;}
 .pr-block{margin:14px 0;padding:13px 15px;border:1px solid var(--border);border-radius:12px;background:var(--cream-200);}
 .pr-h{font-size:12px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px;}
@@ -508,6 +509,19 @@ h2.sec.light{color:#fff;}
 .pr-li{font-size:13px;color:var(--navy);padding:5px 0;display:flex;align-items:center;gap:8px;}
 .pr-b{margin-top:12px;}
 .pr-b-h{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.pr-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+@media print{
+  body.printing-path{background:#fff !important;}
+  body.printing-path>*{display:none !important;}
+  body.printing-path #pathResultsModal{display:block !important;position:static !important;inset:auto !important;background:#fff !important;padding:0 !important;backdrop-filter:none !important;}
+  body.printing-path #pathResultsModal .modal-card{box-shadow:none !important;max-width:100% !important;max-height:none !important;overflow:visible !important;border-radius:0 !important;padding:0 !important;}
+  body.printing-path #pathResultsModal .modal-x,body.printing-path #pathResultsModal .pr-actions{display:none !important;}
+  body.printing-ins *{visibility:hidden !important;}
+  body.printing-ins #insBox,body.printing-ins #insBox *{visibility:visible !important;}
+  body.printing-ins #insBox{position:absolute !important;left:0;top:0;width:100%;}
+  body.printing-ins [data-insback],body.printing-ins .ins-actions{display:none !important;}
+  .pr-block,.pr-b,.qa-row,.ins-ess,.ins-path-b{break-inside:avoid;}
+}
 .pi-cols{display:grid;gap:12px;}
 @media(min-width:640px){.pi-cols{grid-template-columns:1fr 1fr;}}
 .pi-col-h{font-size:12.5px;font-weight:800;color:var(--navy);}
@@ -1040,6 +1054,11 @@ svg.ic{width:24px;height:24px;}
   <div class="modal-card results-card">
     <button class="modal-x" id="pathResultsClose" aria-label="Close">&times;</button>
     <h3>Full Assessment Results</h3>
+    <div class="pr-actions">
+      <button type="button" class="btn btn-outline btn-sm" id="prCopy">📋 Copy</button>
+      <button type="button" class="btn btn-outline btn-sm" id="prEmail">✉️ Email</button>
+      <button type="button" class="btn btn-gold btn-sm" id="prPdf">🖨️ Save as PDF</button>
+    </div>
     <div id="pathResultsBody" style="margin-top:12px;"></div>
   </div>
 </div>
@@ -2022,6 +2041,9 @@ function _insDt(x){try{return new Date(x).toLocaleDateString(undefined,{year:'nu
 function _insDur(sec){sec=sec||0;var h=Math.floor(sec/3600),m=Math.round((sec%3600)/60);return h?(h+'h '+m+'m'):(m?(m+'m'):(sec>0?'<1m':'—'));}
 function _insPathData(prows){var out={sat:[],now:{},then:{},na:{},dates:{}};if(!prows||!prows.length)return out;var prev={};prows.forEach(function(row){var ds=_insDt(row.created_at);if(row.satisfaction!=null)out.sat.push({d:ds,v:row.satisfaction});var a=row.answers||{},nowMap,naMap;if(a&&(a.now||a.then||a.na)){nowMap=a.now||{};naMap=a.na||{};}else{nowMap=a||{};naMap={};}var eff={};Object.keys(nowMap).forEach(function(k){eff[k]=nowMap[k];});Object.keys(naMap).forEach(function(k){if(naMap[k])eff[k]='na';});Object.keys(eff).forEach(function(k){if(prev[k]!==eff[k]){out.dates[k]=ds;prev[k]=eff[k];}});});var last=prows[prows.length-1],la=last.answers||{};if(la&&(la.now||la.then||la.na)){out.now=la.now||{};out.then=la.then||{};out.na=la.na||{};}else{out.now=la||{};out.then={};out.na={};}return out;}
 function _insLatestSat(pd){return pd.sat.length?pd.sat[pd.sat.length-1].v:'';}
+function _insResultsText(mode){var rows=window._insRows||[],r=rows.filter(function(x){return x.id===window._insMember;})[0];if(!r)return '';var pd=_insPathData(r.path||[]);var answered=PATH_IND.filter(function(x){return pd.now[x.id]||pd.na[x.id];});var real=answered.filter(function(x){return !pd.na[x.id];});var L=['EPE FULL ASSESSMENT RESULTS'];L.push('Member: '+r.name+(r.email?(' <'+r.email+'>'):''));if(r.a&&r.a.created_at)L.push('Last check-in: '+_insDt(r.a.created_at));L.push(real.length+' of '+PATH_IND.length+' indicators answered');L.push('');if(pd.sat.length){var t='Life satisfaction: '+pd.sat[pd.sat.length-1].v+'/10';if(pd.sat.length>1){var f=pd.sat[0],l=pd.sat[pd.sat.length-1],d=l.v-f.v;t+=' ('+(d>0?'+':'')+d+' since '+f.d+')';}L.push(t);}var gc=0,yc=0,rc=0,imp=0,dec=0,same=0;real.forEach(function(x){var nv=pd.now[x.id];if(nv==='g')gc++;else if(nv==='y')yc++;else if(nv==='r')rc++;var tv=pd.then[x.id];if(tv){var dd=pathRank(nv)-pathRank(tv);if(dd>0)imp++;else if(dd<0)dec++;else same++;}});L.push('Strengths: '+gc+'  |  Doing okay: '+yc+'  |  Need support: '+rc);if(imp+dec+same>0)L.push('Since journey began: '+imp+' improved, '+same+' unchanged, '+dec+' declined');var focus=real.filter(function(x){return pd.now[x.id]==='r';}),strengths=real.filter(function(x){return pd.now[x.id]==='g';});if(focus.length){L.push('');L.push('AREAS TO FOCUS ON:');focus.forEach(function(x){L.push('  - '+x.q);});}if(strengths.length){L.push('');L.push('STRENGTHS:');strengths.forEach(function(x){L.push('  - '+x.q);});}if(mode==='full'){var byB={};answered.forEach(function(x){(byB[x.b]=byB[x.b]||[]).push(x);});L.push('');L.push('BY HUMAN ESSENTIAL:');PATH_BUCKETS.forEach(function(bk){var items=byB[bk.key]||[];if(!items.length)return;L.push('');L.push(bk.name+':');items.forEach(function(x){var lbl=pd.na[x.id]?'Does not apply':pathLabel(pd.now[x.id]);var was=(!pd.na[x.id]&&pd.then[x.id]&&pd.then[x.id]!==pd.now[x.id])?(' (was '+pathLabel(pd.then[x.id])+')'):'';L.push('  - '+x.q+': '+lbl+was);});});}return L.join('\n');}
+function _insCopy(btn){var txt=_insResultsText('full');function done(){if(btn){var o=btn.getAttribute('data-lbl')||btn.textContent;btn.setAttribute('data-lbl',o);btn.textContent='Copied \u2713';setTimeout(function(){btn.textContent=o;},1600);}try{logEvent('action','Admin copied member results');}catch(e){}}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,function(){pathFallbackCopy(txt);done();});}else{pathFallbackCopy(txt);done();}}
+function _insEmail(){var rows=window._insRows||[],r=rows.filter(function(x){return x.id===window._insMember;})[0];var subj='EPE Full Assessment Results'+((r&&r.name)?(' - '+r.name):'');var href='mailto:?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(_insResultsText('summary'));try{logEvent('action','Admin emailed member results');}catch(e){}window.location.href=href;}
 function _insPathHtml(pd){var answered=PATH_IND.filter(function(x){return pd.now[x.id]||pd.na[x.id];});var hasSat=pd.sat.length>0;if(!hasSat&&!answered.length)return '<p class="grouplabel" style="margin-top:16px">Full Path Assessment</p><p class="sub">No path assessment logged yet.</p>';var h='<p class="grouplabel" style="margin-top:16px">Full Path Assessment <span class="sub" style="font-weight:400">— '+answered.length+' of '+PATH_IND.length+' answered</span></p>';if(hasSat){var f=pd.sat[0],l=pd.sat[pd.sat.length-1],diff=l.v-f.v,cls=diff>0?'up':(diff<0?'down':'flat'),ar=diff>0?'↑':(diff<0?'↓':'→');var rec=pd.sat.slice(-8);h+='<div class="sat-trend '+cls+'" style="border-top:none;padding-top:0;margin-top:4px">Life satisfaction: '+rec.map(function(p){return '<span class="st-pt">'+_insEsc(p.d)+' · <b>'+p.v+'</b></span>';}).join('<span class="st-ar">→</span>')+' <span class="st-net">'+ar+' '+(diff>0?'+':'')+diff+'</span></div>';}var byB={};answered.forEach(function(x){(byB[x.b]=byB[x.b]||[]).push(x);});PATH_BUCKETS.forEach(function(bk){var items=byB[bk.key]||[];if(!items.length)return;h+='<div class="ins-path-b"><div class="ins-path-bh">'+bk.icon+' '+bk.name+'</div>'+items.map(function(x){var na=pd.na[x.id],nw=pd.now[x.id],th=pd.then[x.id];var chip=na?'<span class="sub" style="font-size:11px">Does not apply</span>':('<span class="pdot '+nw+'"></span>'+(th&&th!==nw?('<span class="ins-then">was <span class="pdot '+th+'"></span></span>'):''));var dt=pd.dates[x.id]?('<span class="ins-pd-dt">'+_insEsc(pd.dates[x.id])+'</span>'):'';return '<div class="qa-row"><span class="qa-q">'+_insEsc(x.q)+'</span><span class="qa-a">'+chip+' '+dt+'</span></div>';}).join('')+'</div>';});return h;}
 function _insPass(r){var f=window._insFlt||{};if(f.zip&&r.zip!==f.zip)return false;if(f.prio){var tp=(r.a&&r.a.priority)?String(r.a.priority).split(',')[0].trim():'';if(tp!==f.prio)return false;}if(f.need){var e=ESS7.filter(function(x){return x.name===f.need;})[0];if(e){if(!(r.a&&r.a.scores))return false;if(essStatus(r.a.scores[e.key]).c!=='red')return false;}}return true;}
 function loadInsights(){
@@ -2063,7 +2085,7 @@ function showInsights(){
     var h='<button class="btn btn-outline btn-sm" data-insback>\u2190 All members</button>';
     if(!r){box.innerHTML=h+'<p class="sub" style="margin-top:12px">Member not found.</p>';return;}
     var a=r.a,sc=a&&a.scores;
-    h+='<div class="panel" style="margin-top:12px"><span class="section-eyebrow">Member</span><h2>'+_insEsc(r.name)+'</h2><p class="sub">'+_insEsc(r.email)+(r.zip?' \u00b7 '+_insEsc(r.zip):'')+' \u00b7 '+(r.level==='gold'?'Gold':'Basic')+' Member'+(a?(' \u00b7 checked in '+_insDt(a.created_at)):'')+'</p>'+(r.sess?('<p class="sub" style="margin-top:4px"><b>'+r.sess.logins+'</b> logins · <b>'+_insDur(r.sess.seconds)+'</b> total time'+(r.sess.last?(' · last active '+_insDt(r.sess.last)):'')+'</p>'):'');
+    h+='<div class="panel" style="margin-top:12px"><span class="section-eyebrow">Member</span><h2>'+_insEsc(r.name)+'</h2><p class="sub">'+_insEsc(r.email)+(r.zip?' \u00b7 '+_insEsc(r.zip):'')+' \u00b7 '+(r.level==='gold'?'Gold':'Basic')+' Member'+(a?(' \u00b7 checked in '+_insDt(a.created_at)):'')+'</p>'+(r.sess?('<p class="sub" style="margin-top:4px"><b>'+r.sess.logins+'</b> logins · <b>'+_insDur(r.sess.seconds)+'</b> total time'+(r.sess.last?(' · last active '+_insDt(r.sess.last)):'')+'</p>'):'')+'<div class="ins-actions"><button type="button" class="btn btn-outline btn-sm" data-inscopy>\ud83d\udccb Copy</button><button type="button" class="btn btn-outline btn-sm" data-insemail>\u2709\ufe0f Email</button><button type="button" class="btn btn-gold btn-sm" data-insprint>\ud83d\udda8\ufe0f Save as PDF</button></div>';
     if(sc){
       var ans=(a.answers)||{}; var goals=Array.isArray(ans._goals)?ans._goals:[];
       h+='<p class="grouplabel" style="margin-top:16px">7 Human Essentials <span class="sub" style="font-weight:400">— tap to see answers</span></p>'+ESS7.map(function(e){var pct=sc[e.key];var st=essStatus(pct);var c=cc(st);
@@ -2558,6 +2580,9 @@ document.getElementById('admView').addEventListener('click',function(e){
   if((el2=t.closest('[data-essx]'))){var _dd=document.getElementById('essdet-'+el2.getAttribute('data-essx'));if(_dd)_dd.style.display=(_dd.style.display==='none')?'':'none';el2.classList.toggle('open');return;}
   if((el2=t.closest('[data-insmem]'))){window._insMember=el2.getAttribute('data-insmem');showInsights();return;}
   if(t.closest('[data-insback]')){window._insMember=null;showInsights();return;}
+  if((el2=t.closest('[data-inscopy]'))){_insCopy(el2);return;}
+  if(t.closest('[data-insemail]')){_insEmail();return;}
+  if(t.closest('[data-insprint]')){try{logEvent('action','Admin printed member results');}catch(_){}doPrint('printing-ins');return;}
   if(t.closest('#insCsv')){insExportCsv();return;}
   if((el2=t.closest('[data-mileok]'))){var _mk=el2.getAttribute('data-mileok').split(':');el2.textContent='Confirming…';sb.from('milestones').update({status:'verified',verified_at:new Date().toISOString()}).eq('member_id',_mk[0]).eq('mkey',_mk[1]).then(function(){loadInsights();},function(){loadInsights();});return;}
   if((el2=t.closest('[data-msgconv]'))){window._msgConv=el2.getAttribute('data-msgconv');loadAdminMessages();return;}
@@ -3419,9 +3444,32 @@ function renderPathResults(){
   });
   body.innerHTML=h;
 }
+function pathLabel(v){return ({g:'Green',y:'Yellow',r:'Red'})[v]||'-';}
+function pathResultsText(mode){
+  var answered=PATH_IND.filter(function(x){return PATH_NOW[x.id]||PATH_NA[x.id];});
+  var real=answered.filter(function(x){return !PATH_NA[x.id];});
+  var L=['EPE FULL ASSESSMENT RESULTS'];
+  if(PATH_LAST)L.push('Date: '+PATH_LAST);
+  L.push(real.length+' of '+PATH_IND.length+' indicators answered');L.push('');
+  if(PATH_SAT!=null){var t='Life satisfaction: '+PATH_SAT+'/10';if(PATH_SAT_TREND.length>1){var f0=PATH_SAT_TREND[0],l0=PATH_SAT_TREND[PATH_SAT_TREND.length-1],d0=l0.v-f0.v;t+=' ('+(d0>0?'+':'')+d0+' since '+f0.d+')';}L.push(t);}
+  var gc=0,yc=0,rc=0,imp=0,dec=0,same=0;
+  real.forEach(function(x){var nv=PATH_NOW[x.id];if(nv==='g')gc++;else if(nv==='y')yc++;else if(nv==='r')rc++;var tv=PATH_THEN[x.id];if(tv){var dd=pathRank(nv)-pathRank(tv);if(dd>0)imp++;else if(dd<0)dec++;else same++;}});
+  L.push('Strengths: '+gc+'  |  Doing okay: '+yc+'  |  Need support: '+rc);
+  if(imp+dec+same>0)L.push('Since journey began: '+imp+' improved, '+same+' unchanged, '+dec+' declined');
+  var focus=real.filter(function(x){return PATH_NOW[x.id]==='r';});
+  var strengths=real.filter(function(x){return PATH_NOW[x.id]==='g';});
+  if(focus.length){L.push('');L.push('AREAS TO FOCUS ON:');focus.forEach(function(x){L.push('  - '+x.q);});}
+  if(strengths.length){L.push('');L.push('STRENGTHS:');strengths.forEach(function(x){L.push('  - '+x.q);});}
+  if(mode==='full'){var byB={};answered.forEach(function(x){(byB[x.b]=byB[x.b]||[]).push(x);});L.push('');L.push('BY HUMAN ESSENTIAL:');PATH_BUCKETS.forEach(function(bk){var items=byB[bk.key]||[];if(!items.length)return;L.push('');L.push(bk.name+':');items.forEach(function(x){var lbl=PATH_NA[x.id]?'Does not apply':pathLabel(PATH_NOW[x.id]);var was=(!PATH_NA[x.id]&&PATH_THEN[x.id]&&PATH_THEN[x.id]!==PATH_NOW[x.id])?(' (was '+pathLabel(PATH_THEN[x.id])+')'):'';L.push('  - '+x.q+': '+lbl+was);});});}
+  return L.join('\n');
+}
+function doPrint(cls){document.body.classList.add(cls);var clean=function(){document.body.classList.remove(cls);window.removeEventListener('afterprint',clean);};window.addEventListener('afterprint',clean);setTimeout(function(){window.print();setTimeout(clean,1200);},30);}
+function pathFallbackCopy(txt){try{var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);}catch(e){}}
+function pathCopy(btn){var txt=pathResultsText('full');function done(){if(btn){var o=btn.getAttribute('data-lbl')||btn.textContent;btn.setAttribute('data-lbl',o);btn.textContent='Copied \u2713';setTimeout(function(){btn.textContent=o;},1600);}try{logEvent('action','Assessment results copied');}catch(e){}}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,function(){pathFallbackCopy(txt);done();});}else{pathFallbackCopy(txt);done();}}
+function pathEmail(){var href='mailto:?subject='+encodeURIComponent('EPE Full Assessment Results')+'&body='+encodeURIComponent(pathResultsText('summary'));try{logEvent('action','Assessment results emailed');}catch(e){}window.location.href=href;}
 function openPathResults(){renderPathResults();var m=document.getElementById('pathResultsModal');if(m)m.classList.add('open');try{logEvent('view','Full Assessment Results');}catch(e){}}
 function closePathResults(){var m=document.getElementById('pathResultsModal');if(m)m.classList.remove('open');}
-document.addEventListener('click',function(e){if(e.target.closest('[data-pathresults]')){openPathResults();return;}if(e.target.id==='pathResultsClose'){closePathResults();return;}var m=document.getElementById('pathResultsModal');if(m&&e.target===m){closePathResults();return;}});
+document.addEventListener('click',function(e){if(e.target.closest('[data-pathresults]')){openPathResults();return;}var cb=e.target.closest('#prCopy');if(cb){pathCopy(cb);return;}if(e.target.closest('#prEmail')){pathEmail();return;}if(e.target.closest('#prPdf')){try{logEvent('action','Assessment results printed');}catch(_){}doPrint('printing-path');return;}if(e.target.id==='pathResultsClose'){closePathResults();return;}var m=document.getElementById('pathResultsModal');if(m&&e.target===m){closePathResults();return;}});
 function pathBadge(bkey){var items=PATH_IND.filter(function(x){return x.b===bkey;});var an=items.reduce(function(a,x){return a+pathDoneCount(x);},0);var badge=document.querySelector('[data-pathb="'+bkey+'"] .path-count');if(badge)badge.textContent=an+'/'+items.length;}
 function savePath(){var msg=document.getElementById('pathMsg');if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Sign in with a real account to save.';return;}if(msg)msg.textContent='Saving…';sb.from('path_assessments').insert({member_id:CUR.uid,answers:{now:PATH_NOW,then:PATH_THEN,na:PATH_NA},satisfaction:PATH_SAT}).then(function(r){if(r&&r.error){if(msg)msg.textContent='Could not save: '+r.error.message;return;}if(msg)msg.textContent='Saved \u2713 new log recorded.';try{logEvent('action','Full Path Assessment saved');}catch(e){}loadPath();},function(){if(msg)msg.textContent='Network error — try again.';});}
 function loadPath(){if(!CUR.live||!CUR.uid)return;sb.from('path_assessments').select('answers,satisfaction,created_at').eq('member_id',CUR.uid).order('created_at',{ascending:true}).then(function(r){if(r&&r.error)return;var rows=(r&&r.data)||[];PATH_COUNT=rows.length;PATH_SAT_TREND=[];PATH_IND_DATE={};var prev={};function fmt(t){try{return new Date(t).toLocaleDateString();}catch(e){return(''+t).slice(0,10);}}rows.forEach(function(row){var ds=fmt(row.created_at);if(row.satisfaction!=null)PATH_SAT_TREND.push({d:ds,v:row.satisfaction});var a=row.answers||{};var nowMap,naMap;if(a&&(a.now||a.then||a.na)){nowMap=a.now||{};naMap=a.na||{};}else{nowMap=a||{};naMap={};}var eff={};Object.keys(nowMap).forEach(function(k){eff[k]=nowMap[k];});Object.keys(naMap).forEach(function(k){if(naMap[k])eff[k]='na';});Object.keys(eff).forEach(function(k){if(prev[k]!==eff[k]){PATH_IND_DATE[k]=ds;prev[k]=eff[k];}});});var d=rows.length?rows[rows.length-1]:null;if(d){var a=d.answers;if(a&&typeof a==='object'){if(a.now||a.then||a.na){PATH_NOW=a.now||{};PATH_THEN=a.then||{};PATH_NA=a.na||{};}else{PATH_NOW=a;PATH_THEN={};PATH_NA={};}}if(d.satisfaction!=null)PATH_SAT=d.satisfaction;PATH_LAST=fmt(d.created_at);}renderPath();});}
