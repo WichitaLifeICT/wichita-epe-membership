@@ -1209,8 +1209,7 @@ svg.ic{width:24px;height:24px;}
       <button type="button" class="hub-tab" data-tp="bank"><span class="n">5</span>Bank of Solutions</button>
       <button type="button" class="hub-tab" data-tp="ach"><span class="n">6</span>Achievements</button>
       <button type="button" class="hub-tab" data-tp="rewards"><span class="n">7</span>Rewards</button>
-      <button type="button" class="hub-tab" data-tp="reviews"><span class="n">8</span>Ratings &amp; Reviews</button>
-      <button type="button" class="hub-tab" data-tp="stories"><span class="n">9</span>Stories</button>
+      <button type="button" class="hub-tab" data-tp="reviews"><span class="n">8</span>Ratings, Reviews &amp; Stories</button>
     </nav>
 
     <div class="hub-panels">
@@ -1357,7 +1356,7 @@ svg.ic{width:24px;height:24px;}
         </div>
       </div>
 
-      <!-- 7. RATINGS & REVIEWS (new — visual for now) -->
+      <!-- 8. RATINGS, REVIEWS & STORIES -->
       <div class="hub-panel" data-tp="reviews">
         <div class="panel">
           <span class="section-eyebrow">Ratings &amp; Reviews</span>
@@ -1365,11 +1364,7 @@ svg.ic{width:24px;height:24px;}
           <p class="sub">You own your reviews — add or delete them anytime.</p>
           <div id="reviewsBox"></div>
         </div>
-      </div>
-
-      <!-- 8. STORIES (new — visual, one example) -->
-      <div class="hub-panel" data-tp="stories">
-        <div class="panel">
+        <div class="panel" style="margin-top:18px">
           <span class="section-eyebrow">Transformation Stories</span>
           <h2>Tell your story</h2>
           <p class="sub">Optional — share the story behind your progress to inspire others.</p>
@@ -2207,29 +2202,37 @@ function viewAnalytics(){
 }
 function loadAnalytics(){
   var box=document.getElementById('anaBox'); if(!box)return;
-  function esc(x){return String(x==null?'':x).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':'&gt;';});}
   box.innerHTML='<p class="sub">Loading…</p>';
   sb.from('events').select('type,visitor,label,created_at').order('created_at',{ascending:false}).limit(5000).then(function(r){
     if(!r||r.error||!r.data){box.innerHTML='<div class="panel"><p class="sub">Could not load — admin login required, and make sure the <b>events</b> table exists.</p></div>';return;}
-    var ev=r.data;
-    var views=ev.filter(function(x){return x.type==='view';});
-    var clicks=ev.filter(function(x){return x.type==='click';});
-    var actions=ev.filter(function(x){return x.type==='action';});
-    var uniq={}; ev.forEach(function(x){if(x.visitor)uniq[x.visitor]=1;});
-    var since=Date.now()-7*864e5;
-    function recent(a){return a.filter(function(x){var t=new Date(x.created_at).getTime();return t>=since;}).length;}
-    var byLabel={}; clicks.forEach(function(x){var l=x.label||'(unlabeled)';byLabel[l]=(byLabel[l]||0)+1;});
-    var top=Object.keys(byLabel).map(function(l){return {l:l,n:byLabel[l]};}).sort(function(a,b){return b.n-a.n;}).slice(0,15);
-    var h=(ev.length===0?'<div class="panel" style="border-color:var(--gold)"><p class="sub"><b>No analytics data yet.</b> Either the newest site is not uploaded (so nothing is being logged) or the events table policies are not set. Upload the latest index.html, browse a few pages, then refresh.</p></div>':'')+'<div class="ins-tiles"><div class="ins-tile"><div class="v">'+views.length+'</div><div class="l">Total views</div></div><div class="ins-tile"><div class="v">'+Object.keys(uniq).length+'</div><div class="l">Unique visitors</div></div><div class="ins-tile"><div class="v">'+clicks.length+'</div><div class="l">Total clicks</div></div></div>';
-    var _st=new Date(); _st.setHours(0,0,0,0); var _stMs=_st.getTime();
-    function inLast(a,ms){return a.filter(function(x){return (Date.now()-new Date(x.created_at).getTime())<=ms;}).length;}
-    var cToday=clicks.filter(function(x){return new Date(x.created_at).getTime()>=_stMs;}).length;
-    h+='<div class="panel" style="margin-top:18px" data-collapsible><span class="section-eyebrow">Clicks</span><h2>Click activity</h2><div class="ins-tiles" style="margin-top:12px"><div class="ins-tile"><div class="v">'+cToday+'</div><div class="l">Today</div></div><div class="ins-tile"><div class="v">'+inLast(clicks,7*864e5)+'</div><div class="l">Last 7 days</div></div><div class="ins-tile"><div class="v">'+clicks.length+'</div><div class="l">All time</div></div></div><p class="sub" style="margin-top:12px">'+inLast(views,7*864e5)+' views in the last 7 days.</p></div>';
-    var byAct={};actions.forEach(function(x){var l=x.label||'(action)';byAct[l]=(byAct[l]||0)+1;});var actList=Object.keys(byAct).map(function(l){return {l:l,n:byAct[l]};}).sort(function(a,b){return b.n-a.n;});
-    h+='<div class="panel" style="margin-top:18px" data-collapsible><span class="section-eyebrow">Funnel</span><h2>Key actions</h2>'+(actList.length?('<div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:360px"><thead><tr><th>Action</th><th>Count</th></tr></thead><tbody>'+actList.map(function(t){return '<tr><td class="nm">'+esc(t.l)+'</td><td>'+t.n+'</td></tr>';}).join('')+'</tbody></table></div>'):'<p class="sub">No key actions tracked yet.</p>')+'</div>';
-    h+='<div class="panel" style="margin-top:18px" data-collapsible><span class="section-eyebrow">Engagement</span><h2>Most-clicked links &amp; actions</h2>'+(top.length?('<div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:420px"><thead><tr><th>Link / action</th><th>Clicks</th></tr></thead><tbody>'+top.map(function(t){return '<tr><td class="nm">'+esc(t.l)+'</td><td>'+t.n+'</td></tr>';}).join('')+'</tbody></table></div>'):'<p class="sub">No clicks tracked yet.</p>')+'</div>';
-    box.innerHTML=h; if(window.initCollapsibles)window.initCollapsibles();
+    window._anaEv=r.data; if(!window._anaRange)window._anaRange='all'; renderAnalytics();
   },function(){box.innerHTML='<div class="panel"><p class="sub">Network error loading analytics.</p></div>';});
+}
+function anaFilter(ev,range){if(range==='all'||!range)return ev;var cut;if(range==='today'){var d=new Date();d.setHours(0,0,0,0);cut=d.getTime();}else{cut=Date.now()-(+range)*864e5;}return ev.filter(function(x){return new Date(x.created_at).getTime()>=cut;});}
+function renderAnalytics(){
+  var box=document.getElementById('anaBox'); if(!box)return;
+  function esc(x){return String(x==null?'':x).replace(/[&<>]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':'&gt;';});}
+  var all=window._anaEv||[]; var range=window._anaRange||'all'; var ev=anaFilter(all,range);
+  var views=ev.filter(function(x){return x.type==='view';});
+  var clicks=ev.filter(function(x){return x.type==='click';});
+  var actions=ev.filter(function(x){return x.type==='action';});
+  var uniq={}; ev.forEach(function(x){if(x.visitor)uniq[x.visitor]=1;});
+  var byLabel={}; clicks.forEach(function(x){var l=x.label||'(unlabeled)';byLabel[l]=(byLabel[l]||0)+1;});
+  var top=Object.keys(byLabel).map(function(l){return {l:l,n:byLabel[l]};}).sort(function(a,b){return b.n-a.n;}).slice(0,15);
+  var byAct={};actions.forEach(function(x){var l=x.label||'(action)';byAct[l]=(byAct[l]||0)+1;});
+  var actList=Object.keys(byAct).map(function(l){return {l:l,n:byAct[l]};}).sort(function(a,b){return b.n-a.n;});
+  var opts=[['all','All time'],['90','Last 90 days'],['30','Last 30 days'],['7','Last 7 days'],['today','Today']];
+  var bar='<div class="ins-filters" style="margin-bottom:14px"><select id="anaRange">'+opts.map(function(o){return '<option value="'+o[0]+'"'+(range===o[0]?' selected':'')+'>'+o[1]+'</option>';}).join('')+'</select><span class="ins-count">'+ev.length+' of '+all.length+' events</span></div>';
+  var h=bar+(all.length===0?'<div class="panel" style="border-color:var(--gold)"><p class="sub"><b>No analytics data yet.</b> Either the newest site is not uploaded (so nothing is being logged) or the events table policies are not set. Upload the latest index.html, browse a few pages, then refresh.</p></div>':'');
+  h+='<div class="ins-tiles"><div class="ins-tile"><div class="v">'+views.length+'</div><div class="l">Total views</div></div><div class="ins-tile"><div class="v">'+Object.keys(uniq).length+'</div><div class="l">Unique visitors</div></div><div class="ins-tile"><div class="v">'+clicks.length+'</div><div class="l">Total clicks</div></div></div>';
+  var _st=new Date();_st.setHours(0,0,0,0);var _stMs=_st.getTime();function inLast(a,ms){return a.filter(function(x){return (Date.now()-new Date(x.created_at).getTime())<=ms;}).length;}
+  var allClicks=all.filter(function(x){return x.type==='click';});var allViews=all.filter(function(x){return x.type==='view';});
+  var cToday=allClicks.filter(function(x){return new Date(x.created_at).getTime()>=_stMs;}).length;
+  h+='<div class="panel" style="margin-top:18px" data-collapsible data-collapsed="1"><span class="section-eyebrow">Clicks</span><h2>Click activity</h2><div class="ins-tiles" style="margin-top:12px"><div class="ins-tile"><div class="v">'+cToday+'</div><div class="l">Today</div></div><div class="ins-tile"><div class="v">'+inLast(allClicks,7*864e5)+'</div><div class="l">Last 7 days</div></div><div class="ins-tile"><div class="v">'+allClicks.length+'</div><div class="l">All time</div></div></div><p class="sub" style="margin-top:12px">'+inLast(allViews,7*864e5)+' views in the last 7 days. (This panel always shows all data.)</p></div>';
+  h+='<div class="panel" style="margin-top:18px" data-collapsible data-collapsed="1"><span class="section-eyebrow">Funnel</span><h2>Key actions</h2>'+(actList.length?('<div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:360px"><thead><tr><th>Action</th><th>Count</th></tr></thead><tbody>'+actList.map(function(t){return '<tr><td class="nm">'+esc(t.l)+'</td><td>'+t.n+'</td></tr>';}).join('')+'</tbody></table></div>'):'<p class="sub">No key actions in this range.</p>')+'</div>';
+  h+='<div class="panel" style="margin-top:18px" data-collapsible data-collapsed="1"><span class="section-eyebrow">Engagement</span><h2>Most-clicked links &amp; actions</h2>'+(top.length?('<div class="tbl-wrap" style="margin-top:10px"><table class="tbl" style="min-width:420px"><thead><tr><th>Link / action</th><th>Clicks</th></tr></thead><tbody>'+top.map(function(t){return '<tr><td class="nm">'+esc(t.l)+'</td><td>'+t.n+'</td></tr>';}).join('')+'</tbody></table></div>'):'<p class="sub">No clicks in this range.</p>')+'</div>';
+  box.innerHTML=h; if(window.initCollapsibles)window.initCollapsibles();
+  var sel=document.getElementById('anaRange'); if(sel)sel.addEventListener('change',function(){window._anaRange=this.value;renderAnalytics();});
 }
 function viewInsights(){
   var h=head('Member Insights','Aggregate 7 Human Essentials data across every member — filter, export, and dive into any individual check-in.');
@@ -2245,12 +2248,12 @@ function _insResultsText(mode){var rows=window._insRows||[],r=rows.filter(functi
 function _insCopy(btn){var txt=_insResultsText('full');function done(){if(btn){var o=btn.getAttribute('data-lbl')||btn.textContent;btn.setAttribute('data-lbl',o);btn.textContent='Copied \u2713';setTimeout(function(){btn.textContent=o;},1600);}try{logEvent('action','Admin copied member results');}catch(e){}}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,function(){pathFallbackCopy(txt);done();});}else{pathFallbackCopy(txt);done();}}
 function _insEmail(){var rows=window._insRows||[],r=rows.filter(function(x){return x.id===window._insMember;})[0];var subj='EPE Full Assessment Results'+((r&&r.name)?(' - '+r.name):'');var href='mailto:?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(_insResultsText('summary'));try{logEvent('action','Admin emailed member results');}catch(e){}window.location.href=href;}
 function _insPathHtml(pd){var answered=PATH_IND.filter(function(x){return pd.now[x.id]||pd.na[x.id];});var hasSat=pd.sat.length>0;if(!hasSat&&!answered.length)return '<p class="grouplabel" style="margin-top:16px">Full Path Assessment</p><p class="sub">No path assessment logged yet.</p>';var h='<p class="grouplabel" style="margin-top:16px">Full Path Assessment <span class="sub" style="font-weight:400">— '+answered.length+' of '+PATH_IND.length+' answered</span></p>';if(hasSat){var _sm3=pathSatSummary(pd.sat,null);h+='<div class="sat-trend '+(_sm3.diff>0?'up':(_sm3.diff<0?'down':'flat'))+'" style="border-top:none;padding-top:0;margin-top:4px"><b style="font-weight:700">Life satisfaction</b> &nbsp; '+_sm3.html+' '+_sm3.net+'</div>';}var byB={};answered.forEach(function(x){(byB[x.b]=byB[x.b]||[]).push(x);});PATH_BUCKETS.forEach(function(bk){var items=byB[bk.key]||[];if(!items.length)return;h+='<div class="ins-path-b"><div class="ins-path-bh">'+bk.icon+' '+bk.name+'</div>'+items.map(function(x){var na=pd.na[x.id],nw=pd.now[x.id],th=pd.then[x.id];var chip=na?'<span class="sub" style="font-size:11px">Does not apply</span>':('<span class="pdot '+nw+'"></span>'+(th&&th!==nw?('<span class="ins-then">was <span class="pdot '+th+'"></span></span>'):''));var dt=pd.dates[x.id]?('<span class="ins-pd-dt">'+_insEsc(pd.dates[x.id])+'</span>'):'';return '<div class="qa-row"><span class="qa-q">'+_insEsc(x.q)+'</span><span class="qa-a">'+chip+' '+dt+'</span></div>';}).join('')+'</div>';});return h;}
-function _insPass(r){var f=window._insFlt||{};if(f.zip&&r.zip!==f.zip)return false;if(f.prio){var tp=(r.a&&r.a.priority)?String(r.a.priority).split(',')[0].trim():'';if(tp!==f.prio)return false;}if(f.need){var e=ESS7.filter(function(x){return x.name===f.need;})[0];if(e){if(!(r.a&&r.a.scores))return false;if(essStatus(r.a.scores[e.key]).c!=='red')return false;}}return true;}
+function _insPass(r){var f=window._insFlt||{};if(f.zip&&r.zip!==f.zip)return false;if(f.org&&(r.org||'')!==f.org)return false;if(f.prio){var tp=(r.a&&r.a.priority)?String(r.a.priority).split(',')[0].trim():'';if(tp!==f.prio)return false;}if(f.need){var e=ESS7.filter(function(x){return x.name===f.need;})[0];if(e){if(!(r.a&&r.a.scores))return false;if(essStatus(r.a.scores[e.key]).c!=='red')return false;}}return true;}
 function loadInsights(){
-  window._insMember=null; window._insFlt={zip:'',prio:'',need:''};
+  window._insMember=null; window._insFlt={zip:'',prio:'',need:'',org:''};
   var box=document.getElementById('insBox'); if(box)box.innerHTML='<p class="sub">Loading…</p>';
   Promise.all([
-    sb.from('members').select('profile_id,level,joined_at,goals,profiles(full_name,email,zip)'),
+    sb.from('members').select('profile_id,level,joined_at,goals,partner_org,profiles(full_name,email,zip)'),
     sb.from('essential_assessments').select('member_id,answers,scores,priority,created_at,kind').order('created_at',{ascending:false}),
     sb.from('sessions').select('uid,seconds,last_seen,kind'),
     sb.from('milestones').select('member_id,mkey,status'),
@@ -2263,16 +2266,16 @@ function loadInsights(){
     var sagg={}; ((res[2]&&res[2].data)||[]).forEach(function(x){if(!x.uid)return;var g=sagg[x.uid]||(sagg[x.uid]={logins:0,seconds:0,last:null});if(x.kind!=='resume')g.logins++;g.seconds+=(x.seconds||0);if(x.last_seen&&(!g.last||x.last_seen>g.last))g.last=x.last_seen;});
     var magg={}; ((res[3]&&res[3].data)||[]).forEach(function(x){(magg[x.member_id]=magg[x.member_id]||{})[x.mkey]=x.status;});
     var pagg={}; ((res[4]&&res[4].data)||[]).forEach(function(x){(pagg[x.member_id]=pagg[x.member_id]||[]).push(x);});
-    window._insRows=((mres&&mres.data)||[]).map(function(m){var p=m.profiles||{};return {id:m.profile_id,name:p.full_name||'Member',email:p.email||'',zip:p.zip||'',level:m.level||'basic',a:latest[m.profile_id],sess:sagg[m.profile_id],miles:magg[m.profile_id]||{},path:pagg[m.profile_id]||[],base:baseA[m.profile_id],goals:(Array.isArray(m.goals)?m.goals:[])};});
+    window._insRows=((mres&&mres.data)||[]).map(function(m){var p=m.profiles||{};return {id:m.profile_id,name:p.full_name||'Member',email:p.email||'',zip:p.zip||'',level:m.level||'basic',a:latest[m.profile_id],sess:sagg[m.profile_id],miles:magg[m.profile_id]||{},path:pagg[m.profile_id]||[],base:baseA[m.profile_id],goals:(Array.isArray(m.goals)?m.goals:[]),org:(m.partner_org||'')};});
     showInsights();
   },function(){var box=document.getElementById('insBox'); if(box)box.innerHTML='<div class="panel"><p class="sub">Network error loading insights.</p></div>';});
 }
 function insExportCsv(){
   var rows=(window._insRows||[]).filter(_insPass);
-  var cols=['Name','Email','ZIP','Level','Top priority','Needs attention','Logins','Time (min)'].concat(ESS7.map(function(e){return e.name;})).concat(['Last check-in','Life satisfaction']);
+  var cols=['Name','Email','ZIP','Partner','Level','Top priority','Needs attention','Logins','Time (min)'].concat(ESS7.map(function(e){return e.name;})).concat(['Last check-in','Life satisfaction']);
   var lines=[cols.join(',')];
   rows.forEach(function(r){var sc=r.a&&r.a.scores;var tp=(r.a&&r.a.priority)?String(r.a.priority).split(',')[0].trim():'';var need=sc?ESS7.filter(function(e){return essStatus(sc[e.key]).c==='red';}).length:'';
-    var cells=[r.name,r.email,r.zip,(r.level==='gold'?'Gold':'Basic'),tp,need,(r.sess?r.sess.logins:0),(r.sess?Math.round(r.sess.seconds/60):0)].concat(ESS7.map(function(e){return sc?essStatus(sc[e.key]).t:'';})).concat([r.a?_insDt(r.a.created_at):'', _insLatestSat(_insPathData(r.path||[]))]);
+    var cells=[r.name,r.email,r.zip,r.org,(r.level==='gold'?'Gold':'Basic'),tp,need,(r.sess?r.sess.logins:0),(r.sess?Math.round(r.sess.seconds/60):0)].concat(ESS7.map(function(e){return sc?essStatus(sc[e.key]).t:'';})).concat([r.a?_insDt(r.a.created_at):'', _insLatestSat(_insPathData(r.path||[]))]);
     lines.push(cells.map(function(c){c=String(c==null?'':c);return /[",\n]/.test(c)?('"'+c.replace(/"/g,'""')+'"'):c;}).join(','));});
   var a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(lines.join('\n'));a.download='member-insights.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);
 }
@@ -2302,29 +2305,34 @@ function showInsights(){
     h+=_insPathHtml(_insPathData(r.path||[]));
     h+='</div>'; box.innerHTML=h; return;
   }
-  var withc=rows.filter(function(r){return r.a&&r.a.scores;});
+  var arows=rows.filter(_insPass);
+  var zips=[]; rows.forEach(function(r){if(r.zip&&zips.indexOf(r.zip)<0)zips.push(r.zip);}); zips.sort();
+  var orgs=[]; rows.forEach(function(r){if(r.org&&orgs.indexOf(r.org)<0)orgs.push(r.org);}); orgs.sort();
+  var f=window._insFlt||{};
+  var fbar='<div class="ins-filters">'+
+    '<select id="insZip"><option value="">All ZIPs</option>'+zips.map(function(z){return '<option value="'+z+'"'+(f.zip===z?' selected':'')+'>'+z+'</option>';}).join('')+'</select>'+
+    '<select id="insOrg"><option value="">All partners</option>'+orgs.map(function(o){return '<option value="'+_insEsc(o)+'"'+(f.org===o?' selected':'')+'>Partner: '+_insEsc(o)+'</option>';}).join('')+'</select>'+
+    '<select id="insPrio"><option value="">Any top priority</option>'+PRIORITY_OPTS.map(function(pp){return '<option value="'+pp+'"'+(f.prio===pp?' selected':'')+'>Priority: '+pp+'</option>';}).join('')+'</select>'+
+    '<select id="insNeed"><option value="">Any Essential</option>'+ESS7.map(function(e){return '<option value="'+e.name+'"'+(f.need===e.name?' selected':'')+'>Needs attention: '+e.name+'</option>';}).join('')+'</select>'+
+    '<button class="btn btn-outline btn-sm" id="insCsv">Export CSV</button>'+
+    '<span class="ins-count">'+arows.length+' of '+rows.length+' members</span></div>';
+  var withc=arows.filter(function(r){return r.a&&r.a.scores;});
   var agg={}; ESS7.forEach(function(e){agg[e.key]={red:0,amber:0,green:0,n:0};});
   var needsTotal=0;
   withc.forEach(function(r){var need=0;ESS7.forEach(function(e){var pct=r.a.scores[e.key];if(pct==null)return;var st=essStatus(pct),c=cc(st);agg[e.key][c]++;agg[e.key].n++;if(c==='red')need++;});needsTotal+=need;});
   var avgNeed=withc.length?(needsTotal/withc.length).toFixed(1):'0';
-  var sB=0,sBn=0,sC=0,sCn=0;rows.forEach(function(r){var b=r.base&&r.base.answers&&r.base.answers._sat;var c=r.a&&r.a.answers&&r.a.answers._sat;if(b!=null){sB+=+b;sBn++;}if(c!=null){sC+=+c;sCn++;}});var satBaseAvg=sBn?(sB/sBn):null,satCurAvg=sCn?(sC/sCn):null;
-var imp={};ESS7.forEach(function(e){imp[e.key]={improved:0,same:0,declined:0,n:0};});rows.forEach(function(r){if(!(r.base&&r.base.scores)||!(r.a&&r.a.scores))return;ESS7.forEach(function(e){var b=r.base.scores[e.key],c=r.a.scores[e.key];if(b==null||c==null)return;imp[e.key].n++;if(c<b)imp[e.key].improved++;else if(c>b)imp[e.key].declined++;else imp[e.key].same++;});});
-var goalCount={};rows.forEach(function(r){(r.goals||[]).forEach(function(g){goalCount[g]=(goalCount[g]||0)+1;});});
+  var sB=0,sBn=0,sC=0,sCn=0;arows.forEach(function(r){var b=r.base&&r.base.answers&&r.base.answers._sat;var c=r.a&&r.a.answers&&r.a.answers._sat;if(b!=null){sB+=+b;sBn++;}if(c!=null){sC+=+c;sCn++;}});var satBaseAvg=sBn?(sB/sBn):null,satCurAvg=sCn?(sC/sCn):null;
+var imp={};ESS7.forEach(function(e){imp[e.key]={improved:0,same:0,declined:0,n:0};});arows.forEach(function(r){if(!(r.base&&r.base.scores)||!(r.a&&r.a.scores))return;ESS7.forEach(function(e){var b=r.base.scores[e.key],c=r.a.scores[e.key];if(b==null||c==null)return;imp[e.key].n++;if(c<b)imp[e.key].improved++;else if(c>b)imp[e.key].declined++;else imp[e.key].same++;});});
+var goalCount={};arows.forEach(function(r){(r.goals||[]).forEach(function(g){goalCount[g]=(goalCount[g]||0)+1;});});
 var satPanel='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Life satisfaction</span><h2>How satisfied members are</h2>'+((satBaseAvg!=null||satCurAvg!=null)?('<div class="ins-tiles"><div class="ins-tile"><div class="v">'+(satBaseAvg!=null?satBaseAvg.toFixed(1):"\u2014")+'</div><div class="l">Avg baseline</div></div><div class="ins-tile"><div class="v">'+(satCurAvg!=null?satCurAvg.toFixed(1):"\u2014")+'</div><div class="l">Avg now</div></div><div class="ins-tile"><div class="v" style="color:'+((satCurAvg!=null&&satBaseAvg!=null&&satCurAvg>=satBaseAvg)?"var(--sage)":"var(--coral)")+'">'+((satCurAvg!=null&&satBaseAvg!=null)?((satCurAvg-satBaseAvg>=0?"+":"")+(satCurAvg-satBaseAvg).toFixed(1)):"\u2014")+'</div><div class="l">Change</div></div></div>'):'<p class="sub">No satisfaction data yet.</p>')+'</div>';
-var goalsPanel='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Top goals &amp; priorities</span><h2>What members want to achieve</h2>'+GOALS_BUCKETS.map(function(b){var items=b.goals.map(function(g){return {g:g,c:goalCount[g]||0};}).filter(function(x){return x.c>0;}).sort(function(a,b){return b.c-a.c;});if(!items.length)return "";return '<div class="ins-ess"><div class="ins-ess-h"><span>'+b.icon+' '+b.name+'</span></div>'+items.map(function(x){return '<div class="qa-row"><span class="qa-q">'+_insEsc(x.g)+'</span><span class="qa-a"><b>'+x.c+'</b></span></div>';}).join("")+'</div>';}).join("")+(function(){var known={};GOALS_BUCKETS.forEach(function(b){b.goals.forEach(function(g){known[g]=true;});});var custom=Object.keys(goalCount).filter(function(g){return !known[g];}).map(function(g){return {g:g,c:goalCount[g]};}).sort(function(a,b){return b.c-a.c;});if(!custom.length)return "";return '<div class="ins-ess"><div class="ins-ess-h"><span>\u2795 Other / custom</span></div>'+custom.map(function(x){return '<div class="qa-row"><span class="qa-q">'+_insEsc(x.g)+'</span><span class="qa-a"><b>'+x.c+'</b></span></div>';}).join("")+'</div>';})()+(Object.keys(goalCount).length?"":'<p class="sub">No goals selected yet.</p>')+'</div>';
-var h='<div class="ins-tiles"><div class="ins-tile"><div class="v">'+rows.length+'</div><div class="l">Members</div></div><div class="ins-tile"><div class="v">'+withc.length+'</div><div class="l">Completed check-in</div></div><div class="ins-tile"><div class="v">'+avgNeed+'</div><div class="l">Avg. areas needing attention</div></div></div>';
+function goalBucketFor(g){var n=String(g||'').toLowerCase().replace(/[^a-z0-9]/g,'');for(var i=0;i<GOALS_BUCKETS.length;i++){for(var j=0;j<GOALS_BUCKETS[i].goals.length;j++){if(GOALS_BUCKETS[i].goals[j].toLowerCase().replace(/[^a-z0-9]/g,'')===n)return GOALS_BUCKETS[i];}}var alias={homeownership:'housing',reliabletransportation:'transport',increaseincome:'financial',educationtraining:'education',education:'education',buildsavings:'financial',growasmallbusiness:'economic',betterhealth:'health',health:'health',strongerrelationships:'relationships'};var k=alias[n];if(k){for(var m=0;m<GOALS_BUCKETS.length;m++)if(GOALS_BUCKETS[m].key===k)return GOALS_BUCKETS[m];}return null;}
+var gByBucket={};GOALS_BUCKETS.forEach(function(b){gByBucket[b.key]=[];});var gCustom=[];Object.keys(goalCount).forEach(function(g){var b=goalBucketFor(g);if(b)gByBucket[b.key].push({g:g,c:goalCount[g]});else gCustom.push({g:g,c:goalCount[g]});});
+var goalsPanel='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Top goals &amp; priorities</span><h2>What members want to achieve</h2>'+(f.org?'<p class="sub" style="margin-top:-6px">Partner: <b>'+_insEsc(f.org)+'</b></p>':'')+GOALS_BUCKETS.map(function(b){var items=gByBucket[b.key].slice().sort(function(a,b){return b.c-a.c;});if(!items.length)return "";var tot=items.reduce(function(a,x){return a+x.c;},0);return '<div class="ins-ess"><div class="ins-ess-h"><span>'+b.icon+' '+b.name+'</span><span class="sub" style="font-weight:500">'+tot+'</span></div>'+items.map(function(x){return '<div class="qa-row"><span class="qa-q">'+_insEsc(x.g)+'</span><span class="qa-a"><b>'+x.c+'</b></span></div>';}).join("")+'</div>';}).join("")+(gCustom.length?('<div class="ins-ess"><div class="ins-ess-h"><span>\u2795 Other / custom</span></div>'+gCustom.sort(function(a,b){return b.c-a.c;}).map(function(x){return '<div class="qa-row"><span class="qa-q">'+_insEsc(x.g)+'</span><span class="qa-a"><b>'+x.c+'</b></span></div>';}).join("")+'</div>'):'')+(Object.keys(goalCount).length?"":'<p class="sub">No goals selected yet.</p>')+'</div>';
+var baseDone=arows.filter(function(r){return r.base;}).length,curDone=arows.filter(function(r){return r.a;}).length;var h=fbar+'<div class="ins-tiles"><div class="ins-tile"><div class="v">'+arows.length+'</div><div class="l">Total members</div></div><div class="ins-tile"><div class="v">'+baseDone+'</div><div class="l">Baselines completed</div></div><div class="ins-tile"><div class="v">'+curDone+'</div><div class="l">Current Life completed</div></div><div class="ins-tile"><div class="v">'+avgNeed+'</div><div class="l">Avg. areas needing attention</div></div></div>';
   h+=satPanel+goalsPanel;h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">By Essential</span><h2>Baseline \u2192 now</h2>'+
     ESS7.map(function(e){var g=agg[e.key],tot=g.n||1;return '<div class="ins-ess"><div class="ins-ess-h"><span>'+e.name+'</span><span class="sub" style="font-weight:500">'+g.n+' assessed</span></div><div class="ins-bar"><span class="bg-red" style="width:'+(g.red/tot*100)+'%"></span><span class="bg-amber" style="width:'+(g.amber/tot*100)+'%"></span><span class="bg-green" style="width:'+(g.green/tot*100)+'%"></span></div><div class="ins-legend">'+g.red+' need attention \u00b7 '+g.amber+' opportunity \u00b7 '+g.green+' strength</div>'+(imp[e.key].n?('<div class="ins-legend" style="color:var(--sage)">Since baseline: '+imp[e.key].improved+' improved'+(imp[e.key].declined?(' \u00b7 <span style="color:var(--coral)">'+imp[e.key].declined+' declined</span>'):'')+' \u00b7 '+imp[e.key].same+' unchanged</div>'):'')+'</div>';}).join('')+'</div>';
-  var zips=[]; rows.forEach(function(r){if(r.zip&&zips.indexOf(r.zip)<0)zips.push(r.zip);}); zips.sort();
-  var f=window._insFlt||{};
-  var filtered=rows.filter(_insPass);
-  var fbar='<div class="ins-filters">'+
-    '<select id="insZip"><option value="">All ZIPs</option>'+zips.map(function(z){return '<option value="'+z+'"'+(f.zip===z?' selected':'')+'>'+z+'</option>';}).join('')+'</select>'+
-    '<select id="insPrio"><option value="">Any top priority</option>'+PRIORITY_OPTS.map(function(p){return '<option value="'+p+'"'+(f.prio===p?' selected':'')+'>Priority: '+p+'</option>';}).join('')+'</select>'+
-    '<select id="insNeed"><option value="">Any Essential</option>'+ESS7.map(function(e){return '<option value="'+e.name+'"'+(f.need===e.name?' selected':'')+'>Needs attention: '+e.name+'</option>';}).join('')+'</select>'+
-    '<button class="btn btn-outline btn-sm" id="insCsv">Export CSV</button>'+
-    '<span class="ins-count">'+filtered.length+' of '+rows.length+'</span></div>';
-  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Members</span><h2>Individual check-ins</h2>'+fbar+
+  var filtered=arows;
+  h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Members</span><h2>Individual check-ins</h2>'+
     '<div class="tbl-wrap"><table class="tbl" style="min-width:640px"><thead><tr><th>Name</th><th>Top priority</th><th>Needs attention</th><th>Logins</th><th>Time</th><th>Last check-in</th><th></th></tr></thead><tbody>'+
     (filtered.length?filtered.map(function(r){var need=(r.a&&r.a.scores)?ESS7.filter(function(e){return essStatus(r.a.scores[e.key]).c==='red';}).length:'\u2014';var prio=(r.a&&r.a.priority)?String(r.a.priority).split(',')[0]:'\u2014';var date=r.a?_insDt(r.a.created_at):'No check-in';return '<tr><td class="nm">'+_insEsc(r.name)+'<div style="font-size:11px;color:var(--muted)">'+_insEsc(r.email)+'</div></td><td>'+_insEsc(prio)+'</td><td>'+need+'</td><td>'+(r.sess?r.sess.logins:0)+'</td><td>'+(r.sess?_insDur(r.sess.seconds):'—')+'</td><td>'+date+'</td><td>'+(r.a?'<button class="rowact" data-insmem="'+r.id+'">View</button>':'')+'</td></tr>';}).join(''):'<tr><td colspan="7" style="color:var(--muted)">No members match these filters.</td></tr>')+
     '</tbody></table></div></div>';
@@ -2809,7 +2817,7 @@ document.getElementById('admView').addEventListener('change',function(e){
   var t=e.target,el2;
   if((el2=t.closest('[data-sel]'))){ADMIN.sel[el2.getAttribute('data-sel')]=t.checked;renderView();return;}
   if((el2=t.closest('[data-refstat]'))){var r=REFERRALS.filter(function(x){return x.id===el2.getAttribute('data-refstat');})[0];if(r){r.status=t.value;saveRefs();renderView();}return;}
-  if(['insZip','insPrio','insNeed'].indexOf(t.id)>=0){window._insFlt=window._insFlt||{};window._insFlt[t.id==='insZip'?'zip':t.id==='insPrio'?'prio':'need']=t.value;showInsights();return;}
+  if(['insZip','insOrg','insPrio','insNeed'].indexOf(t.id)>=0){window._insFlt=window._insFlt||{};window._insFlt[t.id==='insZip'?'zip':t.id==='insOrg'?'org':t.id==='insPrio'?'prio':'need']=t.value;showInsights();return;}
   if(['fQ','fZip','fLevel','fStatus','fNav'].indexOf(t.id)>=0){applyFilters();return;}
 });
 document.getElementById('admView').addEventListener('input',function(e){
@@ -3669,8 +3677,8 @@ var GOALS_BUCKETS=[
 ];
 var MY_GOALS=[],MY_REVIEWS=[],MY_STORIES=[];
 var GOAL_TAB=GOALS_BUCKETS[0].key;var GOAL_SHORT={housing:'Housing',financial:'Financial',economic:'Economic',education:'Education',health:'Health',transport:'Transportation',relationships:'Relationships'};function goalBucket(g){for(var i=0;i<GOALS_BUCKETS.length;i++){if(GOALS_BUCKETS[i].goals.indexOf(g)>=0)return GOALS_BUCKETS[i];}return null;}
-function renderGoals(){var el=document.getElementById('goalsBox');if(!el)return;if(!GOALS_BUCKETS.filter(function(b){return b.key===GOAL_TAB;}).length)GOAL_TAB=GOALS_BUCKETS[0].key;var nav='<div class="ess-nav" style="margin-bottom:16px;">'+GOALS_BUCKETS.map(function(b){var cnt=b.goals.filter(function(g){return MY_GOALS.indexOf(g)>=0;}).length;return '<button type="button" class="ess-chip'+(b.key===GOAL_TAB?' active':'')+(cnt?' ess-chip-prio':'')+'" data-goaltab="'+b.key+'">'+(GOAL_SHORT[b.key]||b.name)+(cnt?(' · '+cnt):'')+'</button>';}).join('')+'</div>';var bucket=GOALS_BUCKETS.filter(function(b){return b.key===GOAL_TAB;})[0]||GOALS_BUCKETS[0];var chips=bucket.goals.map(function(g){var on=MY_GOALS.indexOf(g)>=0;return '<div class="goal'+(on?' on':'')+'" data-goal="'+aEsc(g)+'">'+pEsc(g)+'</div>';}).join('')+'<div class="goal" data-goal="__other__"><span class="gi">➕</span>Other…</div>';var goalsSection='<div class="goals-b-h">'+bucket.icon+' '+bucket.name+'</div><div class="goals">'+chips+'</div>';var pri=MY_GOALS.length?('<ol class="prio">'+MY_GOALS.map(function(t,i){var _gb=goalBucket(t);var _tag=_gb?('<span class="goal-tag">'+_gb.icon+' '+(GOAL_SHORT[_gb.key]||_gb.name)+'</span>'):'<span class="goal-tag" style="opacity:.7">Custom</span>';return '<li><span class="rank"></span><span class="prio-goal"><b>'+pEsc(t)+'</b> '+_tag+'</span><span style="margin-left:auto;display:flex;gap:5px;"><button type="button" class="pmove" data-gup="'+i+'">↑</button><button type="button" class="pmove" data-gdown="'+i+'">↓</button><button type="button" class="pmove del" data-grem="'+i+'">×</button></span></li>';}).join('')+'</ol>'):'<p class="sub">No goals selected yet — tap goals under any area above.</p>';el.innerHTML=nav+goalsSection+'<div style="border-top:1px solid var(--border);margin:22px 0 0;"></div><h3 style="margin:18px 0 4px;font-family:var(--display);color:var(--navy);">Your priorities</h3><p class="sub" style="margin-top:0;">Your selections across every area — drag-rank with ↑ ↓.</p>'+pri;}
-function loadGoals(){if(!CUR.live||!CUR.uid){renderGoals();return;}sb.from('members').select('goals').eq('profile_id',CUR.uid).maybeSingle().then(function(r){if(r&&r.data&&Array.isArray(r.data.goals))MY_GOALS=r.data.goals;renderGoals();});}
+function renderGoals(){var el=document.getElementById('goalsBox');if(!el)return;if(!GOALS_BUCKETS.filter(function(b){return b.key===GOAL_TAB;}).length)GOAL_TAB=GOALS_BUCKETS[0].key;var nav='<div class="ess-nav" style="margin-bottom:16px;">'+GOALS_BUCKETS.map(function(b){var cnt=b.goals.filter(function(g){return MY_GOALS.indexOf(g)>=0;}).length;return '<button type="button" class="ess-chip'+(b.key===GOAL_TAB?' active':'')+(cnt?' ess-chip-prio':'')+'" data-goaltab="'+b.key+'">'+(GOAL_SHORT[b.key]||b.name)+(cnt?(' · '+cnt):'')+'</button>';}).join('')+'</div>';var bucket=GOALS_BUCKETS.filter(function(b){return b.key===GOAL_TAB;})[0]||GOALS_BUCKETS[0];var chips=bucket.goals.map(function(g){var on=MY_GOALS.indexOf(g)>=0;return '<div class="goal'+(on?' on':'')+'" data-goal="'+aEsc(g)+'">'+pEsc(g)+'</div>';}).join('');var goalsSection='<div class="goals-b-h">'+bucket.icon+' '+bucket.name+'</div><div class="goals">'+chips+'</div>';var pri=MY_GOALS.length?('<ol class="prio">'+MY_GOALS.map(function(t,i){var _gb=goalBucket(t);var _tag=_gb?('<span class="goal-tag">'+_gb.icon+' '+(GOAL_SHORT[_gb.key]||_gb.name)+'</span>'):'<span class="goal-tag" style="opacity:.7">Custom</span>';return '<li><span class="rank"></span><span class="prio-goal"><b>'+pEsc(t)+'</b> '+_tag+'</span><span style="margin-left:auto;display:flex;gap:5px;"><button type="button" class="pmove" data-gup="'+i+'">↑</button><button type="button" class="pmove" data-gdown="'+i+'">↓</button><button type="button" class="pmove del" data-grem="'+i+'">×</button></span></li>';}).join('')+'</ol>'):'<p class="sub">No goals selected yet — tap goals under any area above.</p>';el.innerHTML=nav+goalsSection+'<div style="border-top:1px solid var(--border);margin:22px 0 0;"></div><h3 style="margin:18px 0 4px;font-family:var(--display);color:var(--navy);">Your priorities</h3><p class="sub" style="margin-top:0;">Your selections across every area — drag-rank with ↑ ↓.</p>'+pri;}
+function loadGoals(){if(!CUR.live||!CUR.uid){renderGoals();return;}sb.from('members').select('goals').eq('profile_id',CUR.uid).maybeSingle().then(function(r){if(r&&r.data&&Array.isArray(r.data.goals))MY_GOALS=r.data.goals.filter(function(g){return goalBucket(g);});renderGoals();});}
 function saveGoals(){var m=document.getElementById('goalsMsg');if(!CUR.live||!CUR.uid){if(m)m.textContent='Sign in to save.';return;}if(m)m.textContent='Saving\u2026';sb.from('members').update({goals:MY_GOALS}).eq('profile_id',CUR.uid).then(function(r){if(m)m.textContent=(r&&r.error)?('Could not save: '+r.error.message):'Saved \u2713';try{logEvent('action','Goals saved');}catch(e){}},function(){if(m)m.textContent='Network error \u2014 try again.';});}
 function rvScale(v){v=(v==null?-1:v);var h='';for(var i=1;i<=10;i++)h+='<i class="'+(i<=v?'on':'')+'"></i>';return h;}
 function rvNumOpts(){var h='<option value="">\u2014</option>';for(var i=0;i<=10;i++)h+='<option>'+i+'</option>';return h;}
@@ -3864,7 +3872,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 
 <script>
-(function(){document.addEventListener('click',function(e){var gt=e.target.closest('[data-goaltab]');if(gt){GOAL_TAB=gt.getAttribute('data-goaltab');renderGoals();return;}var g=e.target.closest('[data-goal]');if(g){var t=g.getAttribute('data-goal');if(t==='__other__'){var v=prompt('Add a goal:');if(v){v=v.trim();if(v&&MY_GOALS.indexOf(v)<0)MY_GOALS.push(v);}renderGoals();return;}var ix=MY_GOALS.indexOf(t);if(ix>=0)MY_GOALS.splice(ix,1);else MY_GOALS.push(t);renderGoals();return;}var gu=e.target.closest('[data-gup]');if(gu){var i=+gu.getAttribute('data-gup');if(i>0){var tmp=MY_GOALS[i-1];MY_GOALS[i-1]=MY_GOALS[i];MY_GOALS[i]=tmp;}renderGoals();return;}var gd=e.target.closest('[data-gdown]');if(gd){var i2=+gd.getAttribute('data-gdown');if(i2<MY_GOALS.length-1){var t2=MY_GOALS[i2+1];MY_GOALS[i2+1]=MY_GOALS[i2];MY_GOALS[i2]=t2;}renderGoals();return;}var gr=e.target.closest('[data-grem]');if(gr){MY_GOALS.splice(+gr.getAttribute('data-grem'),1);renderGoals();return;}if(e.target.closest('#goalsSave')){saveGoals();return;}if(e.target.closest('#rvAdd')){addReview();return;}var re=e.target.closest('[data-rvedit]');if(re){EDIT_REVIEW=re.getAttribute('data-rvedit');renderReviews();return;}if(e.target.closest('[data-rvcancel]')){EDIT_REVIEW=null;renderReviews();return;}var rs=e.target.closest('[data-rvsave]');if(rs){updateReview(rs.getAttribute('data-rvsave'));return;}var rd=e.target.closest('[data-rvdel]');if(rd){deleteReview(rd.getAttribute('data-rvdel'));return;}if(e.target.closest('#stSave')){addStory();return;}var sd=e.target.closest('[data-stdel]');if(sd){deleteStory(sd.getAttribute('data-stdel'));return;}});})();
+(function(){document.addEventListener('click',function(e){var gt=e.target.closest('[data-goaltab]');if(gt){GOAL_TAB=gt.getAttribute('data-goaltab');renderGoals();return;}var g=e.target.closest('[data-goal]');if(g){var t=g.getAttribute('data-goal');var ix=MY_GOALS.indexOf(t);if(ix>=0)MY_GOALS.splice(ix,1);else MY_GOALS.push(t);renderGoals();return;}var gu=e.target.closest('[data-gup]');if(gu){var i=+gu.getAttribute('data-gup');if(i>0){var tmp=MY_GOALS[i-1];MY_GOALS[i-1]=MY_GOALS[i];MY_GOALS[i]=tmp;}renderGoals();return;}var gd=e.target.closest('[data-gdown]');if(gd){var i2=+gd.getAttribute('data-gdown');if(i2<MY_GOALS.length-1){var t2=MY_GOALS[i2+1];MY_GOALS[i2+1]=MY_GOALS[i2];MY_GOALS[i2]=t2;}renderGoals();return;}var gr=e.target.closest('[data-grem]');if(gr){MY_GOALS.splice(+gr.getAttribute('data-grem'),1);renderGoals();return;}if(e.target.closest('#goalsSave')){saveGoals();return;}if(e.target.closest('#rvAdd')){addReview();return;}var re=e.target.closest('[data-rvedit]');if(re){EDIT_REVIEW=re.getAttribute('data-rvedit');renderReviews();return;}if(e.target.closest('[data-rvcancel]')){EDIT_REVIEW=null;renderReviews();return;}var rs=e.target.closest('[data-rvsave]');if(rs){updateReview(rs.getAttribute('data-rvsave'));return;}var rd=e.target.closest('[data-rvdel]');if(rd){deleteReview(rd.getAttribute('data-rvdel'));return;}if(e.target.closest('#stSave')){addStory();return;}var sd=e.target.closest('[data-stdel]');if(sd){deleteStory(sd.getAttribute('data-stdel'));return;}});})();
 </script>
 
 <script>(function(){function w(){return document.getElementById('chatWidget');}function openChat(){var el=w();if(el){el.classList.add('open');var t=document.getElementById('chatThread');if(t)t.scrollTop=t.scrollHeight;var ci=document.getElementById('chatInput');if(ci)ci.focus();}try{localStorage.setItem(chatReadKey(),new Date().toISOString());}catch(e){}['chatBadge','chatBadgeFab'].forEach(function(id){var bb=document.getElementById(id);if(bb)bb.style.display='none';});}function closeChat(){var el=w();if(el)el.classList.remove('open');}window.openChat=openChat;window.closeChat=closeChat;document.addEventListener('click',function(e){if(e.target.closest('#chatHelp')){e.preventDefault();openChat();return;}if(e.target.closest('#chatFab')){e.preventDefault();var el=w();if(el&&el.classList.contains('open'))closeChat();else openChat();return;}if(e.target.closest('#chatMin')){closeChat();return;}});})();</script>
