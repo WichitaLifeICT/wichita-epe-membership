@@ -275,6 +275,8 @@ h2.sec.light{color:#fff;}
 .pf-chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);border-radius:999px;padding:7px 13px;font-size:13px;font-weight:500;color:var(--navy);cursor:pointer;background:#fff;font-family:var(--sans);}
 .pf-chip input{width:15px;height:15px;accent-color:var(--gold);cursor:pointer;margin:0;flex:none;}
 .pf-chip.on{border-color:var(--gold);background:rgba(216,162,58,.1);font-weight:600;}
+.pf-chip.disabled{opacity:.42;cursor:not-allowed;}
+.pf-chip.disabled input{cursor:not-allowed;}
 .pf-cap{display:block;margin-bottom:4px;}
 .pf-i{width:100%;margin-top:5px;border:1px solid var(--border);border-radius:10px;padding:10px 13px;font-size:14px;font-family:var(--sans);color:var(--ink);background:#fff;}
 .pf-i:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold);}
@@ -283,6 +285,16 @@ h2.sec.light{color:#fff;}
 .modal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(14,39,69,.55);backdrop-filter:blur(3px);}
 .modal.open{display:flex;}
 .modal-card{position:relative;width:100%;max-width:380px;background:var(--cream);border-radius:18px;padding:28px;box-shadow:0 25px 60px -15px rgba(14,39,69,.5);}
+.about-hero{margin:-28px -28px 20px;padding:26px 22px;background:linear-gradient(95deg,var(--navy),#1f6fb2 85%);text-align:center;border-radius:18px 18px 0 0;}
+.about-vision{display:inline-block;color:#fff;font-family:var(--sans);font-weight:800;letter-spacing:5px;font-size:16px;padding:9px 22px;border:2px solid rgba(255,255,255,.75);border-radius:4px;}
+.about-lead{font-size:15px;line-height:1.6;color:var(--ink);margin:0 0 12px;}
+.about-lead b{color:var(--navy);}
+.about-area{font-size:12.5px;color:var(--muted);background:var(--cream-200);border-radius:10px;padding:9px 12px;margin:0 0 18px;}
+.about-h{font-family:var(--display);font-weight:600;color:var(--navy);font-size:16px;margin:0 0 8px;}
+.about-princ{list-style:none;counter-reset:pr;margin:0;padding:0;}
+.about-princ li{counter-increment:pr;display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px;color:var(--navy);}
+.about-princ li:last-child{border-bottom:none;}
+.about-princ li::before{content:counter(pr);flex:none;width:26px;height:26px;border-radius:50%;background:var(--gold-soft);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;font-family:var(--sans);}
 .modal-card h3{font-family:var(--display);font-weight:600;font-size:22px;color:var(--navy);}
 .modal-card .hint{font-size:13px;color:var(--muted);margin-top:4px;}
 .modal-card label{display:block;margin-top:14px;font-size:13px;font-weight:600;color:var(--navy);}
@@ -1166,6 +1178,7 @@ svg.ic{width:24px;height:24px;}
     <div class="who">
       <span class="stars" id="dashStars">&#9733; 0</span>
       <button class="notif-bell" id="chatBell" type="button" aria-label="Messages">&#128276;<span class="notif-badge" id="chatBadge" style="display:none;">0</span></button>
+      <button class="btn btn-outline-light btn-sm" id="aboutBtn">About EPE</button>
       <button class="btn btn-outline-light btn-sm" id="chatHelp">&#128172; Help</button>
       <button class="btn btn-outline-light btn-sm" id="logoutBtn">Log out</button>
     </div>
@@ -1184,9 +1197,9 @@ svg.ic{width:24px;height:24px;}
       <button type="button" class="hub-tab" data-tp="goals"><span class="n">2</span>Goals &amp; Priorities</button>
       <button type="button" class="hub-tab" data-tp="baseline"><span class="n">3</span>Baseline</button>
       <button type="button" class="hub-tab" data-tp="current"><span class="n">4</span>Current Life</button>
-      <button type="button" class="hub-tab" data-tp="ach"><span class="n">5</span>Achievements</button>
-      <button type="button" class="hub-tab" data-tp="rewards"><span class="n">6</span>Rewards</button>
-      <button type="button" class="hub-tab" data-tp="bank"><span class="n">7</span>Bank of Solutions</button>
+      <button type="button" class="hub-tab" data-tp="bank"><span class="n">5</span>Bank of Solutions</button>
+      <button type="button" class="hub-tab" data-tp="ach"><span class="n">6</span>Achievements</button>
+      <button type="button" class="hub-tab" data-tp="rewards"><span class="n">7</span>Rewards</button>
       <button type="button" class="hub-tab" data-tp="reviews"><span class="n">8</span>Ratings &amp; Reviews</button>
       <button type="button" class="hub-tab" data-tp="stories"><span class="n">9</span>Stories</button>
     </nav>
@@ -1219,9 +1232,11 @@ svg.ic{width:24px;height:24px;}
             <label class="pf-l">People in household<input class="pf-i" id="pfHhSize" type="number" min="0" placeholder="e.g. 4"/></label>
             <label class="pf-l">People in household under 18<input class="pf-i" id="pfHhKids" type="number" min="0" placeholder="e.g. 2"/></label>
           </div>
-          <div class="pf-l" style="margin-top:12px;">Which EPE partner organizations are you primarily affiliated with? <span style="font-weight:400;color:var(--muted);">(select all that apply)</span><div class="pf-chips" id="pfPartner"></div></div>
+          <div class="pf-l" style="margin-top:12px;">Which EPE partner organization are you primarily affiliated with? <span style="font-weight:400;color:var(--muted);">(choose one)</span><div class="pf-chips" id="pfPartner"></div></div>
           <label class="pf-l" id="pfPartnerOtherWrap" style="display:none;">Which organization(s)?<input class="pf-i" id="pfPartnerOther" type="text" placeholder="Type the name(s), separated by commas"/></label>
           <label class="pf-l">When did you start working with the organization selected above?<input class="pf-i" id="pfJourney" type="date"/></label>
+          <div class="pf-l" style="margin-top:12px;">Are you affiliated with any <b>other</b> EPE partner organizations? <span style="font-weight:400;color:var(--muted);">(select all that apply)</span><div class="pf-chips" id="pfOtherPartners"></div></div>
+          <label class="pf-l" id="pfOtherPartnerWrap" style="display:none;">Which other organization(s)?<input class="pf-i" id="pfOtherPartnerOther" type="text" placeholder="Type the name(s), separated by commas"/></label>
           <label class="pf-consent" style="margin-top:16px;"><input type="checkbox" id="pfConsent"/><span>I agree that my information may be shared with trusted nonprofit partners so they can help support my journey. You can change this anytime.</span></label>
           <button type="button" class="btn btn-gold" id="pfSave" style="margin-top:16px;">Save profile</button>
           <p class="sub" id="pfMsg" style="margin-top:8px;"></p>
@@ -3079,7 +3094,7 @@ function loadProfileForm(){
   if(!CUR.live||!CUR.uid)return;
   var _pe2=document.getElementById('pfEmail2');if(_pe2)_pe2.value=CUR.email||'';
   sb.from('profiles').select('phone,zip').eq('id',CUR.uid).maybeSingle().then(function(p){var d=(p&&p.data)||{};var a=document.getElementById('pfPhone');if(a)a.value=d.phone||'';var b=document.getElementById('pfZip');if(b)b.value=d.zip||'';if(d.phone||d.zip){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
-  sb.from('members').select('want_help,employment_status,employment_detail,solution_offer,reward_wish,income,household_income,english_first,household_size,household_under18,journey_start,share_consent,partner_org').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfStatus',d.employment_status,'data-st');var dt=document.getElementById('pfDetail');if(dt)dt.value=d.employment_detail||'';var so=document.getElementById('pfSolution');if(so)so.value=d.solution_offer||'';fillIntakeOptions();var setv=function(id,v){var el=document.getElementById(id);if(el)el.value=(v==null?'':v);};setv('pfIncome',d.income);setv('pfHhIncome',d.household_income);setv('pfEnglish',d.english_first);setv('pfHhSize',d.household_size);setv('pfHhKids',d.household_under18);setv('pfJourney',d.journey_start);setPartner(d.partner_org);var _cc=document.getElementById('pfConsent');if(_cc)_cc.checked=!!d.share_consent;CUR.journeyStart=d.journey_start||null;renderMemberSince();loadIdeasMine();pfToggleSolution();if(d.want_help||d.employment_status||d.employment_detail||d.solution_offer){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
+  sb.from('members').select('want_help,employment_status,employment_detail,solution_offer,reward_wish,income,household_income,english_first,household_size,household_under18,journey_start,share_consent,partner_org,other_partners').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfStatus',d.employment_status,'data-st');var dt=document.getElementById('pfDetail');if(dt)dt.value=d.employment_detail||'';var so=document.getElementById('pfSolution');if(so)so.value=d.solution_offer||'';fillIntakeOptions();var setv=function(id,v){var el=document.getElementById(id);if(el)el.value=(v==null?'':v);};setv('pfIncome',d.income);setv('pfHhIncome',d.household_income);setv('pfEnglish',d.english_first);setv('pfHhSize',d.household_size);setv('pfHhKids',d.household_under18);setv('pfJourney',d.journey_start);setPartner(d.partner_org);setOtherPartners(d.other_partners);var _cc=document.getElementById('pfConsent');if(_cc)_cc.checked=!!d.share_consent;CUR.journeyStart=d.journey_start||null;renderMemberSince();loadIdeasMine();pfToggleSolution();if(d.want_help||d.employment_status||d.employment_detail||d.solution_offer){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
 }
 function saveProfile(){
   var msg={set textContent(v){var a=document.getElementById('pfMsg'),b=document.getElementById('baseInfoMsg');if(a)a.textContent=v;if(b)b.textContent=v;}};
@@ -3090,23 +3105,27 @@ function saveProfile(){
   var detail=(document.getElementById('pfDetail').value||'').trim();
   var soEl=document.getElementById('pfSolution');var solution=(soEl&&soEl.value||'').trim();
   function _gv(id){var el=document.getElementById(id);return el?(el.value||''):'';}
-  var i_hs=_gv('pfHhSize'),i_hk=_gv('pfHhKids'),i_j=_gv('pfJourney');var _cc=document.getElementById('pfConsent'),i_consent=!!(_cc&&_cc.checked);var _pel=document.getElementById('pfPartner'),_po=document.getElementById('pfPartnerOther'),_parr=[];if(_pel){var _cbs=_pel.querySelectorAll('input[type=checkbox]');for(var _i=0;_i<_cbs.length;_i++){if(_cbs[_i].checked&&_cbs[_i].value!=='__other__')_parr.push(_cbs[_i].value);}var _ocb=document.getElementById('pfPartnerOtherCb');if(_ocb&&_ocb.checked&&_po&&_po.value.trim()){_po.value.split(',').forEach(function(x){x=x.trim();if(x)_parr.push(x);});}}var i_partner=_parr.length?JSON.stringify(_parr):null;
+  var i_hs=_gv('pfHhSize'),i_hk=_gv('pfHhKids'),i_j=_gv('pfJourney');var _cc=document.getElementById('pfConsent'),i_consent=!!(_cc&&_cc.checked);var i_partner=getPrimaryPartner()||null;var _oth=MYOTHER.slice();var _ocb=document.getElementById('pfOtherOtherCb'),_oo=document.getElementById('pfOtherPartnerOther');if(_ocb&&_ocb.checked&&_oo&&_oo.value.trim()){_oo.value.split(',').forEach(function(x){x=x.trim();if(x)_oth.push(x);});}var i_other=_oth.length?JSON.stringify(_oth):null;
   if(msg)msg.textContent='Saving…'; logEvent('action','Profile saved');
   Promise.all([
     sb.from('profiles').update({phone:phone,zip:zip}).eq('id',CUR.uid),
-    sb.from('members').update({want_help:hp,employment_status:st,employment_detail:detail,solution_offer:solution,household_size:(i_hs===''?null:parseInt(i_hs,10)),household_under18:(i_hk===''?null:parseInt(i_hk,10)),journey_start:(i_j||null),share_consent:i_consent,partner_org:(i_partner||null)}).eq('profile_id',CUR.uid)
+    sb.from('members').update({want_help:hp,employment_status:st,employment_detail:detail,solution_offer:solution,household_size:(i_hs===''?null:parseInt(i_hs,10)),household_under18:(i_hk===''?null:parseInt(i_hk,10)),journey_start:(i_j||null),share_consent:i_consent,partner_org:(i_partner||null),other_partners:(i_other||null)}).eq('profile_id',CUR.uid)
   ]).then(function(res){var err=(res[0]&&res[0].error)||(res[1]&&res[1].error);if(msg)msg.textContent=err?('Could not save: '+err.message):'Saved \u2713';if(!err){var _ne=((document.getElementById('pfEmail2')||{}).value||'').trim();if(_ne&&_ne!==CUR.email){sb.auth.updateUser({email:_ne}).then(function(er2){if(msg)msg.textContent=(er2&&er2.error)?('Saved. Email change failed: '+er2.error.message):('Saved \u2713 \u2014 check '+_ne+' to confirm your new email.');},function(){});}var _lastSat=(PATH_SAT_TREND.length?PATH_SAT_TREND[PATH_SAT_TREND.length-1].v:null);if(PATH_SAT!=null&&PATH_SAT!==_lastSat){sb.from('path_assessments').insert({member_id:CUR.uid,answers:{now:PATH_NOW,then:PATH_THEN,na:PATH_NA},satisfaction:(AMODE==='baseline'?PATH_SAT_BASE:PATH_SAT)}).then(function(){loadPath();},function(){});}}},function(){if(msg)msg.textContent='Network error — try again.';});
 }
-(function(){var sv=document.getElementById('pfSave');if(sv)sv.addEventListener('click',saveProfile);var ps=document.getElementById('pfPartner');if(ps)ps.addEventListener('change',function(){pfTogglePartner();pfSyncChips();});})();
+(function(){var sv=document.getElementById('pfSave');if(sv)sv.addEventListener('click',saveProfile);var ps=document.getElementById('pfPartner');if(ps)ps.addEventListener('change',function(){pfTogglePartner();pfSyncChips();var pr=getPrimaryPartner();var ix=MYOTHER.indexOf(pr);if(ix>=0)MYOTHER.splice(ix,1);renderOtherPartners();});var pso=document.getElementById('pfPartnerOther');if(pso)pso.addEventListener('input',function(){renderOtherPartners();});var op=document.getElementById('pfOtherPartners');if(op)op.addEventListener('change',function(e){var cb=e.target.closest('input[type=checkbox]');if(!cb)return;if(cb.id==='pfOtherOtherCb'){OTHER_FLAG=cb.checked;var w=document.getElementById('pfOtherPartnerWrap');if(w)w.style.display=OTHER_FLAG?'':'none';}else{var vv=cb.value,jx=MYOTHER.indexOf(vv);if(cb.checked&&jx<0)MYOTHER.push(vv);else if(!cb.checked&&jx>=0)MYOTHER.splice(jx,1);}});})();
 var INTAKE_INCOME=["Under $10,000","$10,000–$19,999","$20,000–$29,999","$30,000–$39,999","$40,000–$49,999","$50,000–$59,999","$60,000–$69,999","$70,000–$79,999","$80,000–$89,999","$90,000–$99,999","$100,000 or more","Prefer not to say"];
 var INTAKE_RACE=["American Indian or Alaska Native","Asian","Black or African American","Hispanic or Latino","Middle Eastern or North African","Native Hawaiian or Pacific Islander","White","Another race or ethnicity","Prefer not to say"];
 var PARTNER_ORGS=["Empower","WSU Tech","Bridges ICT","Hope CDC","Family Promise","Hope 4 Da Hood","Build & Rebuild","Create Campaign","Spero","Bike Walk Wichita"];
 function fillJPartner(){var el=document.getElementById('jPartner');if(!el||el.childElementCount)return;el.innerHTML=PARTNER_ORGS.concat(['Other']).map(function(o){var e=o.replace(/"/g,'&quot;');return '<label class="pf-chip"><input type="checkbox" value="'+e+'"/><span>'+o+'</span></label>';}).join('');}
-function fillPartnerSel(){var el=document.getElementById('pfPartner');if(!el||el.childElementCount)return;el.innerHTML=PARTNER_ORGS.map(function(o){var e=o.replace(/"/g,'&quot;');return '<label class="pf-chip"><input type="checkbox" value="'+e+'"/><span>'+o+'</span></label>';}).join('')+'<label class="pf-chip"><input type="checkbox" value="__other__" id="pfPartnerOtherCb"/><span>Other</span></label>';}
+function fillPartnerSel(){var el=document.getElementById('pfPartner');if(!el||el.childElementCount)return;el.innerHTML=PARTNER_ORGS.map(function(o){var e=o.replace(/"/g,'&quot;');return '<label class="pf-chip"><input type="radio" name="pfPartnerPrimary" value="'+e+'"/><span>'+o+'</span></label>';}).join('')+'<label class="pf-chip"><input type="radio" name="pfPartnerPrimary" value="__other__" id="pfPartnerOtherCb"/><span>Other</span></label>';renderOtherPartners();}
+var MYOTHER=[],OTHER_FLAG=false;
+function getPrimaryPartner(){var el=document.getElementById('pfPartner');if(!el)return '';var r=el.querySelector('input[name=pfPartnerPrimary]:checked');if(!r)return '';if(r.value==='__other__'){var oi=document.getElementById('pfPartnerOther');return (oi&&oi.value.trim())||'';}return r.value;}
+function renderOtherPartners(){var el=document.getElementById('pfOtherPartners');if(!el)return;var primary=getPrimaryPartner();el.innerHTML=PARTNER_ORGS.map(function(o){var e=o.replace(/"/g,'&quot;');var dis=(!!primary&&o===primary);var on=MYOTHER.indexOf(o)>=0;return '<label class="pf-chip'+(dis?' disabled':(on?' on':''))+'"><input type="checkbox" value="'+e+'"'+(dis?' disabled':'')+(on?' checked':'')+'/><span>'+o+'</span></label>';}).join('')+'<label class="pf-chip'+(OTHER_FLAG?' on':'')+'"><input type="checkbox" value="__other__" id="pfOtherOtherCb"'+(OTHER_FLAG?' checked':'')+'/><span>Other</span></label>';var w=document.getElementById('pfOtherPartnerWrap');if(w)w.style.display=OTHER_FLAG?'':'none';}
+function setOtherPartners(v){var arr=parsePartnerVal(v);var known={};PARTNER_ORGS.forEach(function(o){known[o]=true;});MYOTHER=arr.filter(function(x){return known[x];});var others=arr.filter(function(x){return !known[x];});OTHER_FLAG=others.length>0;var oi=document.getElementById('pfOtherPartnerOther');if(oi)oi.value=others.join(', ');renderOtherPartners();}
 function pfSyncChips(){var el=document.getElementById('pfPartner');if(!el)return;var chips=el.querySelectorAll('.pf-chip');for(var i=0;i<chips.length;i++){var inp=chips[i].querySelector('input');if(inp)chips[i].classList.toggle('on',inp.checked);}}
 function parsePartnerVal(v){if(!v)return [];if(Array.isArray(v))return v;var t=String(v).trim();if(t.charAt(0)==='['){try{var a=JSON.parse(t);if(Array.isArray(a))return a;}catch(e){}}return t.split(',').map(function(x){return x.trim();}).filter(Boolean);}
 function pfTogglePartner(){var cb=document.getElementById('pfPartnerOtherCb'),w=document.getElementById('pfPartnerOtherWrap');if(w)w.style.display=(cb&&cb.checked)?'':'none';}
-function setPartner(v){var el=document.getElementById('pfPartner'),oi=document.getElementById('pfPartnerOther');if(!el)return;var arr=parsePartnerVal(v);var known={};PARTNER_ORGS.forEach(function(o){known[o]=true;});var others=arr.filter(function(x){return !known[x];});var cbs=el.querySelectorAll('input[type=checkbox]');for(var i=0;i<cbs.length;i++){var val=cbs[i].value;cbs[i].checked=(val==='__other__')?(others.length>0):(arr.indexOf(val)>=0);}if(oi)oi.value=others.join(', ');pfSyncChips();pfTogglePartner();}
+function setPartner(v){var el=document.getElementById('pfPartner'),oi=document.getElementById('pfPartnerOther');if(!el)return;var arr=parsePartnerVal(v);var primary=arr.length?arr[0]:'';var known={};PARTNER_ORGS.forEach(function(o){known[o]=true;});var isOther=(!!primary&&!known[primary]);var rs=el.querySelectorAll('input[name=pfPartnerPrimary]');for(var i=0;i<rs.length;i++){var val=rs[i].value;rs[i].checked=(val==='__other__')?isOther:(val===primary);}if(oi)oi.value=isOther?primary:'';pfSyncChips();pfTogglePartner();renderOtherPartners();}
 function fillIntakeSel(id,opts){var el=document.getElementById(id);if(!el||el.options.length>1)return;el.innerHTML='<option value="">Select…</option>'+(opts||INTAKE_INCOME).map(function(o){return '<option>'+o+'</option>';}).join('');}
 function fillIntakeOptions(){fillIntakeSel('pfIncome',INTAKE_INCOME);fillIntakeSel('pfHhIncome',INTAKE_INCOME);fillPartnerSel();}
 try{fillJPartner();}catch(_fjp){}
@@ -3823,5 +3842,23 @@ document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 
 <script>(function(){function w(){return document.getElementById('chatWidget');}function openChat(){var el=w();if(el){el.classList.add('open');var t=document.getElementById('chatThread');if(t)t.scrollTop=t.scrollHeight;var ci=document.getElementById('chatInput');if(ci)ci.focus();}try{localStorage.setItem(chatReadKey(),new Date().toISOString());}catch(e){}['chatBadge','chatBadgeFab'].forEach(function(id){var bb=document.getElementById(id);if(bb)bb.style.display='none';});}function closeChat(){var el=w();if(el)el.classList.remove('open');}window.openChat=openChat;window.closeChat=closeChat;document.addEventListener('click',function(e){if(e.target.closest('#chatHelp')){e.preventDefault();openChat();return;}if(e.target.closest('#chatFab')){e.preventDefault();var el=w();if(el&&el.classList.contains('open'))closeChat();else openChat();return;}if(e.target.closest('#chatMin')){closeChat();return;}});})();</script>
+
+<div class="modal" id="aboutModal" role="dialog" aria-modal="true" aria-label="About EPE">
+  <div class="modal-card" style="max-width:520px;max-height:88vh;overflow-y:auto;">
+    <button class="modal-x" id="aboutClose" aria-label="Close" style="color:#fff;z-index:2;">&times;</button>
+    <div class="about-hero"><span class="about-vision">VISION</span></div>
+    <p class="about-lead"><b>Every Person Empowered.</b> Create the conditions for flourishing in Wichita’s northside neighborhoods by innovating solutions for the 7 human essentials, making this community a model for the country.</p>
+    <p class="about-area">Focus area: N of Central, S of K-96, E of I-235 and W of Oliver — with emphasis on <b>67214</b>.</p>
+    <div class="about-h">Our principles</div>
+    <ol class="about-princ">
+      <li>Dignity</li>
+      <li>Empowerment</li>
+      <li>Integrity, Respect &amp; Humility</li>
+      <li>Ecosystem Collaboration</li>
+      <li>Win-Win Entrepreneurship</li>
+    </ol>
+  </div>
+</div>
+<script>(function(){var m=document.getElementById('aboutModal');function o(){if(m)m.classList.add('open');}function c(){if(m)m.classList.remove('open');}document.addEventListener('click',function(e){if(e.target.closest('#aboutBtn')){e.preventDefault();o();return;}if(e.target.closest('#aboutClose')){c();return;}if(m&&e.target===m){c();return;}});})();</script>
 </body>
 </html>
