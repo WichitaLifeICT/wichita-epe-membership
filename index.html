@@ -50,7 +50,22 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(251,247,239,.85);bac
 .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
 .brand{display:flex;align-items:center;gap:10px;}
 .brand-mark{width:38px;height:38px;border-radius:9px;background:#fff var(--logo) center/86% no-repeat;flex:none;box-shadow:0 1px 3px rgba(14,39,69,.18);}
-.brand-name{font-family:var(--display);font-weight:600;font-size:18px;color:var(--navy);}
+.brand-name{font-family:var(--display);font-weight:600;font-size:18px;color:var(--navy);white-space:nowrap;}
+.prof-stars{display:none;margin-left:8px;background:rgba(216,162,58,.18);color:#9a6b16;font-weight:700;font-size:12px;padding:3px 9px;border-radius:999px;white-space:nowrap;vertical-align:middle;}
+/* Mobile: de-crowd the dashboard top bar so the brand never wraps */
+@media(max-width:560px){
+  .dash-bar .stars{display:none;}
+  .prof-stars{display:inline-block;}
+  .dash-bar{height:56px;gap:8px;}
+  .dash-bar .brand-mark{width:30px;height:30px;}
+  .dash-bar .brand-name{font-size:15px;}
+  .dash-bar .who{gap:6px;}
+  .dash-bar .stars{padding:5px 9px;font-size:12.5px;white-space:nowrap;}
+  .dash-bar .btn-sm{padding:6px 9px;font-size:12px;white-space:nowrap;}
+  /* hide secondary top-bar actions on mobile: About, and Help (the chat
+     bubble bottom-right and the bell both already open messages) */
+  .dash-bar #aboutBtn,.dash-bar #chatHelp{display:none;}
+}
 .nav-links{display:none;align-items:center;gap:28px;}
 .nav-links a{font-size:14px;font-weight:500;color:var(--muted);transition:color .2s;}
 .nav-links a:hover{color:var(--navy);}
@@ -74,8 +89,8 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(251,247,239,.85);bac
 
 /* hero */
 .hero{position:relative;overflow:hidden;background:var(--cream);}
-.hero .grid{display:grid;gap:48px;align-items:center;padding:64px 0;}
-@media(min-width:1024px){.hero .grid{grid-template-columns:1fr 1fr;padding:96px 0;}}
+.hero .grid{display:grid;gap:48px;align-items:center;padding-top:64px;padding-bottom:64px;}
+@media(min-width:1024px){.hero .grid{grid-template-columns:1fr 1fr;padding-top:96px;padding-bottom:96px;}}
 .badge{display:inline-flex;align-items:center;gap:8px;background:var(--sage-light);color:var(--sage);font-size:12px;font-weight:600;padding:6px 16px;border-radius:999px;}
 .badge .dot{width:6px;height:6px;border-radius:50%;background:var(--sage);}
 .hero h1{font-family:var(--display);font-weight:600;font-size:clamp(40px,6vw,64px);line-height:1.05;letter-spacing:-.02em;color:var(--navy);margin-top:24px;}
@@ -108,8 +123,16 @@ h2.sec.light{color:#fff;}
 .intro{margin-top:16px;font-size:18px;color:var(--muted);line-height:1.6;}
 .intro.light{color:rgba(255,255,255,.92);}
 .center{text-align:center;margin-left:auto;margin-right:auto;max-width:640px;}
-.pad{padding:80px 0;}
-@media(min-width:640px){.pad{padding:96px 0;}}
+.pad{padding-top:80px;padding-bottom:80px;}
+@media(min-width:640px){.pad{padding-top:96px;padding-bottom:96px;}}
+/* Consent checkbox on the dark navy sign-up section — force it visible & square.
+   (Overrides .form-box input{width:100%;padding:12px 16px} which otherwise
+    stretches the checkbox and squeezes the label into a narrow column.) */
+.form-box .join-consent{width:100%;}
+.form-box .join-consent span{flex:1 1 auto;min-width:0;text-align:left;}
+#jConsent{-webkit-appearance:none;appearance:none;box-sizing:border-box;width:20px;height:20px;min-width:20px;padding:0;margin:1px 0 0;border:2px solid rgba(251,247,239,.7);border-radius:4px;background:rgba(255,255,255,.14);cursor:pointer;position:relative;flex:0 0 auto;}
+#jConsent:checked{background:var(--gold);border-color:var(--gold);}
+#jConsent:checked::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid var(--navy);border-width:0 2px 2px 0;transform:rotate(45deg);}
 
 /* what is epe */
 .split{display:grid;gap:48px;align-items:center;}
@@ -321,7 +344,7 @@ h2.sec.light{color:#fff;}
 .panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
 .panel+.panel{margin-top:20px;}
 @media(max-width:520px){
-  .dash-wrap{padding:20px 14px 72px;}
+  .dash-wrap{padding:20px 14px 92px;}
   .panel{padding:18px 15px;}
   .dash-bar{padding:0 14px;}
   .dash-wrap h1{font-size:26px;}
@@ -869,7 +892,7 @@ svg.ic{width:24px;height:24px;}
 .goals-b-h{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:8px;letter-spacing:.2px;}
 .goal-tag{display:inline-block;font-size:11px;font-weight:600;color:var(--muted);background:var(--cream-200);border-radius:999px;padding:2px 9px;margin-left:8px;white-space:nowrap;}
 .prio-goal{display:inline-flex;align-items:center;flex-wrap:wrap;gap:4px;}
-.prio{list-style:none;margin:8px 0 0;padding:0;counter-reset:p;}
+ol.prio{list-style:none;margin:8px 0 0;padding:0;counter-reset:p;}
 .prio li{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:var(--cream);margin-bottom:9px;}
 .prio li .rank{counter-increment:p;width:26px;height:26px;border-radius:50%;background:var(--navy);color:var(--gold-light);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex:none;}
 .prio li .rank::before{content:counter(p);}
@@ -1071,7 +1094,6 @@ svg.ic{width:24px;height:24px;}
       <p class="body">Through relationships at Hope 4 Da Hood, support at WSU Tech, and a network of people who believed in him, Peazy found purpose and now invests back into his neighborhood.</p>
     </div>
   </div>
-  <div class="stories" id="stories"></div>
 </section>
 
 <!-- WHY THIS MATTERS -->
@@ -1132,7 +1154,7 @@ svg.ic{width:24px;height:24px;}
           <label class="join-consent" style="display:flex;gap:8px;align-items:flex-start;font-size:12px;color:rgba(251,247,239,.85);margin-top:10px;cursor:pointer;line-height:1.4;"><input type="checkbox" id="jConsent" style="margin-top:2px;accent-color:var(--gold);flex:none;"/><span>I agree that my information may be shared with trusted nonprofit partners to help support my journey.</span></label>
           <p class="fine" id="joinErr" style="color:var(--gold-light);display:none;margin-top:10px;"></p>
           <button type="submit" class="btn btn-gold btn-full submit">Create my account</button>
-          <p class="fine">We'll never share your information.</p>
+          <p class="fine">We'll never share your information without your approval.</p>
         </form>
       </div>
     </div>
@@ -1197,7 +1219,7 @@ svg.ic{width:24px;height:24px;}
       <div class="hub-id">
         <h1 id="dashHello" style="margin:0 0 2px;">Welcome back</h1>
         <p class="sub" style="margin:0;"><b id="profName">Member</b> <span id="profEmail" style="color:var(--muted);"></span></p>
-        <p class="sub" id="profLevel" style="margin:2px 0 0;">Basic Member</p>
+        <p class="sub" id="profLevel" style="margin:2px 0 0;">Basic Member <span class="prof-stars" id="profStars">&#9733; 0</span></p>
       </div>
     </div>
 
@@ -1232,6 +1254,12 @@ svg.ic{width:24px;height:24px;}
               <button type="button" class="seg-btn" data-hp="both">Both</button>
             </div>
           </div>
+          <div class="pf-l"><span class="pf-cap">Would you like help navigating the ecosystem?</span>
+            <div class="seg seg-2" id="pfNav" role="group">
+              <button type="button" class="seg-btn" data-nav="yes">Yes</button>
+              <button type="button" class="seg-btn" data-nav="no">No</button>
+            </div>
+          </div>
           <div class="pf-l" id="pfSolutionWrap" style="display:none;">
             <span class="pf-cap">What can you offer others?</span>
             <textarea class="pf-i" id="pfSolution" rows="3" placeholder="A service, skill, resource, mentorship, opportunity…" style="resize:vertical;"></textarea>
@@ -1248,10 +1276,6 @@ svg.ic{width:24px;height:24px;}
           <label class="pf-consent" style="margin-top:16px;"><input type="checkbox" id="pfConsent"/><span>I agree that my information may be shared with trusted nonprofit partners so they can help support my journey. You can change this anytime.</span></label>
           <button type="button" class="btn btn-gold" id="pfSave" style="margin-top:16px;">Save profile</button>
           <p class="sub" id="pfMsg" style="margin-top:8px;"></p>
-          <div style="display:none;">
-            <input id="pfDetail" type="text"/>
-            <div class="seg" id="pfStatus"><button type="button" class="seg-btn" data-st="Employed"></button><button type="button" class="seg-btn" data-st="School"></button><button type="button" class="seg-btn" data-st="Other"></button></div>
-          </div>
         </div>
       </div>
 
@@ -1316,7 +1340,7 @@ svg.ic{width:24px;height:24px;}
       <div class="hub-panel" data-tp="ach">
         <div class="panel">
           <span class="section-eyebrow">Achievements</span>
-          <h2>Your progress + milestones</h2>
+          <h2>Your achievements</h2>
           <p class="sub" id="memberSince" style="margin-bottom:14px;"></p>
           <div id="essProgress"></div>
           <div class="hist" id="histList" style="display:none;"></div>
@@ -1325,10 +1349,10 @@ svg.ic{width:24px;height:24px;}
 
       <!-- 5. REWARDS (real rewards submission + coming soon) -->
       <div class="hub-panel" data-tp="rewards">
-        <div class="place" style="margin-bottom:16px;">
-          <div class="place-ic">&#11088;</div>
-          <div><b>Rewards — coming soon</b><p class="sub" style="margin:2px 0 0;">Earn stars as you complete goals &amp; achievements. Star tracking and redemptions are on the way.</p></div>
-          <div style="margin-left:auto;text-align:right;"><div style="font-family:var(--display);font-size:28px;font-weight:700;color:var(--navy);"><span id="rewardStars">&#9733; 0</span></div><div class="sub" style="margin:0;">stars earned</div></div>
+        <div class="panel" style="margin-bottom:16px;">
+          <span class="section-eyebrow">Rewards</span>
+          <h2>Earn Gold membership</h2>
+          <div id="rewardsProgress"></div>
         </div>
         <div class="panel">
           <span class="section-eyebrow">EPE Rewards</span>
@@ -1543,12 +1567,6 @@ var LEVELS=[
 ];
 var CATS=[["Goal Setting & Progress","target"],["Workforce & Training","briefcase"],["Financial Coaching","wallet"],["Transportation","bus"],["Housing & Homeownership","home"],["Family Stability","family"],["Community Contribution","heart"]];
 var PARTNERS=["WSU Tech","Thrive Lights","Family Promise","Hope CDC","Hope 4 Da Hood","Empower","Create Campaign","Bike Walk Wichita","Spero"];
-var STORIES=[
-  ["I set one goal — get my license back. EPE connected me to a ride program and a coach. Six months later I'm driving to a job I actually like.","Marcus T.","Basic Member · North End"],
-  ["The card made it feel real. Like someone in Wichita was actually rooting for me to make it.","Dana R.","Gold Member · Planeview"],
-  ["I started to get help. Now I mentor two new members. That's the part nobody tells you about — you get to give back.","Olivia M.","Gold Member · Delano"]
-];
-
 /* ---------- render ---------- */
 function el(html){var d=document.createElement('div');d.innerHTML=html.trim();return d.firstChild;}
 
@@ -1582,10 +1600,6 @@ document.getElementById('cats').innerHTML=CATS.map(function(c){
 }).join('');
 
 document.getElementById('partnerChips').innerHTML=PARTNERS.map(function(p){return '<span class="chip-p">'+p+'</span>';}).join('');
-
-document.getElementById('stories').innerHTML=STORIES.map(function(s){
-  return '<figure class="story"><span class="q">&ldquo;</span><blockquote>'+s[0]+'</blockquote><figcaption><p class="nm">'+s[1]+'</p><p class="dt">'+s[2]+'</p></figcaption></figure>';
-}).join('');
 
 /* ---------- thrive lights interactivity ---------- */
 var states=DOMAINS.map(function(_,i){return i%3===0?0:(i%3===1?1:2);});
@@ -2325,8 +2339,8 @@ function showInsights(){
 var imp={};ESS7.forEach(function(e){imp[e.key]={improved:0,same:0,declined:0,n:0};});arows.forEach(function(r){if(!(r.base&&r.base.scores)||!(r.a&&r.a.scores))return;ESS7.forEach(function(e){var b=r.base.scores[e.key],c=r.a.scores[e.key];if(b==null||c==null)return;imp[e.key].n++;if(c<b)imp[e.key].improved++;else if(c>b)imp[e.key].declined++;else imp[e.key].same++;});});
 var goalCount={};arows.forEach(function(r){(r.goals||[]).forEach(function(g){goalCount[g]=(goalCount[g]||0)+1;});});
 var satPanel='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Life satisfaction</span><h2>How satisfied members are</h2>'+((satBaseAvg!=null||satCurAvg!=null)?('<div class="ins-tiles"><div class="ins-tile"><div class="v">'+(satBaseAvg!=null?satBaseAvg.toFixed(1):"\u2014")+'</div><div class="l">Avg baseline</div></div><div class="ins-tile"><div class="v">'+(satCurAvg!=null?satCurAvg.toFixed(1):"\u2014")+'</div><div class="l">Avg now</div></div><div class="ins-tile"><div class="v" style="color:'+((satCurAvg!=null&&satBaseAvg!=null&&satCurAvg>=satBaseAvg)?"var(--sage)":"var(--coral)")+'">'+((satCurAvg!=null&&satBaseAvg!=null)?((satCurAvg-satBaseAvg>=0?"+":"")+(satCurAvg-satBaseAvg).toFixed(1)):"\u2014")+'</div><div class="l">Change</div></div></div>'):'<p class="sub">No satisfaction data yet.</p>')+'</div>';
-function goalBucketFor(g){var n=String(g||'').toLowerCase().replace(/[^a-z0-9]/g,'');for(var i=0;i<GOALS_BUCKETS.length;i++){for(var j=0;j<GOALS_BUCKETS[i].goals.length;j++){if(GOALS_BUCKETS[i].goals[j].toLowerCase().replace(/[^a-z0-9]/g,'')===n)return GOALS_BUCKETS[i];}}var alias={homeownership:'housing',reliabletransportation:'transport',increaseincome:'financial',educationtraining:'education',education:'education',buildsavings:'financial',growasmallbusiness:'economic',betterhealth:'health',health:'health',strongerrelationships:'relationships'};var k=alias[n];if(k){for(var m=0;m<GOALS_BUCKETS.length;m++)if(GOALS_BUCKETS[m].key===k)return GOALS_BUCKETS[m];}return null;}
-var gByBucket={};GOALS_BUCKETS.forEach(function(b){gByBucket[b.key]=[];});var gCustom=[];Object.keys(goalCount).forEach(function(g){var b=goalBucketFor(g);if(b)gByBucket[b.key].push({g:g,c:goalCount[g]});else gCustom.push({g:g,c:goalCount[g]});});
+function goalBucketFor(g){var raw=String(g||'');var ci=raw.indexOf('::');if(ci>=0){var kk=raw.slice(0,ci);for(var z=0;z<GOALS_BUCKETS.length;z++)if(GOALS_BUCKETS[z].key===kk)return GOALS_BUCKETS[z];}var n=String(g||'').toLowerCase().replace(/[^a-z0-9]/g,'');for(var i=0;i<GOALS_BUCKETS.length;i++){for(var j=0;j<GOALS_BUCKETS[i].goals.length;j++){if(GOALS_BUCKETS[i].goals[j].toLowerCase().replace(/[^a-z0-9]/g,'')===n)return GOALS_BUCKETS[i];}}var alias={homeownership:'housing',reliabletransportation:'transport',increaseincome:'financial',educationtraining:'education',education:'education',buildsavings:'financial',growasmallbusiness:'economic',betterhealth:'health',health:'health',strongerrelationships:'relationships'};var k=alias[n];if(k){for(var m=0;m<GOALS_BUCKETS.length;m++)if(GOALS_BUCKETS[m].key===k)return GOALS_BUCKETS[m];}return null;}
+var gByBucket={};GOALS_BUCKETS.forEach(function(b){gByBucket[b.key]=[];});var gCustom=[];Object.keys(goalCount).forEach(function(g){var b=goalBucketFor(g);if(b)gByBucket[b.key].push({g:goalText(g),c:goalCount[g]});else gCustom.push({g:goalText(g),c:goalCount[g]});});
 var goalsPanel='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">Top goals &amp; priorities</span><h2>What members want to achieve</h2>'+(f.org?'<p class="sub" style="margin-top:-6px">Partner: <b>'+_insEsc(f.org)+'</b></p>':'')+GOALS_BUCKETS.map(function(b){var items=gByBucket[b.key].slice().sort(function(a,b){return b.c-a.c;});if(!items.length)return "";var tot=items.reduce(function(a,x){return a+x.c;},0);return '<div class="ins-ess"><div class="ins-ess-h"><span>'+b.icon+' '+b.name+'</span><span class="sub" style="font-weight:500">'+tot+'</span></div>'+items.map(function(x){return '<div class="qa-row"><span class="qa-q">'+_insEsc(x.g)+'</span><span class="qa-a"><b>'+x.c+'</b></span></div>';}).join("")+'</div>';}).join("")+(gCustom.length?('<div class="ins-ess"><div class="ins-ess-h"><span>\u2795 Other / custom</span></div>'+gCustom.sort(function(a,b){return b.c-a.c;}).map(function(x){return '<div class="qa-row"><span class="qa-q">'+_insEsc(x.g)+'</span><span class="qa-a"><b>'+x.c+'</b></span></div>';}).join("")+'</div>'):'')+(Object.keys(goalCount).length?"":'<p class="sub">No goals selected yet.</p>')+'</div>';
 var baseDone=arows.filter(function(r){return r.base;}).length,curDone=arows.filter(function(r){return r.a;}).length;var h=fbar+'<div class="ins-tiles"><div class="ins-tile"><div class="v">'+arows.length+'</div><div class="l">Total members</div></div><div class="ins-tile"><div class="v">'+baseDone+'</div><div class="l">Baselines completed</div></div><div class="ins-tile"><div class="v">'+curDone+'</div><div class="l">Current Life completed</div></div><div class="ins-tile"><div class="v">'+avgNeed+'</div><div class="l">Avg. areas needing attention</div></div></div>';
   h+=satPanel+goalsPanel;h+='<div class="panel" style="margin-top:18px"><span class="section-eyebrow">By Essential</span><h2>Baseline \u2192 now</h2>'+
@@ -3112,23 +3126,23 @@ function loadProfileForm(){
   if(!CUR.live||!CUR.uid)return;
   var _pe2=document.getElementById('pfEmail2');if(_pe2)_pe2.value=CUR.email||'';
   sb.from('profiles').select('phone,zip').eq('id',CUR.uid).maybeSingle().then(function(p){var d=(p&&p.data)||{};var a=document.getElementById('pfPhone');if(a)a.value=d.phone||'';var b=document.getElementById('pfZip');if(b)b.value=d.zip||'';if(d.phone||d.zip){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
-  sb.from('members').select('want_help,employment_status,employment_detail,solution_offer,reward_wish,income,household_income,english_first,household_size,household_under18,journey_start,share_consent,partner_org,other_partners').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfStatus',d.employment_status,'data-st');var dt=document.getElementById('pfDetail');if(dt)dt.value=d.employment_detail||'';var so=document.getElementById('pfSolution');if(so)so.value=d.solution_offer||'';fillIntakeOptions();var setv=function(id,v){var el=document.getElementById(id);if(el)el.value=(v==null?'':v);};setv('pfIncome',d.income);setv('pfHhIncome',d.household_income);setv('pfEnglish',d.english_first);setv('pfHhSize',d.household_size);setv('pfHhKids',d.household_under18);setv('pfJourney',d.journey_start);setPartner(d.partner_org);setOtherPartners(d.other_partners);var _cc=document.getElementById('pfConsent');if(_cc)_cc.checked=!!d.share_consent;CUR.journeyStart=d.journey_start||null;renderMemberSince();loadIdeasMine();pfToggleSolution();if(d.want_help||d.employment_status||d.employment_detail||d.solution_offer){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
+  sb.from('members').select('want_help,wants_navigation,solution_offer,reward_wish,household_size,household_under18,journey_start,share_consent,partner_org,other_partners').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfNav',d.wants_navigation,'data-nav');var so=document.getElementById('pfSolution');if(so)so.value=d.solution_offer||'';fillIntakeOptions();var setv=function(id,v){var el=document.getElementById(id);if(el)el.value=(v==null?'':v);};setv('pfHhSize',d.household_size);setv('pfHhKids',d.household_under18);setv('pfJourney',d.journey_start);setPartner(d.partner_org);setOtherPartners(d.other_partners);var _cc=document.getElementById('pfConsent');if(_cc)_cc.checked=!!d.share_consent;CUR.journeyStart=d.journey_start||null;renderMemberSince();loadIdeasMine();pfToggleSolution();if(d.want_help||d.solution_offer){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
 }
 function saveProfile(){
   var msg={set textContent(v){var a=document.getElementById('pfMsg'),b=document.getElementById('baseInfoMsg');if(a)a.textContent=v;if(b)b.textContent=v;}};
   if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Demo mode — sign in with a real account to save.';return;}
   var phone=(document.getElementById('pfPhone').value||'').trim(),zip=(document.getElementById('pfZip').value||'').trim();
-  var stBtn=document.querySelector('#pfStatus .seg-btn.active'),hpBtn=document.querySelector('#pfHelp .seg-btn.active');
-  var st=stBtn?stBtn.getAttribute('data-st'):null,hp=hpBtn?hpBtn.getAttribute('data-hp'):null;
-  var detail=(document.getElementById('pfDetail').value||'').trim();
+  var hpBtn=document.querySelector('#pfHelp .seg-btn.active');
+  var hp=hpBtn?hpBtn.getAttribute('data-hp'):null;
+  var navBtn=document.querySelector('#pfNav .seg-btn.active');var nav=navBtn?navBtn.getAttribute('data-nav'):null;
   var soEl=document.getElementById('pfSolution');var solution=(soEl&&soEl.value||'').trim();
   function _gv(id){var el=document.getElementById(id);return el?(el.value||''):'';}
   var i_hs=_gv('pfHhSize'),i_hk=_gv('pfHhKids'),i_j=_gv('pfJourney');var _cc=document.getElementById('pfConsent'),i_consent=!!(_cc&&_cc.checked);var i_partner=getPrimaryPartner()||null;var _oth=MYOTHER.slice();var _ocb=document.getElementById('pfOtherOtherCb'),_oo=document.getElementById('pfOtherPartnerOther');if(_ocb&&_ocb.checked&&_oo&&_oo.value.trim()){_oo.value.split(',').forEach(function(x){x=x.trim();if(x)_oth.push(x);});}var i_other=_oth.length?JSON.stringify(_oth):null;
   if(msg)msg.textContent='Saving…'; logEvent('action','Profile saved');
   Promise.all([
     sb.from('profiles').update({phone:phone,zip:zip}).eq('id',CUR.uid),
-    sb.from('members').update({want_help:hp,employment_status:st,employment_detail:detail,solution_offer:solution,household_size:(i_hs===''?null:parseInt(i_hs,10)),household_under18:(i_hk===''?null:parseInt(i_hk,10)),journey_start:(i_j||null),share_consent:i_consent,partner_org:(i_partner||null),other_partners:(i_other||null)}).eq('profile_id',CUR.uid)
-  ]).then(function(res){var err=(res[0]&&res[0].error)||(res[1]&&res[1].error);if(msg)msg.textContent=err?('Could not save: '+err.message):'Saved \u2713';if(!err){var _ne=((document.getElementById('pfEmail2')||{}).value||'').trim();if(_ne&&_ne!==CUR.email){sb.auth.updateUser({email:_ne}).then(function(er2){if(msg)msg.textContent=(er2&&er2.error)?('Saved. Email change failed: '+er2.error.message):('Saved \u2713 \u2014 check '+_ne+' to confirm your new email.');},function(){});}var _lastSat=(PATH_SAT_TREND.length?PATH_SAT_TREND[PATH_SAT_TREND.length-1].v:null);if(PATH_SAT!=null&&PATH_SAT!==_lastSat){sb.from('path_assessments').insert({member_id:CUR.uid,kind:AMODE,answers:{now:PATH_NOW,then:PATH_THEN,na:PATH_NA},satisfaction:(AMODE==='baseline'?PATH_SAT_BASE:PATH_SAT)}).then(function(){loadPath();},function(){});}}},function(){if(msg)msg.textContent='Network error — try again.';});
+    sb.from('members').update({want_help:hp,wants_navigation:nav,solution_offer:solution,household_size:(i_hs===''?null:parseInt(i_hs,10)),household_under18:(i_hk===''?null:parseInt(i_hk,10)),journey_start:(i_j||null),share_consent:i_consent,partner_org:(i_partner||null),other_partners:(i_other||null)}).eq('profile_id',CUR.uid)
+  ]).then(function(res){var err=(res[0]&&res[0].error)||(res[1]&&res[1].error);if(msg)msg.textContent=err?('Could not save: '+err.message):'Saved \u2713';if(!err){var _ne=((document.getElementById('pfEmail2')||{}).value||'').trim();if(_ne&&_ne!==CUR.email){sb.auth.updateUser({email:_ne}).then(function(er2){if(msg)msg.textContent=(er2&&er2.error)?('Saved. Email change failed: '+er2.error.message):('Saved \u2713 \u2014 check '+_ne+' to confirm your new email.');},function(){});}var _lastSat=(PATH_SAT_TREND.length?PATH_SAT_TREND[PATH_SAT_TREND.length-1].v:null);if(PATH_SAT!=null&&PATH_SAT!==_lastSat){sb.from('path_assessments').insert({member_id:CUR.uid,kind:AMODE,answers:pathAnswers(),satisfaction:(AMODE==='baseline'?PATH_SAT_BASE:PATH_SAT)}).then(function(){loadPath();},function(){});}}},function(){if(msg)msg.textContent='Network error — try again.';});
 }
 (function(){var sv=document.getElementById('pfSave');if(sv)sv.addEventListener('click',saveProfile);var ps=document.getElementById('pfPartner');if(ps)ps.addEventListener('change',function(){pfTogglePartner();pfSyncChips();var pr=getPrimaryPartner();var ix=MYOTHER.indexOf(pr);if(ix>=0)MYOTHER.splice(ix,1);renderOtherPartners();});var pso=document.getElementById('pfPartnerOther');if(pso)pso.addEventListener('input',function(){renderOtherPartners();});var op=document.getElementById('pfOtherPartners');if(op)op.addEventListener('change',function(e){var cb=e.target.closest('input[type=checkbox]');if(!cb)return;if(cb.id==='pfOtherOtherCb'){OTHER_FLAG=cb.checked;var w=document.getElementById('pfOtherPartnerWrap');if(w)w.style.display=OTHER_FLAG?'':'none';}else{var vv=cb.value,jx=MYOTHER.indexOf(vv);if(cb.checked&&jx<0)MYOTHER.push(vv);else if(!cb.checked&&jx>=0)MYOTHER.splice(jx,1);}});})();
 var INTAKE_INCOME=["Under $10,000","$10,000–$19,999","$20,000–$29,999","$30,000–$39,999","$40,000–$49,999","$50,000–$59,999","$60,000–$69,999","$70,000–$79,999","$80,000–$89,999","$90,000–$99,999","$100,000 or more","Prefer not to say"];
@@ -3226,12 +3240,9 @@ function jv(id){var e=document.getElementById(id);return e?(e.value||'').trim():
 var ESS7=[
 {key:'transportation',name:'Transportation',intro:'Getting where you need to go.',q:[
  {id:'tp_rel',t:'Do you have reliable transportation?',type:'choice',opts:['Yes','Sometimes','No'],req:true,score:{Yes:0,Sometimes:2,No:4}},
- {id:'tp_type',t:'What type?',type:'choice',opts:['Personal vehicle','Family vehicle','Employer vehicle'],showIf:{tp_rel:'Yes'}},
- {id:'tp_year',t:'Vehicle year',type:'text',showIf:{tp_rel:'Yes'}},
- {id:'tp_miles',t:'Rough mileage',type:'text',showIf:{tp_rel:'Yes'}},
- {id:'tp_around',t:'How do you usually get around?',type:'multi',opts:['Bus','Friend','Family','Uber/Lyft','Walk','Bike','Other'],showIf:{tp_rel:['Sometimes','No']}},
- {id:'tp_missed',t:'Have you missed work, school, or appointments because of transportation?',type:'choice',opts:['Never','Occasionally','Frequently'],req:true,score:{Never:0,Occasionally:2,Frequently:4}},
- {id:'tp_limit',t:'How much does transportation limit your opportunities?',type:'scale',req:true,score:'scale'}
+ {id:'tp_own',t:'Do you own or have regular access to a working car?',type:'yn',req:true,score:{Yes:0,No:2}},
+ {id:'tp_carrel',t:'Is it reliable?',type:'choice',opts:['Yes','Mostly','No'],showIf:{tp_own:'Yes'},score:{Yes:0,Mostly:2,No:4}},
+ {id:'tp_around',t:'How do you usually get around?',type:'multi',opts:['Bus','Friend','Family','Uber/Lyft','Walk','Bike','Other']}
 ]},
 {key:'financial',name:'Financial Resources',intro:'Your money tools and stability.',q:[
  {id:'fn_income',t:'Your income',type:'select',opts:INTAKE_INCOME},
@@ -3246,7 +3257,6 @@ var ESS7=[
 {key:'housing',name:'Safe & Affordable Housing',intro:'A stable place to call home.',q:[
  {id:'ho_cur',t:'What is your current housing?',type:'choice',opts:['Own','Rent','Living with family','Temporary housing','Shelter'],req:true},
  {id:'ho_6mo',t:'Do you expect to still be living there in 6 months?',type:'choice',opts:['Yes','Unsure','No'],req:true,score:{Yes:0,Unsure:2,No:4}},
- {id:'ho_afford',t:'Is your housing affordable for you?',type:'choice',opts:['Yes','Somewhat','No'],req:true,score:{Yes:0,Somewhat:2,No:4}},
  {id:'ho_safe',t:'Do you feel safe where you live?',type:'choice',opts:['Always','Usually','Rarely'],req:true,score:{Always:0,Usually:1,Rarely:4}},
  {id:'ho_int',t:'Are you interested in any of these?',type:'multi',opts:['Buying a home','Home repairs','Finding affordable housing']}
 ]},
@@ -3275,9 +3285,7 @@ var ESS7=[
 ]},
 {key:'relationships',name:'Relationships',intro:'Support and connection.',q:[
  {id:'re_rely',t:'Do you have someone you can rely on?',type:'choice',opts:['Yes','Sometimes','No'],req:true,score:{Yes:0,Sometimes:2,No:4}},
- {id:'re_supp',t:'Do you feel supported by any of these?',type:'multi',opts:['Family','Friends']},
  {id:'re_conn',t:'Do you feel connected to your community?',type:'yn',score:{Yes:0,No:2}},
- {id:'re_inv',t:'Are you involved in any of these?',type:'multi',opts:['Church','Club','Community organization','Nonprofit','None']},
  {id:'re_safe',t:'Do you feel safe and respected in your closest relationships?',type:'choice',opts:['Always','Usually','Rarely'],req:true,score:{Always:0,Usually:1,Rarely:4}},
  {id:'re_int',t:'Would you be interested in any of these?',type:'multi',opts:['Marriage classes','Parenting support','Mentorship','Support groups','Community events']}
 ]}
@@ -3312,7 +3320,7 @@ function renderQ(q){var v=AACT()[q.id];var h='<div class="aq"><p class="aq-t">'+
   return h+'</div>';}
 function essNav(cur){var S={transportation:'Transportation',financial:'Financial',housing:'Affordable Housing',economic:'Economic',education:'Education',health:'Health',relationships:'Relationships'};var h='<div class="ess-nav">';h+=ESS7.map(function(e,i){return '<button type="button" class="ess-chip'+(i===cur?' active':'')+'" data-ajump="'+i+'">'+(S[e.key]||e.name)+'</button>';}).join('');return h+'</div>';}
 function bucketFor(k){return k==='transportation'?'transport':k;}
-function slForBucket(bkey,col){var items=(typeof PATH_IND!=='undefined'?PATH_IND:[]).filter(function(x){return x.b===bkey;});if(!items.length)return '';var mapObj=(col==='then')?PATH_THEN:PATH_NOW;var h='<p class="a-sec">Rate this area <span class="sup-count">tap \ud83d\udfe2 doing well &middot; \ud83d\udfe1 getting there &middot; \ud83d\udd34 need support</span></p>';items.forEach(function(x){var val=mapObj[x.id];h+='<div class="pi-card"><div class="pi-hd">'+pEsc(x.q)+'</div><div class="pi-def">'+pEsc(x.def)+'</div><div class="pi-opts">'+['g','y','r'].map(function(v){return '<button type="button" class="path-o '+v+(val===v?' on':'')+'" data-slc="'+col+'" data-sli="'+x.id+'" data-slv="'+v+'">'+pEsc(x[v])+'</button>';}).join('')+'</div></div>';});return h;}
+function slForBucket(bkey,col){var items=(typeof PATH_IND!=='undefined'?PATH_IND:[]).filter(function(x){return x.b===bkey&&!PATH_AUTO[x.id];});if(!items.length)return '';var mapObj=(col==='then')?PATH_THEN:PATH_NOW;var h='<p class="a-sec">Rate this area <span class="sup-count">tap \ud83d\udfe2 doing well &middot; \ud83d\udfe1 getting there &middot; \ud83d\udd34 need support</span></p>';items.forEach(function(x){var val=mapObj[x.id];h+='<div class="pi-card"><div class="pi-hd">'+pEsc(x.q)+'</div><div class="pi-def">'+pEsc(x.def)+'</div><div class="pi-opts">'+['g','y','r'].map(function(v){return '<button type="button" class="path-o '+v+(val===v?' on':'')+'" data-slc="'+col+'" data-sli="'+x.id+'" data-slv="'+v+'">'+pEsc(x[v])+'</button>';}).join('')+'</div></div>';});return h;}
 function renderEssentialStep(e,i){var h='<p class="a-eyebrow">Essential '+(i+1)+' of '+ESS7.length+'</p>'+essNav(i)+'<h1 class="a-h1">'+e.name+'</h1><p class="a-sub">'+e.intro+'</p>';e.q.forEach(function(q){if(aVisible(q))h+=renderQ(q);});h+=slForBucket(bucketFor(e.key),AMODE==='baseline'?'then':'now');h+='<div class="a-nav">'+(i>0?'<button class="btn btn-outline" data-aback>Back</button>':'<span></span>')+'<span class="a-nav-r"><button class="btn btn-outline btn-sm" data-asave>Save</button><button class="btn btn-gold" data-anext>Next</button></span></div><p class="sub" id="aSaveMsg" style="margin-top:8px;text-align:right;"></p>';return h;}
 function renderGoalsStep(){var g=ANS._goals||[],p=ANS._priority;var h='<p class="a-eyebrow">Almost done</p><h1 class="a-h1">Your goals</h1><p class="a-sub">Pick up to three goals for the next year.</p><div class="aq"><div class="aopts">';GOAL_OPTS.forEach(function(o){var on=g.indexOf(o)>=0;h+='<button type="button" class="aopt'+(on?' active':'')+'" data-q="_goals" data-v="'+aEsc(o)+'" data-multi="1">'+o+'</button>';});h+='</div></div>';var pr=Array.isArray(ANS._priority)?ANS._priority:(ANS._priority?[ANS._priority]:[]);h+='<div class="aq"><p class="aq-t">Which areas would make the biggest difference right now?</p><p class="a-sub" style="margin-top:-2px;margin-bottom:10px;">Tap in order of priority — your first tap is your top priority.</p><div class="aopts">';PRIORITY_OPTS.forEach(function(o){var rank=pr.indexOf(o),on=rank>=0;h+='<button type="button" class="aopt'+(on?' active':'')+'" data-q="_priority" data-v="'+aEsc(o)+'" data-multi="1">'+(on?'<span class="prio-rank">'+(rank+1)+'</span>':'')+o+'</button>';});h+='</div></div><div class="a-nav"><button class="btn btn-outline" data-aback>Back</button><button class="btn btn-gold" data-anext>See my results</button></div>';return h;}
 function renderResultsStep(){var arr=ESS7.map(function(e){return {e:e,pct:scoreEssential(e)};});arr.sort(function(a,b){return (b.pct||0)-(a.pct||0);});var h='<p class="a-eyebrow">Your check-in</p><h1 class="a-h1">Here is what we heard</h1><p class="a-sub">Your strengths, your opportunities, and where we can help most.</p>';var _pr=Array.isArray(ANS._priority)?ANS._priority:(ANS._priority?[ANS._priority]:[]);if(_pr.length)h+='<div class="a-prio">Your priorities: <b>'+_pr.join('</b> &rsaquo; <b>')+'</b></div>';h+='<div class="a-results">';arr.forEach(function(r){var st=essStatus(r.pct),cc=(st.c==='muted'?'amber':st.c),need=r.pct==null?0:r.pct;h+='<div class="a-rcard"><div class="a-rhead"><span class="c">'+r.e.name+'</span><span class="a-pill p-'+cc+'">'+st.t+'</span></div><div class="a-bar"><span class="bg-'+cc+'" style="width:'+need+'%"></span></div>';if(st.c==='red'||st.c==='amber')h+='<div class="a-refs">We can connect you with: '+REFERRALS[r.e.key].slice(0,3).join(' · ')+'</div>';h+='</div>';});h+='</div><p class="sub" id="assessSaveMsg" style="margin-top:14px;"></p><div class="a-nav"><button class="btn btn-outline" data-aretake>Retake</button><button class="btn btn-gold" data-afinish>Done</button></div>';return h;}
@@ -3329,7 +3337,7 @@ function saveGoals(){var msg=document.getElementById('goalsMsg');if(!CUR.live||!
 function renderAStep(){var body=document.getElementById(AMODE==='baseline'?'assessBodyBase':'assessBody');if(!body)return;var total=ESS7.length+1;var bar=document.getElementById(AMODE==='baseline'?'assessBarBase':'assessBar');if(bar)bar.style.width=(ASTEP<0?0:Math.round(ASTEP/(total-1)*100))+'%';if(ASTEP<0)body.innerHTML=renderPriorityStep();else if(ASTEP<ESS7.length)body.innerHTML=renderEssentialStep(ESS7[ASTEP],ASTEP);else body.innerHTML=renderResultsStep();}
 function aScroll(){var _cp=document.getElementById('checkinPanel');if(_cp)_cp.scrollIntoView({block:'start'});}
 function validateAStep(){return true;}
-function finishAssessment(){var scores={};ESS7.forEach(function(e){scores[e.key]=scoreEssential(e);});if(AMODE!=='baseline')window._essScores=scores;if(CUR.live&&CUR.uid){try{sb.from('path_assessments').insert({member_id:CUR.uid,kind:AMODE,answers:{now:PATH_NOW,then:PATH_THEN,na:PATH_NA},satisfaction:(AMODE==='baseline'?PATH_SAT_BASE:PATH_SAT)}).then(function(){},function(){});}catch(_fe){}saveCheckin(function(){});}logEvent('action','Check-in completed');try{window._essLast=new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(e){}renderEssentialsPanel();updateAssessIntro();
+function finishAssessment(){var scores={};ESS7.forEach(function(e){scores[e.key]=scoreEssential(e);});if(AMODE!=='baseline')window._essScores=scores;if(CUR.live&&CUR.uid){try{sb.from('path_assessments').insert({member_id:CUR.uid,kind:AMODE,answers:pathAnswers(),satisfaction:(AMODE==='baseline'?PATH_SAT_BASE:PATH_SAT)}).then(function(){},function(){});}catch(_fe){}saveCheckin(function(){});}logEvent('action','Check-in completed');try{window._essLast=new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(e){}renderEssentialsPanel();updateAssessIntro();
   function setMsg(t){var m=document.getElementById('assessSaveMsg');if(m)m.textContent=t;}
   if(CUR.live&&CUR.uid){setMsg('Saving your answers…');sb.from('essential_assessments').insert({member_id:CUR.uid,answers:ANS,scores:scores,priority:(Array.isArray(ANS._priority)?ANS._priority.join(', '):ANS._priority)||null}).then(function(r){setMsg((r&&r.error)?('Could not save: '+r.error.message):'Saved \u2713 — your answers will be here next time.');},function(){setMsg('Network error — not saved. Try again.');});}
   else{setMsg('Demo mode — sign in with a real account to save.');}}
@@ -3373,36 +3381,42 @@ function mileRowHtml(m){
   }
   return '<div class="mile-row'+(st&&st.status==='verified'?' done':'')+'"><span class="mile-t">'+m.t+'</span><span class="mile-r">'+right+'</span></div>'+attr;
 }
+function essIcon(k){var m={transportation:'🚗',financial:'💳',housing:'🏠',economic:'📈',education:'🎓',health:'🩺',relationships:'🤝'};return m[k]||'';}
 function renderEssProgress(){
-  var el=document.getElementById('essProgress');if(!el)return;
+  var achEl=document.getElementById('essProgress');
+  var rewEl=document.getElementById('rewardsProgress');
+  if(!achEl&&!rewEl)return;
   var sc=window._essScores;
   var hasMiles=(typeof MILESTONES!=='undefined'&&Object.keys(MY_MILES||{}).length>0);
-  if(!sc&&!hasMiles){el.innerHTML='<p class="sub">Complete your <b>7 Human Essentials check-in</b> to see where you stand, then mark milestones as you reach them.</p>';return;}
   var pr=Array.isArray(ANS._priority)?ANS._priority:(ANS._priority?[ANS._priority]:[]);
   var prKeys=pr.map(function(l){return (typeof PRIO2KEY!=='undefined')?PRIO2KEY[l]:null;}).filter(Boolean);
   var ordered=ESS7.slice().sort(function(a,b){var ai=prKeys.indexOf(a.key),bi=prKeys.indexOf(b.key);ai=ai<0?999:ai;bi=bi<0?999:bi;return ai-bi;});
   var stars=0;
-  var bars=ordered.map(function(e){
+  var data=ordered.map(function(e){
     var mils=(typeof MILESTONES!=='undefined'?MILESTONES:[]).filter(function(m){return m.e===e.key;});
     var conf=mils.filter(function(m){return MY_MILES[m.k]&&MY_MILES[m.k].status==='verified';}).length;
     stars+=conf;
     var allDone=(mils.length>0&&conf===mils.length);
     var st=sc?essStatus(sc[e.key]):null;
-    var right=allDone?'<span class="ep-star">\u2605</span>':(st?'<span class="a-pill p-'+(st.c==='muted'?'amber':st.c)+'">'+st.t+'</span>':'');
     var bp,bc;
     if(st){bp=(st.c==='green'?100:(st.c==='amber'||st.c==='muted')?60:30);bc=(st.c==='green'?'green':'amber');}else{bp=0;bc='amber';}
     if(mils.length){bp=Math.max(bp,Math.round(conf/mils.length*100));if(allDone)bc='green';}
-    var milesHtml=mils.length?('<div class="ep-miles">'+mils.map(mileRowHtml).join('')+'</div>'):'';
-    return '<div class="ep-row"><div class="ep-h"><span>'+e.name+'</span>'+right+'</div><div class="ep-bar"><span class="bg-'+bc+'" style="width:'+bp+'%"></span></div>'+milesHtml+'</div>';
-  }).join('');
+    return {e:e,mils:mils,conf:conf,allDone:allDone,st:st,bp:bp,bc:bc};
+  });
   var days=0;var j=CUR.joined||CUR.authCreated;if(j){var dd=new Date(j);if(!isNaN(dd.getTime()))days=Math.max(0,Math.floor((Date.now()-dd.getTime())/86400000));}
-  var gold=(stars>=4&&days>=30);var _rs=document.getElementById('rewardStars');if(_rs)_rs.innerHTML='\u2605 '+stars;
-  if(gold&&CUR.live&&CUR.uid&&CUR.level!=='gold'){CUR.level='gold';try{sb.from('members').update({level:'gold'}).eq('profile_id',CUR.uid).then(function(){},function(){});logEvent('action','Reached Gold membership');}catch(e){}var _lv=document.getElementById('profLevel');if(_lv)_lv.textContent='Gold Member';}
-  var summary='<div class="gold-prog"><div class="gp-h">\u2605 Rewards \u2014 earn Gold membership</div>'+
-    '<div class="gp-row"><span>Confirmed milestones</span><b>'+stars+' / 4</b></div><div class="gp-bar"><span style="width:'+Math.min(100,stars/4*100)+'%"></span></div>'+
-    '<div class="gp-row" style="margin-top:9px"><span>Days as a member</span><b>'+days+' / 30</b></div><div class="gp-bar"><span style="width:'+Math.min(100,days/30*100)+'%"></span></div>'+
-    '<p class="gp-status">'+(gold?'You have earned <b>Gold membership</b> \u2014 welcome!':'Reach a milestone, then your navigator confirms it. Collect <b>4 confirmed milestones + 30 days</b> to unlock Gold.')+'</p></div>';
-  el.innerHTML='<p class="sub" style="margin-bottom:12px">Your standing across the 7 Human Essentials \u2014 mark a milestone when you reach it and your navigator will confirm it.</p>'+bars+summary;
+  var gold=(stars>=4&&days>=30);
+  var _ds=document.getElementById('dashStars');if(_ds)_ds.innerHTML='★ '+stars;
+  var _ps=document.getElementById('profStars');if(_ps)_ps.innerHTML='★ '+stars;
+  if(gold&&CUR.live&&CUR.uid&&CUR.level!=='gold'){CUR.level='gold';try{sb.from('members').update({level:'gold'}).eq('profile_id',CUR.uid).then(function(){},function(){});logEvent('action','Reached Gold membership');}catch(e){}var _lv=document.getElementById('profLevel');if(_lv)_lv.innerHTML='Gold Member <span class="prof-stars" id="profStars">★ '+stars+'</span>';}
+  if(achEl){
+    if(!sc&&!hasMiles){achEl.innerHTML='<p class="sub">Complete your <b>7 Human Essentials check-in</b> to see where you stand, then mark achievements as you reach them.</p>';}
+    else{achEl.innerHTML='<p class="sub" style="margin-bottom:12px">Mark an achievement when you reach it — your navigator will confirm it.</p>'+data.map(function(d){var total=d.mils.length;var badge=total?('<span style="font-size:12px;font-weight:600;color:var(--muted)">'+d.conf+'/'+total+'</span>'):'';var miles=total?('<div class="ep-miles">'+d.mils.map(mileRowHtml).join('')+'</div>'):'<p class="sub" style="margin:6px 0 0">No achievements listed yet.</p>';return '<div class="ep-row"><div class="ep-h"><span>'+essIcon(d.e.key)+' '+d.e.name+'</span>'+badge+'</div>'+miles+'</div>';}).join('');}
+  }
+  if(rewEl){
+    var bars=data.map(function(d){var right=d.allDone?'<span class="ep-star">★</span>':(d.st?'<span class="a-pill p-'+(d.st.c==='muted'?'amber':d.st.c)+'">'+d.st.t+'</span>':'');return '<div class="ep-row"><div class="ep-h"><span>'+essIcon(d.e.key)+' '+d.e.name+'</span>'+right+'</div><div class="ep-bar"><span class="bg-'+d.bc+'" style="width:'+d.bp+'%"></span></div></div>';}).join('');
+    var summary='<div class="gold-prog"><div class="gp-h">★ Earn Gold membership</div>'+'<div class="gp-row"><span>Confirmed milestones</span><b>'+stars+' / 4</b></div><div class="gp-bar"><span style="width:'+Math.min(100,stars/4*100)+'%"></span></div>'+'<div class="gp-row" style="margin-top:9px"><span>Days as a member</span><b>'+days+' / 30</b></div><div class="gp-bar"><span style="width:'+Math.min(100,days/30*100)+'%"></span></div>'+'<p class="gp-status">'+(gold?'You have earned <b>Gold membership</b> — welcome!':'Reach a milestone, then your navigator confirms it. Collect <b>4 confirmed milestones + 30 days</b> to unlock Gold.')+'</p></div>';
+    rewEl.innerHTML='<p class="sub" style="margin-bottom:12px">Your standing across the 7 Human Essentials, and your path to Gold.</p>'+bars+summary;
+  }
 }
 var PATH_IND = [
   // ---- Safe & Affordable Housing ----
@@ -3644,7 +3658,7 @@ function pathOptsHtml(x,col,cur){
     '<button type="button" class="path-o r'+(cur==='r'?' on':'')+'" data-pi="'+x.id+'" data-pc="'+col+'" data-pv="r">'+pEsc(x.r)+'</button>'+
     '</div>';
 }
-function derivePathSuggestions(){var A=(typeof ANS!=='undefined'&&ANS)?ANS:{};var out={};
+function derivePathFrom(A){A=A||{};var out={};
   var mc=(A.he_ins==='Yes')+(A.he_pcp==='Yes')+(A.he_seen==='Yes');
   if(A.he_ins!==undefined||A.he_pcp!==undefined||A.he_seen!==undefined)out.medical=(mc>=3?'g':(mc>=1?'y':'r'));
   if(A.he_dental!==undefined)out.dental=(A.he_dental==='Yes'?'g':'r');
@@ -3655,21 +3669,25 @@ function derivePathSuggestions(){var A=(typeof ANS!=='undefined'&&ANS)?ANS:{};va
   var acct=Array.isArray(A.fn_acct)?A.fn_acct:[];if(A.fn_acct!==undefined)out.banking=(acct.length>=2?'g':(acct.length===1?'y':'r'));
   if(A.fn_emerg!==undefined)out.savings=(A.fn_emerg==='Over $1,000'?'g':(A.fn_emerg==='$500–$1,000'?'y':'r'));
   if(A.tp_rel!==undefined)out.trans_reliability=(A.tp_rel==='Yes'?'g':(A.tp_rel==='Sometimes'?'y':'r'));
-  if(A.tp_type==='Personal vehicle')out.trans_vehicle='g';else if(A.tp_type==='Family vehicle'||A.tp_type==='Employer vehicle')out.trans_vehicle='y';else if(A.tp_rel==='No')out.trans_vehicle='r';
-  if(A.re_rely!==undefined)out.support_rel=(A.re_rely==='Yes'?'g':(A.re_rely==='Sometimes'?'y':'r'));
+  if(A.tp_own==='No')out.trans_vehicle='r';else if(A.tp_own==='Yes')out.trans_vehicle=(A.tp_carrel==='Yes'?'g':(A.tp_carrel==='Mostly'?'y':(A.tp_carrel==='No'?'r':'y')));
+  if(A.re_rely!==undefined)out.close_ties=(A.re_rely==='Yes'?'g':(A.re_rely==='Sometimes'?'y':'r'));
+  if(A.re_safe!==undefined)out.support_rel=(A.re_safe==='Always'?'g':(A.re_safe==='Usually'?'y':'r'));
   if(A.re_conn!==undefined)out.community=(A.re_conn==='Yes'?'g':'r');
-  var rs=Array.isArray(A.re_supp)?A.re_supp:[];if(A.re_supp!==undefined)out.close_ties=(rs.length>=2?'g':(rs.length===1?'y':'r'));
   return out;}
-function applyPathPrefill(){var sug=derivePathSuggestions();var n=0;Object.keys(sug).forEach(function(id){if(!PATH_NOW[id]&&!PATH_NA[id]){PATH_NOW[id]=sug[id];PATH_FROM[id]=true;n++;}});return n;}
+function derivePathSuggestions(){return derivePathFrom((typeof ANS!=='undefined'&&ANS)?ANS:{});}
+function applyPathPrefill(){var sug=derivePathSuggestions();var n=0;Object.keys(sug).forEach(function(id){if(PATH_AUTO[id])return;if(!PATH_NOW[id]&&!PATH_NA[id]){PATH_NOW[id]=sug[id];PATH_FROM[id]=true;n++;}});return n;}
+var PATH_AUTO={medical:1,dental:1,stable_housing:1,banking:1,savings:1,income:1,close_ties:1,community:1,trans_reliability:1,trans_vehicle:1};
+function applyAutoFills(){var cur=derivePathFrom((typeof ANS!=='undefined')?ANS:{});var base=derivePathFrom((typeof ANS_BASE!=='undefined')?ANS_BASE:{});Object.keys(PATH_AUTO).forEach(function(id){if(cur[id]!==undefined)PATH_NOW[id]=cur[id];if(base[id]!==undefined)PATH_THEN[id]=base[id];});}
+function pathAnswers(){applyAutoFills();return {now:PATH_NOW,then:PATH_THEN,na:PATH_NA};}
 function pathPrefill(){var msg=document.getElementById('prefillMsg');var n=applyPathPrefill();renderPath();if(msg)msg.textContent=n?('Filled '+n+' answer'+(n>1?'s':'')+' from your check-in \u2014 review & adjust below, then Save.'):'Nothing new to pre-fill \u2014 finish your 7 Human Essentials check-in first, or those are already answered.';try{logEvent('action','Path pre-filled from check-in');}catch(e){}}
 function satWidgetInto(elId,val,attr,showTrend){var el=document.getElementById(elId);if(!el)return;var h='<div class="path-sat-top"><div class="path-sat-q">How satisfied are you with life as a whole these days?</div><div class="path-sat">';for(var n=1;n<=10;n++){h+='<button type="button" class="path-sn'+(val===n?' on':'')+'" data-'+attr+'="'+n+'">'+n+'</button>';}var st='';if(showTrend){var _sm=pathSatSummary(PATH_SAT_TREND,PATH_SAT);st=_sm.has?('<div class="sat-trend '+(_sm.diff>0?'up':(_sm.diff<0?'down':'flat'))+'">'+_sm.html+' '+_sm.net+'</div>'):'';}h+='</div><div class="path-sat-lbl"><span>1 - Not at all</span><span>10 - Completely</span></div>'+st+'</div>';el.innerHTML=h;}
 function renderSatWidget(){satWidgetInto('profSat',PATH_SAT,'psat',true);satWidgetInto('baseSat',PATH_SAT_BASE,'psatb',false);}
 function pathSatSummary(trend,curVal){trend=trend||[];var parts=[],nf=null,nt=null,today='';try{today=new Date().toLocaleDateString();}catch(e){}if(trend.length){var sT=trend[0],lT=trend[trend.length-1];nf=sT.v;nt=(curVal!=null?curVal:lT.v);parts.push('<span class="st-pt">Started '+pEsc(sT.d)+' &middot; <b>'+sT.v+'</b></span>');if(trend.length>1)parts.push('<span class="st-pt">Last checked '+pEsc(lT.d)+' &middot; <b>'+lT.v+'</b></span>');if(curVal!=null&&curVal!==lT.v)parts.push('<span class="st-pt">Today '+pEsc(today)+' &middot; <b>'+curVal+'</b></span>');}else if(curVal!=null){parts.push('<span class="st-pt">Today '+pEsc(today)+' &middot; <b>'+curVal+'</b></span>');nf=curVal;nt=curVal;}var diff=(nf!=null&&nt!=null)?(nt-nf):0;var net=diff>0?('<span class="st-net">&uarr; +'+diff+'</span>'):(diff<0?('<span class="st-net">&darr; '+diff+'</span>'):'');return {html:parts.join('<span class="st-ar">&rarr;</span>'),net:net,diff:diff,has:parts.length>0};}
 function slLabel(v){return ({g:'\ud83d\udfe2 Green',y:'\ud83d\udfe1 Yellow',r:'\ud83d\udd34 Red'})[v]||'';}
-function slBuckets(mapObj,col,locked){var byB={};PATH_IND.forEach(function(x){(byB[x.b]=byB[x.b]||[]).push(x);});var h='<div class="ess-nav" style="margin-bottom:14px;">'+PATH_BUCKETS.filter(function(bk){return (byB[bk.key]||[]).length;}).map(function(bk){return '<button type="button" class="ess-chip" data-sljump="'+col+':'+bk.key+'">'+pathShort(bk.key)+'</button>';}).join('')+'</div>';PATH_BUCKETS.forEach(function(bk){var items=byB[bk.key]||[];if(!items.length)return;var ansN=items.filter(function(x){return mapObj[x.id];}).length;h+='<div class="path-b"><button type="button" class="path-bh" data-slb="'+col+':'+bk.key+'"><span>'+bk.icon+' '+bk.name+'</span><span class="path-count">'+ansN+'/'+items.length+'</span></button><div class="path-body" id="slb-'+col+'-'+bk.key+'" style="display:none;">';items.forEach(function(x){var val=mapObj[x.id];h+='<div class="pi-card"><div class="pi-hd">'+pEsc(x.q)+'</div><div class="pi-def">'+pEsc(x.def)+'</div><div class="pi-opts">'+['g','y','r'].map(function(v){return '<button type="button" class="path-o '+v+(val===v?' on':'')+'"'+(locked?' disabled style="opacity:.65;cursor:default"':(' data-slc="'+col+'" data-sli="'+x.id+'" data-slv="'+v+'"'))+'>'+pEsc(x[v])+'</button>';}).join('')+'</div>'+((col==='now'&&PATH_THEN[x.id]&&PATH_THEN[x.id]!==val)?('<div class="pi-last">Baseline: '+slLabel(PATH_THEN[x.id])+'</div>'):'')+'</div>';});h+='</div></div>';});return h;}
+function slBuckets(mapObj,col,locked){var byB={};PATH_IND.forEach(function(x){if(PATH_AUTO[x.id])return;(byB[x.b]=byB[x.b]||[]).push(x);});var h='<div class="ess-nav" style="margin-bottom:14px;">'+PATH_BUCKETS.filter(function(bk){return (byB[bk.key]||[]).length;}).map(function(bk){return '<button type="button" class="ess-chip" data-sljump="'+col+':'+bk.key+'">'+pathShort(bk.key)+'</button>';}).join('')+'</div>';PATH_BUCKETS.forEach(function(bk){var items=byB[bk.key]||[];if(!items.length)return;var ansN=items.filter(function(x){return mapObj[x.id];}).length;h+='<div class="path-b"><button type="button" class="path-bh" data-slb="'+col+':'+bk.key+'"><span>'+bk.icon+' '+bk.name+'</span><span class="path-count">'+ansN+'/'+items.length+'</span></button><div class="path-body" id="slb-'+col+'-'+bk.key+'" style="display:none;">';items.forEach(function(x){var val=mapObj[x.id];h+='<div class="pi-card"><div class="pi-hd">'+pEsc(x.q)+'</div><div class="pi-def">'+pEsc(x.def)+'</div><div class="pi-opts">'+['g','y','r'].map(function(v){return '<button type="button" class="path-o '+v+(val===v?' on':'')+'"'+(locked?' disabled style="opacity:.65;cursor:default"':(' data-slc="'+col+'" data-sli="'+x.id+'" data-slv="'+v+'"'))+'>'+pEsc(x[v])+'</button>';}).join('')+'</div>'+((col==='now'&&PATH_THEN[x.id]&&PATH_THEN[x.id]!==val)?('<div class="pi-last">Baseline: '+slLabel(PATH_THEN[x.id])+'</div>'):'')+'</div>';});h+='</div></div>';});return h;}
 function renderBaseline(){var el=document.getElementById('baselineBox');if(!el)return;var set=Object.keys(PATH_THEN).length>0||Object.keys(ANS_BASE).length>0;var intro=document.getElementById('baseIntro');var inl=document.getElementById('baseInline');if(set){el.innerHTML='<div class="place" style="background:var(--sage-light);border-color:transparent;"><div class="place-ic">\ud83d\udccc</div><div><b>Baseline recorded'+(PATH_BASE_DATE?(' \u00b7 '+pEsc(PATH_BASE_DATE)):'')+'</b><p class="sub" style="margin:2px 0 0;">Locked as your starting point \u2014 the same questions as your current check-in. Refine it only if it was not accurate.</p></div><button type="button" class="btn btn-outline btn-sm" id="startBaseline" style="margin-left:auto;">Refine baseline</button></div>';if(intro)intro.style.display='none';}else{el.innerHTML='';if(intro&&(!inl||inl.style.display==='none'))intro.style.display='';}}
 function renderCurrent(){var el=document.getElementById('currentBox');if(!el)return;var baseSet=Object.keys(PATH_THEN).length>0||Object.keys(ANS_BASE).length>0;if(!baseSet){el.innerHTML='<div class="place"><div class="place-ic">\ud83d\udd12</div><div><b>Set your baseline first</b><p class="sub" style="margin:2px 0 0;">Your current check-in unlocks once you have recorded a baseline in the <b>Baseline</b> tab.</p></div><button type="button" class="btn btn-gold btn-sm" style="margin-left:auto;" data-gotobase>Go to Baseline</button></div>';return;}var h='';var haveCur=Object.keys(PATH_NOW).length>0;if(haveCur){var imp=0,dec=0,same=0;PATH_IND.forEach(function(x){var n=PATH_NOW[x.id],t=PATH_THEN[x.id];if(n&&t){var d=pathRank(n)-pathRank(t);if(d>0)imp++;else if(d<0)dec++;else same++;}});if(imp+dec+same>0)h+='<div class="place" style="margin-bottom:14px;"><div class="place-ic">\ud83d\udcc8</div><div><b>Progress since baseline</b><p class="sub" style="margin:2px 0 0;"><b style="color:var(--sage)">'+imp+' improved</b> \u00b7 '+same+' unchanged'+(dec?(' \u00b7 <b style="color:var(--coral)">'+dec+' declined</b>'):'')+'</p></div><button type="button" class="btn btn-outline btn-sm" data-pathresults style="margin-left:auto;">View details</button></div>';}if(!haveCur)h+='<p class="sub">Take the check-in above to record where you are today \u2014 it saves your \ud83d\udfe2\ud83d\udfe1\ud83d\udd34 ratings together with your answers.</p>';el.innerHTML=h;}
-function saveBaselineCurrent(which){var msg=document.getElementById(which==='base'?'baseMsg':'curMsg');if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Sign in with a real account to save.';return;}if(msg)msg.textContent='Saving\u2026';sb.from('path_assessments').insert({member_id:CUR.uid,kind:AMODE,answers:{now:PATH_NOW,then:PATH_THEN,na:PATH_NA},satisfaction:(AMODE==='baseline'?PATH_SAT_BASE:PATH_SAT)}).then(function(r){if(r&&r.error){if(msg)msg.textContent='Could not save: '+r.error.message;return;}if(which==='base')BASE_REFINE=false;if(msg)msg.textContent='Saved \u2713';try{logEvent('action',which==='base'?'Baseline saved':'Current check-in saved');}catch(e){}loadPath();},function(){if(msg)msg.textContent='Network error \u2014 try again.';});}
+function saveBaselineCurrent(which){var msg=document.getElementById(which==='base'?'baseMsg':'curMsg');if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Sign in with a real account to save.';return;}if(msg)msg.textContent='Saving\u2026';sb.from('path_assessments').insert({member_id:CUR.uid,kind:AMODE,answers:pathAnswers(),satisfaction:(AMODE==='baseline'?PATH_SAT_BASE:PATH_SAT)}).then(function(r){if(r&&r.error){if(msg)msg.textContent='Could not save: '+r.error.message;return;}if(which==='base')BASE_REFINE=false;if(msg)msg.textContent='Saved \u2713';try{logEvent('action',which==='base'?'Baseline saved':'Current check-in saved');}catch(e){}loadPath();},function(){if(msg)msg.textContent='Network error \u2014 try again.';});}
 var GOALS_BUCKETS=[
  {key:'housing',name:'Safe & Affordable Housing',icon:'🏠',goals:['Home ownership','Rent a stable place','Own a rental property','Make home repairs / safer','Lower my housing costs']},
  {key:'financial',name:'Financial Resources',icon:'💳',goals:['Increase income','Build savings','Pay down debt','Improve my credit','Investment opportunities','Start & keep a budget']},
@@ -3680,8 +3698,8 @@ var GOALS_BUCKETS=[
  {key:'relationships',name:'Relationships',icon:'🤝',goals:['Build a support network','Get involved in my community','Mentor or give back','Strengthen family relationships','Handle conflict better']}
 ];
 var MY_GOALS=[],MY_REVIEWS=[],MY_STORIES=[];
-var GOAL_TAB=GOALS_BUCKETS[0].key;var GOAL_SHORT={housing:'Housing',financial:'Financial',economic:'Economic',education:'Education',health:'Health',transport:'Transportation',relationships:'Relationships'};function goalBucket(g){for(var i=0;i<GOALS_BUCKETS.length;i++){if(GOALS_BUCKETS[i].goals.indexOf(g)>=0)return GOALS_BUCKETS[i];}return null;}
-function renderGoals(){var el=document.getElementById('goalsBox');if(!el)return;if(!GOALS_BUCKETS.filter(function(b){return b.key===GOAL_TAB;}).length)GOAL_TAB=GOALS_BUCKETS[0].key;var nav='<div class="ess-nav" style="margin-bottom:16px;">'+GOALS_BUCKETS.map(function(b){var cnt=b.goals.filter(function(g){return MY_GOALS.indexOf(g)>=0;}).length;return '<button type="button" class="ess-chip'+(b.key===GOAL_TAB?' active':'')+(cnt?' ess-chip-prio':'')+'" data-goaltab="'+b.key+'">'+(GOAL_SHORT[b.key]||b.name)+(cnt?(' · '+cnt):'')+'</button>';}).join('')+'</div>';var bucket=GOALS_BUCKETS.filter(function(b){return b.key===GOAL_TAB;})[0]||GOALS_BUCKETS[0];var chips=bucket.goals.map(function(g){var on=MY_GOALS.indexOf(g)>=0;return '<div class="goal'+(on?' on':'')+'" data-goal="'+aEsc(g)+'">'+pEsc(g)+'</div>';}).join('');var goalsSection='<div class="goals-b-h">'+bucket.icon+' '+bucket.name+'</div><div class="goals">'+chips+'</div>';var pri=MY_GOALS.length?('<ol class="prio">'+MY_GOALS.map(function(t,i){var _gb=goalBucket(t);var _tag=_gb?('<span class="goal-tag">'+_gb.icon+' '+(GOAL_SHORT[_gb.key]||_gb.name)+'</span>'):'<span class="goal-tag" style="opacity:.7">Custom</span>';return '<li><span class="rank"></span><span class="prio-goal"><b>'+pEsc(t)+'</b> '+_tag+'</span><span style="margin-left:auto;display:flex;gap:5px;"><button type="button" class="pmove" data-gup="'+i+'">↑</button><button type="button" class="pmove" data-gdown="'+i+'">↓</button><button type="button" class="pmove del" data-grem="'+i+'">×</button></span></li>';}).join('')+'</ol>'):'<p class="sub">No goals selected yet — tap goals under any area above.</p>';el.innerHTML=nav+goalsSection+'<div style="border-top:1px solid var(--border);margin:22px 0 0;"></div><h3 style="margin:18px 0 4px;font-family:var(--display);color:var(--navy);">Your priorities</h3><p class="sub" style="margin-top:0;">Your selections across every area — drag-rank with ↑ ↓.</p>'+pri;}
+var GOAL_TAB=GOALS_BUCKETS[0].key;var GOAL_SHORT={housing:'Housing',financial:'Financial',economic:'Economic',education:'Education',health:'Health',transport:'Transportation',relationships:'Relationships'};function goalText(g){var s=String(g);var i=s.indexOf('::');return i>=0?s.slice(i+2):s;}function goalBucket(g){var s=String(g);var i=s.indexOf('::');if(i>=0){var k=s.slice(0,i);for(var j=0;j<GOALS_BUCKETS.length;j++)if(GOALS_BUCKETS[j].key===k)return GOALS_BUCKETS[j];return null;}for(var j=0;j<GOALS_BUCKETS.length;j++){if(GOALS_BUCKETS[j].goals.indexOf(g)>=0)return GOALS_BUCKETS[j];}return null;}
+function renderGoals(){var el=document.getElementById('goalsBox');if(!el)return;if(!GOALS_BUCKETS.filter(function(b){return b.key===GOAL_TAB;}).length)GOAL_TAB=GOALS_BUCKETS[0].key;var nav='<div class="ess-nav" style="margin-bottom:16px;">'+GOALS_BUCKETS.map(function(b){var cnt=MY_GOALS.filter(function(g){var gb=goalBucket(g);return gb&&gb.key===b.key;}).length;return '<button type="button" class="ess-chip'+(b.key===GOAL_TAB?' active':'')+(cnt?' ess-chip-prio':'')+'" data-goaltab="'+b.key+'">'+(GOAL_SHORT[b.key]||b.name)+(cnt?(' · '+cnt):'')+'</button>';}).join('')+'</div>';var bucket=GOALS_BUCKETS.filter(function(b){return b.key===GOAL_TAB;})[0]||GOALS_BUCKETS[0];var chips=bucket.goals.map(function(g){var on=MY_GOALS.indexOf(g)>=0;return '<div class="goal'+(on?' on':'')+'" data-goal="'+aEsc(g)+'">'+pEsc(g)+'</div>';}).join('')+MY_GOALS.filter(function(g){return String(g).indexOf(GOAL_TAB+'::')===0;}).map(function(g){return '<div class="goal on" data-goal="'+aEsc(g)+'">'+pEsc(goalText(g))+'</div>';}).join('')+'<div class="goal" data-goal="__other__"><span class="gi">➕</span>Other…</div>';var goalsSection='<div class="goals-b-h">'+bucket.icon+' '+bucket.name+'</div><div class="goals">'+chips+'</div>';var pri=MY_GOALS.length?('<ol class="prio">'+MY_GOALS.map(function(t,i){var _gb=goalBucket(t);var _tag=_gb?('<span class="goal-tag">'+_gb.icon+' '+(GOAL_SHORT[_gb.key]||_gb.name)+'</span>'):'<span class="goal-tag" style="opacity:.7">Custom</span>';return '<li><span class="rank"></span><span class="prio-goal"><b>'+pEsc(goalText(t))+'</b> '+_tag+'</span><span style="margin-left:auto;display:flex;gap:5px;"><button type="button" class="pmove" data-gup="'+i+'">↑</button><button type="button" class="pmove" data-gdown="'+i+'">↓</button><button type="button" class="pmove del" data-grem="'+i+'">×</button></span></li>';}).join('')+'</ol>'):'<p class="sub">No goals selected yet — tap goals under any area above.</p>';el.innerHTML=nav+goalsSection+'<div style="border-top:1px solid var(--border);margin:22px 0 0;"></div><h3 style="margin:18px 0 4px;font-family:var(--display);color:var(--navy);">Your priorities</h3><p class="sub" style="margin-top:0;">Your selections across every area — drag-rank with ↑ ↓.</p>'+pri;}
 function loadGoals(){if(!CUR.live||!CUR.uid){renderGoals();return;}sb.from('members').select('goals').eq('profile_id',CUR.uid).maybeSingle().then(function(r){if(r&&r.data&&Array.isArray(r.data.goals))MY_GOALS=r.data.goals.filter(function(g){return goalBucket(g);});renderGoals();});}
 function saveGoals(){var m=document.getElementById('goalsMsg');if(!CUR.live||!CUR.uid){if(m)m.textContent='Sign in to save.';return;}if(m)m.textContent='Saving\u2026';sb.from('members').update({goals:MY_GOALS}).eq('profile_id',CUR.uid).then(function(r){if(m)m.textContent=(r&&r.error)?('Could not save: '+r.error.message):'Saved \u2713';try{logEvent('action','Goals saved');}catch(e){}},function(){if(m)m.textContent='Network error \u2014 try again.';});}
 function rvScale(v){v=(v==null?-1:v);var h='';for(var i=1;i<=10;i++)h+='<i class="'+(i<=v?'on':'')+'"></i>';return h;}
@@ -3781,8 +3799,8 @@ function openPathResults(){renderPathResults();var m=document.getElementById('pa
 function closePathResults(){var m=document.getElementById('pathResultsModal');if(m)m.classList.remove('open');}
 document.addEventListener('click',function(e){var _psb=e.target.closest('[data-psatb]');if(_psb){PATH_SAT_BASE=+_psb.getAttribute('data-psatb');if(typeof ANS_BASE==='object')ANS_BASE._sat=PATH_SAT_BASE;renderSatWidget();return;}var _psn=e.target.closest('[data-psat]');if(_psn){PATH_SAT=+_psn.getAttribute('data-psat');if(typeof ANS==='object')ANS._sat=PATH_SAT;renderSatWidget();return;}if(e.target.closest('[data-pathresults]')){openPathResults();return;}if(e.target.closest('[data-pathprefill]')){pathPrefill();return;}var cb=e.target.closest('#prCopy');if(cb){pathCopy(cb);return;}if(e.target.closest('#prEmail')){pathEmail();return;}if(e.target.closest('#prPdf')){try{logEvent('action','Assessment results printed');}catch(_){}doPrint('printing-path');return;}if(e.target.id==='pathResultsClose'){closePathResults();return;}var m=document.getElementById('pathResultsModal');if(m&&e.target===m){closePathResults();return;}});
 function pathBadge(bkey){var items=PATH_IND.filter(function(x){return x.b===bkey;});var an=items.reduce(function(a,x){return a+pathDoneCount(x);},0);var badge=document.querySelector('[data-pathb="'+bkey+'"] .path-count');if(badge)badge.textContent=an+'/'+items.length;}
-function savePath(){var msg=document.getElementById('pathMsg');if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Sign in with a real account to save.';return;}if(msg)msg.textContent='Saving…';sb.from('path_assessments').insert({member_id:CUR.uid,kind:AMODE,answers:{now:PATH_NOW,then:PATH_THEN,na:PATH_NA},satisfaction:(AMODE==='baseline'?PATH_SAT_BASE:PATH_SAT)}).then(function(r){if(r&&r.error){if(msg)msg.textContent='Could not save: '+r.error.message;return;}if(msg)msg.textContent='Saved \u2713 new log recorded.';try{logEvent('action','Full Path Assessment saved');}catch(e){}loadPath();},function(){if(msg)msg.textContent='Network error — try again.';});}
-function loadPath(){if(!CUR.live||!CUR.uid)return;sb.from('path_assessments').select('answers,satisfaction,created_at,kind').eq('member_id',CUR.uid).order('created_at',{ascending:true}).then(function(r){if(r&&r.error)return;var rows=(r&&r.data)||[];PATH_COUNT=rows.length;PATH_SAT_TREND=[];PATH_IND_DATE={};var prev={};function fmt(t){try{return new Date(t).toLocaleDateString();}catch(e){return(''+t).slice(0,10);}}rows.forEach(function(row){var ds=fmt(row.created_at);if(row.satisfaction!=null)PATH_SAT_TREND.push({d:ds,v:row.satisfaction});var a=row.answers||{};var nowMap,naMap;if(a&&(a.now||a.then||a.na)){nowMap=a.now||{};naMap=a.na||{};}else{nowMap=a||{};naMap={};}var eff={};Object.keys(nowMap).forEach(function(k){eff[k]=nowMap[k];});Object.keys(naMap).forEach(function(k){if(naMap[k])eff[k]='na';});Object.keys(eff).forEach(function(k){if(prev[k]!==eff[k]){PATH_IND_DATE[k]=ds;prev[k]=eff[k];}});});var d=rows.length?rows[rows.length-1]:null;if(d){var a=d.answers;if(a&&typeof a==='object'){if(a.now||a.then||a.na){PATH_NOW=a.now||{};PATH_THEN=a.then||{};PATH_NA=a.na||{};}else{PATH_NOW=a;PATH_THEN={};PATH_NA={};}}PATH_SAT=(ANS&&ANS._sat!=null)?ANS._sat:(d.satisfaction!=null?d.satisfaction:PATH_SAT);PATH_LAST=fmt(d.created_at);}PATH_BASE_DATE=rows.length?fmt(rows[0].created_at):null;PATH_SAT_BASE=(ANS_BASE&&ANS_BASE._sat!=null)?ANS_BASE._sat:((rows.length&&rows[0].satisfaction!=null)?rows[0].satisfaction:null);PATH_FROM={};applyPathPrefill();renderPath();renderSatWidget();renderBaseline();renderCurrent();});}
+function savePath(){var msg=document.getElementById('pathMsg');if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Sign in with a real account to save.';return;}if(msg)msg.textContent='Saving…';sb.from('path_assessments').insert({member_id:CUR.uid,kind:AMODE,answers:pathAnswers(),satisfaction:(AMODE==='baseline'?PATH_SAT_BASE:PATH_SAT)}).then(function(r){if(r&&r.error){if(msg)msg.textContent='Could not save: '+r.error.message;return;}if(msg)msg.textContent='Saved \u2713 new log recorded.';try{logEvent('action','Full Path Assessment saved');}catch(e){}loadPath();},function(){if(msg)msg.textContent='Network error — try again.';});}
+function loadPath(){if(!CUR.live||!CUR.uid)return;sb.from('path_assessments').select('answers,satisfaction,created_at,kind').eq('member_id',CUR.uid).order('created_at',{ascending:true}).then(function(r){if(r&&r.error)return;var rows=(r&&r.data)||[];PATH_COUNT=rows.length;PATH_SAT_TREND=[];PATH_IND_DATE={};var prev={};function fmt(t){try{return new Date(t).toLocaleDateString();}catch(e){return(''+t).slice(0,10);}}rows.forEach(function(row){var ds=fmt(row.created_at);if(row.satisfaction!=null)PATH_SAT_TREND.push({d:ds,v:row.satisfaction});var a=row.answers||{};var nowMap,naMap;if(a&&(a.now||a.then||a.na)){nowMap=a.now||{};naMap=a.na||{};}else{nowMap=a||{};naMap={};}var eff={};Object.keys(nowMap).forEach(function(k){eff[k]=nowMap[k];});Object.keys(naMap).forEach(function(k){if(naMap[k])eff[k]='na';});Object.keys(eff).forEach(function(k){if(prev[k]!==eff[k]){PATH_IND_DATE[k]=ds;prev[k]=eff[k];}});});var d=rows.length?rows[rows.length-1]:null;if(d){var a=d.answers;if(a&&typeof a==='object'){if(a.now||a.then||a.na){PATH_NOW=a.now||{};PATH_THEN=a.then||{};PATH_NA=a.na||{};}else{PATH_NOW=a;PATH_THEN={};PATH_NA={};}}PATH_SAT=(ANS&&ANS._sat!=null)?ANS._sat:(d.satisfaction!=null?d.satisfaction:PATH_SAT);PATH_LAST=fmt(d.created_at);}PATH_BASE_DATE=rows.length?fmt(rows[0].created_at):null;PATH_SAT_BASE=(ANS_BASE&&ANS_BASE._sat!=null)?ANS_BASE._sat:((rows.length&&rows[0].satisfaction!=null)?rows[0].satisfaction:null);PATH_FROM={};applyAutoFills();applyPathPrefill();renderPath();renderSatWidget();renderBaseline();renderCurrent();});}
 (function(){var pb=document.getElementById('pathBox'); if(!pb)return;
   pb.addEventListener('click',function(e){
     var pj=e.target.closest('[data-pathjump]'); if(pj){var k=pj.getAttribute('data-pathjump');var bd=document.getElementById('pathb-'+k);if(bd)bd.style.display='';var hh=document.querySelector('[data-pathb="'+k+'"]');if(hh){hh.classList.add('open');hh.scrollIntoView({block:'start'});}var ch=pb.querySelectorAll('[data-pathjump]');for(var q=0;q<ch.length;q++)ch[q].classList.remove('active');pj.classList.add('active');return;}
@@ -3795,7 +3813,7 @@ function loadPath(){if(!CUR.live||!CUR.uid)return;sb.from('path_assessments').se
   });
 })();
 
-var MILESTONES=[{k:'job',t:'Got a job',e:'economic'},{k:'save500',t:'Saved $500',e:'financial'},{k:'save1000',t:'Saved $1,000',e:'financial'},{k:'smg',t:'Completed Save Match Grow',e:'financial'},{k:'getahead',t:'Completed Getting Ahead',e:'economic'},{k:'homeown',t:'Completed the Homeownership program',e:'housing'}];
+var MILESTONES=[{k:'license',t:'Got my driver’s license',e:'transportation'},{k:'car',t:'Got a reliable vehicle',e:'transportation'},{k:'carfix',t:'Completed a needed car repair',e:'transportation'},{k:'transit',t:'Learned to use public transit',e:'transportation'},{k:'bankacct',t:'Opened a checking or savings account',e:'financial'},{k:'save500',t:'Saved $500',e:'financial'},{k:'save1000',t:'Saved $1,000',e:'financial'},{k:'budget90',t:'Built a budget and kept it 3 months',e:'financial'},{k:'debtpaid',t:'Paid off a debt',e:'financial'},{k:'credit50',t:'Raised my credit score 50+ points',e:'financial'},{k:'smg',t:'Completed Save Match Grow',e:'financial'},{k:'stable6',t:'Secured stable housing for 6+ months',e:'housing'},{k:'saferhome',t:'Moved into a safer or better home',e:'housing'},{k:'homerepair',t:'Completed key home repairs',e:'housing'},{k:'homeown',t:'Completed the Homeownership program',e:'housing'},{k:'job',t:'Got a job',e:'economic'},{k:'betterjob',t:'Started a better-paying job',e:'economic'},{k:'raise',t:'Earned a raise or promotion',e:'economic'},{k:'business',t:'Started or grew a business',e:'economic'},{k:'getahead',t:'Completed Getting Ahead',e:'economic'},{k:'enroll',t:'Enrolled in school or training',e:'education'},{k:'ged',t:'Earned my GED or diploma',e:'education'},{k:'cert',t:'Earned a certification or license',e:'education'},{k:'course',t:'Completed a course or class',e:'education'},{k:'insurance',t:'Got health insurance',e:'health'},{k:'pcp',t:'Established care with a doctor',e:'health'},{k:'dentalvisit',t:'Completed a dental visit',e:'health'},{k:'healthyhabit',t:'Built a healthy habit for 30 days',e:'health'},{k:'mentalcare',t:'Started mental-health support',e:'health'},{k:'mentor',t:'Found a mentor',e:'relationships'},{k:'volunteer',t:'Volunteered in my community',e:'relationships'},{k:'joingroup',t:'Joined a support or community group',e:'relationships'},{k:'reconnect',t:'Strengthened a key relationship',e:'relationships'}];
 var MY_MILES={};
 function renderMilestones(){renderEssProgress();}
 function loadMilestones(){if(!CUR.live||!CUR.uid)return;sb.from('milestones').select('mkey,status,verified_at,primary_org,secondary_org').eq('member_id',CUR.uid).then(function(r){MY_MILES={};if(r&&r.data)r.data.forEach(function(x){MY_MILES[x.mkey]={status:x.status,verified_at:x.verified_at,primary_org:x.primary_org,secondary_org:x.secondary_org};});renderMilestones();});}
@@ -3810,7 +3828,7 @@ function renderEssentialsPanel(){renderEssProgress();var el=document.getElementB
   var prKeys=pr.map(function(l){return PRIO2KEY[l];}).filter(Boolean);
   var ordered=ESS7.slice().sort(function(a,b){var ai=prKeys.indexOf(a.key),bi=prKeys.indexOf(b.key);ai=ai<0?999:ai;bi=bi<0?999:bi;if(ai!==bi)return ai-bi;return (sc[b.key]||0)-(sc[a.key]||0);});
   el.innerHTML=ordered.map(function(e){var st=essStatus(sc[e.key]),cc=(st.c==='muted'?'amber':st.c);var rk=prKeys.indexOf(e.key);return '<div class="tl-cell" style="margin-bottom:8px;"><div>'+(rk>=0?'<span class="prio-rank">'+(rk+1)+'</span>':'<span class="dot bg-'+cc+'"></span>')+'<span class="c">'+e.name+'</span></div><div class="s st-'+cc+'">'+st.t+'</div></div>';}).join('');}
-function loadEssScores(){if(!CUR.live||!CUR.uid)return;sb.from('essential_assessments').select('answers,scores,created_at,kind').eq('member_id',CUR.uid).order('created_at',{ascending:false}).then(function(a){var rows=(a&&a.data)||[];var cur=rows.filter(function(r){return r.kind!=='baseline';})[0];var base=rows.filter(function(r){return r.kind==='baseline';})[0];if(cur){if(cur.answers&&typeof cur.answers==='object')ANS=cur.answers;if(cur.scores)window._essScores=cur.scores;if(cur.created_at){try{window._essLast=new Date(cur.created_at).toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(e){}}}if(base&&base.answers&&typeof base.answers==='object')ANS_BASE=base.answers;if(ANS&&ANS._sat!=null)PATH_SAT=ANS._sat;if(ANS_BASE&&ANS_BASE._sat!=null)PATH_SAT_BASE=ANS_BASE._sat;renderEssentialsPanel();var _pl=document.getElementById('prioList');if(_pl)renderDash();updateAssessIntro();renderSatWidget();renderBaseline();if(document.getElementById('currentBox')){applyPathPrefill();renderCurrent();}});}
+function loadEssScores(){if(!CUR.live||!CUR.uid)return;sb.from('essential_assessments').select('answers,scores,created_at,kind').eq('member_id',CUR.uid).order('created_at',{ascending:false}).then(function(a){var rows=(a&&a.data)||[];var cur=rows.filter(function(r){return r.kind!=='baseline';})[0];var base=rows.filter(function(r){return r.kind==='baseline';})[0];if(cur){if(cur.answers&&typeof cur.answers==='object')ANS=cur.answers;if(cur.scores)window._essScores=cur.scores;if(cur.created_at){try{window._essLast=new Date(cur.created_at).toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(e){}}}if(base&&base.answers&&typeof base.answers==='object')ANS_BASE=base.answers;if(ANS&&ANS._sat!=null)PATH_SAT=ANS._sat;if(ANS_BASE&&ANS_BASE._sat!=null)PATH_SAT_BASE=ANS_BASE._sat;renderEssentialsPanel();var _pl=document.getElementById('prioList');if(_pl)renderDash();updateAssessIntro();renderSatWidget();renderBaseline();if(document.getElementById('currentBox')){applyAutoFills();applyPathPrefill();renderCurrent();}});}
 function updateAssessIntro(){var intro=document.getElementById('assessIntro');if(!intro)return;if(window._essLast){var p=intro.querySelector('p');if(p)p.innerHTML='You last updated your check-in on <b>'+window._essLast+'</b>. Your answers are saved \u2014 just update anything that\u2019s changed.';var btn=document.getElementById('startAssess');if(btn)btn.textContent='Review or update my check-in';}}
 (function(){function bindA(b){if(!b)return;
  b.addEventListener('click',function(e){
@@ -3822,7 +3840,7 @@ function updateAssessIntro(){var intro=document.getElementById('assessIntro');if
      var _y=window.scrollY;renderAStep();window.scrollTo(0,_y);return;}
    var _j=e.target.closest('[data-ajump]'); if(_j){var _jv=_j.getAttribute('data-ajump');ASTEP=(_jv==='top')?-1:(+_jv);renderAStep();aScroll();return;}
    if(e.target.closest('[data-aback]')){ASTEP--;renderAStep();aScroll();return;}
-   if(e.target.closest('[data-asave]')){var mm=document.getElementById('aSaveMsg');if(!CUR.live||!CUR.uid){if(mm)mm.textContent='Demo mode — sign in with a real account to save.';return;}if(mm)mm.textContent='Saving…';try{sb.from('path_assessments').insert({member_id:CUR.uid,kind:AMODE,answers:{now:PATH_NOW,then:PATH_THEN,na:PATH_NA},satisfaction:(AMODE==='baseline'?PATH_SAT_BASE:PATH_SAT)}).then(function(){},function(){});}catch(_pe){}try{window._essLast=new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(x){}saveCheckin(function(err){if(mm)mm.textContent=err?'Could not save — try again.':'Saved \u2713';renderEssentialsPanel();updateAssessIntro();var _pl=document.getElementById('prioList');if(_pl)renderDash();});return;}
+   if(e.target.closest('[data-asave]')){var mm=document.getElementById('aSaveMsg');if(!CUR.live||!CUR.uid){if(mm)mm.textContent='Demo mode — sign in with a real account to save.';return;}if(mm)mm.textContent='Saving…';try{sb.from('path_assessments').insert({member_id:CUR.uid,kind:AMODE,answers:pathAnswers(),satisfaction:(AMODE==='baseline'?PATH_SAT_BASE:PATH_SAT)}).then(function(){},function(){});}catch(_pe){}try{window._essLast=new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(x){}saveCheckin(function(err){if(mm)mm.textContent=err?'Could not save — try again.':'Saved \u2713';renderEssentialsPanel();updateAssessIntro();var _pl=document.getElementById('prioList');if(_pl)renderDash();});return;}
    if(e.target.closest('[data-anext]')){if(validateAStep()){ASTEP++;if(ASTEP===ESS7.length)finishAssessment();renderAStep();aScroll();}return;}
    if(e.target.closest('[data-aretake]')){if(AMODE==='baseline')ANS_BASE={};else ANS={};ASTEP=0;renderAStep();return;}
    if(e.target.closest('[data-afinish]')){closeAssessment();return;}
@@ -3876,7 +3894,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 
 <script>
-(function(){document.addEventListener('click',function(e){var gt=e.target.closest('[data-goaltab]');if(gt){GOAL_TAB=gt.getAttribute('data-goaltab');renderGoals();return;}var g=e.target.closest('[data-goal]');if(g){var t=g.getAttribute('data-goal');var ix=MY_GOALS.indexOf(t);if(ix>=0)MY_GOALS.splice(ix,1);else MY_GOALS.push(t);renderGoals();return;}var gu=e.target.closest('[data-gup]');if(gu){var i=+gu.getAttribute('data-gup');if(i>0){var tmp=MY_GOALS[i-1];MY_GOALS[i-1]=MY_GOALS[i];MY_GOALS[i]=tmp;}renderGoals();return;}var gd=e.target.closest('[data-gdown]');if(gd){var i2=+gd.getAttribute('data-gdown');if(i2<MY_GOALS.length-1){var t2=MY_GOALS[i2+1];MY_GOALS[i2+1]=MY_GOALS[i2];MY_GOALS[i2]=t2;}renderGoals();return;}var gr=e.target.closest('[data-grem]');if(gr){MY_GOALS.splice(+gr.getAttribute('data-grem'),1);renderGoals();return;}if(e.target.closest('#goalsSave')){saveGoals();return;}if(e.target.closest('#rvAdd')){addReview();return;}var re=e.target.closest('[data-rvedit]');if(re){EDIT_REVIEW=re.getAttribute('data-rvedit');renderReviews();return;}if(e.target.closest('[data-rvcancel]')){EDIT_REVIEW=null;renderReviews();return;}var rs=e.target.closest('[data-rvsave]');if(rs){updateReview(rs.getAttribute('data-rvsave'));return;}var rd=e.target.closest('[data-rvdel]');if(rd){deleteReview(rd.getAttribute('data-rvdel'));return;}if(e.target.closest('#stSave')){addStory();return;}var sd=e.target.closest('[data-stdel]');if(sd){deleteStory(sd.getAttribute('data-stdel'));return;}});})();
+(function(){document.addEventListener('click',function(e){var gt=e.target.closest('[data-goaltab]');if(gt){GOAL_TAB=gt.getAttribute('data-goaltab');renderGoals();return;}var g=e.target.closest('[data-goal]');if(g){var t=g.getAttribute('data-goal');if(t==='__other__'){var v=prompt('Add a goal for '+(GOAL_SHORT[GOAL_TAB]||GOAL_TAB)+':');if(v){v=v.trim();if(v){var enc=GOAL_TAB+'::'+v;if(MY_GOALS.indexOf(enc)<0)MY_GOALS.push(enc);}}renderGoals();return;}var ix=MY_GOALS.indexOf(t);if(ix>=0)MY_GOALS.splice(ix,1);else MY_GOALS.push(t);renderGoals();return;}var gu=e.target.closest('[data-gup]');if(gu){var i=+gu.getAttribute('data-gup');if(i>0){var tmp=MY_GOALS[i-1];MY_GOALS[i-1]=MY_GOALS[i];MY_GOALS[i]=tmp;}renderGoals();return;}var gd=e.target.closest('[data-gdown]');if(gd){var i2=+gd.getAttribute('data-gdown');if(i2<MY_GOALS.length-1){var t2=MY_GOALS[i2+1];MY_GOALS[i2+1]=MY_GOALS[i2];MY_GOALS[i2]=t2;}renderGoals();return;}var gr=e.target.closest('[data-grem]');if(gr){MY_GOALS.splice(+gr.getAttribute('data-grem'),1);renderGoals();return;}if(e.target.closest('#goalsSave')){saveGoals();return;}if(e.target.closest('#rvAdd')){addReview();return;}var re=e.target.closest('[data-rvedit]');if(re){EDIT_REVIEW=re.getAttribute('data-rvedit');renderReviews();return;}if(e.target.closest('[data-rvcancel]')){EDIT_REVIEW=null;renderReviews();return;}var rs=e.target.closest('[data-rvsave]');if(rs){updateReview(rs.getAttribute('data-rvsave'));return;}var rd=e.target.closest('[data-rvdel]');if(rd){deleteReview(rd.getAttribute('data-rvdel'));return;}if(e.target.closest('#stSave')){addStory();return;}var sd=e.target.closest('[data-stdel]');if(sd){deleteStory(sd.getAttribute('data-stdel'));return;}});})();
 </script>
 
 <script>(function(){function w(){return document.getElementById('chatWidget');}function openChat(){var el=w();if(el){el.classList.add('open');var t=document.getElementById('chatThread');if(t)t.scrollTop=t.scrollHeight;var ci=document.getElementById('chatInput');if(ci)ci.focus();}try{localStorage.setItem(chatReadKey(),new Date().toISOString());}catch(e){}['chatBadge','chatBadgeFab'].forEach(function(id){var bb=document.getElementById(id);if(bb)bb.style.display='none';});}function closeChat(){var el=w();if(el)el.classList.remove('open');}window.openChat=openChat;window.closeChat=closeChat;document.addEventListener('click',function(e){if(e.target.closest('#chatHelp')){e.preventDefault();openChat();return;}if(e.target.closest('#chatFab')){e.preventDefault();var el=w();if(el&&el.classList.contains('open'))closeChat();else openChat();return;}if(e.target.closest('#chatMin')){closeChat();return;}});})();</script>
