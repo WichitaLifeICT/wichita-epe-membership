@@ -1259,6 +1259,7 @@ ol.prio{list-style:none;margin:8px 0 0;padding:0;counter-reset:p;}
       <button class="notif-bell" id="chatBell" type="button" aria-label="Messages">&#128276;<span class="notif-badge" id="chatBadge" style="display:none;">0</span></button>
       <button class="btn btn-outline-light btn-sm" id="aboutBtn">About EPE</button>
       <button class="btn btn-outline-light btn-sm" id="chatHelp">&#128172; Help</button>
+      <button class="btn btn-outline-light btn-sm" id="profileTopBtn">Profile</button>
       <button class="btn btn-outline-light btn-sm" id="logoutBtn">Log out</button>
     </div>
   </div>
@@ -1272,19 +1273,18 @@ ol.prio{list-style:none;margin:8px 0 0;padding:0;counter-reset:p;}
     </div>
 
     <nav class="hub-tabs" id="hubTabs">
-      <button type="button" class="hub-tab active" data-tp="profile"><span class="n">1</span>Profile</button>
-      <button type="button" class="hub-tab" data-tp="goals"><span class="n">2</span>Goals &amp; Priorities</button>
-      <button type="button" class="hub-tab" data-tp="life"><span class="n">3</span>Life Assessment</button>
-      <button type="button" class="hub-tab" data-tp="bank"><span class="n">4</span>Bank of Solutions</button>
-      <button type="button" class="hub-tab" data-tp="ach"><span class="n">5</span>Achievements</button>
-      <button type="button" class="hub-tab" data-tp="rewards"><span class="n">6</span>Rewards</button>
-      <button type="button" class="hub-tab" data-tp="reviews"><span class="n">7</span>Reviews &amp; Stories</button>
+      <button type="button" class="hub-tab active" data-tp="goals"><span class="n">1</span>Goals &amp; Priorities</button>
+      <button type="button" class="hub-tab" data-tp="life"><span class="n">2</span>Life Assessment</button>
+      <button type="button" class="hub-tab" data-tp="bank"><span class="n">3</span>Bank of Solutions</button>
+      <button type="button" class="hub-tab" data-tp="ach"><span class="n">4</span>Achievements</button>
+      <button type="button" class="hub-tab" data-tp="rewards"><span class="n">5</span>Rewards</button>
+      <button type="button" class="hub-tab" data-tp="reviews"><span class="n">6</span>Reviews &amp; Stories</button>
     </nav>
 
     <div class="hub-panels">
 
       <!-- 1. PROFILE -->
-      <div class="hub-panel active" data-tp="profile">
+      <div class="hub-panel" data-tp="profile">
         <div class="panel">
           <span class="section-eyebrow">Your profile</span>
           <h2>Your details</h2>
@@ -1294,13 +1294,6 @@ ol.prio{list-style:none;margin:8px 0 0;padding:0;counter-reset:p;}
             <label class="pf-l">Phone<input class="pf-i" id="pfPhone" type="tel" placeholder="(316) 555-0123"/></label>
           </div>
           <label class="pf-l">ZIP code<input class="pf-i" id="pfZip" type="text" placeholder="67202"/></label>
-          <div class="pf-l"><span class="pf-cap">I want to…</span>
-            <div class="seg" id="pfHelp" role="group">
-              <button type="button" class="seg-btn" data-hp="give">Help Others</button>
-              <button type="button" class="seg-btn" data-hp="need">Explore Opportunities</button>
-              <button type="button" class="seg-btn" data-hp="both">Both</button>
-            </div>
-          </div>
           <div class="pf-l"><span class="pf-cap">Would you like help navigating the ecosystem?</span>
             <div class="seg seg-2" id="pfNav" role="group">
               <button type="button" class="seg-btn" data-nav="yes">Yes</button>
@@ -1309,10 +1302,6 @@ ol.prio{list-style:none;margin:8px 0 0;padding:0;counter-reset:p;}
           </div>
           <div class="pf-l" id="pfNavBox" style="display:none;margin-top:2px;">
             <div class="nav-box" id="pfNavBoxInner"><span class="nav-box-l">&#129517; Your Navigator</span><span class="nav-box-v" id="pfNavName">Navigator Pending</span></div>
-          </div>
-          <div class="pf-l" id="pfSolutionWrap" style="display:none;">
-            <span class="pf-cap">What can you offer others?</span>
-            <textarea class="pf-i" id="pfSolution" rows="3" placeholder="A service, skill, resource, mentorship, opportunity…" style="resize:vertical;"></textarea>
           </div>
           <div class="pf-2">
             <label class="pf-l">People in household<input class="pf-i" id="pfHhSize" type="number" min="0" placeholder="e.g. 4"/></label>
@@ -1323,6 +1312,25 @@ ol.prio{list-style:none;margin:8px 0 0;padding:0;counter-reset:p;}
           <label class="pf-l">When did you start working with the organization selected above?<input class="pf-i" id="pfJourney" type="date"/></label>
           <div class="pf-l" style="margin-top:12px;">Are you affiliated with any <b>other</b> EPE partner organizations? <span style="font-weight:400;color:var(--muted);">(select all that apply)</span><details class="pf-dd"><summary><span id="pfOtherSum">Select organizations…</span></summary><div class="pf-chips" id="pfOtherPartners"></div></details></div>
           <label class="pf-l" id="pfOtherPartnerWrap" style="display:none;">Which other organization(s)?<input class="pf-i" id="pfOtherPartnerOther" type="text" placeholder="Type the name(s), separated by commas"/></label>
+          <div class="pf-l" style="margin-top:16px;"><span class="pf-cap">I want to…</span>
+            <div class="seg" id="pfHelp" role="group">
+              <button type="button" class="seg-btn" data-hp="give">Help Others</button>
+              <button type="button" class="seg-btn" data-hp="need">Explore Opportunities</button>
+              <button type="button" class="seg-btn" data-hp="both">Both</button>
+            </div>
+          </div>
+          <div class="pf-l" id="pfSolutionWrap" style="display:none;">
+            <span class="pf-cap">What can you offer others?</span>
+            <textarea class="pf-i" id="pfSolution" rows="3" placeholder="A service, skill, resource, mentorship, opportunity…" style="resize:vertical;"></textarea>
+            <span class="pf-cap" style="display:block;margin-top:12px;">What are your passions and abilities?</span>
+            <textarea class="pf-i" id="pfPassions" rows="3" placeholder="What you love, what you are good at…" style="resize:vertical;"></textarea>
+          </div>
+          <div class="pf-l"><span class="pf-cap">Would you like more information about joining the Army of Normal Folks service club to help pair you with opportunities that match your interests?</span>
+            <div class="seg seg-2" id="pfANF" role="group">
+              <button type="button" class="seg-btn" data-anf="yes">Yes</button>
+              <button type="button" class="seg-btn" data-anf="no">No</button>
+            </div>
+          </div>
           <label class="pf-consent" style="margin-top:16px;"><input type="checkbox" id="pfConsent"/><span>I agree that my information may be shared with trusted nonprofit partners so they can help support my journey. You can change this anytime.</span></label>
           <button type="button" class="btn btn-gold" id="pfSave" style="margin-top:16px;">Save profile</button>
           <p class="sub" id="pfMsg" style="margin-top:8px;"></p>
@@ -1330,7 +1338,7 @@ ol.prio{list-style:none;margin:8px 0 0;padding:0;counter-reset:p;}
       </div>
 
       <!-- 2. GOALS & PRIORITIES -->
-      <div class="hub-panel" data-tp="goals">
+      <div class="hub-panel active" data-tp="goals">
         <div class="panel">
           <span class="section-eyebrow">Goals &amp; Priorities</span>
           <h2>What are you working toward?</h2>
@@ -3190,7 +3198,7 @@ function loadProfileForm(){
   if(!CUR.live||!CUR.uid)return;
   var _pe2=document.getElementById('pfEmail2');if(_pe2)_pe2.value=CUR.email||'';
   sb.from('profiles').select('phone,zip').eq('id',CUR.uid).maybeSingle().then(function(p){var d=(p&&p.data)||{};var a=document.getElementById('pfPhone');if(a)a.value=d.phone||'';var b=document.getElementById('pfZip');if(b)b.value=d.zip||'';if(d.phone||d.zip){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
-  sb.from('members').select('want_help,wants_navigation,navigator,solution_offer,reward_wish,household_size,household_under18,journey_start,share_consent,partner_org,other_partners').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfNav',d.wants_navigation,'data-nav');var _nb=document.getElementById('pfNavBox'),_nvn=document.getElementById('pfNavName'),_nbi=document.getElementById('pfNavBoxInner');if(_nb){if(d.wants_navigation==='yes'){_nb.style.display='';if(d.navigator){if(_nvn)_nvn.textContent=d.navigator;if(_nbi)_nbi.classList.add('assigned');}else{if(_nvn)_nvn.textContent='Navigator Pending';if(_nbi)_nbi.classList.remove('assigned');}}else{_nb.style.display='none';}}var so=document.getElementById('pfSolution');if(so)so.value=d.solution_offer||'';fillIntakeOptions();var setv=function(id,v){var el=document.getElementById(id);if(el)el.value=(v==null?'':v);};setv('pfHhSize',d.household_size);setv('pfHhKids',d.household_under18);setv('pfJourney',d.journey_start);setPartner(d.partner_org);setOtherPartners(d.other_partners);var _cc=document.getElementById('pfConsent');if(_cc)_cc.checked=!!d.share_consent;CUR.journeyStart=d.journey_start||null;renderMemberSince();loadIdeasMine();pfToggleSolution();if(d.want_help||d.solution_offer){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
+  sb.from('members').select('want_help,wants_navigation,navigator,solution_offer,passions,anf_interest,reward_wish,household_size,household_under18,journey_start,share_consent,partner_org,other_partners').eq('profile_id',CUR.uid).maybeSingle().then(function(m){var d=(m&&m.data)||{};pfFillSeg('pfHelp',d.want_help,'data-hp');pfFillSeg('pfNav',d.wants_navigation,'data-nav');var _nb=document.getElementById('pfNavBox'),_nvn=document.getElementById('pfNavName'),_nbi=document.getElementById('pfNavBoxInner');if(_nb){if(d.wants_navigation==='yes'){_nb.style.display='';if(d.navigator){if(_nvn)_nvn.textContent=d.navigator;if(_nbi)_nbi.classList.add('assigned');}else{if(_nvn)_nvn.textContent='Navigator Pending';if(_nbi)_nbi.classList.remove('assigned');}}else{_nb.style.display='none';}}var so=document.getElementById('pfSolution');if(so)so.value=d.solution_offer||'';var _psi=document.getElementById('pfPassions');if(_psi)_psi.value=d.passions||'';pfFillSeg('pfANF',d.anf_interest,'data-anf');fillIntakeOptions();var setv=function(id,v){var el=document.getElementById(id);if(el)el.value=(v==null?'':v);};setv('pfHhSize',d.household_size);setv('pfHhKids',d.household_under18);setv('pfJourney',d.journey_start);setPartner(d.partner_org);setOtherPartners(d.other_partners);var _cc=document.getElementById('pfConsent');if(_cc)_cc.checked=!!d.share_consent;CUR.journeyStart=d.journey_start||null;renderMemberSince();loadIdeasMine();pfToggleSolution();if(d.want_help||d.solution_offer){var pp=document.getElementById('profilePanel');if(pp)pp.classList.add('collapsed');}});
 }
 function saveProfile(){
   var msg={set textContent(v){var a=document.getElementById('pfMsg'),b=document.getElementById('baseInfoMsg');if(a)a.textContent=v;if(b)b.textContent=v;}};
@@ -3199,13 +3207,13 @@ function saveProfile(){
   var hpBtn=document.querySelector('#pfHelp .seg-btn.active');
   var hp=hpBtn?hpBtn.getAttribute('data-hp'):null;
   var navBtn=document.querySelector('#pfNav .seg-btn.active');var nav=navBtn?navBtn.getAttribute('data-nav'):null;
-  var soEl=document.getElementById('pfSolution');var solution=(soEl&&soEl.value||'').trim();
+  var soEl=document.getElementById('pfSolution');var solution=(soEl&&soEl.value||'').trim();var _pfp=document.getElementById('pfPassions');var i_pass=(_pfp&&_pfp.value||'').trim();var _anfB=document.querySelector('#pfANF .seg-btn.active');var i_anf=_anfB?_anfB.getAttribute('data-anf'):null;
   function _gv(id){var el=document.getElementById(id);return el?(el.value||''):'';}
   var i_hs=_gv('pfHhSize'),i_hk=_gv('pfHhKids'),i_j=_gv('pfJourney');var _cc=document.getElementById('pfConsent'),i_consent=!!(_cc&&_cc.checked);var i_partner=getPrimaryPartner()||null;var _oth=MYOTHER.slice();var _ocb=document.getElementById('pfOtherOtherCb'),_oo=document.getElementById('pfOtherPartnerOther');if(_ocb&&_ocb.checked&&_oo&&_oo.value.trim()){_oo.value.split(',').forEach(function(x){x=x.trim();if(x)_oth.push(x);});}var i_other=_oth.length?JSON.stringify(_oth):null;
   if(msg)msg.textContent='Saving…'; logEvent('action','Profile saved');
   Promise.all([
     sb.from('profiles').update({phone:phone,zip:zip}).eq('id',CUR.uid),
-    sb.from('members').update({want_help:hp,wants_navigation:nav,solution_offer:solution,household_size:(i_hs===''?null:parseInt(i_hs,10)),household_under18:(i_hk===''?null:parseInt(i_hk,10)),journey_start:(i_j||null),share_consent:i_consent,partner_org:(i_partner||null),other_partners:(i_other||null)}).eq('profile_id',CUR.uid)
+    sb.from('members').update({want_help:hp,wants_navigation:nav,solution_offer:solution,passions:(i_pass||null),anf_interest:i_anf,household_size:(i_hs===''?null:parseInt(i_hs,10)),household_under18:(i_hk===''?null:parseInt(i_hk,10)),journey_start:(i_j||null),share_consent:i_consent,partner_org:(i_partner||null),other_partners:(i_other||null)}).eq('profile_id',CUR.uid)
   ]).then(function(res){var err=(res[0]&&res[0].error)||(res[1]&&res[1].error);if(msg)msg.textContent=err?('Could not save: '+err.message):'Saved \u2713';if(!err){var _ne=((document.getElementById('pfEmail2')||{}).value||'').trim();if(_ne&&_ne!==CUR.email){sb.auth.updateUser({email:_ne}).then(function(er2){if(msg)msg.textContent=(er2&&er2.error)?('Saved. Email change failed: '+er2.error.message):('Saved \u2713 \u2014 check '+_ne+' to confirm your new email.');},function(){});}var _lastSat=(PATH_SAT_TREND.length?PATH_SAT_TREND[PATH_SAT_TREND.length-1].v:null);if(PATH_SAT!=null&&PATH_SAT!==_lastSat){sb.from('path_assessments').insert({member_id:CUR.uid,kind:AMODE,answers:pathAnswers(),satisfaction:(AMODE==='baseline'?PATH_SAT_BASE:PATH_SAT)}).then(function(){loadPath();},function(){});}}},function(){if(msg)msg.textContent='Network error — try again.';});
 }
 (function(){var sv=document.getElementById('pfSave');if(sv)sv.addEventListener('click',saveProfile);var pn=document.getElementById('pfNav');if(pn)pn.addEventListener('click',function(e){var b=e.target.closest('.seg-btn');if(!b)return;var box=document.getElementById('pfNavBox');if(box)box.style.display=(b.getAttribute('data-nav')==='yes')?'':'none';});var ps=document.getElementById('pfPartner');if(ps)ps.addEventListener('change',function(){pfTogglePartner();pfSyncChips();var pr=getPrimaryPartner();var ix=MYOTHER.indexOf(pr);if(ix>=0)MYOTHER.splice(ix,1);renderOtherPartners();});var pso=document.getElementById('pfPartnerOther');if(pso)pso.addEventListener('input',function(){renderOtherPartners();});var op=document.getElementById('pfOtherPartners');if(op)op.addEventListener('change',function(e){var cb=e.target.closest('input[type=checkbox]');if(!cb)return;if(cb.id==='pfOtherOtherCb'){OTHER_FLAG=cb.checked;var w=document.getElementById('pfOtherPartnerWrap');if(w)w.style.display=OTHER_FLAG?'':'none';}else{var vv=cb.value,jx=MYOTHER.indexOf(vv);if(cb.checked&&jx<0)MYOTHER.push(vv);else if(!cb.checked&&jx>=0)MYOTHER.splice(jx,1);}});})();
@@ -3772,8 +3780,8 @@ function rvScale(v){v=(v==null?-1:v);var h='';for(var i=1;i<=10;i++)h+='<i class
 function rvNumOpts(){var h='<option value="">\u2014</option>';for(var i=0;i<=10;i++)h+='<option>'+i+'</option>';return h;}
 var EDIT_REVIEW=null;
 function rvNumOptsSel(cur){var h='<option value="">\u2014</option>';for(var i=0;i<=10;i++)h+='<option'+(cur===i?' selected':'')+'>'+i+'</option>';return h;}
-function rvEditForm(r){return '<div class="review" style="background:var(--gold-soft);"><div class="eyebrow">Edit review</div><label class="pf-l">Organization<input class="pf-i" id="rvEOrg" type="text" value="'+aEsc(r.org||'')+'"/></label><div class="pf-2"><label class="pf-l">Recommend? (NPS 0\u201310)<select class="pf-i" id="rvENps">'+rvNumOptsSel(r.nps)+'</select></label><label class="pf-l">Life transformation (0\u201310)<select class="pf-i" id="rvETr">'+rvNumOptsSel(r.transformation)+'</select></label></div><div style="display:flex;gap:10px;align-items:center;margin-top:10px;"><button type="button" class="btn btn-gold btn-sm" data-rvsave="'+r.id+'">Save changes</button><button type="button" class="rv-link" data-rvcancel="1">Cancel</button><span class="sub" id="rvMsg"></span></div></div>';}
-function renderReviews(){var el=document.getElementById('reviewsBox');if(!el)return;var list=MY_REVIEWS.map(function(r){if(r.id===EDIT_REVIEW)return rvEditForm(r);return '<div class="review"><div class="rv-h"><span class="rv-badge">'+pEsc(String(r.org||'?').slice(0,3).toUpperCase())+'</span><span class="rv-t">'+pEsc(r.org)+'</span><span class="rv-used">'+(r.used_note?pEsc(r.used_note):'')+'</span></div><div class="scores"><div class="score nps"><div class="q">How likely are you to recommend this to someone in a similar situation?</div><div class="v">'+(r.nps==null?'\u2014':r.nps)+'<small> / 10</small></div><div class="scale">'+rvScale(r.nps)+'</div></div><div class="score"><div class="q">How much did this organization help transform your life?</div><div class="v">'+(r.transformation==null?'\u2014':r.transformation)+'<small> / 10</small></div><div class="scale">'+rvScale(r.transformation)+'</div></div></div><div class="rv-actions"><button class="rv-link" data-rvedit="'+r.id+'">Edit</button><button class="rv-link del" data-rvdel="'+r.id+'">Delete</button></div></div>';}).join('');if(!MY_REVIEWS.length)list='<p class="sub">No reviews yet \u2014 add one below.</p>';var form=(EDIT_REVIEW?'':'<div class="review" style="background:var(--cream-200);"><div class="eyebrow">Add a review</div><label class="pf-l">Organization<input class="pf-i" id="rvOrg" type="text" placeholder="e.g. WSU Tech"/></label><div class="pf-2"><label class="pf-l">Recommend? (NPS 0\u201310)<select class="pf-i" id="rvNps">'+rvNumOpts()+'</select></label><label class="pf-l">Life transformation (0\u201310)<select class="pf-i" id="rvTr">'+rvNumOpts()+'</select></label></div><button type="button" class="btn btn-gold btn-sm" id="rvAdd" style="margin-top:10px;">Add review</button> <span class="sub" id="rvMsg"></span></div>');el.innerHTML=list+form;}
+function rvEditForm(r){return '<div class="review" style="background:var(--gold-soft);"><div class="eyebrow">Edit review</div><label class="pf-l">Organization<input class="pf-i" id="rvEOrg" type="text" value="'+aEsc(r.org||'')+'"/></label><div class="pf-2"><label class="pf-l">On a scale of 0-10, how likely are you to recommend this organization to someone in a similar situation to you?<select class="pf-i" id="rvENps">'+rvNumOptsSel(r.nps)+'</select></label><label class="pf-l">How much has this organization improved your life? (0 = Not at all; 10 = In a significant and lasting way)<select class="pf-i" id="rvETr">'+rvNumOptsSel(r.transformation)+'</select></label></div><div style="display:flex;gap:10px;align-items:center;margin-top:10px;"><button type="button" class="btn btn-gold btn-sm" data-rvsave="'+r.id+'">Save changes</button><button type="button" class="rv-link" data-rvcancel="1">Cancel</button><span class="sub" id="rvMsg"></span></div></div>';}
+function renderReviews(){var el=document.getElementById('reviewsBox');if(!el)return;var list=MY_REVIEWS.map(function(r){if(r.id===EDIT_REVIEW)return rvEditForm(r);return '<div class="review"><div class="rv-h"><span class="rv-badge">'+pEsc(String(r.org||'?').slice(0,3).toUpperCase())+'</span><span class="rv-t">'+pEsc(r.org)+'</span><span class="rv-used">'+(r.used_note?pEsc(r.used_note):'')+'</span></div><div class="scores"><div class="score nps"><div class="q">On a scale of 0-10 with 10 being the highest, how likely are you to recommend this organization to someone in a similar situation to you?</div><div class="v">'+(r.nps==null?'\u2014':r.nps)+'<small> / 10</small></div><div class="scale">'+rvScale(r.nps)+'</div></div><div class="score"><div class="q">How much has this organization improved your life? (0 = Not at all; 10 = In a significant and lasting way)</div><div class="v">'+(r.transformation==null?'\u2014':r.transformation)+'<small> / 10</small></div><div class="scale">'+rvScale(r.transformation)+'</div></div></div><div class="rv-actions"><button class="rv-link" data-rvedit="'+r.id+'">Edit</button><button class="rv-link del" data-rvdel="'+r.id+'">Delete</button></div></div>';}).join('');if(!MY_REVIEWS.length)list='<p class="sub">No reviews yet \u2014 add one below.</p>';var form=(EDIT_REVIEW?'':'<div class="review" style="background:var(--cream-200);"><div class="eyebrow">Add a review</div><label class="pf-l">Organization<input class="pf-i" id="rvOrg" type="text" placeholder="e.g. WSU Tech"/></label><div class="pf-2"><label class="pf-l">On a scale of 0-10, how likely are you to recommend this organization to someone in a similar situation to you?<select class="pf-i" id="rvNps">'+rvNumOpts()+'</select></label><label class="pf-l">How much has this organization improved your life? (0 = Not at all; 10 = In a significant and lasting way)<select class="pf-i" id="rvTr">'+rvNumOpts()+'</select></label></div><button type="button" class="btn btn-gold btn-sm" id="rvAdd" style="margin-top:10px;">Add review</button> <span class="sub" id="rvMsg"></span></div>');el.innerHTML=list+form;}
 function updateReview(id){var m=document.getElementById('rvMsg');var org=(document.getElementById('rvEOrg').value||'').trim();var nps=document.getElementById('rvENps').value,tr=document.getElementById('rvETr').value;if(!org){if(m)m.textContent='Enter an organization.';return;}if(m)m.textContent='Saving\u2026';sb.from('reviews').update({org:org,nps:(nps===''?null:parseInt(nps,10)),transformation:(tr===''?null:parseInt(tr,10))}).eq('id',id).then(function(r){if(r&&r.error){if(m)m.textContent='Could not save: '+r.error.message;return;}EDIT_REVIEW=null;try{logEvent('action','Review edited');}catch(e){}loadReviews();},function(){if(m)m.textContent='Network error \u2014 try again.';});}
 
 function loadReviews(){if(!CUR.live||!CUR.uid){renderReviews();return;}sb.from('reviews').select('id,org,nps,transformation,used_note,created_at').eq('member_id',CUR.uid).order('created_at',{ascending:false}).then(function(r){MY_REVIEWS=(r&&r.data)||[];renderReviews();});}
@@ -3945,6 +3953,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
 (function(){
   var tabs=document.getElementById('hubTabs');
   if(tabs){tabs.addEventListener('click',function(e){var b=e.target.closest('.hub-tab');if(!b)return;var id=b.getAttribute('data-tp');tabs.querySelectorAll('.hub-tab').forEach(function(t){t.classList.toggle('active',t===b);});document.querySelectorAll('.hub-panel').forEach(function(p){p.classList.toggle('active',p.getAttribute('data-tp')===id);});});}
+  var _ptb=document.getElementById('profileTopBtn');if(_ptb)_ptb.addEventListener('click',function(){var tb=document.getElementById('hubTabs');if(tb)tb.querySelectorAll('.hub-tab').forEach(function(t){t.classList.remove('active');});document.querySelectorAll('.hub-panel').forEach(function(pp){pp.classList.toggle('active',pp.getAttribute('data-tp')==='profile');});window.scrollTo(0,0);});
   document.querySelectorAll('.hub-panel .goal').forEach(function(g){g.addEventListener('click',function(){g.classList.toggle('on');});});
   var pm=document.getElementById('profileModal');
   function openPM(){if(pm)pm.classList.add('open');}
