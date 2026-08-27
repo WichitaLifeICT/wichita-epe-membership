@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Wichita EPE — Ecosystem Impact Dashboard</title>
+<meta name="description" content="A public overview of the Wichita Empowerment & Prosperity Ecosystem — from what members want, to measurable transformation."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0e2745;--gold:#d8a23a;--gold-light:#ecc06a;--cream:#fbf7ef;--cream-200:#f3ecdd;
+  --sage:#4f8a63;--coral:#c8553d;--ink:#1c2330;--muted:#5e6b7e;--border:rgba(14,39,69,0.10);
+  --display:'Fraunces',Georgia,serif;--sans:'Outfit',ui-sans-serif,system-ui,sans-serif;
+}
+*{box-sizing:border-box;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;margin:0;}
+.wrap{max-width:1120px;margin:0 auto;padding:0 1.25rem;}
+h2{margin:8px 0 0;}
+.site-head{background:linear-gradient(135deg,var(--navy),#123034);color:#fff;padding:26px 0 22px;}
+.site-head .eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-light);}
+.site-head h1{font-family:var(--display);font-weight:700;font-size:30px;line-height:1.1;margin:8px 0 4px;color:#fff;}
+.site-head p{margin:0;color:#cfdedc;font-size:15px;max-width:60ch;}
+main{padding:26px 0 60px;}
+.panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:0 1px 2px rgba(0,0,0,.04);}
+.section-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--sage);}
+.sub{color:var(--muted);font-size:14px;}
+.ess-nav{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 2px;}
+.ess-chip{border:1px solid var(--border);background:#fff;border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;font-family:var(--sans);transition:all .12s;}
+.ess-chip:hover{border-color:var(--gold);color:var(--navy);}
+.ess-chip.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+.ins-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+@media(max-width:640px){.ins-tiles{grid-template-columns:1fr;}}
+.ins-tile{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;}
+.ins-tile .v{font-size:26px;font-weight:700;color:var(--navy);font-family:var(--display);}
+.ins-tile .l{font-size:12px;color:var(--muted);margin-top:2px;}
+.imd-hero{background:linear-gradient(135deg,var(--navy),#123034);color:#eaf1f0;border-radius:16px;padding:24px;display:grid;grid-template-columns:1.2fr 1fr;gap:22px;align-items:center;}
+@media(max-width:640px){.imd-hero{grid-template-columns:1fr;}}
+.imd-hero .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-light);}
+.imd-hero h2{font-family:var(--display);font-size:26px;margin:8px 0 0;color:#fff;line-height:1.1;}
+.imd-big{display:flex;align-items:baseline;gap:10px;margin-top:14px;}
+.imd-big span{font-family:var(--display);font-size:40px;font-weight:700;color:var(--gold-light);}
+.imd-big em{font-style:normal;font-size:13px;color:#b9cbc9;}
+.imd-move{margin-top:6px;font-size:14px;color:#cfdedc;}
+.imd-move b{color:#fff;}
+.imd-field{display:grid;grid-template-columns:repeat(auto-fill,minmax(12px,1fr));gap:3px;}
+.imd-sq{aspect-ratio:1;border-radius:2px;}
+.imd-key{display:flex;gap:14px;margin-top:10px;font-size:11.5px;color:#cfdedc;flex-wrap:wrap;}
+.imd-key i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle;}
+.imd-erow{margin-top:12px;}
+.imd-eh{display:flex;justify-content:space-between;font-size:13.5px;font-weight:600;color:var(--navy);margin-bottom:5px;}
+.imd-ebar{height:11px;border-radius:6px;background:var(--cream-200);position:relative;overflow:hidden;}
+.imd-ebar .base{position:absolute;left:0;top:0;bottom:0;background:#B7C6C5;}
+.imd-ebar .cur{position:absolute;left:0;top:0;bottom:0;background:var(--sage);}
+.imd-legend{display:flex;gap:16px;font-size:12px;color:var(--muted);margin:4px 0 4px;}
+.imd-legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:5px;vertical-align:middle;}
+.imd-need{display:flex;align-items:center;gap:10px;margin-top:10px;}
+.imd-need .nm{width:150px;font-size:13.5px;font-weight:600;color:var(--navy);flex:none;}
+.imd-need .bar{flex:1;height:9px;border-radius:5px;background:var(--cream-200);overflow:hidden;}
+.imd-need .bar>span{display:block;height:100%;background:var(--coral);}
+.imd-need .pct{width:44px;text-align:right;font-size:13px;font-weight:700;color:var(--coral);flex:none;}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.04);margin-top:10px;}
+.tbl{border-collapse:collapse;width:100%;}
+.tbl th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;padding:11px 12px;border-bottom:1px solid var(--border);background:var(--cream);}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--navy);vertical-align:middle;white-space:nowrap;}
+.tbl .nm{font-weight:600;}
+.story-q{font-family:var(--display);font-size:17px;color:var(--navy);line-height:1.35;font-style:italic;}
+.pub-note{font-size:12px;color:var(--muted);margin-top:18px;text-align:center;}
+</style>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+  <div class="eyebrow">Wichita Empowerment &amp; Prosperity Ecosystem</div>
+  <h1>Ecosystem Impact Dashboard</h1>
+  <p>From what members want, to measurable change in their lives. A public snapshot of how the ecosystem is moving Wichita forward.</p>
+</div></header>
+<main><div class="wrap">
+  <div id="imdBox"><p class="sub">Loading…</p></div>
+  <p class="pub-note" id="pubNote"></p>
+</div></main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+var SB_URL='https://hahxdrqbnhqmcdfmnslw.supabase.co';
+var SB_KEY='sb_publishable_84UR6pZcET9j3uD9xZarGg_9L4f2307';
+var sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY):null;
+window._imdTab='demand';
+
+function _insEsc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':c==='>'?'&gt;':'&quot;';});}
+var ESS_NAMES=['Transportation','Financial Resources','Safe & Affordable Housing','Economic Opportunity','Education','Health & Wellness','Relationships'];
+
+function imdSquares(g,a,r){var o=[];var i;for(i=0;i<g;i++)o.push('#4F8A63');for(i=0;i<a;i++)o.push('#D8A23A');for(i=0;i<r;i++)o.push('#C8553D');for(i=o.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=o[i];o[i]=o[j];o[j]=t;}return o;}
+function imdSample(){var d=[[52,64,18],[38,49,31],[41,45,27],[44,58,22],[55,66,14],[49,53,24],[58,71,11]];var perE=ESS_NAMES.map(function(nm,i){var v=d[i]||[45,55,20];return {name:nm,baseG:v[0],curG:v[1],curR:v[2]};});return {membersN:128,baseDone:96,curDone:74,verified:41,densBase:47,densNow:57,perE:perE,satB:5.9,satC:7.1,squares:imdSquares(103,45,32),topGoals:[{label:'Get a reliable car',count:27},{label:'Increase income',count:23},{label:'Improve my credit',count:19},{label:'Home ownership',count:14},{label:'Build savings',count:13},{label:'Get a better job',count:12},{label:'Get car insurance or better car insurance',count:9},{label:'Start a business',count:8},{label:'Strengthen family relationships',count:7},{label:'Repair my vehicle',count:6}],achievements:[{label:'Got a job',count:18},{label:'Saved $500',count:15},{label:'Got a reliable vehicle',count:11},{label:'Got health insurance',count:9},{label:'Earned my GED or diploma',count:6},{label:'Completed the Homeownership program',count:3}],solutions:[{label:'Wichita Transportation Solutions',count:34},{label:'Empower — Save Match Grow',count:22},{label:'Hope CDC — Homeownership',count:14},{label:'WSU Tech Career Services',count:11}],stories:[{title:'Back on the road',body:'A ride program and a coach got me driving to a job I like.',name:'Marcus T.'},{title:'Rooting for me',body:'The card made it feel real — like Wichita was rooting for me.',name:'Dana R.'}],reviews:[{org:'Empower',count:9,avgNps:9.1,avgTr:8.4},{org:'WSU Tech',count:12,avgNps:8.6,avgTr:7.9},{org:'Hope CDC',count:6,avgNps:7.8,avgTr:8.8},{org:'Bridges ICT',count:5,avgNps:8.2,avgTr:7.1}]};}
+
+function imdTabsNav(){var tab=window._imdTab||'demand';var T=[['demand','Demand Signals'],['transform','Measurable Transformation'],['ach','Achievements'],['solutions','Bank of Solutions'],['stories','Stories']];return '<div class="ess-nav" style="margin-bottom:16px;flex-wrap:wrap">'+T.map(function(t){return '<button type="button" class="ess-chip'+(t[0]===tab?' active':'')+'" data-imdtab="'+t[0]+'">'+t[1]+'</button>';}).join('')+'</div>';}
+function imdBarList(items,color,pcolor){if(!items||!items.length)return '';var mx=items[0].count||1;return items.map(function(g){return '<div class="imd-need"><span class="nm" style="width:220px">'+_insEsc(g.label)+'</span><span class="bar"><span style="width:'+Math.round(g.count/mx*100)+'%;background:'+color+'"></span></span><span class="pct" style="color:'+pcolor+'">'+g.count+'</span></div>';}).join('');}
+function imdDemand(M){if(!M.topGoals||!M.topGoals.length)return '<div class="panel"><span class="section-eyebrow">Demand signals</span><h2>What members want</h2><p class="sub">This fills in automatically as members set goals.</p></div>';return '<div class="panel"><span class="section-eyebrow">Demand signals</span><h2>What members want</h2><p class="sub">Auto-fed from the goals members set. Of '+M.membersN+' members, the most-wanted are '+M.topGoals.slice(0,4).map(function(g){return _insEsc(g.label)+' ('+g.count+')';}).join(', ')+'.</p>'+imdBarList(M.topGoals,'var(--sage)','var(--sage)')+'</div>';}
+function imdTransform(M){var delta=M.densNow-M.densBase;var squares=M.squares||[];var h='<div class="imd-hero"><div><div class="eyebrow">Measurable transformation</div><h2>Are people\'s lives improving?</h2><div class="imd-big"><span>'+(delta>=0?'▲ ':'▼ ')+Math.abs(delta)+'</span><em>points of green density</em></div><div class="imd-move">Green density <b>'+M.densBase+'% → '+M.densNow+'%</b> · baseline to current</div><p class="sub" style="color:#b9cbc9;margin-top:10px;max-width:44ch">Green density is the share of measured life indicators reported as stable or thriving.</p></div><div><div class="imd-field">'+(squares.length?squares.map(function(c){return '<span class="imd-sq" style="background:'+c+'"></span>';}).join(''):'<p class="sub" style="color:#b9cbc9">No check-ins yet.</p>')+'</div><div class="imd-key"><span><i style="background:#4F8A63"></i>Thriving</span><span><i style="background:#D8A23A"></i>Working on it</span><span><i style="background:#C8553D"></i>Needs support</span></div></div></div>';h+='<div class="ins-tiles" style="margin-top:16px"><div class="ins-tile"><div class="v">'+M.membersN+'</div><div class="l">Members</div></div><div class="ins-tile"><div class="v">'+M.baseDone+' / '+M.curDone+'</div><div class="l">Baseline / current check-ins</div></div><div class="ins-tile" data-imdtab="ach" style="cursor:pointer" title="View achievements"><div class="v">'+M.verified+'</div><div class="l">Achievements reached &rarr;</div></div></div>';h+='<div class="panel" style="margin-top:16px"><span class="section-eyebrow">The seven Human Essentials</span><h2>Baseline to current</h2><div class="imd-legend"><span><i style="background:#B7C6C5"></i>Baseline green</span><span><i style="background:var(--sage)"></i>Current green</span></div>'+M.perE.map(function(dd){return '<div class="imd-erow"><div class="imd-eh"><span>'+_insEsc(dd.name)+'</span><span class="num">'+dd.baseG+'% → '+dd.curG+'%</span></div><div class="imd-ebar"><span class="base" style="width:'+dd.baseG+'%"></span><span class="cur" style="width:'+dd.curG+'%"></span></div></div>';}).join('')+'</div>';var need=M.perE.slice().sort(function(a,b){return b.curR-a.curR;});h+='<div class="panel" style="margin-top:16px"><span class="section-eyebrow">Where people need help</span><h2>Share currently reporting red</h2>'+need.map(function(dd){return '<div class="imd-need"><span class="nm">'+_insEsc(dd.name)+'</span><span class="bar"><span style="width:'+dd.curR+'%"></span></span><span class="pct">'+dd.curR+'%</span></div>';}).join('')+'</div>';if(M.satB!=null||M.satC!=null)h+='<div class="panel" style="margin-top:16px"><span class="section-eyebrow">Self-reported flourishing</span><h2>Life satisfaction</h2><div class="ins-tiles"><div class="ins-tile"><div class="v">'+(M.satB!=null?(+M.satB).toFixed(1):'—')+'</div><div class="l">Avg baseline</div></div><div class="ins-tile"><div class="v">'+(M.satC!=null?(+M.satC).toFixed(1):'—')+'</div><div class="l">Avg now</div></div><div class="ins-tile"><div class="v" style="color:'+((M.satC!=null&&M.satB!=null&&M.satC>=M.satB)?'var(--sage)':'var(--coral)')+'">'+((M.satC!=null&&M.satB!=null)?((M.satC-M.satB>=0?'+':'')+(M.satC-M.satB).toFixed(1)):'—')+'</div><div class="l">Change</div></div></div></div>';return h;}
+function imdAch(M){if(!M.achievements||!M.achievements.length)return '<div class="panel"><span class="section-eyebrow">Achievements</span><h2>Milestones reached</h2><p class="sub">Fills in as members mark achievements.</p></div>';var total=M.achievements.reduce(function(a,x){return a+x.count;},0);return '<div class="panel"><span class="section-eyebrow">Achievements</span><h2>Milestones members have reached</h2><p class="sub">'+total+' achievements marked across '+M.membersN+' members.</p>'+imdBarList(M.achievements,'var(--gold)','#9a6b16')+'</div>';}
+function imdSolutions(M){var h=(!M.solutions||!M.solutions.length)?'<div class="panel"><span class="section-eyebrow">Bank of Solutions</span><h2>Most-opened solutions</h2><p class="sub">Click tracking fills in as members open solution links.</p></div>':'<div class="panel"><span class="section-eyebrow">Bank of Solutions</span><h2>Most-opened solutions</h2><p class="sub">Which partner solutions members are clicking into.</p>'+imdBarList(M.solutions,'var(--navy)','var(--navy)')+'</div>';if(M.reviews&&M.reviews.length){h+='<div class="panel" style="margin-top:16px"><span class="section-eyebrow">Ratings & reviews</span><h2>How members rate organizations</h2><p class="sub">Average scores from member reviews.</p><div class="tbl-wrap"><table class="tbl" style="min-width:520px"><thead><tr><th>Organization</th><th>Reviews</th><th>Recommend (NPS)</th><th>Life impact</th></tr></thead><tbody>'+M.reviews.map(function(r){return '<tr><td class="nm">'+_insEsc(r.org)+'</td><td>'+r.count+'</td><td>'+(r.avgNps!=null?(+r.avgNps).toFixed(1):'—')+' / 10</td><td>'+(r.avgTr!=null?(+r.avgTr).toFixed(1):'—')+' / 10</td></tr>';}).join('')+'</tbody></table></div></div>';}else{h+='<div class="panel" style="margin-top:16px"><span class="section-eyebrow">Ratings & reviews</span><h2>How members rate organizations</h2><p class="sub">Fills in as members leave reviews.</p></div>';}return h;}
+function imdStories(M){if(!M.stories||!M.stories.length)return '<div class="panel"><span class="section-eyebrow">Stories</span><h2>Transformation stories</h2><p class="sub">Member stories will appear here.</p></div>';return '<div class="panel"><span class="section-eyebrow">Stories</span><h2>Transformation stories ('+M.stories.length+')</h2></div>'+M.stories.map(function(st){return '<div class="panel" style="margin-top:12px"><div class="story-q">'+(st.title?('<b>'+_insEsc(st.title)+'</b><br>'):'')+_insEsc(st.body||'')+'</div><p class="sub" style="margin-top:6px">— '+_insEsc(st.name||'Member')+'</p></div>';}).join('');}
+function imdRender(M){var box=document.getElementById('imdBox');if(!box)return;window._imdM=M;var tab=window._imdTab||'demand';var body=(tab==='transform')?imdTransform(M):((tab==='ach')?imdAch(M):((tab==='solutions')?imdSolutions(M):((tab==='stories')?imdStories(M):imdDemand(M))));box.innerHTML=imdTabsNav()+body;}
+
+document.addEventListener('click',function(e){var t=e.target.closest('[data-imdtab]');if(t){window._imdTab=t.getAttribute('data-imdtab');if(window._imdM)imdRender(window._imdM);}});
+
+function fmtWhen(iso){if(!iso)return '';try{var d=new Date(iso);return d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});}catch(x){return '';}}
+
+function boot(){
+  var note=document.getElementById('pubNote');
+  if(!sb){imdRender(imdSample());if(note)note.textContent='Showing sample data (offline preview).';return;}
+  sb.from('impact_snapshot').select('data,published_at').eq('id',1).maybeSingle().then(function(r){
+    if(r&&!r.error&&r.data&&r.data.data&&r.data.data.perE){
+      imdRender(r.data.data);
+      if(note)note.textContent='Last updated '+fmtWhen(r.data.published_at)+'.';
+    }else{
+      imdRender(imdSample());
+      if(note)note.textContent='Showing sample data until the dashboard is published.';
+    }
+  },function(){imdRender(imdSample());if(note)note.textContent='Showing sample data.';});
+}
+if(sb){boot();}else{window.addEventListener('load',boot);}
+</script>
+</body>
+</html>
