@@ -476,6 +476,15 @@ h2.sec.light{color:#fff;}
 .aq-req{color:var(--coral);}
 .aopts{display:flex;flex-wrap:wrap;gap:8px;}
 .aopt{border:1.5px solid var(--border);background:#fff;border-radius:999px;padding:10px 16px;font-size:14px;font-weight:500;color:var(--navy);cursor:pointer;font-family:var(--sans);transition:all .12s;}
+.aopts.stoplight{flex-direction:column;}
+.aopt.sl{width:100%;border-radius:12px;display:flex;align-items:center;gap:11px;text-align:left;padding:12px 15px;}
+.aopt.sl .sl-dot{width:15px;height:15px;border-radius:50%;flex:none;box-shadow:0 0 0 2px rgba(0,0,0,.04) inset;}
+.aopt.sl-g .sl-dot{background:var(--sage);}
+.aopt.sl-y .sl-dot{background:var(--gold);}
+.aopt.sl-r .sl-dot{background:var(--coral);}
+.aopt.sl.active.sl-g{border-color:var(--sage);background:rgba(79,138,99,.10);}
+.aopt.sl.active.sl-y{border-color:var(--gold);background:rgba(216,162,58,.13);}
+.aopt.sl.active.sl-r{border-color:var(--coral);background:rgba(200,85,61,.10);}
 .aopt:hover{border-color:var(--navy-300);}
 .aopt.active{background:var(--navy);color:#fff;border-color:var(--navy);}
 .goal-suggest{margin-top:10px;background:rgba(216,162,58,.12);border:1px solid var(--gold);border-radius:10px;padding:10px 14px;font-size:14px;color:var(--navy);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
@@ -3365,9 +3374,8 @@ function jv(id){var e=document.getElementById(id);return e?(e.value||'').trim():
 /* ================= 7 Essentials assessment ================= */
 var ESS7=[
 {key:'transportation',name:'Transportation',intro:'Getting where you need to go.',q:[
- {id:'tp_rel',t:'Do you have reliable transportation?',type:'choice',opts:['Yes','Sometimes','No'],req:true,score:{Yes:0,Sometimes:2,No:4}},
- {id:'tp_own',t:'Do you own or have regular access to a working car?',type:'yn',req:true,score:{Yes:0,No:2}},
- {id:'tp_carrel',t:'Is it reliable?',type:'choice',opts:['Yes','Mostly','No'],showIf:{tp_own:'Yes'},score:{Yes:0,Mostly:2,No:4}},
+ {id:'tp_rel',t:'Do you have reliable transportation?',type:'stoplight',req:true,opts:[{v:'g',t:'Reliable — I can get where I need to go'},{v:'y',t:'Sometimes — it’s limited or unreliable'},{v:'r',t:'No — I don’t have reliable transportation'}],score:{g:0,y:2,r:4,Yes:0,Sometimes:2,No:4}},
+ {id:'tp_own',t:'Do you own or have regular access to a reliable, working vehicle?',type:'yn',req:true,score:{Yes:0,No:2}},
  {id:'tp_around',t:'How do you usually get around?',type:'multi',opts:['Bus','Friend','Family','Uber/Lyft','Walk','Bike','Other']}
 ]},
 {key:'financial',name:'Financial Resources',intro:'Your money tools and stability.',q:[
@@ -3442,6 +3450,7 @@ function renderQ(q){var v=AACT()[q.id];var h='<div class="aq"><p class="aq-t">'+
   else if(q.type==='text'){h+='<input class="a-input" type="text" data-q="'+q.id+'" value="'+(v?aEsc(v):'')+'" placeholder="Type here (optional)"/>';}
   else if(q.type==='select'){h+='<select class="a-input" data-q="'+q.id+'"><option value="">Select…</option>'+(q.opts||[]).map(function(o){return '<option'+(v===o?' selected':'')+'>'+aEsc(o)+'</option>';}).join('')+'</select>';}
   else if(q.type==='multi'){h+='<div class="aopts">';q.opts.forEach(function(o){var on=Array.isArray(v)&&v.indexOf(o)>=0;h+='<button type="button" class="aopt'+(on?' active':'')+'" data-q="'+q.id+'" data-v="'+aEsc(o)+'" data-multi="1">'+o+'</button>';});h+='</div>';}
+  else if(q.type==='stoplight'){h+='<div class="aopts stoplight">';q.opts.forEach(function(o){h+='<button type="button" class="aopt sl sl-'+o.v+(v===o.v?' active':'')+'" data-q="'+q.id+'" data-v="'+o.v+'"><span class="sl-dot"></span><span>'+aEsc(o.t)+'</span></button>';});h+='</div>';}
   else{var opts=q.type==='yn'?['Yes','No']:q.opts;h+='<div class="aopts">';opts.forEach(function(o){h+='<button type="button" class="aopt'+(v===o?' active':'')+'" data-q="'+q.id+'" data-v="'+aEsc(o)+'">'+o+'</button>';});h+='</div>';}
   var _sg=(typeof GOAL_SUGGEST!=='undefined'&&GOAL_SUGGEST[q.id])?GOAL_SUGGEST[q.id][AACT()[q.id]]:null;if(_sg){var _has=(typeof MY_GOALS!=='undefined'&&MY_GOALS.indexOf(_sg.goal)>=0);h+=_has?('<div class="goal-suggest done">\u2713 Added <b>'+_sg.label+'</b> to your goals.</div>'):('<div class="goal-suggest">Would you like to make <b>'+_sg.label+'</b> a goal? <button type="button" class="btn btn-gold btn-sm" data-goaladd="'+aEsc(_sg.goal)+'">Add goal</button></div>');}
   return h+'</div>';}
@@ -3798,8 +3807,8 @@ function derivePathFrom(A){A=A||{};var out={};
   if(A.eo_income!==undefined)out.income=(A.eo_income==='Yes'?'g':(A.eo_income==='Mostly'?'y':'r'));
   var acct=Array.isArray(A.fn_acct)?A.fn_acct:[];if(A.fn_acct!==undefined)out.banking=(acct.length>=2?'g':(acct.length===1?'y':'r'));
   if(A.fn_emerg!==undefined)out.savings=(A.fn_emerg==='Over $1,000'?'g':(A.fn_emerg==='$500–$1,000'?'y':'r'));
-  if(A.tp_rel!==undefined)out.trans_reliability=(A.tp_rel==='Yes'?'g':(A.tp_rel==='Sometimes'?'y':'r'));
-  if(A.tp_own==='No')out.trans_vehicle='r';else if(A.tp_own==='Yes')out.trans_vehicle=(A.tp_carrel==='Yes'?'g':(A.tp_carrel==='Mostly'?'y':(A.tp_carrel==='No'?'r':'y')));
+  if(A.tp_rel!==undefined){var _tr=A.tp_rel;out.trans_reliability=(_tr==='g'||_tr==='Yes')?'g':((_tr==='y'||_tr==='Sometimes')?'y':'r');}
+  if(A.tp_own==='No')out.trans_vehicle='r';else if(A.tp_own==='Yes')out.trans_vehicle='g';
   if(A.re_rely!==undefined)out.close_ties=(A.re_rely==='Yes'?'g':(A.re_rely==='Sometimes'?'y':'r'));
   if(A.re_safe!==undefined)out.support_rel=(A.re_safe==='Always'?'g':(A.re_safe==='Usually'?'y':'r'));
   if(A.re_conn!==undefined)out.community=(A.re_conn==='Yes'?'g':'r');
@@ -3829,7 +3838,7 @@ var GOALS_BUCKETS=[
  {key:'education',name:'Education',icon:'🎓',goals:['Finish a degree or GED','Job training / certification','Learn a new skill','Support my kids\' education','Improve my English']}
 ];
 var MY_GOALS=[],MY_REVIEWS=[],MY_STORIES=[];
-var GOAL_SUGGEST={tp_rel:{No:{goal:'Get a reliable car',label:'reliable transportation'},Sometimes:{goal:'Get a reliable car',label:'reliable transportation'}},tp_own:{No:{goal:'Get a reliable car',label:'a reliable car'}},eo_income:{No:{goal:'Increase income',label:'increasing your income'}},fn_emerg:{None:{goal:'Build savings',label:'building savings'}},fn_credit:{No:{goal:'Improve my credit',label:'improving your credit'}}};
+var GOAL_SUGGEST={tp_rel:{r:{goal:'Get a reliable car',label:'reliable transportation'},y:{goal:'Get a reliable car',label:'reliable transportation'}},tp_own:{No:{goal:'Get a reliable car',label:'a reliable car'}},eo_income:{No:{goal:'Increase income',label:'increasing your income'}},fn_emerg:{None:{goal:'Build savings',label:'building savings'}},fn_credit:{No:{goal:'Improve my credit',label:'improving your credit'}}};
 var GOAL_TAB=GOALS_BUCKETS[0].key;var GOAL_SHORT={housing:'Housing',financial:'Financial Health',economic:'Income',education:'Education',health:'Health',transport:'Transportation',relationships:'Relationships'};function goalText(g){var s=String(g);var i=s.indexOf('::');return i>=0?s.slice(i+2):s;}function goalBucket(g){var s=String(g);var i=s.indexOf('::');if(i>=0){var k=s.slice(0,i);for(var j=0;j<GOALS_BUCKETS.length;j++)if(GOALS_BUCKETS[j].key===k)return GOALS_BUCKETS[j];return null;}for(var j=0;j<GOALS_BUCKETS.length;j++){if(GOALS_BUCKETS[j].goals.indexOf(g)>=0)return GOALS_BUCKETS[j];}return null;}
 function renderGoals(){var el=document.getElementById('goalsBox');if(!el)return;if(!GOALS_BUCKETS.filter(function(b){return b.key===GOAL_TAB;}).length)GOAL_TAB=GOALS_BUCKETS[0].key;var nav='<div class="ess-nav" style="margin-bottom:16px;">'+GOALS_BUCKETS.map(function(b){var cnt=MY_GOALS.filter(function(g){var gb=goalBucket(g);return gb&&gb.key===b.key;}).length;return '<button type="button" class="ess-chip'+(b.key===GOAL_TAB?' active':'')+(cnt?' ess-chip-prio':'')+'" data-goaltab="'+b.key+'">'+(GOAL_SHORT[b.key]||b.name)+(cnt?(' · '+cnt):'')+'</button>';}).join('')+'</div>';var bucket=GOALS_BUCKETS.filter(function(b){return b.key===GOAL_TAB;})[0]||GOALS_BUCKETS[0];var chips=bucket.goals.map(function(g){var on=MY_GOALS.indexOf(g)>=0;return '<div class="goal'+(on?' on':'')+'" data-goal="'+aEsc(g)+'">'+pEsc(g)+'</div>';}).join('')+MY_GOALS.filter(function(g){return String(g).indexOf(GOAL_TAB+'::')===0;}).map(function(g){return '<div class="goal on" data-goal="'+aEsc(g)+'">'+pEsc(goalText(g))+'</div>';}).join('')+'<div class="goal" data-goal="__other__"><span class="gi">➕</span>Other…</div>';var goalsSection='<div class="goals-b-h">'+bucket.icon+' '+bucket.name+'</div><div class="goals">'+chips+'</div>';var pri=MY_GOALS.length?('<ol class="prio">'+MY_GOALS.map(function(t,i){var _gb=goalBucket(t);var _tag=_gb?('<span class="goal-tag">'+_gb.icon+' '+(GOAL_SHORT[_gb.key]||_gb.name)+'</span>'):'<span class="goal-tag" style="opacity:.7">Custom</span>';return '<li><span class="rank"></span><span class="prio-goal"><b>'+pEsc(goalText(t))+'</b> '+_tag+'</span><span style="margin-left:auto;display:flex;gap:5px;"><button type="button" class="pmove" data-gup="'+i+'">↑</button><button type="button" class="pmove" data-gdown="'+i+'">↓</button><button type="button" class="pmove del" data-grem="'+i+'">×</button></span></li>';}).join('')+'</ol>'):'<p class="sub">No goals selected yet — tap goals under any area above.</p>';el.innerHTML=nav+goalsSection+'<div style="border-top:1px solid var(--border);margin:22px 0 0;"></div><h3 style="margin:18px 0 4px;font-family:var(--display);color:var(--navy);">Your priorities</h3><p class="sub" style="margin-top:0;">Your selections across every area — drag-rank with ↑ ↓.</p>'+pri;}
 function loadGoals(){if(!CUR.live||!CUR.uid){renderGoals();return;}sb.from('members').select('goals').eq('profile_id',CUR.uid).maybeSingle().then(function(r){if(r&&r.data&&Array.isArray(r.data.goals))MY_GOALS=r.data.goals.filter(function(g){return goalBucket(g);});renderGoals();});}
