@@ -117,6 +117,9 @@ main{padding:26px 0 60px;}
 .tbl .nm{font-weight:600;}
 .story-q{font-family:var(--display);font-size:17px;color:var(--navy);line-height:1.35;font-style:italic;}
 .pub-note{font-size:12px;color:var(--muted);margin-top:18px;text-align:center;}
+.pub-zip{display:flex;justify-content:flex-end;margin-bottom:12px;}
+.pub-zip label{font-size:13px;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:7px;}
+.pub-zip select{font-family:var(--sans);font-size:13px;padding:6px 9px;border:1px solid var(--border);border-radius:8px;background:#fff;color:var(--navy);font-weight:600;}
 </style>
 </head>
 <body>
@@ -164,7 +167,10 @@ function imdInsights(M){var ins=M.insights||{};function bl(items,color){if(!item
 function imdAch(M){if(!M.achievements||!M.achievements.length)return '<div class="panel"><span class="section-eyebrow">Achievements</span><h2>Milestones reached</h2><p class="sub">Fills in as members mark achievements.</p></div>';var total=M.achievements.reduce(function(a,x){return a+x.count;},0);return '<div class="panel"><div class="imd-achhead"><div><span class="section-eyebrow">Achievements</span><h2>Milestones members have reached</h2><p class="sub">'+total+' achievements marked across '+M.membersN+' members.</p></div><div class="imd-bignum"><div class="imd-bignum-n">'+total+'</div><div class="imd-bignum-l">Achievements</div></div></div>'+imdBarList(M.achievements,'var(--gold)','#9a6b16')+'</div>';}
 function imdSolutions(M){var h=(!M.solutions||!M.solutions.length)?'<div class="panel"><span class="section-eyebrow">Bank of Solutions</span><h2>Most-opened solutions</h2><p class="sub">Click tracking fills in as members open solution links.</p></div>':'<div class="panel"><span class="section-eyebrow">Bank of Solutions</span><h2>Most-opened solutions</h2><p class="sub">Which partner solutions members are clicking into.</p>'+imdBarList(M.solutions,'var(--navy)','var(--navy)')+'</div>';if(M.reviews&&M.reviews.length){h+='<div class="panel" style="margin-top:16px"><span class="section-eyebrow">Ratings & reviews</span><h2>How members rate organizations</h2><p class="sub">Average scores from member reviews.</p><div class="tbl-wrap"><table class="tbl" style="min-width:520px"><thead><tr><th>Solutions or Programs</th><th>Reviews</th><th>Recommend (NPS)</th><th>Life impact</th></tr></thead><tbody>'+M.reviews.map(function(r){return '<tr><td class="nm">'+_insEsc(r.org)+'</td><td>'+r.count+'</td><td>'+(r.avgNps!=null?(+r.avgNps).toFixed(1):'—')+' / 10</td><td>'+(r.avgTr!=null?(+r.avgTr).toFixed(1):'—')+' / 10</td></tr>';}).join('')+'</tbody></table></div></div>';}else{h+='<div class="panel" style="margin-top:16px"><span class="section-eyebrow">Ratings & reviews</span><h2>How members rate organizations</h2><p class="sub">Fills in as members leave reviews.</p></div>';}return h;}
 function imdStories(M){if(!M.stories||!M.stories.length)return '<div class="panel"><span class="section-eyebrow">Stories</span><h2>Transformation stories</h2><p class="sub">Member stories will appear here.</p></div>';return '<div class="panel"><span class="section-eyebrow">Stories</span><h2>Transformation stories ('+M.stories.length+')</h2></div>'+M.stories.map(function(st){return '<div class="panel" style="margin-top:12px"><div class="story-q">'+(st.title?('<b>'+_insEsc(st.title)+'</b><br>'):'')+_insEsc(st.body||'')+'</div><p class="sub" style="margin-top:6px">— '+_insEsc(st.name||'Member')+'</p></div>';}).join('');}
-function imdRender(M){var box=document.getElementById('imdBox');if(!box)return;window._imdM=M;var tab=window._imdTab||'demand';var body=(tab==='crime')?imdCrime(M):((tab==='insights')?imdInsights(M):((tab==='transform')?imdTransform(M):((tab==='ach')?imdAch(M):((tab==='solutions')?imdSolutions(M):((tab==='stories')?imdStories(M):imdDemand(M))))));box.innerHTML=imdTabsNav()+body;}
+function pubZipBar(){var d=window._pubData;if(!d||!d.zips||!d.zips.length)return '';var cur=window._pubZip||'';return '<div class="pub-zip"><label>Filter by ZIP <select onchange="pubSetZip(this.value)"><option value=""'+(cur?'':' selected')+'>All ZIPs</option>'+d.zips.map(function(z){return '<option value="'+z+'"'+(cur===z?' selected':'')+'>'+z+'</option>';}).join('')+'</select></label></div>';}
+function pubSetZip(z){window._pubZip=z||'';pubApplyZip();}
+function pubApplyZip(){var d=window._pubData;var M=(window._pubZip&&d&&d.byZip&&d.byZip[window._pubZip])?d.byZip[window._pubZip]:d;imdRender(M);}
+function imdRender(M){var box=document.getElementById('imdBox');if(!box)return;window._imdM=M;var tab=window._imdTab||'demand';var body=(tab==='crime')?imdCrime(M):((tab==='insights')?imdInsights(M):((tab==='transform')?imdTransform(M):((tab==='ach')?imdAch(M):((tab==='solutions')?imdSolutions(M):((tab==='stories')?imdStories(M):imdDemand(M))))));box.innerHTML=pubZipBar()+imdTabsNav()+body;}
 
 document.addEventListener('click',function(e){var t=e.target.closest('[data-imdtab]');if(t){window._imdTab=t.getAttribute('data-imdtab');if(window._imdM)imdRender(window._imdM);}});
 
@@ -172,13 +178,13 @@ function fmtWhen(iso){if(!iso)return '';try{var d=new Date(iso);return d.toLocal
 
 function boot(){
   var note=document.getElementById('pubNote');
-  if(!sb){imdRender(imdSample());if(note)note.textContent='Showing sample data (offline preview).';return;}
+  if(!sb){window._pubData=imdSample();pubApplyZip();if(note)note.textContent='Showing sample data (offline preview).';return;}
   sb.from('impact_snapshot').select('data,published_at').eq('id',1).maybeSingle().then(function(r){
     if(r&&!r.error&&r.data&&r.data.data&&r.data.data.perE){
-      imdRender(r.data.data);
+      window._pubData=r.data.data;pubApplyZip();
       if(note)note.textContent='Last updated '+fmtWhen(r.data.published_at)+'.';
     }else{
-      imdRender(imdSample());
+      window._pubData=imdSample();pubApplyZip();
       if(note)note.textContent='Showing sample data until the dashboard is published.';
     }
   },function(){imdRender(imdSample());if(note)note.textContent='Showing sample data.';});
