@@ -141,73 +141,10 @@ var sb=(window.supabase&&window.supabase.createClient)?window.supabase.createCli
 window._imdTab='demand';
 
 function _insEsc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return c==='&'?'&amp;':c==='<'?'&lt;':c==='>'?'&gt;':'&quot;';});}
-var ESS_NAMES=['Safe & Affordable Housing','Income','Health & Wellness','Transportation','Financial Health','Relationships','Education'];
+var ESS_NAMES=['Transportation','Financial Health','Safe & Affordable Housing','Income','Education','Health & Wellness','Relationships'];
 
 function imdSquares(g,a,r){var o=[];var i;for(i=0;i<g;i++)o.push('#4F8A63');for(i=0;i<a;i++)o.push('#D8A23A');for(i=0;i<r;i++)o.push('#C8553D');for(i=o.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=o[i];o[i]=o[j];o[j]=t;}return o;}
-var SAMPLE_ZIPS=['67203','67211','67214','67218','67220'];
-function _sampleRecords(){
- if(window._sampleRecs)return window._sampleRecs;
- var seed=987654321;function Rn(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;}
- function ch(p){return Rn()<p;}function ri(a,b){return a+Math.floor(Rn()*(b-a+1));}
- var ORDER=[['housing','Safe & Affordable Housing'],['economic','Income'],['health','Health & Wellness'],['transportation','Transportation'],['financial','Financial Health'],['relationships','Relationships'],['education','Education']];
- var GOALS=['Get a reliable car','Increase income','Improve my credit','Home ownership','Build savings','Get a better job','Get car insurance or better car insurance','Start a business','Strengthen family relationships','Repair my vehicle'];
- var TRANS=['Bus','Friend','Family','Walk','Uber/Lyft','Bike','Other'];
- var INC=['Under $10,000','$10,000–$19,999','$20,000–$29,999','$30,000–$39,999','$40,000–$49,999','$50,000–$59,999','$60,000–$69,999','$70,000–$79,999'];
- var EMP=['Full-time','Part-time','Unemployed','Self-employed'];
- var SOL=['Wichita Transportation Solutions','Empower — Save Match Grow','Hope CDC — Homeownership','WSU Tech Career Services'];
- var MILES=[['Got a job',0.14],['Saved $500',0.12],['Got a reliable vehicle',0.09],['Got health insurance',0.07],['Earned my GED or diploma',0.05],['Completed the Homeownership program',0.025]];
- var Z={'67203':{green:0.54,car:0.32,inc:0.9,low:1.05},'67211':{green:0.62,car:0.56,inc:1.15,low:0.8},'67214':{green:0.46,car:0.26,inc:0.8,low:1.2},'67218':{green:0.66,car:0.62,inc:1.25,low:0.65},'67220':{green:0.58,car:0.48,inc:1.05,low:0.9}};
- var W=[['67203',0.24],['67211',0.20],['67214',0.19],['67218',0.19],['67220',0.18]];
- function pickZip(){var x=Rn(),c=0;for(var i=0;i<W.length;i++){c+=W[i][1];if(x<=c)return W[i][0];}return W[W.length-1][0];}
- var recs=[],N=1023;
- for(var i=0;i<N;i++){
-  var zip=pickZip(),zp=Z[zip];var r={zip:zip};
-  r.hh=ri(1,6);r.u18=Math.max(0,ri(-1,3));r.age=ri(19,68);
-  var hasCur=ch(0.58);r.hasCur=hasCur;r.base={};r.cur={};
-  ORDER.forEach(function(o){var k=o[0];var bs=ch(zp.green-0.12)?'g':(ch(0.5)?'y':'r');r.base[k]=bs;if(hasCur){var cc=bs;if(bs==='r'){if(ch(0.5))cc=ch(0.4)?'g':'y';}else if(bs==='y'){if(ch(0.45))cc='g';}if(ch(0.06))cc=(bs==='g'?'y':(bs==='y'?'r':cc));r.cur[k]=cc;}});
-  r.satB=ri(4,7);r.satC=hasCur?Math.min(10,r.satB+ri(0,3)):null;
-  r.goals=[];var ng=ri(1,3);for(var g=0;g<ng;g++){var gg=GOALS[Math.floor(Rn()*GOALS.length)];if(r.goals.indexOf(gg)<0)r.goals.push(gg);}
-  r.transport=[];if(ch(zp.car))r.transport.push('Car');TRANS.forEach(function(t){if(ch(0.16))r.transport.push(t);});if(!r.transport.length)r.transport.push('Bus');
-  var bse=Math.floor(Rn()*4),shift=Math.round((zp.inc-1)*3);var ii=Math.max(0,Math.min(INC.length-1,bse+1+shift));r.income=INC[ii];
-  r.emp=ch(0.42)?'Full-time':EMP[ri(1,3)];
-  r.miles=[];if(hasCur){MILES.forEach(function(mm){if(ch(mm[1]))r.miles.push(mm[0]);});}
-  r.b_savings=ch(0.34*zp.low);r.b_vehicle=ch(0.21*zp.low);r.b_housing=ch(0.17*zp.low);r.b_trust=ch(0.12*zp.low);r.b_care=ch(0.11*zp.low);
-  r.clicks=[];[0.26,0.17,0.11,0.086].forEach(function(pr,si){if(ch(pr))r.clicks.push(SOL[si]);});
-  r.review=ch(0.25)?{org:['Empower','WSU Tech','Hope CDC','Bridges ICT'][ri(0,3)],nps:ri(6,10),tr:ri(6,10)}:null;
-  recs.push(r);
- }
- window._sampleRecs=recs;return recs;
-}
-function _sampleAgg(zip){
- var all=_sampleRecords(),recs=zip?all.filter(function(r){return r.zip===zip;}):all;
- var ORDER=[['housing','Safe & Affordable Housing'],['economic','Income'],['health','Health & Wellness'],['transportation','Transportation'],['financial','Financial Health'],['relationships','Relationships'],['education','Education']];
- function pc(a,b){return b?Math.round(a/b*100):0;}
- var n=recs.length,wc=recs.filter(function(r){return r.hasCur;});
- var perE=ORDER.map(function(o){var k=o[0],bg=0,bt=0,cg=0,cr=0,ct=0;recs.forEach(function(r){var b=r.base[k];if(b){bt++;if(b==='g')bg++;}if(r.hasCur){var c=r.cur[k];if(c){ct++;if(c==='g')cg++;if(c==='r')cr++;}}});return {name:o[1],baseG:pc(bg,bt),curG:pc(cg,ct),curR:pc(cr,ct)};});
- var dbg=0,dbt=0,dcg=0,dct=0;recs.forEach(function(r){ORDER.forEach(function(o){var k=o[0],b=r.base[k];if(b){dbt++;if(b==='g')dbg++;}if(r.hasCur){var c=r.cur[k];if(c){dct++;if(c==='g')dcg++;}}});});
- var mv={redYellow:0,yellowGreen:0,redGreen:0,noChange:0,declined:0,participants:0},rk={r:0,y:1,g:2};
- wc.forEach(function(r){mv.participants++;ORDER.forEach(function(o){var k=o[0],b=r.base[k],c=r.cur[k];if(!b||!c)return;if(rk[c]>rk[b]){if(b==='r'&&c==='y')mv.redYellow++;else if(b==='r'&&c==='g')mv.redGreen++;else mv.yellowGreen++;}else if(rk[c]<rk[b])mv.declined++;else mv.noChange++;});});
- var BF=[['b_savings','Less than $500 in emergency savings','The most common single point of failure','Financial Health'],['b_vehicle','No reliable vehicle','Includes those who own a car that does not run','Transportation'],['b_housing','Housing costs above 40% of income','Housed, but with no absorption capacity','Safe & Affordable Housing'],['b_trust','No trusted person to call in an emergency','Strongest predictor of falling back after a shock','Relationships'],['b_care','No access to primary care','Uninsured and underinsured combined','Health & Wellness']];
- var barriers=BF.map(function(f){var c=0;recs.forEach(function(r){if(r[f[0]])c++;});return {label:f[1],sub:f[2],people:c,pct:pc(c,n),essential:f[3]};}).sort(function(a,b){return b.people-a.people;});
- function tally(get){var o={};recs.forEach(function(r){var v=get(r);if(v==null)return;if(Array.isArray(v))v.forEach(function(x){o[x]=(o[x]||0)+1;});else o[v]=(o[v]||0)+1;});return Object.keys(o).map(function(k){return {label:k,count:o[k]};}).sort(function(a,b){return b.count-a.count;});}
- var topGoals=tally(function(r){return r.goals;}).slice(0,10);
- var achievements=tally(function(r){return r.miles;});
- var verified=recs.reduce(function(s,r){return s+r.miles.length;},0);
- var solutions=tally(function(r){return r.clicks;});
- var ro={};recs.forEach(function(r){if(r.review){var g=ro[r.review.org]||(ro[r.review.org]={org:r.review.org,count:0,ns:0,ts:0});g.count++;g.ns+=r.review.nps;g.ts+=r.review.tr;}});
- var reviews=Object.keys(ro).map(function(o){var g=ro[o];return {org:o,count:g.count,avgNps:g.ns/g.count,avgTr:g.ts/g.count};}).sort(function(a,b){return b.count-a.count;});
- var sB=0,sBn=0,sC=0,sCn=0;recs.forEach(function(r){if(r.satB!=null){sB+=r.satB;sBn++;}if(r.satC!=null){sC+=r.satC;sCn++;}});
- var hs=0,hsn=0,u=0,un=0,ag=0,agn=0;recs.forEach(function(r){if(r.hh!=null){hs+=r.hh;hsn++;}if(r.u18!=null){u+=r.u18;un++;}if(r.age!=null){ag+=r.age;agn++;}});
- var income=tally(function(r){return r.income;});
- var insights={membersN:n,transport:tally(function(r){return r.transport;}),income:income,topIncome:(income[0]?income[0].label:''),employment:tally(function(r){return r.emp;}),avgHousehold:hsn?hs/hsn:null,avgUnder18:un?u/un:null,avgAge:agn?ag/agn:null};
- var sq=[];wc.forEach(function(r){ORDER.forEach(function(o){var c=r.cur[o[0]];if(!c)return;sq.push(c==='g'?'#4F8A63':(c==='r'?'#C8553D':'#D8A23A'));});});
- var ss=42;for(var q=sq.length-1;q>0;q--){ss=(ss*1103515245+12345)>>>0;var w=ss%(q+1);var t=sq[q];sq[q]=sq[w];sq[w]=t;}
- return {membersN:n,baseDone:recs.length,curDone:wc.length,verified:verified,densBase:pc(dbg,dbt),densNow:pc(dcg,dct),perE:perE,satB:sBn?sB/sBn:null,satC:sCn?sC/sCn:null,squares:sq.slice(0,180),topGoals:topGoals,achievements:achievements,solutions:solutions,stories:[{title:'Back on the road',body:'A ride program and a coach got me driving to a job I like.',name:'Marcus T.'},{title:'Rooting for me',body:'The card made it feel real — like Wichita was rooting for me.',name:'Dana R.'}],reviews:reviews,movement:mv,barriers:barriers,insights:insights};
-}
-function imdSample(){return _sampleAgg('');}
-function imdSampleForZip(zip){return _sampleAgg(zip||'');}
-function _pubSample(){var d=imdSample();d.byZip={};SAMPLE_ZIPS.forEach(function(z){d.byZip[z]=imdSampleForZip(z);});d.zips=SAMPLE_ZIPS.slice();return d;}
-
+function imdSample(){var d=[[52,64,18],[38,49,31],[41,45,27],[44,58,22],[55,66,14],[49,53,24],[58,71,11]];var perE=ESS_NAMES.map(function(nm,i){var v=d[i]||[45,55,20];return {name:nm,baseG:v[0],curG:v[1],curR:v[2]};});return {membersN:128,baseDone:96,curDone:74,verified:62,densBase:47,densNow:57,perE:perE,satB:5.9,satC:7.1,squares:imdSquares(103,45,32),topGoals:[{label:'Get a reliable car',count:27},{label:'Increase income',count:23},{label:'Improve my credit',count:19},{label:'Home ownership',count:14},{label:'Build savings',count:13},{label:'Get a better job',count:12},{label:'Get car insurance or better car insurance',count:9},{label:'Start a business',count:8},{label:'Strengthen family relationships',count:7},{label:'Repair my vehicle',count:6}],achievements:[{label:'Got a job',count:18},{label:'Saved $500',count:15},{label:'Got a reliable vehicle',count:11},{label:'Got health insurance',count:9},{label:'Earned my GED or diploma',count:6},{label:'Completed the Homeownership program',count:3}],solutions:[{label:'Wichita Transportation Solutions',count:34},{label:'Empower — Save Match Grow',count:22},{label:'Hope CDC — Homeownership',count:14},{label:'WSU Tech Career Services',count:11}],stories:[{title:'Back on the road',body:'A ride program and a coach got me driving to a job I like.',name:'Marcus T.'},{title:'Rooting for me',body:'The card made it feel real — like Wichita was rooting for me.',name:'Dana R.'}],reviews:[{org:'Empower',count:9,avgNps:9.1,avgTr:8.4},{org:'WSU Tech',count:12,avgNps:8.6,avgTr:7.9},{org:'Hope CDC',count:6,avgNps:7.8,avgTr:8.8},{org:'Bridges ICT',count:5,avgNps:8.2,avgTr:7.1}],movement:{redYellow:8,yellowGreen:14,redGreen:4,noChange:42,declined:6,participants:74},barriers:[{label:'Less than $500 in emergency savings',sub:'The most common single point of failure',people:44,pct:34,essential:'Financial Resources'},{label:'No reliable vehicle',sub:'Includes those who own a car that does not run',people:27,pct:21,essential:'Transportation'},{label:'Housing costs above 40% of income',sub:'Housed, but with no absorption capacity',people:22,pct:17,essential:'Safe & Affordable Housing'},{label:'No trusted person to call in an emergency',sub:'Strongest predictor of falling back after a shock',people:15,pct:12,essential:'Relationships'},{label:'No access to primary care',sub:'Uninsured and underinsured combined',people:14,pct:11,essential:'Health & Wellness'}],insights:{membersN:128,avgHousehold:3.4,avgUnder18:1.6,avgAge:38,topIncome:'$15,000–$24,999',transport:[{label:'Bus',count:41},{label:'Friend',count:33},{label:'Family',count:27},{label:'Walk',count:21},{label:'Uber/Lyft',count:16},{label:'Bike',count:11},{label:'Other',count:6}],income:[{label:'$15,000–$24,999',count:34},{label:'Under $15,000',count:29},{label:'$25,000–$34,999',count:25},{label:'$35,000–$49,999',count:23},{label:'$50,000 or more',count:17}],employment:[{label:'Full-time',count:44},{label:'Part-time',count:33},{label:'Unemployed',count:29},{label:'Self-employed',count:22}]}};}
 
 function imdTabsNav(){var tab=window._imdTab||'demand';var T=[['demand','Demand Signals'],['transform','Measurable Transformation'],['ach','Achievements'],['solutions','Bank of Solutions'],['stories','Stories'],['crime','Neighborhood Safety'],['insights','Additional Insights']];return '<div class="ess-nav" style="margin-bottom:16px;flex-wrap:wrap">'+T.map(function(t){return '<button type="button" class="ess-chip'+(t[0]===tab?' active':'')+'" data-imdtab="'+t[0]+'">'+t[1]+'</button>';}).join('')+'</div>';}
 function imdBarList(items,color,pcolor){if(!items||!items.length)return '';var mx=items[0].count||1;return items.map(function(g){return '<div class="imd-need"><span class="nm" style="width:220px">'+_insEsc(g.label)+'</span><span class="bar"><span style="width:'+Math.round(g.count/mx*100)+'%;background:'+color+'"></span></span><span class="pct" style="color:'+pcolor+'">'+g.count+'</span></div>';}).join('');}
@@ -241,13 +178,13 @@ function fmtWhen(iso){if(!iso)return '';try{var d=new Date(iso);return d.toLocal
 
 function boot(){
   var note=document.getElementById('pubNote');
-  if(!sb){window._pubData=_pubSample();pubApplyZip();if(note)note.textContent='Showing sample data (offline preview).';return;}
+  if(!sb){window._pubData=imdSample();pubApplyZip();if(note)note.textContent='Showing sample data (offline preview).';return;}
   sb.from('impact_snapshot').select('data,published_at').eq('id',1).maybeSingle().then(function(r){
     if(r&&!r.error&&r.data&&r.data.data&&r.data.data.perE){
       window._pubData=r.data.data;pubApplyZip();
       if(note)note.textContent='Last updated '+fmtWhen(r.data.published_at)+'.';
     }else{
-      window._pubData=_pubSample();pubApplyZip();
+      window._pubData=imdSample();pubApplyZip();
       if(note)note.textContent='Showing sample data until the dashboard is published.';
     }
   },function(){imdRender(imdSample());if(note)note.textContent='Showing sample data.';});
