@@ -2525,7 +2525,7 @@ function _sampleRecords(){
  var TRANS=['Bus','Friend','Family','Walk','Uber/Lyft','Bike','Other'];
  var INC=['Under $10,000','$10,000–$19,999','$20,000–$29,999','$30,000–$39,999','$40,000–$49,999','$50,000–$59,999','$60,000–$69,999','$70,000–$79,999'];
  var EMP=['Full-time','Part-time','Unemployed','Self-employed'];
- var SOL=['Wichita Transportation Solutions','Empower — Save Match Grow','Hope CDC — Homeownership','WSU Tech Career Services'];
+ var SOL=['Wichita Transportation Solutions','Empower — Save Match Grow','Operation Hope 1 on 1 Coaching','Hope CDC — Homeownership','WSU Tech Career Services','Bike Walk Wichita','Operation Hope Credit Repair','Family Promise','Getting Ahead (Bridges ICT)'];
  var MILES=[['Got a job',0.14],['Increased my income',0.11],['Held a steady job for 6 months',0.07],['Completed a job-training program',0.06],['My income now covers my basic needs',0.06],['Moved from part-time to full-time',0.05],['Landed a job in my field',0.045],['Started a second income stream',0.035],['Saved $500',0.12],['Got a reliable vehicle',0.09],['Got health insurance',0.07],['Earned my GED or diploma',0.05],['Completed the Homeownership program',0.025]];
  var Z={'67203':{green:0.54,car:0.32,inc:0.9,low:1.05},'67211':{green:0.62,car:0.56,inc:1.15,low:0.8},'67214':{green:0.46,car:0.26,inc:0.8,low:1.2},'67218':{green:0.66,car:0.62,inc:1.25,low:0.65},'67220':{green:0.58,car:0.48,inc:1.05,low:0.9}};
  var W=[['67203',0.24],['67211',0.20],['67214',0.19],['67218',0.19],['67220',0.18]];
@@ -2543,8 +2543,8 @@ function _sampleRecords(){
   r.emp=ch(0.42)?'Full-time':EMP[ri(1,3)];
   r.miles=[];if(hasCur){MILES.forEach(function(mm){if(ch(mm[1]))r.miles.push(mm[0]);});}
   if(hasCur){r.ans={fn_emerg:gyr(0.40*zp.low),eo_income:gyr(0.34*zp.low),tp_own:(ch(0.21*zp.low)?'No':'Yes'),ho_6mo:gyr(0.17*zp.low),he_care:gyr(0.11*zp.low),re_rely:gyr(0.12*zp.low)};}
-  r.clicks=[];[0.26,0.17,0.11,0.086].forEach(function(pr,si){if(ch(pr))r.clicks.push(SOL[si]);});
-  r.review=ch(0.25)?{org:['Empower','WSU Tech','Hope CDC','Bridges ICT'][ri(0,3)],nps:ri(6,10),tr:ri(6,10)}:null;
+  r.clicks=[];[0.26,0.19,0.15,0.12,0.11,0.09,0.08,0.06,0.05].forEach(function(pr,si){if(ch(pr))r.clicks.push(SOL[si]);});
+  r.review=ch(0.28)?{org:['Empower','WSU Tech','Hope CDC','Operation HOPE','Bike Walk Wichita','Family Promise','Bridges ICT','YMCA'][ri(0,7)],nps:ri(6,10),tr:ri(6,10)}:null;
   recs.push(r);
  }
  window._sampleRecs=recs;return recs;
