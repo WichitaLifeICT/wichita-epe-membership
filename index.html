@@ -563,6 +563,14 @@ h2.sec.light{color:#fff;}
 .ins-path-bh{font-size:12px;font-weight:800;color:var(--navy);margin-bottom:2px;}
 .ins-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
 .results-card{max-width:580px;max-height:88vh;overflow-y:auto;padding:26px 24px;}
+.privacy-card{max-width:600px;max-height:88vh;overflow-y:auto;padding:26px 24px;}
+.privacy-card .pp-date{font-size:12px;color:var(--muted);margin:2px 0 14px;}
+.privacy-card .pp-body{font-size:13.5px;line-height:1.6;color:var(--ink);}
+.privacy-card .pp-body p{margin:0 0 12px;}
+.privacy-card .pp-body h4{font-family:var(--display);font-weight:600;color:var(--navy);font-size:15px;margin:16px 0 6px;}
+.privacy-card .pp-list{margin:0 0 12px;padding-left:20px;}
+.privacy-card .pp-list li{margin-bottom:5px;}
+.pp-link{display:inline-block;margin-top:8px;font-size:12.5px;color:var(--navy);text-decoration:underline;cursor:pointer;}
 .pr-block{margin:14px 0;padding:13px 15px;border:1px solid var(--border);border-radius:12px;background:var(--cream-200);}
 .pr-h{font-size:12px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px;}
 .pr-sat-big{font-size:34px;font-weight:800;color:var(--navy);line-height:1;}
@@ -1139,6 +1147,7 @@ ol.prio{list-style:none;margin:8px 0 0;padding:0;counter-reset:p;}
       <span class="badge"><span class="dot"></span>Every Person Empowered · Wichita</span>
       <h1>Wichita EPE Membership Hub</h1>
       <p class="sub">A simple way for people, partners, and neighbors to take the next step toward stability, progress, and contribution.</p>
+      <p class="hero-tagline" style="font-family:var(--display);font-style:italic;font-weight:600;font-size:21px;color:var(--gold);margin:14px 0 0;">Empowerment in your pocket.</p>
       <div class="cta-row">
         <a href="#join" class="btn btn-gold">Become a Member</a>
         <a href="#levels" class="btn btn-outline">Explore Member Benefits</a>
@@ -1305,10 +1314,10 @@ ol.prio{list-style:none;margin:8px 0 0;padding:0;counter-reset:p;}
               <button type="button" class="seg-btn" data-val="no">No thanks</button>
             </div>
           </div>
-          <label class="join-consent" style="display:flex;gap:8px;align-items:flex-start;font-size:12px;color:rgba(251,247,239,.85);margin-top:10px;cursor:pointer;line-height:1.4;"><input type="checkbox" id="jConsent" style="margin-top:2px;accent-color:var(--gold);flex:none;"/><span>I agree that my information may be shared with trusted nonprofit partners to help support my journey.</span></label>
+          <label class="join-consent" style="display:flex;gap:8px;align-items:flex-start;font-size:12px;color:rgba(251,247,239,.85);margin-top:10px;cursor:pointer;line-height:1.4;"><input type="checkbox" id="jConsent" style="margin-top:2px;accent-color:var(--gold);flex:none;"/><span>I agree that my information may be shared with trusted nonprofit partners to help support my journey, as described in the Privacy Policy.*</span></label>
           <p class="fine" id="joinErr" style="color:var(--gold-light);display:none;margin-top:10px;"></p>
           <button type="submit" class="btn btn-gold btn-full submit">Create my account</button>
-          <p class="fine">We'll never share your information without your approval.</p>
+          <p class="fine">We'll never share your information without your approval. <a href="#" data-openprivacy style="color:var(--gold-light);text-decoration:underline;">*See Privacy Policy</a></p>
         </form>
       </div>
     </div>
@@ -1353,6 +1362,55 @@ ol.prio{list-style:none;margin:8px 0 0;padding:0;counter-reset:p;}
       <button type="button" class="btn btn-gold btn-sm" id="prPdf">🖨️ Save as PDF</button>
     </div>
     <div id="pathResultsBody" style="margin-top:12px;"></div>
+  </div>
+</div>
+
+<div class="modal" id="privacyModal" role="dialog" aria-modal="true" aria-label="Privacy Policy">
+  <div class="modal-card privacy-card">
+    <button class="modal-x" id="privacyClose" aria-label="Close">&times;</button>
+    <span class="section-eyebrow">Your privacy</span>
+    <h3>Privacy Policy</h3>
+    <p class="pp-date">Last updated: September 2026</p>
+    <div class="pp-body">
+      <p>The Wichita EPE (Every Person Empowered) Membership Hub (&ldquo;EPE,&rdquo; &ldquo;we,&rdquo; &ldquo;us&rdquo;) exists to help people in our community take steps toward stability, progress, and contribution. We take your privacy seriously and collect only the minimum needed to support you. This policy explains, in plain language, what we do and do not collect, and how your information is used.</p>
+
+      <h4>Information we collect</h4>
+      <p>We collect only information you choose to give us, which may include: your name; a contact method you provide (such as an email address or phone number); your ZIP code; general household details you enter (such as household size or number of children); the goals you set; your own self-reported &ldquo;green / yellow / red&rdquo; ratings and answers on the Life Assessment; achievements you log; and messages you send us. All of it is provided voluntarily, and you decide how much to share.</p>
+
+      <h4>Information we do <u>not</u> collect</h4>
+      <p>To protect you, EPE does <b>not</b> collect or store any of the following:</p>
+      <ul class="pp-list">
+        <li>Your full street address or exact home location &mdash; we use <b>ZIP code only</b>;</li>
+        <li>Social Security numbers or any government-issued identification numbers;</li>
+        <li>Bank account, credit card, or other financial account numbers;</li>
+        <li>Precise GPS or device location data;</li>
+        <li>Medical, clinical, or diagnostic records &mdash; the Life Assessment is your own self-reported reflection, <b>not</b> a medical, legal, or eligibility determination;</li>
+        <li>Biometric data, immigration status, or criminal-history records.</li>
+      </ul>
+      <p>Please do not enter any of the information above into free-text fields. We ask that you leave it out; if you enter it anyway, you agree that we may handle it under this policy.</p>
+
+      <h4>How we use your information</h4>
+      <p>We use your information only to: connect you with programs, solutions, and nonprofit partners that fit your goals; personalize the support and resources we show you; communicate with you; and measure our community impact in <b>aggregate, de-identified</b> form (for example, &ldquo;this many members improved their transportation rating&rdquo;). Demo and test accounts are excluded from impact reporting.</p>
+
+      <h4>How we share your information</h4>
+      <p>We share your personal information with a nonprofit partner <b>only when you check the box giving your consent</b>, and only so that partner can help support your journey. We do <b>not</b> sell your information, and we do <b>not</b> share it for advertising. Aggregate, de-identified statistics that cannot reasonably identify you may be shown publicly to demonstrate community impact. We may disclose information only where required by law.</p>
+
+      <h4>Your choices</h4>
+      <p>You can update or withdraw your sharing consent at any time from your Profile. You may ask us to correct or delete your information by contacting us. Withdrawing consent does not affect information already shared before you withdrew it.</p>
+
+      <h4>Data security</h4>
+      <p>Your information is stored using industry-standard safeguards and access controls, and access is limited to those who help support you. No system is perfectly secure, but we work to protect your information.</p>
+
+      <h4>Children</h4>
+      <p>The Hub is intended for adults. We do not knowingly create accounts for children under 13.</p>
+
+      <h4>Consent</h4>
+      <p>By checking the consent box and using the Hub, you acknowledge that you have read and understood this Privacy Policy and agree to how your information is handled as described here.</p>
+
+      <h4>Contact</h4>
+      <p>Questions about your privacy? Reach us through the message center in your dashboard, your EPE navigator, or at <b>privacy@wichitaepe.org</b>.</p>
+    </div>
+    <button type="button" class="btn btn-gold btn-full" id="privacyOk" style="margin-top:18px;">Got it</button>
   </div>
 </div>
 
@@ -1439,8 +1497,8 @@ ol.prio{list-style:none;margin:8px 0 0;padding:0;counter-reset:p;}
               <button type="button" class="seg-btn" data-anf="no">No</button>
             </div>
           </div>
-          <label class="pf-consent" style="margin-top:16px;"><input type="checkbox" id="pfConsent"/><span>I agree that my information may be shared with trusted nonprofit partners so they can help support my journey. You can change this anytime.</span></label>
-          <button type="button" class="btn btn-gold" id="pfSave" style="margin-top:16px;">Save profile</button>
+          <label class="pf-consent" style="margin-top:16px;"><input type="checkbox" id="pfConsent"/><span>I agree that my information may be shared with trusted nonprofit partners so they can help support my journey, as described in the Privacy Policy below.* You can change this anytime.</span></label>
+          <button type="button" class="btn btn-gold" id="pfSave" style="margin-top:16px;">Save profile</button> <a href="#" data-openprivacy class="pp-link">*See Privacy Policy here</a>
           <p class="sub" id="pfMsg" style="margin-top:8px;"></p>
         </div>
       </div>
@@ -1499,18 +1557,18 @@ ol.prio{list-style:none;margin:8px 0 0;padding:0;counter-reset:p;}
       </div>
     </div>
 
-        <div class="panel" style="margin-top:24px;" id="currentPanel" data-collapsible>
-          <span class="section-eyebrow">Results / progress</span>
-          <h2>Your results &amp; progress</h2>
-          <p class="sub">How you're doing across the essentials — and how far you've come since your baseline. Update your ratings anytime in the check-in above.</p>
-          <div id="currentBox"></div>
-        </div>
         </div>
       </div>
 
       <!-- 4. ACHIEVEMENTS (real — progress + milestones) -->
       <div class="hub-panel" data-tp="ach">
-        <div class="panel">
+        <div class="panel" id="currentPanel" data-collapsible>
+          <span class="section-eyebrow">Results / progress</span>
+          <h2>Your results &amp; progress</h2>
+          <p class="sub">How you're doing across the essentials — and how far you've come since your baseline. Update your ratings anytime in the <b>Current Life</b> tab.</p>
+          <div id="currentBox"></div>
+        </div>
+        <div class="panel" style="margin-top:24px;">
           <span class="section-eyebrow">Achievements</span>
           <h2>Your achievements</h2>
           <p class="sub" id="memberSince" style="margin-bottom:14px;"></p>
@@ -3521,15 +3579,12 @@ var ESS7=[
  {id:'tp_own',t:'Do you own or have regular access to a reliable, working vehicle?',type:'yn',req:true,score:{Yes:0,No:2}},
  {id:'tp_around',t:'How do you usually get around?',type:'multi',opts:['Car','Bus','Friend','Family','Uber/Lyft','Walk','Bike','Other']}
 ]},
-{key:'financial',name:'Financial Resources',intro:'Your money tools and stability.',q:[
- {id:'fn_income',t:'Your income',type:'select',opts:INTAKE_INCOME},
- {id:'fn_hhincome',t:'Household income',type:'select',opts:INTAKE_INCOME},
+{key:'financial',name:'Financial Health',intro:'What you do with the money you have — saving, budgeting, banking, and credit.',q:[
  {id:'fn_acct',t:'We use banking services',type:'stoplight',req:true,opts:[{v:'g',t:'We use banking services (checking or savings accounts).'},{v:'y',t:'We use a check cashing service, money orders, or a prepaid banking card.'},{v:'r',t:'We do not use banking services.'}],score:{g:0,y:2,r:4}},
  {id:'fn_bills',t:'Can you usually pay your bills on time?',type:'choice',opts:['Always','Usually','Sometimes','Rarely'],req:true,score:{Always:0,Usually:1,Sometimes:3,Rarely:4}},
  {id:'fn_emerg',t:'We have savings',type:'stoplight',req:true,opts:[{v:'g',t:'We have enough savings to cover three months’ worth of living expenses.'},{v:'y',t:'We have savings, but not enough to cover three months’ living expenses.'},{v:'r',t:'We do not have savings.'}],score:{g:0,y:2,r:4,'None':4,'Under $500':3,'$500–$1,000':2,'Over $1,000':0}},
  {id:'fn_credit',t:'Do you know your credit score?',type:'yn',score:{Yes:0,No:2}},
- {id:'fn_improve',t:'Are you working to improve your credit?',type:'yn'},
- {id:'fn_goal',t:'Which financial goals would help you most? (Select all that apply)',type:'multi',opts:['Budgeting','Debt reduction','Credit improvement','Saving','Homeownership','Starting a business']}
+ {id:'fn_improve',t:'Are you working to improve your credit?',type:'yn'}
 ]},
 {key:'housing',name:'Safe & Affordable Housing',intro:'A stable place to call home.',q:[
  {id:'ho_cur',t:'What is your current housing?',type:'choice',opts:['Own','Rent','Living with family','Temporary housing','Shelter'],req:true},
@@ -3537,7 +3592,9 @@ var ESS7=[
  {id:'ho_safe',t:'Do you feel safe where you live?',type:'choice',opts:['Always','Usually','Rarely'],req:true,score:{Always:0,Usually:1,Rarely:4}},
  {id:'ho_int',t:'Are you interested in any of these?',type:'multi',opts:['Buying a home','Home repairs','Finding affordable housing']}
 ]},
-{key:'economic',name:'Economic Opportunity',intro:'Work and income that fit your life.',q:[
+{key:'economic',name:'Income',intro:'Getting money — your work, earnings, and household income.',q:[
+ {id:'fn_income',t:'Your income',type:'select',opts:INTAKE_INCOME},
+ {id:'fn_hhincome',t:'Household income',type:'select',opts:INTAKE_INCOME},
  {id:'eo_status',t:'What is your employment status?',type:'choice',opts:['Full-time','Part-time','Self-employed','Unemployed'],req:true,score:{'Full-time':0,'Part-time':2,'Self-employed':1,'Unemployed':4}},
  {id:'eo_happy',t:'Are you happy with your current job?',type:'choice',opts:['Very','Somewhat','Not really'],score:{Very:0,Somewhat:2,'Not really':4}},
  {id:'eo_income',t:'We have enough income',type:'stoplight',req:true,opts:[{v:'g',t:'We have enough income to meet our basic needs, and we also have extra money.'},{v:'y',t:'We have enough income to meet our basic needs, but no extra.'},{v:'r',t:'We do not have enough income to meet our basic needs.'}],score:{g:0,y:2,r:4,Yes:0,Mostly:2,No:4}},
@@ -3601,7 +3658,7 @@ function renderQ(q){var v=AACT()[q.id];var h='<div class="aq"><p class="aq-t">'+
 function essNav(cur){var S={transportation:'Transportation',financial:'Financial Health',housing:'Affordable Housing',economic:'Income',education:'Education',health:'Health',relationships:'Relationships'};var h='<div class="ess-nav">';h+=ESS7.map(function(e,i){return '<button type="button" class="ess-chip'+(i===cur?' active':'')+'" data-ajump="'+i+'">'+(S[e.key]||e.name)+'</button>';}).join('');h+='<button type="button" class="ess-chip'+(cur===ESS7.length?' active':'')+'" data-ajump="'+ESS7.length+'">Other</button>';return h+'</div>';}
 function bucketFor(k){return k==='transportation'?'transport':k;}
 function slForBucket(bkey,col){var items=(typeof PATH_IND!=='undefined'?PATH_IND:[]).filter(function(x){return x.b===bkey&&!PATH_AUTO[x.id];});if(!items.length)return '';var mapObj=(col==='then')?PATH_THEN:PATH_NOW;var h='<p class="a-sec">Rate this area <span class="sup-count">tap \ud83d\udfe2 doing well &middot; \ud83d\udfe1 getting there &middot; \ud83d\udd34 need support</span></p>';items.forEach(function(x){var val=mapObj[x.id];h+='<div class="pi-card"><div class="pi-hd">'+pEsc(x.q)+'</div><div class="pi-def">'+pEsc(x.def)+'</div><div class="pi-opts">'+['g','y','r'].map(function(v){return '<button type="button" class="path-o '+v+(val===v?' on':'')+'" data-slc="'+col+'" data-sli="'+x.id+'" data-slv="'+v+'">'+pEsc(x[v])+'</button>';}).join('')+'</div></div>';});return h;}
-function renderEssentialStep(e,i){var h='<p class="a-eyebrow">Essential '+(i+1)+' of '+ESS7.length+'</p>'+essNav(i)+'<h1 class="a-h1">'+e.name+'</h1><p class="a-sub">'+e.intro+'</p>';var _slLeg=false;e.q.forEach(function(q){if(!aVisible(q))return;if(q.type==='stoplight'&&!_slLeg){h+='<div class="sl-legend">Rate this area — tap <span class="sl-lg">🟢 doing well</span> · <span class="sl-lg">🟡 getting there</span> · <span class="sl-lg">🔴 need support</span></div>';_slLeg=true;}h+=renderQ(q);});h+=slForBucket(bucketFor(e.key),AMODE==='baseline'?'then':'now');h+='<div class="a-nav">'+(i>0?'<button class="btn btn-outline" data-aback>Back</button>':'<span></span>')+'<span class="a-nav-r"><button class="btn btn-outline btn-sm" data-asave>Save</button><button class="btn btn-gold" data-anext>Next</button></span></div><p class="sub" id="aSaveMsg" style="margin-top:8px;text-align:right;"></p>';return h;}
+function renderEssentialStep(e,i){var h='<p class="a-eyebrow">Essential '+(i+1)+' of '+ESS7.length+'</p>'+essNav(i)+'<h1 class="a-h1">'+e.name+'</h1><p class="a-sub">'+e.intro+'</p>';var _slLeg=false;var _oth=e.q.filter(function(q){return q.type!=='stoplight';}),_stp=e.q.filter(function(q){return q.type==='stoplight';});_oth.concat(_stp).forEach(function(q){if(!aVisible(q))return;if(q.type==='stoplight'&&!_slLeg){h+='<div class="sl-legend">Rate this area — tap <span class="sl-lg">🟢 doing well</span> · <span class="sl-lg">🟡 getting there</span> · <span class="sl-lg">🔴 need support</span></div>';_slLeg=true;}h+=renderQ(q);});h+=slForBucket(bucketFor(e.key),AMODE==='baseline'?'then':'now');h+='<div class="a-nav">'+(i>0?'<button class="btn btn-outline" data-aback>Back</button>':'<span></span>')+'<span class="a-nav-r"><button class="btn btn-outline btn-sm" data-asave>Save</button><button class="btn btn-gold" data-anext>Next</button></span></div><p class="sub" id="aSaveMsg" style="margin-top:8px;text-align:right;"></p>';return h;}
 function renderGoalsStep(){var g=ANS._goals||[],p=ANS._priority;var h='<p class="a-eyebrow">Almost done</p><h1 class="a-h1">Your goals</h1><p class="a-sub">Pick up to three goals for the next year.</p><div class="aq"><div class="aopts">';GOAL_OPTS.forEach(function(o){var on=g.indexOf(o)>=0;h+='<button type="button" class="aopt'+(on?' active':'')+'" data-q="_goals" data-v="'+aEsc(o)+'" data-multi="1">'+o+'</button>';});h+='</div></div>';var pr=Array.isArray(ANS._priority)?ANS._priority:(ANS._priority?[ANS._priority]:[]);h+='<div class="aq"><p class="aq-t">Which areas would make the biggest difference right now?</p><p class="a-sub" style="margin-top:-2px;margin-bottom:10px;">Tap in order of priority — your first tap is your top priority.</p><div class="aopts">';PRIORITY_OPTS.forEach(function(o){var rank=pr.indexOf(o),on=rank>=0;h+='<button type="button" class="aopt'+(on?' active':'')+'" data-q="_priority" data-v="'+aEsc(o)+'" data-multi="1">'+(on?'<span class="prio-rank">'+(rank+1)+'</span>':'')+o+'</button>';});h+='</div></div><div class="a-nav"><button class="btn btn-outline" data-aback>Back</button><button class="btn btn-gold" data-anext>See my results</button></div>';return h;}
 function renderResultsStep(){var arr=ESS7.map(function(e){return {e:e,pct:scoreEssential(e)};});arr.sort(function(a,b){return (b.pct||0)-(a.pct||0);});var h='<p class="a-eyebrow">Your check-in</p><h1 class="a-h1">Here is what we heard</h1><p class="a-sub">Your strengths, your opportunities, and where we can help most.</p>';var _pr=Array.isArray(ANS._priority)?ANS._priority:(ANS._priority?[ANS._priority]:[]);if(_pr.length)h+='<div class="a-prio">Your priorities: <b>'+_pr.join('</b> &rsaquo; <b>')+'</b></div>';h+='<div class="a-results">';arr.forEach(function(r){var st=essStatus(r.pct),cc=(st.c==='muted'?'amber':st.c),need=r.pct==null?0:r.pct;h+='<div class="a-rcard"><div class="a-rhead"><span class="c">'+r.e.name+'</span><span class="a-pill p-'+cc+'">'+st.t+'</span></div><div class="a-bar"><span class="bg-'+cc+'" style="width:'+need+'%"></span></div>';if(st.c==='red'||st.c==='amber')h+='<div class="a-refs">We can connect you with: '+REFERRALS[r.e.key].slice(0,3).join(' · ')+'</div>';h+='</div>';});h+='</div><p class="sub" id="assessSaveMsg" style="margin-top:14px;"></p><div class="a-nav"><button class="btn btn-outline" data-aretake>Retake</button><button class="btn btn-gold" data-afinish>Done</button></div>';return h;}
 function orderedPriorities(){var pr=Array.isArray(ANS._priority)?ANS._priority.slice():[];pr=pr.filter(function(o){return PRIORITY_OPTS.indexOf(o)>=0;});PRIORITY_OPTS.forEach(function(o){if(pr.indexOf(o)<0)pr.push(o);});return pr;}
@@ -3703,6 +3760,7 @@ function epeQRfinder(x,y,m){var fz=7;function f(ox,oy){if(x>=ox&&x<ox+fz&&y>=oy&
 function epeQR(seed){var m=25,cell=9,s=0;for(var i=0;i<seed.length;i++)s=(s*31+seed.charCodeAt(i))>>>0;function rnd(){s=(s*1103515245+12345)>>>0;return (s>>>16)&1;}var cells='';for(var y=0;y<m;y++){for(var x=0;x<m;x++){var fin=epeQRfinder(x,y,m);var on=(fin!=null)?fin:(rnd()?1:0);if(on)cells+='<rect x="'+(x*cell)+'" y="'+(y*cell)+'" width="'+cell+'" height="'+cell+'"/>';}}return '<svg viewBox="0 0 '+(m*cell)+' '+(m*cell)+'" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#fff"/><g fill="#0e2745">'+cells+'</g></svg>';}
 function openEpeId(){var nm=(window.CUR&&CUR.name)?CUR.name:(((document.getElementById('profName')||{}).textContent)||'Member');var id=epeIdNum();var w=document.createElement('div');w.className='epe-id-ov';w.innerHTML='<div class="epe-id-card"><button type="button" class="epe-id-x" aria-label="Close">\u00d7</button><div class="epe-id-top"><span class="epe-id-eyebrow">Every Person Empowered</span><span class="epe-id-badge">ID</span></div><div class="epe-id-body"><div class="epe-id-name">'+_insEsc(nm)+'</div><div class="epe-id-num">EPE ID \u00b7 '+id+'</div><div class="epe-id-qr">'+epeQR('EPE-'+id)+'</div><div class="epe-id-note">Show this at partner sites. Demo QR \u2014 not yet scannable.</div></div></div>';w.addEventListener('click',function(e){if(e.target===w||e.target.closest('.epe-id-x')){if(w.parentNode)w.parentNode.removeChild(w);}});document.body.appendChild(w);}
 document.addEventListener('click',function(e){if(e.target.closest('#epeIdBtn')){e.preventDefault();openEpeId();}});
+document.addEventListener('click',function(e){var _op=e.target.closest('[data-openprivacy]');if(_op){e.preventDefault();var pm=document.getElementById('privacyModal');if(pm)pm.classList.add('open');return;}if(e.target.closest('#privacyClose')||e.target.closest('#privacyOk')){var pm2=document.getElementById('privacyModal');if(pm2)pm2.classList.remove('open');return;}var pmm=document.getElementById('privacyModal');if(pmm&&pmm.classList.contains('open')&&e.target===pmm){pmm.classList.remove('open');}});
 function rewardsStarTotal(){var baseDone=!!window._baseDone;var curDone=!!window._curDone||!!window._essScores;var hasGoals=(typeof MY_GOALS!=='undefined'&&MY_GOALS.length>0);var hasMile=(typeof MY_MILES!=='undefined'&&Object.keys(MY_MILES||{}).some(function(k){return MY_MILES[k];}));var hasReview=(typeof MY_REVIEWS!=='undefined'&&MY_REVIEWS.length>0);return (baseDone?10:0)+(curDone?10:0)+(hasGoals?10:0)+(hasMile?10:0)+(hasReview?5:0);}
 function openHubTab(id){var tabs=document.getElementById('hubTabs');if(tabs)tabs.querySelectorAll('.hub-tab').forEach(function(t){t.classList.toggle('active',t.getAttribute('data-tp')===id);});document.querySelectorAll('.hub-panel').forEach(function(p){p.classList.toggle('active',p.getAttribute('data-tp')===id);});if(id==='rewards'){try{renderRewards();}catch(e){}}}
 function renderRewards(){var el=document.getElementById('rewardsBox');if(!el)return;var baseDone=!!window._baseDone;var curDone=!!window._curDone||!!window._essScores;var hasGoals=(typeof MY_GOALS!=='undefined'&&MY_GOALS.length>0);var hasMile=(typeof MY_MILES!=='undefined'&&Object.keys(MY_MILES||{}).some(function(k){return MY_MILES[k];}));var hasReview=(typeof MY_REVIEWS!=='undefined'&&MY_REVIEWS.length>0);var curDate=window._curDate?new Date(window._curDate):null;var unlockMs=(curDate&&!isNaN(curDate.getTime()))?(curDate.getTime()+28*86400000):null;var now=Date.now();var fuAvail=(curDone&&unlockMs!=null&&now>=unlockMs);var fuDateStr='';if(unlockMs){try{fuDateStr=new Date(unlockMs).toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});}catch(e){}}function item(t,stars,done){var badge=done?'<span class="rwd-earned">✓ Earned</span>':'<span class="rwd-star">★ '+stars+'</span>';return '<div class="rwd-item'+(done?' done':'')+'"><div class="rwd-main"><div class="rwd-t">'+t+'</div></div>'+badge+'</div>';}var earned=rewardsStarTotal();var fuSub;if(!curDone){fuSub='Complete your Life Assessment first.';}else if(fuAvail){fuSub='Available now — retake your Life Assessment to earn this.';}else{fuSub='🔒 Unlocks 4 weeks after your Life Assessment'+(fuDateStr?(' — available '+fuDateStr):'')+'.';}var big=document.getElementById('rewardsStarBig');if(big)big.innerHTML='<div class="rwd-bigstar-num">★ '+earned+'</div><div class="rwd-bigstar-l">stars earned</div>';var h='<div class="rwd-list">';h+=item('Complete Baseline Life Assessment',10,baseDone);h+=item('Complete Life Assessment',10,curDone);h+='<div class="rwd-item rwd-follow'+(fuAvail?'':' locked')+'"><div class="rwd-main"><div class="rwd-t">↳ Complete a Follow-up Life Assessment</div><div class="rwd-sub">'+fuSub+'</div></div><span class="rwd-star">★ 10</span></div>';h+=item('Setting Goals',10,hasGoals);h+=item('Log Achievements',10,hasMile);h+=item('Review a Solution',5,hasReview);h+='</div>';el.innerHTML=h;}
@@ -3846,7 +3904,7 @@ var PATH_IND = [
     g:"We cover our basic needs and have a little extra.",
     y:"We cover the basics, but there's nothing left over.",
     r:"We can't cover our basic needs."},
-  {id:"assets", b:"economic", q:"Assets", def:"Building ownership for long-term security.",
+  {id:"assets", b:"financial", q:"Assets", def:"Building ownership for long-term security.",
     g:"I currently own assets in one or more forms (stocks/investments, a business, or housing).",
     y:"I do not own assets, but I am taking concrete actions or have specific plans to acquire them within the next 6 months (for example, saving regularly, starting a business, seeking financing for a home purchase, or participating in financial education workshops).",
     r:"I do not own assets and I do not have plans or near-term possibilities to acquire them."},
@@ -3975,7 +4033,7 @@ function pathSatSummary(trend,curVal){trend=trend||[];var parts=[],nf=null,nt=nu
 function slLabel(v){return ({g:'\ud83d\udfe2 Green',y:'\ud83d\udfe1 Yellow',r:'\ud83d\udd34 Red'})[v]||'';}
 function slBuckets(mapObj,col,locked){var byB={};PATH_IND.forEach(function(x){if(PATH_AUTO[x.id])return;(byB[x.b]=byB[x.b]||[]).push(x);});var h='<div class="ess-nav" style="margin-bottom:14px;">'+PATH_BUCKETS.filter(function(bk){return (byB[bk.key]||[]).length;}).map(function(bk){return '<button type="button" class="ess-chip" data-sljump="'+col+':'+bk.key+'">'+pathShort(bk.key)+'</button>';}).join('')+'</div>';PATH_BUCKETS.forEach(function(bk){var items=byB[bk.key]||[];if(!items.length)return;var ansN=items.filter(function(x){return mapObj[x.id];}).length;h+='<div class="path-b"><button type="button" class="path-bh" data-slb="'+col+':'+bk.key+'"><span>'+bk.icon+' '+bk.name+'</span><span class="path-count">'+ansN+'/'+items.length+'</span></button><div class="path-body" id="slb-'+col+'-'+bk.key+'" style="display:none;">';items.forEach(function(x){var val=mapObj[x.id];h+='<div class="pi-card"><div class="pi-hd">'+pEsc(x.q)+'</div><div class="pi-def">'+pEsc(x.def)+'</div><div class="pi-opts">'+['g','y','r'].map(function(v){return '<button type="button" class="path-o '+v+(val===v?' on':'')+'"'+(locked?' disabled style="opacity:.65;cursor:default"':(' data-slc="'+col+'" data-sli="'+x.id+'" data-slv="'+v+'"'))+'>'+pEsc(x[v])+'</button>';}).join('')+'</div>'+((col==='now'&&PATH_THEN[x.id]&&PATH_THEN[x.id]!==val)?('<div class="pi-last">Baseline: '+slLabel(PATH_THEN[x.id])+'</div>'):'')+'</div>';});h+='</div></div>';});return h;}
 function setLifeTab(w){var b=document.getElementById('lifeBaseline'),c=document.getElementById('lifeCurrent');if(!b||!c)return;var cur=(w==='current');b.style.display=cur?'none':'';c.style.display=cur?'':'none';var tiles=document.querySelectorAll('[data-lifetab]');for(var i=0;i<tiles.length;i++)tiles[i].classList.toggle('active',tiles[i].getAttribute('data-lifetab')===w);}
-function renderBaseline(){var el=document.getElementById('baselineBox');if(!el)return;var set=Object.keys(PATH_THEN).length>0||Object.keys(ANS_BASE).length>0;var intro=document.getElementById('baseIntro');var inl=document.getElementById('baseInline');if(set){el.innerHTML='<div class="place" style="background:var(--sage-light);border-color:transparent;"><div class="place-ic">\ud83d\udccc</div><div><b>Baseline recorded'+(PATH_BASE_DATE?(' \u00b7 '+pEsc(PATH_BASE_DATE)):'')+'</b><p class="sub" style="margin:2px 0 0;">Locked as your starting point \u2014 the same questions as your current check-in. Refine it only if it was not accurate.</p></div><button type="button" class="btn btn-outline btn-sm" id="startBaseline" style="margin-left:auto;">Refine baseline</button></div>';if(intro)intro.style.display='none';}else{el.innerHTML='';if(intro&&(!inl||inl.style.display==='none'))intro.style.display='';}}
+function baselineRatable(){return PATH_IND.filter(function(x){return !PATH_AUTO[x.id];});}function baselineAnswered(id){return !!PATH_THEN[id]||!!(PATH_NA&&PATH_NA[id]);}function baselineCount(){var it=baselineRatable(),n=0;it.forEach(function(x){if(baselineAnswered(x.id))n++;});return {done:n,total:it.length};}function baselineDone(){var c=baselineCount();return c.total>0&&c.done>=c.total;}function renderBaseline(){var el=document.getElementById('baselineBox');if(!el)return;var intro=document.getElementById('baseIntro');var inl=document.getElementById('baseInline');var open=inl&&inl.style.display!=='none';var started=Object.keys(PATH_THEN).length>0||Object.keys(ANS_BASE).length>0;var done=baselineDone();if(open){el.innerHTML='';if(intro)intro.style.display='none';return;}if(done){el.innerHTML='<div class="place" style="background:var(--sage-light);border-color:transparent;"><div class="place-ic">📌</div><div><b>Baseline recorded'+(PATH_BASE_DATE?(' · '+pEsc(PATH_BASE_DATE)):'')+'</b><p class="sub" style="margin:2px 0 0;">Locked as your starting point — the same questions as your current check-in. Refine it only if it was not accurate.</p></div><button type="button" class="btn btn-outline btn-sm" id="startBaseline" style="margin-left:auto;">Refine baseline</button></div>';if(intro)intro.style.display='none';}else if(started){var c=baselineCount();el.innerHTML='<div class="place" style="background:#fbf1dc;border-color:transparent;"><div class="place-ic">📝</div><div><b>Finish your baseline assessment</b><p class="sub" style="margin:2px 0 0;">You\'ve rated <b>'+c.done+' of '+c.total+'</b> areas so far. There\'s no need to answer everything at once — finish it to lock your starting point and unlock your progress view.</p></div></div><a href="#" id="startBaseline" class="btn btn-gold" style="display:block;width:100%;box-sizing:border-box;text-align:center;font-size:17px;padding:15px 20px;margin-top:12px;">Finish your baseline assessment</a>';if(intro)intro.style.display='none';}else{el.innerHTML='';if(intro&&(!inl||inl.style.display==='none'))intro.style.display='';}}
 function renderCurrent(){var el=document.getElementById('currentBox');if(!el)return;var baseSet=Object.keys(PATH_THEN).length>0||Object.keys(ANS_BASE).length>0;if(!baseSet){el.innerHTML='<div class="place"><div class="place-ic">\ud83d\udd12</div><div><b>Set your baseline first</b><p class="sub" style="margin:2px 0 0;">Your current check-in unlocks once you have recorded a baseline in the <b>Baseline</b> tab.</p></div><button type="button" class="btn btn-gold btn-sm" style="margin-left:auto;" data-gotobase>Go to Baseline</button></div>';return;}var h='';var haveCur=Object.keys(PATH_NOW).length>0;if(haveCur){var imp=0,dec=0,same=0;PATH_IND.forEach(function(x){var n=PATH_NOW[x.id],t=PATH_THEN[x.id];if(n&&t){var d=pathRank(n)-pathRank(t);if(d>0)imp++;else if(d<0)dec++;else same++;}});if(imp+dec+same>0)h+='<div class="place" style="margin-bottom:14px;"><div class="place-ic">\ud83d\udcc8</div><div><b>Progress since baseline</b><p class="sub" style="margin:2px 0 0;"><b style="color:var(--sage)">'+imp+' improved</b> \u00b7 '+same+' unchanged'+(dec?(' \u00b7 <b style="color:var(--coral)">'+dec+' declined</b>'):'')+'</p></div><button type="button" class="btn btn-outline btn-sm" data-pathresults style="margin-left:auto;">View details</button></div>';}if(!haveCur)h+='<p class="sub">Take the check-in above to record where you are today \u2014 it saves your \ud83d\udfe2\ud83d\udfe1\ud83d\udd34 ratings together with your answers.</p>';el.innerHTML=h;}
 function saveBaselineCurrent(which){var msg=document.getElementById(which==='base'?'baseMsg':'curMsg');if(!CUR.live||!CUR.uid){if(msg)msg.textContent='Sign in with a real account to save.';return;}if(msg)msg.textContent='Saving\u2026';sb.from('path_assessments').insert({member_id:CUR.uid,kind:AMODE,answers:pathAnswers(),satisfaction:(AMODE==='baseline'?PATH_SAT_BASE:PATH_SAT)}).then(function(r){if(r&&r.error){if(msg)msg.textContent='Could not save: '+r.error.message;return;}if(which==='base')BASE_REFINE=false;if(msg)msg.textContent='Saved \u2713';try{logEvent('action',which==='base'?'Baseline saved':'Current check-in saved');}catch(e){}loadPath();},function(){if(msg)msg.textContent='Network error \u2014 try again.';});}
 var GOALS_BUCKETS=[
